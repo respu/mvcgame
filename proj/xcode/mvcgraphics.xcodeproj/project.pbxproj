@@ -30,6 +30,8 @@
 		065B90CE168491D30072FCD2 /* ViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B90A016848DFB0072FCD2 /* ViewController.cpp */; };
 		065BB0DE1684A1FE0072FCD2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065BB0DD1684A1FE0072FCD2 /* main.cpp */; };
 		065BB0E01684A1FE0072FCD2 /* UnitTests.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 065BB0DF1684A1FE0072FCD2 /* UnitTests.1 */; };
+		065BB10C1684ADCE0072FCD2 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 065BB1021684ADCE0072FCD2 /* gtest-all.cc */; };
+		065BB1171684AF100072FCD2 /* AdapterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 065BB1161684AF100072FCD2 /* AdapterTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -106,6 +108,9 @@
 		065BB0DA1684A1FE0072FCD2 /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		065BB0DD1684A1FE0072FCD2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		065BB0DF1684A1FE0072FCD2 /* UnitTests.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = UnitTests.1; sourceTree = "<group>"; };
+		065BB1021684ADCE0072FCD2 /* gtest-all.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "gtest-all.cc"; sourceTree = "<group>"; };
+		065BB1151684AF100072FCD2 /* AdapterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdapterTest.h; sourceTree = "<group>"; };
+		065BB1161684AF100072FCD2 /* AdapterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdapterTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +145,7 @@
 		065B900916848C710072FCD2 = {
 			isa = PBXGroup;
 			children = (
+				065BB1001684ADBC0072FCD2 /* lib */,
 				065B908016848DFB0072FCD2 /* src */,
 				065B90B01684917F0072FCD2 /* tests */,
 				065B901E16848C720072FCD2 /* TestApp */,
@@ -279,8 +285,27 @@
 			children = (
 				065BB0DD1684A1FE0072FCD2 /* main.cpp */,
 				065BB0DF1684A1FE0072FCD2 /* UnitTests.1 */,
+				065BB1151684AF100072FCD2 /* AdapterTest.h */,
+				065BB1161684AF100072FCD2 /* AdapterTest.m */,
 			);
 			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		065BB1001684ADBC0072FCD2 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				065BB1011684ADCE0072FCD2 /* gtest */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		065BB1011684ADCE0072FCD2 /* gtest */ = {
+			isa = PBXGroup;
+			children = (
+				065BB1021684ADCE0072FCD2 /* gtest-all.cc */,
+			);
+			name = gtest;
+			path = ../../lib/googletest/src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,6 +436,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				065BB0DE1684A1FE0072FCD2 /* main.cpp in Sources */,
+				065BB10C1684ADCE0072FCD2 /* gtest-all.cc in Sources */,
+				065BB1171684AF100072FCD2 /* AdapterTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,14 +563,16 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"GTEST_HAS_RTTI=1",
+					"DEBUG=1",
+					CC_TARGET_OS_IPHONE,
+					"GTEST_USE_OWN_TR1_TUPLE=1",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../lib/googletest/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../lib/googletest\" \"$(SRCROOT)/../../lib/googletest/include\"";
 			};
 			name = Debug;
 		};
@@ -553,12 +582,15 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "GTEST_HAS_RTTI=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					CC_TARGET_OS_IPHONE,
+					"GTEST_USE_OWN_TR1_TUPLE=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../lib/googletest/include\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../lib/googletest\" \"$(SRCROOT)/../../lib/googletest/include\"";
 			};
 			name = Release;
 		};

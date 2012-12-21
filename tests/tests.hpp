@@ -11,15 +11,10 @@
 
 #include "gtest/gtest.h"
 
-void runAllTests()
+int runAllTests()
 {
     int i = 0;
     ::testing::InitGoogleTest(&i,(char **)&i);
-    initGraphics();
-
-    testing::TestEventListeners& listeners = testing::UnitTest::GetInstance()->listeners();
-    listeners.Append(new tap::TapListener());
-
     return RUN_ALL_TESTS();
 }
 
