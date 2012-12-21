@@ -7,7 +7,7 @@
 //
 
 #include <mvcgraphics/View.hpp>
-
+#include <assert.h>
 
 namespace mvcgraphics {
 

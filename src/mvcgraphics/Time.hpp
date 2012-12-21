@@ -10,6 +10,7 @@
 #define hydra_Time_hpp
 
 #include <mvcgraphics/Geometry.hpp>
+#include <stdint.h>
 
 namespace mvcgraphics {
 

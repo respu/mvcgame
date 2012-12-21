@@ -97,7 +97,7 @@ namespace mvcgraphics {
         }
     }
     
-    void EventEmitter::emitTouchEnd(hydra::EndTouchEvent &event, hydra::ViewController &controller)
+    void EventEmitter::emitTouchEnd(EndTouchEvent &event, ViewController &controller)
     {
         TouchEvent::Responders list = event.getStart().getResponders();
         TouchEvent::Responders::iterator itr;

@@ -8,6 +8,7 @@
 
 #include <mvcgraphics/ActionRunner.hpp>
 #include <mvcgraphics/Events.hpp>
+#include <assert.h>
 
 namespace mvcgraphics {
 

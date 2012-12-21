@@ -9,6 +9,8 @@
 #include <mvcgraphics/Geometry.hpp>
 #include <mvcgraphics/Time.hpp>
 #include <math.h>
+#include <limits>
+#include <algorithm>
 
 #define GUNIT_EQ_ULP 4
 

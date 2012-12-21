@@ -9,7 +9,7 @@
 #ifndef hydra_Easing_hpp
 #define hydra_Easing_hpp
 
-#include <boost/function.hpp>
+#include <functional>
 #include <math.h>
 
 namespace mvcgraphics {
@@ -39,7 +39,7 @@ namespace mvcgraphics {
         static const double Pi = 3.1415926535897932384626433832795028841971693993751;
 
 	public:
-		typedef boost::function<float(float p, float b, float c)> Function;
+		typedef std::function<float(float p, float b, float c)> Function;
 
 		static float linear(float p, float b, float c)
 		{

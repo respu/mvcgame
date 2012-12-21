@@ -16,14 +16,8 @@
 		065B902B16848C720072FCD2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 065B902A16848C720072FCD2 /* Default.png */; };
 		065B902D16848C720072FCD2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 065B902C16848C720072FCD2 /* Default@2x.png */; };
 		065B902F16848C720072FCD2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 065B902E16848C720072FCD2 /* Default-568h@2x.png */; };
-		065B903E16848D3E0072FCD2 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 065B903D16848D3E0072FCD2 /* CoreFoundation.framework */; };
-		065B904816848D3F0072FCD2 /* UnitTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 065B904716848D3F0072FCD2 /* UnitTests.h */; };
-		065B904B16848D3F0072FCD2 /* UnitTests.cp in Sources */ = {isa = PBXBuildFile; fileRef = 065B904A16848D3F0072FCD2 /* UnitTests.cp */; };
-		065B90B31684917F0072FCD2 /* GeometryTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B90B11684917F0072FCD2 /* GeometryTest.cpp */; };
-		065B90B41684917F0072FCD2 /* TimeTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B90B21684917F0072FCD2 /* TimeTest.cpp */; };
 		065B90BA168491B50072FCD2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 065B901A16848C720072FCD2 /* Foundation.framework */; };
-		065B90BF168491B60072FCD2 /* mvcgraphics.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 065B90BE168491B60072FCD2 /* mvcgraphics.h */; };
-		065B90C1168491B60072FCD2 /* mvcgraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 065B90C0168491B60072FCD2 /* mvcgraphics.m */; };
+		065B90BF168491B60072FCD2 /* mvcgraphics.hpp in CopyFiles */ = {isa = PBXBuildFile; fileRef = 065B90BE168491B60072FCD2 /* mvcgraphics.hpp */; };
 		065B90C5168491D30072FCD2 /* ActionRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B908216848DFB0072FCD2 /* ActionRunner.cpp */; };
 		065B90C6168491D30072FCD2 /* EventEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B908516848DFB0072FCD2 /* EventEmitter.cpp */; };
 		065B90C7168491D30072FCD2 /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B908716848DFB0072FCD2 /* Events.cpp */; };
@@ -34,6 +28,8 @@
 		065B90CC168491D30072FCD2 /* TweenAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B909C16848DFB0072FCD2 /* TweenAction.cpp */; };
 		065B90CD168491D30072FCD2 /* View.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B909E16848DFB0072FCD2 /* View.cpp */; };
 		065B90CE168491D30072FCD2 /* ViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065B90A016848DFB0072FCD2 /* ViewController.cpp */; };
+		065BB0DE1684A1FE0072FCD2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 065BB0DD1684A1FE0072FCD2 /* main.cpp */; };
+		065BB0E01684A1FE0072FCD2 /* UnitTests.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 065BB0DF1684A1FE0072FCD2 /* UnitTests.1 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,36 +39,36 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				065B90BF168491B60072FCD2 /* mvcgraphics.h in CopyFiles */,
+				065B90BF168491B60072FCD2 /* mvcgraphics.hpp in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		065BB0D81684A1FE0072FCD2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				065BB0E01684A1FE0072FCD2 /* UnitTests.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		065B901416848C720072FCD2 /* mvcgraphics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = mvcgraphics.app; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		065B901416848C720072FCD2 /* TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		065B901816848C720072FCD2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		065B901A16848C720072FCD2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		065B901C16848C720072FCD2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		065B902016848C720072FCD2 /* mvcgraphics-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "mvcgraphics-Info.plist"; sourceTree = "<group>"; };
+		065B902016848C720072FCD2 /* TestApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TestApp-Info.plist"; sourceTree = "<group>"; };
 		065B902216848C720072FCD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		065B902416848C720072FCD2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		065B902616848C720072FCD2 /* mvcgraphics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mvcgraphics-Prefix.pch"; sourceTree = "<group>"; };
 		065B902716848C720072FCD2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		065B902816848C720072FCD2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		065B902A16848C720072FCD2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		065B902C16848C720072FCD2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		065B902E16848C720072FCD2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		065B903C16848D3E0072FCD2 /* UnitTests.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		065B903D16848D3E0072FCD2 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		065B904116848D3E0072FCD2 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
-		065B904316848D3E0072FCD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		065B904416848D3E0072FCD2 /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
-		065B904516848D3F0072FCD2 /* UnitTestsProj.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UnitTestsProj.xcconfig; sourceTree = "<group>"; };
-		065B904616848D3F0072FCD2 /* UnitTestsTarget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UnitTestsTarget.xcconfig; sourceTree = "<group>"; };
-		065B904716848D3F0072FCD2 /* UnitTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnitTests.h; sourceTree = "<group>"; };
-		065B904916848D3F0072FCD2 /* UnitTestsPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnitTestsPriv.h; sourceTree = "<group>"; };
-		065B904A16848D3F0072FCD2 /* UnitTests.cp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnitTests.cp; sourceTree = "<group>"; };
 		065B908216848DFB0072FCD2 /* ActionRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionRunner.cpp; sourceTree = "<group>"; };
 		065B908316848DFB0072FCD2 /* ActionRunner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ActionRunner.hpp; sourceTree = "<group>"; };
 		065B908416848DFB0072FCD2 /* Easing.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Easing.hpp; sourceTree = "<group>"; };
@@ -105,9 +101,11 @@
 		065B90B11684917F0072FCD2 /* GeometryTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeometryTest.cpp; sourceTree = "<group>"; };
 		065B90B21684917F0072FCD2 /* TimeTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimeTest.cpp; sourceTree = "<group>"; };
 		065B90B9168491B50072FCD2 /* libmvcgraphics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmvcgraphics.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		065B90BD168491B60072FCD2 /* mvcgraphics-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mvcgraphics-Prefix.pch"; sourceTree = "<group>"; };
-		065B90BE168491B60072FCD2 /* mvcgraphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mvcgraphics.h; sourceTree = "<group>"; };
-		065B90C0168491B60072FCD2 /* mvcgraphics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mvcgraphics.m; sourceTree = "<group>"; };
+		065B90BE168491B60072FCD2 /* mvcgraphics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mvcgraphics.hpp; sourceTree = "<group>"; };
+		065BB0D41684A05F0072FCD2 /* tests.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tests.hpp; sourceTree = "<group>"; };
+		065BB0DA1684A1FE0072FCD2 /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
+		065BB0DD1684A1FE0072FCD2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		065BB0DF1684A1FE0072FCD2 /* UnitTests.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = UnitTests.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,19 +119,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		065B903916848D3E0072FCD2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				065B903E16848D3E0072FCD2 /* CoreFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		065B90B6168491B50072FCD2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				065B90BA168491B50072FCD2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		065BB0D71684A1FE0072FCD2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,8 +143,8 @@
 				065B908016848DFB0072FCD2 /* src */,
 				065B90B01684917F0072FCD2 /* tests */,
 				065B901E16848C720072FCD2 /* TestApp */,
-				065B903F16848D3E0072FCD2 /* UnitTests */,
 				065B90BB168491B60072FCD2 /* mvcgraphics */,
+				065BB0DC1684A1FE0072FCD2 /* UnitTests */,
 				065B901716848C720072FCD2 /* Frameworks */,
 				065B901516848C720072FCD2 /* Products */,
 			);
@@ -156,9 +153,9 @@
 		065B901516848C720072FCD2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				065B901416848C720072FCD2 /* mvcgraphics.app */,
-				065B903C16848D3E0072FCD2 /* UnitTests.bundle */,
+				065B901416848C720072FCD2 /* TestApp.app */,
 				065B90B9168491B50072FCD2 /* libmvcgraphics.a */,
+				065BB0DA1684A1FE0072FCD2 /* UnitTests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,36 +184,12 @@
 		065B901F16848C720072FCD2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				065B902016848C720072FCD2 /* mvcgraphics-Info.plist */,
+				065B902016848C720072FCD2 /* TestApp-Info.plist */,
 				065B902116848C720072FCD2 /* InfoPlist.strings */,
 				065B902416848C720072FCD2 /* main.m */,
-				065B902616848C720072FCD2 /* mvcgraphics-Prefix.pch */,
 				065B902A16848C720072FCD2 /* Default.png */,
 				065B902C16848C720072FCD2 /* Default@2x.png */,
 				065B902E16848C720072FCD2 /* Default-568h@2x.png */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		065B903F16848D3E0072FCD2 /* UnitTests */ = {
-			isa = PBXGroup;
-			children = (
-				065B904516848D3F0072FCD2 /* UnitTestsProj.xcconfig */,
-				065B904616848D3F0072FCD2 /* UnitTestsTarget.xcconfig */,
-				065B904716848D3F0072FCD2 /* UnitTests.h */,
-				065B904916848D3F0072FCD2 /* UnitTestsPriv.h */,
-				065B904A16848D3F0072FCD2 /* UnitTests.cp */,
-				065B904016848D3E0072FCD2 /* Supporting Files */,
-			);
-			path = UnitTests;
-			sourceTree = "<group>";
-		};
-		065B904016848D3E0072FCD2 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				065B904116848D3E0072FCD2 /* UnitTests-Info.plist */,
-				065B904216848D3E0072FCD2 /* InfoPlist.strings */,
-				065B904416848D3E0072FCD2 /* UnitTests-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -227,7 +200,7 @@
 				065B908116848DFB0072FCD2 /* mvcgraphics */,
 			);
 			name = src;
-			path = ../src;
+			path = ../../src;
 			sourceTree = "<group>";
 		};
 		065B908116848DFB0072FCD2 /* mvcgraphics */ = {
@@ -268,18 +241,18 @@
 		065B909316848DFB0072FCD2 /* platform */ = {
 			isa = PBXGroup;
 			children = (
-				065B909416848DFB0072FCD2 /* cocos2d-x */,
+				065B909416848DFB0072FCD2 /* cocos2dx */,
 			);
 			path = platform;
 			sourceTree = "<group>";
 		};
-		065B909416848DFB0072FCD2 /* cocos2d-x */ = {
+		065B909416848DFB0072FCD2 /* cocos2dx */ = {
 			isa = PBXGroup;
 			children = (
 				065B909516848DFB0072FCD2 /* PlatformView.cpp */,
 				065B909616848DFB0072FCD2 /* PlatformView.hpp */,
 			);
-			path = "cocos2d-x";
+			path = cocos2dx;
 			sourceTree = "<group>";
 		};
 		065B90B01684917F0072FCD2 /* tests */ = {
@@ -287,41 +260,30 @@
 			children = (
 				065B90B11684917F0072FCD2 /* GeometryTest.cpp */,
 				065B90B21684917F0072FCD2 /* TimeTest.cpp */,
+				065BB0D41684A05F0072FCD2 /* tests.hpp */,
 			);
 			name = tests;
-			path = ../tests;
+			path = ../../tests;
 			sourceTree = "<group>";
 		};
 		065B90BB168491B60072FCD2 /* mvcgraphics */ = {
 			isa = PBXGroup;
 			children = (
-				065B90BE168491B60072FCD2 /* mvcgraphics.h */,
-				065B90C0168491B60072FCD2 /* mvcgraphics.m */,
-				065B90BC168491B60072FCD2 /* Supporting Files */,
+				065B90BE168491B60072FCD2 /* mvcgraphics.hpp */,
 			);
 			path = mvcgraphics;
 			sourceTree = "<group>";
 		};
-		065B90BC168491B60072FCD2 /* Supporting Files */ = {
+		065BB0DC1684A1FE0072FCD2 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				065B90BD168491B60072FCD2 /* mvcgraphics-Prefix.pch */,
+				065BB0DD1684A1FE0072FCD2 /* main.cpp */,
+				065BB0DF1684A1FE0072FCD2 /* UnitTests.1 */,
 			);
-			name = "Supporting Files";
+			path = UnitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		065B903A16848D3E0072FCD2 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				065B904816848D3F0072FCD2 /* UnitTests.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		065B901316848C720072FCD2 /* TestApp */ = {
@@ -338,25 +300,8 @@
 			);
 			name = TestApp;
 			productName = mvcgraphics;
-			productReference = 065B901416848C720072FCD2 /* mvcgraphics.app */;
+			productReference = 065B901416848C720072FCD2 /* TestApp.app */;
 			productType = "com.apple.product-type.application";
-		};
-		065B903B16848D3E0072FCD2 /* UnitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 065B904C16848D3F0072FCD2 /* Build configuration list for PBXNativeTarget "UnitTests" */;
-			buildPhases = (
-				065B903816848D3E0072FCD2 /* Sources */,
-				065B903916848D3E0072FCD2 /* Frameworks */,
-				065B903A16848D3E0072FCD2 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = UnitTests;
-			productName = UnitTests;
-			productReference = 065B903C16848D3E0072FCD2 /* UnitTests.bundle */;
-			productType = "com.apple.product-type.bundle";
 		};
 		065B90B8168491B50072FCD2 /* mvcgraphics */ = {
 			isa = PBXNativeTarget;
@@ -374,6 +319,23 @@
 			productName = mvcgraphics;
 			productReference = 065B90B9168491B50072FCD2 /* libmvcgraphics.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		065BB0D91684A1FE0072FCD2 /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 065BB0E11684A1FE0072FCD2 /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				065BB0D61684A1FE0072FCD2 /* Sources */,
+				065BB0D71684A1FE0072FCD2 /* Frameworks */,
+				065BB0D81684A1FE0072FCD2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 065BB0DA1684A1FE0072FCD2 /* UnitTests */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -397,8 +359,8 @@
 			projectRoot = "";
 			targets = (
 				065B901316848C720072FCD2 /* TestApp */,
-				065B903B16848D3E0072FCD2 /* UnitTests */,
 				065B90B8168491B50072FCD2 /* mvcgraphics */,
+				065BB0D91684A1FE0072FCD2 /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -427,21 +389,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		065B903816848D3E0072FCD2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				065B904B16848D3F0072FCD2 /* UnitTests.cp in Sources */,
-				065B90B31684917F0072FCD2 /* GeometryTest.cpp in Sources */,
-				065B90B41684917F0072FCD2 /* TimeTest.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		065B90B5168491B50072FCD2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				065B90C1168491B60072FCD2 /* mvcgraphics.m in Sources */,
 				065B90C5168491D30072FCD2 /* ActionRunner.cpp in Sources */,
 				065B90C6168491D30072FCD2 /* EventEmitter.cpp in Sources */,
 				065B90C7168491D30072FCD2 /* Events.cpp in Sources */,
@@ -455,6 +406,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		065BB0D61684A1FE0072FCD2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				065BB0DE1684A1FE0072FCD2 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -462,14 +421,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				065B902216848C720072FCD2 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		065B904216848D3E0072FCD2 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				065B904316848D3E0072FCD2 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -492,12 +443,20 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					CC_TARGET_OS_IPHONE,
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../src\"",
+					"\"$(SRCROOT)/../../lib/cocos2d-x/cocos2dx\"",
+					"\"$(SRCROOT)/../../lib/cocos2d-x/cocos2dx/include\"",
+					"\"$(SRCROOT)/../../lib/cocos2d-x/cocos2dx/platform/ios\"",
+					"\"$(SRCROOT)/../../lib/cocos2d-x/cocos2dx/kazmath/include\"",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -516,9 +475,17 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = CC_TARGET_OS_IPHONE;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../src\"",
+					"\"$(SRCROOT)/../../lib/cocos2d-x/cocos2dx\"",
+					"\"$(SRCROOT)/../../lib/cocos2d-x/cocos2dx/include\"",
+					"\"$(SRCROOT)/../../lib/cocos2d-x/cocos2dx/platform/ios\"",
+					"\"$(SRCROOT)/../../lib/cocos2d-x/cocos2dx/kazmath/include\"",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
@@ -530,9 +497,6 @@
 		065B903316848C720072FCD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "mvcgraphics/mvcgraphics-Prefix.pch";
-				INFOPLIST_FILE = "mvcgraphics/mvcgraphics-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -541,44 +505,8 @@
 		065B903416848C720072FCD2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "mvcgraphics/mvcgraphics-Prefix.pch";
-				INFOPLIST_FILE = "mvcgraphics/mvcgraphics-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		065B904D16848D3F0072FCD2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		065B904E16848D3F0072FCD2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -586,8 +514,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/mvcgraphics.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "mvcgraphics/mvcgraphics-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -598,11 +524,41 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/mvcgraphics.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "mvcgraphics/mvcgraphics-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		065BB0E21684A1FE0072FCD2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"GTEST_HAS_RTTI=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../lib/googletest/include\"";
+			};
+			name = Debug;
+		};
+		065BB0E31684A1FE0072FCD2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "GTEST_HAS_RTTI=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../lib/googletest/include\"";
 			};
 			name = Release;
 		};
@@ -627,20 +583,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		065B904C16848D3F0072FCD2 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				065B904D16848D3F0072FCD2 /* Debug */,
-				065B904E16848D3F0072FCD2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		065B90C2168491B60072FCD2 /* Build configuration list for PBXNativeTarget "mvcgraphics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				065B90C3168491B60072FCD2 /* Debug */,
 				065B90C4168491B60072FCD2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		065BB0E11684A1FE0072FCD2 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				065BB0E21684A1FE0072FCD2 /* Debug */,
+				065BB0E31684A1FE0072FCD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};

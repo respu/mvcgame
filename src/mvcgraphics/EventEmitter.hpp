@@ -9,7 +9,6 @@
 #ifndef hydra_EventEmitter_hpp
 #define hydra_EventEmitter_hpp
 
-#include <boost/function.hpp>
 #include <vector>
 
 namespace mvcgraphics {

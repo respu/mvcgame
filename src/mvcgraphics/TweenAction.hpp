@@ -12,6 +12,7 @@
 #include <mvcgraphics/Easing.hpp>
 #include <mvcgraphics/IAction.hpp>
 #include <mvcgraphics/Geometry.hpp>
+#include <functional>
 
 namespace mvcgraphics {
  
@@ -23,7 +24,7 @@ namespace mvcgraphics {
 	class TweenAction : public IAction
 	{
 	public:
-		typedef boost::function<void(IView& view)> Function;
+		typedef std::function<void(IView& view)> Function;
 	private:
 		Function _complete;
 		Function _animate;

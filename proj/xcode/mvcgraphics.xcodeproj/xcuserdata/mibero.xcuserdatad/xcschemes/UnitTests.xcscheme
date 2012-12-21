@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "065B903B16848D3E0072FCD2"
-               BuildableName = "UnitTests.bundle"
+               BlueprintIdentifier = "065BB0D91684A1FE0072FCD2"
+               BuildableName = "UnitTests"
                BlueprintName = "UnitTests"
                ReferencedContainer = "container:mvcgraphics.xcodeproj">
             </BuildableReference>

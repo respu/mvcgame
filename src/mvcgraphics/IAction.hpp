@@ -10,6 +10,7 @@
 #define hydra_IAction_hpp
 
 #include <mvcgraphics/Time.hpp>
+#include <mvcgraphics/IView.hpp>
 
 namespace mvcgraphics {
     

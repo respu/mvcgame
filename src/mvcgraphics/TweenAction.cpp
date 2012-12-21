@@ -8,7 +8,7 @@
 
 #include <mvcgraphics/TweenAction.hpp>
 #include <mvcgraphics/View.hpp>
-#include <boost/bind.hpp>
+#include <functional>
 
 namespace mvcgraphics {
 
@@ -17,7 +17,7 @@ namespace mvcgraphics {
 	{
 		if(_easing == NULL)
 		{
-			_easing = boost::bind(&Easing::linear, _1, _2, _3);
+			_easing = std::bind(&Easing::linear, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 		}
 	}
     
