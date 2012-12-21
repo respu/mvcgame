@@ -1,0 +1,5 @@
+//
+// Prefix header for all source files of the 'UnitTests' target in the 'UnitTests' project
+//
+
+#include <CoreFoundation/CoreFoundation.h>
