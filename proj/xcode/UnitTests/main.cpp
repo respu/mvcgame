@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Social Point. All rights reserved.
 //
 
-#include <iostream>
 #include "tests.hpp"
 
 int main(int argc, const char * argv[])
@@ -14,4 +13,3 @@ int main(int argc, const char * argv[])
     runAllTests();
     return 0;
 }
-
