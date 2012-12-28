@@ -1,13 +1,13 @@
 //
 //  TextureFrame.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef __hydra__TextureFrame__
-#define __hydra__TextureFrame__
+#ifndef mvcgame_TextureFrame_hpp
+#define mvcgame_TextureFrame_hpp
 
 #include <mvcgame/Geometry.hpp>
 #include <mvcgame/ITexture.hpp>

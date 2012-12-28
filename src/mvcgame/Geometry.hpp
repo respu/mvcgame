@@ -1,13 +1,13 @@
 //
 //  Geometry.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_Geometry_hpp
-#define hydra_Geometry_hpp
+#ifndef mvcgame_Geometry_hpp
+#define mvcgame_Geometry_hpp
 
 namespace mvcgame {
     

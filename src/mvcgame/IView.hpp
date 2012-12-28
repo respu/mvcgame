@@ -1,13 +1,13 @@
 //
 //  IView.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_IView_hpp
-#define hydra_IView_hpp
+#ifndef mvcgame_IView_hpp
+#define mvcgame_IView_hpp
 
 #include <mvcgame/IResponder.hpp>
 

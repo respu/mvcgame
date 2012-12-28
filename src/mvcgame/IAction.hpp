@@ -1,13 +1,13 @@
 //
 //  IAction.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_IAction_hpp
-#define hydra_IAction_hpp
+#ifndef mvcgame_IAction_hpp
+#define mvcgame_IAction_hpp
 
 #include <mvcgame/Time.hpp>
 #include <mvcgame/IView.hpp>

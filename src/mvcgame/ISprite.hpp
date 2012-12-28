@@ -1,13 +1,13 @@
 //
 //  ISprite.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_ISprite_hpp
-#define hydra_ISprite_hpp
+#ifndef mvcgame_ISprite_hpp
+#define mvcgame_ISprite_hpp
 
 #include <mvcgame/IView.hpp>
 

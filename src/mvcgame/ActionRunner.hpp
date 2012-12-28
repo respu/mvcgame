@@ -1,13 +1,13 @@
 //
 //  ActionRunner.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_ActionRunner_hpp
-#define hydra_ActionRunner_hpp
+#ifndef mvcgame_ActionRunner_hpp
+#define mvcgame_ActionRunner_hpp
 
 #include <mvcgame/Time.hpp>
 #include <mvcgame/IAction.hpp>

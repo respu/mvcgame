@@ -1,6 +1,6 @@
 //
 //  ViewController.cpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //

@@ -1,13 +1,13 @@
 //
 //  ViewController.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_ViewController_hpp
-#define hydra_ViewController_hpp
+#ifndef mvcgame_ViewController_hpp
+#define mvcgame_ViewController_hpp
 
 #include <mvcgame/IResponder.hpp>
 #include <mvcgame/ActionRunner.hpp>

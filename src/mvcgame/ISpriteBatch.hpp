@@ -1,13 +1,13 @@
 //
 //  ISpriteBatch.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_ISpriteBatch_hpp
-#define hydra_ISpriteBatch_hpp
+#ifndef mvcgame_ISpriteBatch_hpp
+#define mvcgame_ISpriteBatch_hpp
 
 #include <mvcgame/IView.hpp>
 

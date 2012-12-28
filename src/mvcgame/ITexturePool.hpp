@@ -1,13 +1,13 @@
 //
 //  ITexturePool.h
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef __hydra__ITexturePool__
-#define __hydra__ITexturePool__
+#ifndef mvcgame_ITexturePool_hpp
+#define mvcgame_ITexturePool_hpp
 
 #include <mvcgame/ITexture.hpp>
 

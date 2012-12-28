@@ -1,28 +1,28 @@
 //
-//  PlatformView.cpp
-//  hydra
+//  View.cpp
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#include <mvcgame/platform/cocos2dx/PlatformView.hpp>
+#include <mvcgame/platform/cocos2dx/View.hpp>
 #include <mvcgame/Geometry.hpp>
 
 namespace mvcgame {
 
-	PlatformView::PlatformView(cocos2d::CCNode* node) : _node(node)
+	View::View(cocos2d::CCNode* node) : _node(node)
 	{
 		setNode(node);
 	}
 
-    PlatformView::PlatformView()
+    View::View()
     {
     	_node = new cocos2d::CCNode();
     	setNode(_node);
     }
 
-    PlatformView::~PlatformView()
+    View::~View()
     {
     	CC_SAFE_RELEASE(_node);
     	Children::const_iterator itr;
@@ -32,7 +32,7 @@ namespace mvcgame {
     	}
     }
 
-    void  PlatformView::setNode(cocos2d::CCNode* node)
+    void  View::setNode(cocos2d::CCNode* node)
     {
     	_node = node;
     	const cocos2d::CCSize& size = node->getContentSize();
@@ -43,43 +43,43 @@ namespace mvcgame {
         View::setAnchor(Anchor(a.x, a.y));
     }
 
-    void PlatformView::setFrame(const Rect& rect)
+    void View::setFrame(const Rect& rect)
     {
     	View::setFrame(rect);
     	_node->setPosition(cocos2d::CCPointMake(rect.origin.x, rect.origin.y));
     	_node->setContentSize(cocos2d::CCSizeMake(rect.size.width, rect.size.height));
     }
 
-    void PlatformView::setRotation(const Rotation& r)
+    void View::setRotation(const Rotation& r)
     {
     	View::setRotation(r);
     	_node->setRotation(r.x);    	
     }
 
-    void PlatformView::setScale(const Scale& s)
+    void View::setScale(const Scale& s)
     {
     	setScale(s);
     	_node->setScaleX(s.x);
     	_node->setScaleY(s.y);
     }
 
-    void PlatformView::setAnchor(const Anchor& a)
+    void View::setAnchor(const Anchor& a)
     {
         setAnchor(a);
         _node->setAnchorPoint(cocos2d::CCPointMake(a.x, a.y));
     }
     
-    void PlatformView::addChild(IView* child, unsigned layer)
+    void View::addChild(IView* child, unsigned layer)
     {
         View::addChild(child);
-        PlatformView* pchild = static_cast<PlatformView*>(child);
+        View* pchild = static_cast<View*>(child);
     	_node->addChild(pchild->_node, layer);
     }
 
-    void PlatformView::removeChild(IView* child)
+    void View::removeChild(IView* child)
     {
     	View::removeChild(child);
-        PlatformView* pchild = static_cast<PlatformView*>(child);
+        View* pchild = static_cast<View*>(child);
         _node->removeChild(pchild->_node, true);
     }
 

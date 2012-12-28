@@ -1,10 +1,13 @@
 //
 //  IViewMask.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
+
+#ifndef mvcgame_IViewMask_hpp
+#define mvcgame_IViewMask_hpp
 
 namespace mvcgame {
 
@@ -14,3 +17,5 @@ namespace mvcgame {
 		virtual contains(const Point& point) = 0;
 	};
 }
+
+#endif

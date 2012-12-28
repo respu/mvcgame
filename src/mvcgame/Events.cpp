@@ -1,6 +1,6 @@
 //
 //  Events.cpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 19/12/12.
 //

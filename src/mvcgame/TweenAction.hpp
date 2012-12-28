@@ -1,13 +1,13 @@
 //
 //  TweenAction.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_TweenAction_hpp
-#define hydra_TweenAction_hpp
+#ifndef mvcgame_TweenAction_hpp
+#define mvcgame_TweenAction_hpp
 
 #include <mvcgame/Easing.hpp>
 #include <mvcgame/IAction.hpp>

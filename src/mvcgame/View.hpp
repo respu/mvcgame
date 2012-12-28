@@ -1,58 +1,8 @@
-//
-//  View.hpp
-//  hydra
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
+#ifndef mvcgame_View_hpp
+#define mvcgame_View_hpp
 
-#ifndef hydra_View_hpp
-#define hydra_View_hpp
-
-#include <mvcgame/IView.hpp>
-#include <mvcgame/Geometry.hpp>
-
-namespace mvcgame {
-
-    /**
-     * This is a basic view class that doesn't draw anything
-     * Can be used by the different platforms to inherit from.
-     */
-    class View : public IView
-    {
-    private:
-        IView::Children _children;
-        Rect _frame;
-        Scale _scale;        
-        Anchor _anchor;
-        Rotation _rotation;
-
-    protected:
-        IView::Children::iterator findChild(IView* child);
-    public:
-        View();
-        View(const IView& view);
-        View(const Rect& f, const Scale& s, const Anchor& a, const Rotation& r);
-        virtual ~View();
-
-        virtual void draw();
-
-        virtual const Rect& getFrame() const;
-        virtual void setFrame(const Rect& rect);
-        
-        virtual const Rotation& getRotation() const;
-        virtual void setRotation(const Rotation& r);
-        
-        virtual const Scale& getScale() const;
-        virtual void setScale(const Scale& s);
-
-        virtual const Anchor& getAnchor() const;
-        virtual void setAnchor(const Anchor& a);        
-        
-        virtual void addChild(IView* child, unsigned layer=0);
-        virtual void removeChild(IView* child);
-        
-    };
-}
+#ifdef MVCGAME_PLATFORM_COCOS2DX
+#include <mvcgame/platform/cocos2dx/View.hpp>
+#endif
 
 #endif

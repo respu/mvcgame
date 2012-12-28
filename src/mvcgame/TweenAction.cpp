@@ -1,13 +1,13 @@
 //
 //  TweenAction.cpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
 #include <mvcgame/TweenAction.hpp>
-#include <mvcgame/View.hpp>
+#include <mvcgame/BaseView.hpp>
 #include <functional>
 
 namespace mvcgame {
@@ -53,8 +53,8 @@ namespace mvcgame {
 		if(p == 0)
 		{
 			// obtain the end view properties
-			_start = new View(view);
-			_end = new View(view);
+			_start = new BaseView(view);
+			_end = new BaseView(view);
 			_animate(*_end);
 		}
 

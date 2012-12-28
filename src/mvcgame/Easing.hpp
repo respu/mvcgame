@@ -1,13 +1,13 @@
 //
 //  Easing.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_Easing_hpp
-#define hydra_Easing_hpp
+#ifndef mvcgame_Easing_hpp
+#define mvcgame_Easing_hpp
 
 #include <functional>
 #include <math.h>

@@ -1,13 +1,13 @@
 //
 //  Events.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef __hydra__Events__
-#define __hydra__Events__
+#ifndef mvcgame_Events_hpp
+#define mvcgame_Events_hpp
 
 #include <mvcgame/Geometry.hpp>
 #include <mvcgame/Time.hpp>

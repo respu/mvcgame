@@ -1,21 +1,21 @@
 //
-//  PlatformView.hpp
-//  hydra
+//  View.hpp
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_PlatformView_hpp
-#define hydra_PlatformView_hpp
+#ifndef mvcgame_View_hpp
+#define mvcgame_View_hpp
 
-#include <mvcgame/View.hpp>
+#include <mvcgame/BaseView.hpp>
 #include <mvcgame/Geometry.hpp>
-#include "base_nodes/CCNode.h"
+#include <cocos2dx/base_nodes/CCNode.h>
 
 namespace mvcgame {
   
-    class PlatformView : public View
+    class View : public BaseView
     {
     private:
         IView::Children _children;
@@ -23,9 +23,9 @@ namespace mvcgame {
 
         void setNode(cocos2d::CCNode* node);
     public:
-        PlatformView(cocos2d::CCNode* node);
-        PlatformView();
-        ~PlatformView();
+        View(cocos2d::CCNode* node);
+        View();
+        ~View();
 
         void setFrame(const Rect& rect);
         void setRotation(const Rotation& r);

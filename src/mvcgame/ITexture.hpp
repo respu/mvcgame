@@ -1,13 +1,13 @@
 //
 //  ITexture.h
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef __hydra__ITexture__
-#define __hydra__ITexture__
+#ifndef mvcgame_ITexture_hpp
+#define mvcgame_ITexture_hpp
 
 #include <mvcgame/Geometry.hpp>
 

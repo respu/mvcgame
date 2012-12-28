@@ -1,13 +1,13 @@
 //
 //  Time.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_Time_hpp
-#define hydra_Time_hpp
+#ifndef mvcgame_Time_hpp
+#define mvcgame_Time_hpp
 
 #include <mvcgame/Geometry.hpp>
 #include <stdint.h>

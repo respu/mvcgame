@@ -1,13 +1,13 @@
 //
 //  IResponder.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_IResponder_hpp
-#define hydra_IResponder_hpp
+#ifndef mvcgame_IResponder_hpp
+#define mvcgame_IResponder_hpp
 
 #include <mvcgame/Events.hpp>
 

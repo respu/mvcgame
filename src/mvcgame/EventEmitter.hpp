@@ -1,13 +1,13 @@
 //
 //  EventEmitter.hpp
-//  hydra
+//  mvcgame
 //
 //  Created by Miguel Ibero on 29/11/12.
 //
 //
 
-#ifndef hydra_EventEmitter_hpp
-#define hydra_EventEmitter_hpp
+#ifndef mvcgame_EventEmitter_hpp
+#define mvcgame_EventEmitter_hpp
 
 #include <vector>
 
