@@ -38,24 +38,13 @@ namespace mvcgame {
 		{
 		}
 
-        static constexpr easing_t Pi()
-        {
-        	return 3.1415926535897932384626433832795028841971693993751;
-        }
+        static const easing_t Pi;
 
 	public:
 		typedef std::function<easing_t(easing_t p, easing_t b, easing_t c)> Function;
 
-		static easing_t linear(easing_t p, easing_t b, easing_t c)
-		{
-			return c*p + b;
-		}
-
-		static easing_t swing(easing_t p, easing_t b, easing_t c)
-		{
-			p = 0.5 - cosf( p*Pi() ) / 2;
-			return linear(p, b, c);
-		}
+		static easing_t linear(easing_t p, easing_t b, easing_t c);
+		static easing_t swing(easing_t p, easing_t b, easing_t c);
 	};
 }
 

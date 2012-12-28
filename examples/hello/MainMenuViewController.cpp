@@ -1,4 +1,0 @@
-
-#include "hello/MainMenuViewController.hpp"
-
-

@@ -1,7 +1,7 @@
 
 
 #include <mvcgame/platform/cocos2dx/Application.hpp>
-#include <mvcgame/ViewController.hpp>
+#include <mvcgame/controller/ViewController.hpp>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -48,6 +48,10 @@ namespace mvcgame {
 		    cocos2d::CCDirector::sharedDirector()->startAnimation();
 		}
 	};
+
+	Application::Application()	
+	{
+	}
 
 	Application::~Application()
 	{

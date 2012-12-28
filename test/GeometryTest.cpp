@@ -198,12 +198,12 @@ TEST(Geometry, rotation) {
     ASSERT_FLOAT_EQ(0, r.x);
     ASSERT_FLOAT_EQ(0, r.y);
     
-    r = Rotation(Rotation::Pi());
+    r = Rotation(Rotation::Pi);
     
     ASSERT_FLOAT_EQ(3.141592, r.x);
     ASSERT_FLOAT_EQ(3.141592, r.y);
     
-    r += Rotation::Pi()*2;
+    r += Rotation::Pi*2;
     
     ASSERT_FLOAT_EQ(3.141592, r.x);
     ASSERT_FLOAT_EQ(3.141592, r.y);

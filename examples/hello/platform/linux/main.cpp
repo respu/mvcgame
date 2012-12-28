@@ -1,6 +1,6 @@
 
 #include "hello/platform/linux/main.h"
-#include "hello/MainMenuViewController.hpp"
+#include "hello/controller/MainMenuViewController.hpp"
 #include <mvcgame/Application.hpp>
 
 int main(int argc, char **argv)

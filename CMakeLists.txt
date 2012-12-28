@@ -120,9 +120,20 @@ enDif()
 
 # library
 include_directories(src)
-aux_source_directory(src/mvcgame MVCGAME_SOURCES)
+set(MVCGAME_SOURCE_DIR "src/mvcgame")
+file(GLOB MVCGAME_SOURCES
+	"${MVCGAME_SOURCE_DIR}/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/action/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/controller/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/event/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/model/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/texture/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/view/*.cpp"
+) 
 if("${LIBRARY}" STREQUAL "cocos2dx")
-	aux_source_directory(src/mvcgame/platform/cocos2dx MVCGAME_PLATFORM_SOURCES)
+	file(GLOB_RECURSE MVCGAME_PLATFORM_SOURCES
+		"${MVCGAME_SOURCE_DIR}/platform/cocos2dx/*.cpp"
+	)
 	set(LIBRARY_COMPILE_FLAGS "-DLINUX")
 endif()
 add_library(mvcgame ${MVCGAME_SOURCES} ${MVCGAME_PLATFORM_SOURCES})
@@ -133,10 +144,21 @@ target_link_libraries(mvcgame cocos2dx)
 include_directories(examples)
 
 # examples: hello
+set(MVCGAME_EXAMPLE_HELLO_SOURCE_DIR "examples/hello")
+file(GLOB MVCGAME_EXAMPLE_HELLO_SOURCES
+	"${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/*.cpp"
+	"${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/action/*.cpp"
+	"${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/controller/*.cpp"
+	"${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/event/*.cpp"
+	"${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/model/*.cpp"
+	"${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/texture/*.cpp"
+	"${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/view/*.cpp"
+) 
 if("${PLATFORM}" STREQUAL "linux")
-	add_executable(hello examples/hello/platform/linux/main.cpp)
+	set(MVCGAME_EXAMPLE_HELLO_PLATFORM_SOURCES "${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/platform/linux/main.cpp")
 endif()
 
+add_executable(hello ${MVCGAME_EXAMPLE_HELLO_SOURCES} ${MVCGAME_EXAMPLE_HELLO_PLATFORM_SOURCES})
 target_link_libraries(hello mvcgame)
 
 # unit tests

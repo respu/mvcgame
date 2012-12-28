@@ -1,4 +1,6 @@
 
+#ifndef mvcgame_cocos2dx_Application_hpp
+#define mvcgame_cocos2dx_Application_hpp
 
 #include <mvcgame/IApplication.hpp>
 
@@ -9,8 +11,11 @@ namespace mvcgame {
     private:
     	ViewController* _root;
     public:
-		virtual ~Application();
-		virtual void run();
-		virtual void setRootViewController(ViewController* root);
+    	Application();
+		~Application();
+		void run();
+		void setRootViewController(ViewController* root);
     };
 }
+
+#endif
