@@ -1,5 +1,3 @@
-
-
 #include <mvcgame/platform/cocos2dx/Application.hpp>
 #include <mvcgame/controller/ViewController.hpp>
 #include <mvcgame/view/BaseView.hpp>
@@ -41,11 +39,13 @@ namespace mvcgame {
 		    return true;
 		}
 
-		void applicationDidEnterBackground() {
+		void applicationDidEnterBackground()
+		{
 		    cocos2d::CCDirector::sharedDirector()->stopAnimation();
 		}
 
-		void applicationWillEnterForeground() {
+		void applicationWillEnterForeground()
+		{
 		    cocos2d::CCDirector::sharedDirector()->startAnimation();
 		}
 	};
@@ -56,26 +56,18 @@ namespace mvcgame {
 
 	Application::~Application()
 	{
-		if(_rootController != nullptr)
-		{
-			delete _rootController;
-		}
-		if(_appController != nullptr)
-		{
-			delete _appController;
-		}
 	}
 
-	void Application::setRootViewController(ViewController* root)
+	void Application::setRootViewController(IViewControllerPtr root)
 	{
-		if(_rootController != nullptr)
+		if(_appController == nullptr)
 		{
-			delete _rootController;
-		}		
-		_rootController = root;
-		if(_appController != nullptr)
+			_rootController = std::move(root);
+		}
+		else
 		{
-			_appController->addChild(root);
+			_appController->clearChildren();
+			_appController->addChild(std::move(root));
 		}
 	}
 
@@ -105,14 +97,14 @@ namespace mvcgame {
 	    cocos2d::CCApplication::sharedApplication()->run();
 
 	    // setup fake app controller
-	    _appController = new ViewController();
-	    BaseView* appView = new BaseView();
+	    _appController = IViewControllerPtr(new ViewController());
+	    IViewPtr appView(new BaseView());
 	    appView->setFrame(Rect(Point(), _size));
-	    _appController->setView(appView);
+	    _appController->setView(std::move(appView));
 
 	    if(_rootController != nullptr)
 	    {
-	    	_appController->addChild(_rootController);
+	    	_appController->addChild(std::move(_rootController));
 	    }
 	}
 

@@ -12,6 +12,7 @@
 #include <mvcgame/Time.hpp>
 
 #include <vector>
+#include <memory>
 
 namespace mvcgame {
 
@@ -19,6 +20,8 @@ namespace mvcgame {
     class IView;
     class UpdateEvent;
     class RunningAction;
+    typedef std::unique_ptr<IAction> IActionPtr;
+    typedef std::unique_ptr<RunningAction> RunningActionPtr;        
 
     /**
      * Represents a running action
@@ -26,11 +29,11 @@ namespace mvcgame {
     class RunningAction final
     {
     public:
-        IAction* action;
+        IActionPtr action;
         Time start;
         Duration duration;
 
-        RunningAction(IAction* paction, const Time& pstart, const Duration& pduration);
+        RunningAction(IActionPtr paction, const Time& pstart, const Duration& pduration);
         ~RunningAction();
     };
 
@@ -40,7 +43,7 @@ namespace mvcgame {
     class ActionRunner
     {
     public:
-        typedef std::vector<RunningAction> ActionList;       
+        typedef std::vector<RunningActionPtr> ActionList;       
     private:
         ActionList _actions;
     public:
@@ -50,8 +53,8 @@ namespace mvcgame {
 
         void clear();
         
-        void add(IAction* action);
-        void add(IAction* action, const Duration& duration);
+        void add(IActionPtr action);
+        void add(IActionPtr action, const Duration& duration);
         
         void remove(const IAction& action);
 

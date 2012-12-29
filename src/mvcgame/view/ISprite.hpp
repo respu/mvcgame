@@ -20,10 +20,6 @@ namespace mvcgame {
     public:
         const ITexture& getTexture() const;
         
-        /**
-         * The texture should not be deleted
-         * as many sprites can use the same one
-         */
         void setTexture(const ITexture& texture);
 
         const Anchor& getAnchor() const;

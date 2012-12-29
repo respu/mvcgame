@@ -3,10 +3,13 @@
 #ifndef mvcgame_IApplication_hpp
 #define mvcgame_IApplication_hpp
 
+#include <memory>
+
 namespace mvcgame {
 
-	class ViewController;
+	class IViewController;
 	class Size;
+	typedef std::unique_ptr<IViewController> IViewControllerPtr;
 
 	class IApplication
 	{
@@ -14,7 +17,7 @@ namespace mvcgame {
 		virtual ~IApplication(){}
 		virtual void run() = 0;
 		virtual void setSize(const Size& size) = 0;
-		virtual void setRootViewController(ViewController* root) = 0;
+		virtual void setRootViewController(IViewControllerPtr root) = 0;
 	};
 }
 

@@ -10,12 +10,15 @@
 #define mvcgame_TweenAction_hpp
 
 #include <mvcgame/Easing.hpp>
-#include <mvcgame/action/IAction.hpp>
 #include <mvcgame/Geometry.hpp>
+#include <mvcgame/action/IAction.hpp>
 
 #include <functional>
 
 namespace mvcgame {
+
+    class IView;
+    typedef std::unique_ptr<IView> IViewPtr;	
  
  	/**
  	 * This action will tween a view from the current
@@ -29,8 +32,8 @@ namespace mvcgame {
 		Function _animate;		
 		Function _complete;
 		Easing::Function _easing;
-		IView* _start;
-		IView* _end;
+		IViewPtr _start;
+		IViewPtr _end;
 
 		float ease(float p, float b, float c);
 	public:

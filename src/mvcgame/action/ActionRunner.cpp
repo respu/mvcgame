@@ -15,14 +15,13 @@
 
 namespace mvcgame {
 
-    RunningAction::RunningAction(IAction* paction, const Time& pstart, const Duration& pduration) :
-    action(paction), start(pstart), duration(pduration) 
+    RunningAction::RunningAction(IActionPtr paction, const Time& pstart, const Duration& pduration) :
+    action(std::move(paction)), start(pstart), duration(pduration) 
     {
     }
 
     RunningAction::~RunningAction()
     {
-        delete action;
     }
 
 	ActionRunner::ActionRunner()
@@ -33,20 +32,21 @@ namespace mvcgame {
 	{
 	}
 
-    void ActionRunner::add(IAction* action)
+    void ActionRunner::add(IActionPtr action)
     {
-        add(action, Duration());
+        add(std::move(action), Duration());
     }
     
-    void ActionRunner::add(IAction* action, const Duration& duration)
+    void ActionRunner::add(IActionPtr action, const Duration& duration)
     {
-        _actions.push_back(RunningAction(action, Time(), duration));
+        _actions.push_back(RunningActionPtr(new RunningAction(std::move(action), Time(), duration)));
     }
 
     void ActionRunner::remove(const IAction& action)
     {
-        std::remove_if(_actions.begin(), _actions.end(), [&action](const RunningAction& running){
-            return running.action == &action;
+        std::remove_if(_actions.begin(), _actions.end(), [&action](const RunningActionPtr& running)
+        {
+            return running->action.get() == &action;
         });
     }
 
@@ -57,29 +57,30 @@ namespace mvcgame {
 
     void ActionRunner::update(IView& view, UpdateEvent& event)
     {
-        for(RunningAction& running : _actions)
+        for(RunningActionPtr& running : _actions)
         {
-            if(!running.start)
+            if(!running->start)
             {
-                running.start = event.getTime();
+                running->start = event.getTime();
             }
-            Duration passed = event.getTime() - Time(running.start);
+            Duration passed = event.getTime() - Time(running->start);
             float proportion = 1.0f;
-            if(running.duration)
+            if(running->duration)
             {
-                proportion = passed/running.duration;
+                proportion = passed/running->duration;
             }
-            running.action->update(view, proportion);
+            running->action->update(view, proportion);
             if(proportion >= 1.0f)
             {
                 // mark all finished actions with duration 0
-                running.duration = Duration();
+                running->duration = Duration();
             }
         }
 
         // remove all actions with duration 0
-        std::remove_if(_actions.begin(), _actions.end(), [](const RunningAction& running){
-            return !running.duration;
+        std::remove_if(_actions.begin(), _actions.end(), [](const RunningActionPtr& running)
+        {
+            return !running->duration;
         });
     }
 

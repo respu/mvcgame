@@ -12,13 +12,13 @@ MainMenuViewController::MainMenuViewController()
 void MainMenuViewController::controllerAdded()
 {
 	mvcgame::ColorView* view = new mvcgame::ColorView();
-	setView(view);
 	view->setBackgroundColor(mvcgame::Color::Red);	
 	view->setFrame(getParent().getView().getFrame());
+	setView(mvcgame::IViewPtr(view));	
 
 	mvcgame::TextView* label = new mvcgame::TextView();
-	view->addChild(label);
 	label->setText("mvcgame test");
 	label->setTextColor(mvcgame::Color::White);
 	label->setTextSize(20);
+	view->addChild(mvcgame::IViewPtr(label));	
 }

@@ -23,8 +23,6 @@ namespace mvcgame {
     
     TweenAction::~TweenAction()
     {
-    	delete _start;
-    	delete _end;
     }
 
 	void TweenAction::setEasing(const Easing::Function& easing)
@@ -47,8 +45,8 @@ namespace mvcgame {
 		if(p == 0)
 		{
 			// obtain the end view properties
-			_start = new BaseView(view);
-			_end = new BaseView(view);
+			_start = IViewPtr(new BaseView(view));
+			_end = IViewPtr(new BaseView(view));
 			_animate(*_end);
 		}
 

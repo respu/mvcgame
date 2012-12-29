@@ -10,15 +10,15 @@ namespace mvcgame {
     class Application : public IApplication
     {
     private:
-        ViewController* _appController;
-    	ViewController* _rootController;
+        IViewControllerPtr _appController;
+    	IViewControllerPtr _rootController;
         Size _size;
     public:
     	Application();
 		~Application();
 		void run();
         void setSize(const Size& size);
-		void setRootViewController(ViewController* root);
+		void setRootViewController(IViewControllerPtr root);
     };
 }
 

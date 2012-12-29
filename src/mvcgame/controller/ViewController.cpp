@@ -23,10 +23,6 @@ namespace mvcgame {
         removeFromParent();
     	clearChildren();
         clearActions();
-        if(_view != nullptr)
-        {
-            delete _view;
-        }
     }
 
     void ViewController::removeFromParent()
@@ -38,27 +34,23 @@ namespace mvcgame {
         }
     }
 
-    void ViewController::setParent(ViewController& parent)
+    void ViewController::setParent(IViewController& parent)
     {
         _parent = &parent;
     }
 
-    ViewController& ViewController::getParent()
+    IViewController& ViewController::getParent()
     {
         return *_parent;
     }
 
-    const ViewController& ViewController::getParent() const
+    const IViewController& ViewController::getParent() const
     {
         return *_parent;
     }
 
     void ViewController::clearChildren()
     {
-        for(const ViewController* child : _children)
-        {
-            delete child;
-        }
         _children.clear();
     }
 
@@ -67,13 +59,9 @@ namespace mvcgame {
         _actions.clear();
     }
 
-    void ViewController::setView(IView* view)
+    void ViewController::setView(IViewPtr view)
     {
-        if(_view != nullptr)
-        {
-            delete _view;
-        }
-        _view = view;
+        _view = std::move(view);
     }
         
     const IView& ViewController::getView() const
@@ -86,51 +74,38 @@ namespace mvcgame {
     	return *_view;
     }
  
-    void ViewController::addChild(ViewController* child)
+    void ViewController::addChild(IViewControllerPtr child)
     {
         child->setParent(*this);
-    	_children.push_back(child);
-        if(_view != nullptr)
-        {
-            _view->addChild(&child->getView());
-        }
+    	_children.push_back(std::move(child));
         child->controllerAdded();
     }
 
-    void ViewController::removeChild(const ViewController& child)
+    void ViewController::removeChild(const IViewController& child)
     {
-        std::remove_if(_children.begin(), _children.end(), [&child](const ViewController* elm){
-            return elm == &child;
+        std::remove_if(_children.begin(), _children.end(), [&child](const std::unique_ptr<IViewController>& elm)
+        {
+            return elm.get() == &child;
         });
     }
 
-    const ViewController::ChildrenList& ViewController::getChildren() const
+    const IViewController::ChildrenList& ViewController::getChildren() const
     {
         return _children;
     }
 
-    ViewController::ChildrenList& ViewController::getChildren()
+    IViewController::ChildrenList& ViewController::getChildren()
     {
         return _children;
     }
     
-    void ViewController::runAction(IAction* action)
+    void ViewController::runAction(IActionPtr action, const Duration& duration)
     {
-        _actions.add(action);
-    }
-    
-    void ViewController::runAction(IAction* action, const Duration& duration)
-    {
-        _actions.add(action, duration);
+        _actions.add(std::move(action), duration);
     }
 
     void ViewController::updateActions(UpdateEvent& event)
     {
         _actions.update(getView(), event);
-    }
-
-    void ViewController::controllerAdded()
-    {
-
     }
 }

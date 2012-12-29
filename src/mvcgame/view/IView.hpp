@@ -10,15 +10,17 @@
 #define mvcgame_IView_hpp
 
 #include <mvcgame/event/IResponder.hpp>
+#include <memory>
 
 namespace mvcgame {
 
     class IView;
+    typedef std::unique_ptr<IView> IViewPtr;
 
     class IView : public IResponder
     {
     public:
-        typedef std::pair<IView*,unsigned> ChildWithLayer;
+        typedef std::pair<IViewPtr,unsigned> ChildWithLayer;
         typedef std::vector<ChildWithLayer> Children;
 
         virtual ~IView(){};
@@ -40,10 +42,7 @@ namespace mvcgame {
         virtual const Anchor& getAnchor() const = 0;
         virtual void setAnchor(const Anchor& a) = 0;
 
-        /**
-         * The added children should be deleted when the parent is.
-         */
-        virtual void addChild(IView* child, unsigned layer=0) = 0;
+        virtual void addChild(IViewPtr child, unsigned layer=0) = 0;
         
         virtual void removeChild(const IView& child) = 0;
 

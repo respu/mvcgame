@@ -14,7 +14,7 @@
 
 namespace mvcgame {
 
-    EventEmitter::EventEmitter(ViewController& root) : _root(root)
+    EventEmitter::EventEmitter(IViewController& root) : _root(root)
     {
     }
 
@@ -22,7 +22,7 @@ namespace mvcgame {
     {
     }
 
-    void EventEmitter::emitUpdate(UpdateEvent& event, ViewController& controller)
+    void EventEmitter::emitUpdate(UpdateEvent& event, IViewController& controller)
     {
         controller.respondOnUpdate(event);
         if(event.getStopPropagation())
@@ -35,8 +35,8 @@ namespace mvcgame {
             return;
         }
         
-        ViewController::ChildrenList& children = controller.getChildren();
-        ViewController::ChildrenList::iterator itr;
+        IViewController::ChildrenList& children = controller.getChildren();
+        IViewController::ChildrenList::iterator itr;
         for(itr=children.begin(); itr!=children.end(); ++itr)
         {
             emitUpdate(event, **itr);
@@ -52,7 +52,7 @@ namespace mvcgame {
         controller.updateActions(event);
     }
 
-    void EventEmitter::findTouchResponders(const Point& p, TouchEvent& event, ViewController& controller)
+    void EventEmitter::findTouchResponders(const Point& p, TouchEvent& event, IViewController& controller)
     {
         if(controller.respondToTouchPoint(p, event))
         {
@@ -64,15 +64,15 @@ namespace mvcgame {
             event.addResponder(view);
         }
         
-        ViewController::ChildrenList& children = controller.getChildren();
-        ViewController::ChildrenList::iterator itr;
+        IViewController::ChildrenList& children = controller.getChildren();
+        IViewController::ChildrenList::iterator itr;
         for(itr=children.begin(); itr!=children.end(); ++itr)
         {
             findTouchResponders(p, event, **itr);
         }
     }
 
-    void EventEmitter::findTouchResponders(TouchEvent& event, ViewController& controller)
+    void EventEmitter::findTouchResponders(TouchEvent& event, IViewController& controller)
     {
         TouchEvent::Points::const_iterator itr;
         
@@ -82,7 +82,7 @@ namespace mvcgame {
         }
     }
 
-    void EventEmitter::emitTouchStart(TouchEvent& event, ViewController& controller)
+    void EventEmitter::emitTouchStart(TouchEvent& event, IViewController& controller)
     {
         findTouchResponders(event, _root);
         TouchEvent::Responders& list = event.getResponders();
@@ -97,7 +97,7 @@ namespace mvcgame {
         }
     }
     
-    void EventEmitter::emitTouchEnd(EndTouchEvent &event, ViewController &controller)
+    void EventEmitter::emitTouchEnd(EndTouchEvent &event, IViewController &controller)
     {
         TouchEvent::Responders list = event.getStart().getResponders();
         TouchEvent::Responders::iterator itr;

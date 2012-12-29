@@ -9,55 +9,42 @@
 #ifndef mvcgame_ViewController_hpp
 #define mvcgame_ViewController_hpp
 
-#include <mvcgame/event/IResponder.hpp>
+#include <mvcgame/controller/IViewController.hpp>
 #include <mvcgame/action/ActionRunner.hpp>
 
 namespace mvcgame {
-    
-    class IView;
 
-    class ViewController : public IResponder
+    class ViewController : public IViewController
     {
-    public:
-        typedef std::vector<ViewController*> ChildrenList;
-
     private:
-        ViewController* _parent;
-        ChildrenList _children;
+        IViewController* _parent;
+        IViewController::ChildrenList _children;
         ActionRunner _actions;
-        IView* _view;
-    protected:
+        IViewPtr _view;
     public:
         ViewController();
-
         virtual ~ViewController();
         
         const IView& getView() const;
         IView& getView();
-        void setView(IView* view);
+        void setView(IViewPtr view);
 
-        const ViewController& getParent() const;
-        ViewController& getParent();
-        void setParent(ViewController& parent);
+        const IViewController& getParent() const;
+        IViewController& getParent();
+        void setParent(IViewController& parent);
         
-        void addChild(ViewController* child);
-        void removeChild(const ViewController& child);
+        void addChild(IViewControllerPtr child);
+        void removeChild(const IViewController& child);
 
-        const ChildrenList& getChildren() const;
-        ChildrenList& getChildren();
+        const IViewController::ChildrenList& getChildren() const;
+        IViewController::ChildrenList& getChildren();
 
-        void runAction(IAction* action);
-        void runAction(IAction* action, const Duration& duration);
+        void runAction(IActionPtr action, const Duration& duration);
         void updateActions(UpdateEvent& event);
 
         void clearChildren();
         void clearActions();
         void removeFromParent();
-
-        /**
-         * called after the controller is added to a parent controller
-         */
-        virtual void controllerAdded();
     };
 }
 

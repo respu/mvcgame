@@ -34,7 +34,7 @@ namespace mvcgame {
         void setScale(const Scale& s);
         void setAnchor(const Anchor& a);
         
-        void addChild(IView* child, unsigned layer=0);
+        void addChild(IViewPtr child, unsigned layer=0);
         void removeChild(const IView& child);
     };
     

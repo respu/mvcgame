@@ -65,11 +65,11 @@ namespace mvcgame {
         _node->setAnchorPoint(cocos2d::CCPointMake(a.x, a.y));
     }
     
-    void View::addChild(IView* child, unsigned layer)
+    void View::addChild(IViewPtr child, unsigned layer)
     {
-        View* pchild = static_cast<View*>(child);
+        View* pchild = static_cast<View*>(child.get());
     	_node->addChild(pchild->_node, layer);
-        BaseView::addChild(child);
+        BaseView::addChild(std::move(child));
     }
 
     void View::removeChild(const IView& child)
