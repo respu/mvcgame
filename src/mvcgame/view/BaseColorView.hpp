@@ -11,7 +11,7 @@ namespace mvcgame {
 	class BaseColorView : public IColorView
 	{
 	protected:
-		Color _bgColor = Color::Black;
+		Color _bgColor = Colors::Black;
 	public:
 		virtual void setBackgroundColor(const Color& color);
 	};

@@ -13,6 +13,8 @@ namespace mvcgame {
   
     class TextView : public View, public BaseTextView
     {
+    private:
+        cocos2d::CCLabelTTF* _label;
     public:
         TextView(cocos2d::CCLabelTTF* label);
         TextView();

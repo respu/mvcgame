@@ -1,10 +1,3 @@
-//
-//  ViewController.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_IViewController_hpp
 #define mvcgame_IViewController_hpp
@@ -29,7 +22,8 @@ namespace mvcgame {
         
         virtual const IView& getView() const = 0;
         virtual IView& getView() = 0;
-        virtual void setView(std::unique_ptr<IView> view) = 0;
+
+        virtual void setView(IViewPtr view) = 0;
 
         virtual const IViewController& getParent() const = 0;
         virtual IViewController& getParent() = 0;
@@ -53,12 +47,6 @@ namespace mvcgame {
         virtual void clearActions() = 0;
         virtual void removeFromParent() = 0;
 
-        /**
-         * called after the controller is added to a parent controller
-         */
-        virtual void controllerAdded()
-        {
-        }
     };
 }
 

@@ -3,18 +3,20 @@
 
 namespace mvcgame {
 
-    ColorView::ColorView(cocos2d::CCLayerColor* layer) : View(layer)
+    ColorView::ColorView(cocos2d::CCLayerColor* layer) : View(layer), _layer(layer)
     {
 
     }
 
-    ColorView::ColorView() : View(new cocos2d::CCLayerColor())
+    ColorView::ColorView() : ColorView(new cocos2d::CCLayerColor())
     {
-
+        assert(_layer->init());
     }
 
 	void ColorView::setBackgroundColor(const Color& color)
 	{
+        _layer->setColor(cocos2d::ccc3(color.r,color.g,color.b));
+        _layer->setOpacity((float)color.a/255.0f);
 		BaseColorView::setBackgroundColor(color);
 	}
 }

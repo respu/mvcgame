@@ -12,22 +12,26 @@
 
 namespace mvcgame {
 
-    BaseView::BaseView()
+    BaseView::BaseView() : _parent(nullptr)
     {
     }
 
     BaseView::BaseView(const IView& v) :
-    _frame(v.getFrame()), _scale(v.getScale()), _anchor(v.getAnchor()), _rotation(v.getRotation())
+    BaseView(v.getFrame(), v.getScale(), v.getAnchor(), v.getRotation())
     {
     }
 
     BaseView::BaseView(const Rect& f, const Scale& s, const Anchor& a, const Rotation& r) :
-    _frame(f), _scale(s), _anchor(a), _rotation(r)
+    _parent(nullptr), _frame(f), _scale(s), _anchor(a), _rotation(r)
     {
     }
 
     BaseView::~BaseView()
     {
+        for(ChildWithLayer& child : _children)
+        {
+            child.first->removeFromParent();
+        }
         removeFromParent();
     }
 
@@ -81,9 +85,16 @@ namespace mvcgame {
         _children.push_back(IView::ChildWithLayer(std::move(child), layer));
     }
 
-    void BaseView::removeChild(const IView& child)
+    IViewPtr BaseView::removeChild(const IView& child)
     {
-        _children.erase(findChild(child));
+        IView::Children::iterator itr = findChild(child);
+        if(itr == _children.end())
+        {
+            return IViewPtr();
+        }
+        IViewPtr childPtr = std::move(itr->first);
+        _children.erase(itr);
+        return childPtr;
     }
 
     IView::Children::iterator BaseView::findChild(const IView& child)

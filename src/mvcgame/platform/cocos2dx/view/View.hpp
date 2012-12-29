@@ -25,8 +25,6 @@ namespace mvcgame {
     private:
         IView::Children _children;
         cocos2d::CCNode* _node;
-
-        void setNode(cocos2d::CCNode* node);
     public:
         View(cocos2d::CCNode* node);
         View();
@@ -38,12 +36,12 @@ namespace mvcgame {
         void setAnchor(const Anchor& a);
         
         void addChild(IViewPtr child, unsigned layer=0);
-        void removeChild(const IView& child);
+        IViewPtr removeChild(const IView& child);
         void setParent(IView& parent);
 
-        void addChild(ViewPtr child, unsigned layer=0);
-        void removeChild(const View& child);
-        void setParent(View& parent);        
+        void setNode(cocos2d::CCNode* node);
+        void updateNode(cocos2d::CCNode* node);
+        cocos2d::CCNode* getNode() const;
     };
     
 }

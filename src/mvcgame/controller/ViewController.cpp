@@ -1,29 +1,20 @@
-//
-//  ViewController.cpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #include <mvcgame/controller/ViewController.hpp>
 #include <mvcgame/view/IView.hpp>
 
+#include <assert.h>
 #include <algorithm>
 
 namespace mvcgame {
 
     ViewController::ViewController() : _parent(nullptr), _view(nullptr)
     {
-
     }
 
     ViewController::~ViewController()
     {
         removeFromParent();
-    	clearChildren();
-        clearActions();
-    }
+    }    
 
     void ViewController::removeFromParent()
     {
@@ -36,80 +27,65 @@ namespace mvcgame {
 
     void ViewController::setParent(IViewController& parent)
     {
+        if(_view != nullptr)
+        {
+            if(_parent != nullptr)
+            {
+                // remove view from old parent
+                _parent->getView().removeChild(*_view).release();
+            }
+            parent.getView().addChild(IViewPtr(_view));
+        }
         _parent = &parent;
+        controllerAdded();
     }
 
     IViewController& ViewController::getParent()
     {
+        assert(_parent != nullptr);
         return *_parent;
     }
 
     const IViewController& ViewController::getParent() const
     {
+        assert(_parent != nullptr);
         return *_parent;
-    }
-
-    void ViewController::clearChildren()
-    {
-        _children.clear();
-    }
-
-    void ViewController::clearActions()
-    {
-        _actions.clear();
     }
 
     void ViewController::setView(IViewPtr view)
     {
-        _view = std::move(view);
-        for(IViewControllerPtr& child : _children)
+        assert(_parent != nullptr);
+
+        // set new view pointer
+        IView* oldView = _view;
+        _view = view.get();
+
+        if(oldView != nullptr)
         {
-            child->getView().setParent(*_view);
+            // move all the child controller views to the new view
+            moveChildren(*oldView);
+            // remove the old view from the parent controller view
+            _parent->getView().removeChild(*oldView);
         }
+
+        // add the new view
+        _parent->getView().addChild(std::move(view));
     }
         
     const IView& ViewController::getView() const
     {
-    	return *_view;
+        assert(_view != nullptr);
+        return *_view;
     }
     
     IView& ViewController::getView()
     {
-    	return *_view;
-    }
- 
-    void ViewController::addChild(IViewControllerPtr child)
-    {
-        child->setParent(*this);
-    	_children.push_back(std::move(child));
-        child->controllerAdded();
+        assert(_view != nullptr);
+        return *_view;
     }
 
-    void ViewController::removeChild(const IViewController& child)
+    void ViewController::controllerAdded()
     {
-        std::remove_if(_children.begin(), _children.end(), [&child](const std::unique_ptr<IViewController>& elm)
-        {
-            return elm.get() == &child;
-        });
     }
 
-    const IViewController::ChildrenList& ViewController::getChildren() const
-    {
-        return _children;
-    }
-
-    IViewController::ChildrenList& ViewController::getChildren()
-    {
-        return _children;
-    }
-    
-    void ViewController::runAction(IActionPtr action, const Duration& duration)
-    {
-        _actions.add(std::move(action), duration);
-    }
-
-    void ViewController::updateActions(UpdateEvent& event)
-    {
-        _actions.update(getView(), event);
-    }
 }

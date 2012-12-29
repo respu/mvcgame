@@ -14,7 +14,7 @@ namespace mvcgame {
 		ITextView::HorizontalAlign _textHorizAlign;
 		ITextView::VerticalAlign _textVertiAlign;
 		std::string _text;
-		Color _textColor = Color::White;
+		Color _textColor = Colors::White;
 		std::string _textFont;
 		unsigned short _textSize;
 	public:

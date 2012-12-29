@@ -3,14 +3,14 @@
 
 namespace mvcgame {
 
-    TextView::TextView(cocos2d::CCLabelTTF* label) : View(label)
+    TextView::TextView(cocos2d::CCLabelTTF* label) : View(label), _label(label)
     {
 
     }
 
     TextView::TextView() : View(new cocos2d::CCLabelTTF())
     {
-
+    	assert(_label->init());
     }
 
 	void TextView::setTextHorizontalAlign(ITextView::HorizontalAlign align)

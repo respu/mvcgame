@@ -33,9 +33,7 @@ namespace mvcgame {
 	class Easing
 	{
 	private:
-		Easing()
-		{
-		}
+		Easing(){}
 
 	public:
 

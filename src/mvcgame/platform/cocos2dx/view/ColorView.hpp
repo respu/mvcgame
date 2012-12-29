@@ -13,6 +13,8 @@ namespace mvcgame {
   
     class ColorView : public View, public BaseColorView
     {
+    private:
+    	cocos2d::CCLayerColor* _layer;
     public:
         ColorView(cocos2d::CCLayerColor* layer);
         ColorView();
