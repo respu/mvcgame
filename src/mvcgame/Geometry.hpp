@@ -194,7 +194,7 @@ namespace mvcgame {
         gunit_t x = 0.0f;
         gunit_t y = 0.0f;
 
-        static const gunit_t Pi;
+        static constexpr gunit_t Pi = 3.1415926535897932384626433832795028841971693993751;
         
         Rotation();
         Rotation(gunit_t px);

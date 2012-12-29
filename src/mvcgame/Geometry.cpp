@@ -512,8 +512,6 @@ namespace mvcgame {
         correct();
     }
 
-    const gunit_t Rotation::Pi = 3.1415926535897932384626433832795028841971693993751;
-
     bool Rotation::operator==(const Rotation& r) const
     {
         return guniteq(x, r.x) && guniteq(y, r.y);

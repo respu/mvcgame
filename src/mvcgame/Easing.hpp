@@ -10,7 +10,6 @@
 #define mvcgame_Easing_hpp
 
 #include <functional>
-#include <math.h>
 
 namespace mvcgame {
 
@@ -38,13 +37,14 @@ namespace mvcgame {
 		{
 		}
 
-        static const easing_t Pi;
-
 	public:
+
+        static constexpr easing_t Pi = 3.1415926535897932384626433832795028841971693993751;
+
 		typedef std::function<easing_t(easing_t p, easing_t b, easing_t c)> Function;
 
-		static easing_t linear(easing_t p, easing_t b, easing_t c);
-		static easing_t swing(easing_t p, easing_t b, easing_t c);
+		static constexpr easing_t linear(easing_t p, easing_t b, easing_t c);
+		static constexpr easing_t swing(easing_t p, easing_t b, easing_t c);
 	};
 }
 

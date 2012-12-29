@@ -16,6 +16,9 @@ namespace cocos2d {
 }
 
 namespace mvcgame {
+
+    class View;
+    typedef std::unique_ptr<View> ViewPtr;
   
     class View : public BaseView
     {
@@ -36,6 +39,11 @@ namespace mvcgame {
         
         void addChild(IViewPtr child, unsigned layer=0);
         void removeChild(const IView& child);
+        void setParent(IView& parent);
+
+        void addChild(ViewPtr child, unsigned layer=0);
+        void removeChild(const View& child);
+        void setParent(View& parent);        
     };
     
 }

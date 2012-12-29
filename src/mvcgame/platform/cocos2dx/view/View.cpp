@@ -64,19 +64,41 @@ namespace mvcgame {
         BaseView::setAnchor(a);
         _node->setAnchorPoint(cocos2d::CCPointMake(a.x, a.y));
     }
-    
+
     void View::addChild(IViewPtr child, unsigned layer)
     {
-        View* pchild = static_cast<View*>(child.get());
-    	_node->addChild(pchild->_node, layer);
-        BaseView::addChild(std::move(child));
+        // Can only add cocos2dx implemented views
+        assert(false);
     }
 
     void View::removeChild(const IView& child)
     {
+        // Can only add cocos2dx implemented views
+        assert(false);
+    }
+
+    void View::setParent(IView& parent)
+    {
+        // Can only add cocos2dx implemented views
+        assert(false);
+    }    
+    
+    void View::addChild(ViewPtr child, unsigned layer)
+    {
+    	_node->addChild(child->_node, layer);
+        BaseView::addChild(IViewPtr(child.release()), layer);
+    }
+
+    void View::removeChild(const View& child)
+    {
     	BaseView::removeChild(child);
-        const View& pchild = static_cast<const View&>(child);
-        _node->removeChild(pchild._node, true);
+        _node->removeChild(child._node, true);
+    }
+
+    void View::setParent(View& parent)
+    {
+        BaseView::setParent(parent);
+        _node->setParent(parent._node);
     }
 
 }

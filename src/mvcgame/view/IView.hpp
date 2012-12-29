@@ -43,7 +43,6 @@ namespace mvcgame {
         virtual void setAnchor(const Anchor& a) = 0;
 
         virtual void addChild(IViewPtr child, unsigned layer=0) = 0;
-        
         virtual void removeChild(const IView& child) = 0;
 
         virtual IView& getParent() = 0;

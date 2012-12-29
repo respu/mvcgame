@@ -62,6 +62,10 @@ namespace mvcgame {
     void ViewController::setView(IViewPtr view)
     {
         _view = std::move(view);
+        for(IViewControllerPtr& child : _children)
+        {
+            child->getView().setParent(*_view);
+        }
     }
         
     const IView& ViewController::getView() const
