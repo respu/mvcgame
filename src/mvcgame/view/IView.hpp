@@ -45,7 +45,12 @@ namespace mvcgame {
          */
         virtual void addChild(IView* child, unsigned layer=0) = 0;
         
-        virtual void removeChild(const IView& child) = 0;        
+        virtual void removeChild(const IView& child) = 0;
+
+        virtual IView& getParent() = 0;
+        virtual const IView& getParent() const = 0;
+        virtual void removeFromParent() = 0;
+        virtual void setParent(IView& parent) = 0;
     };
 }
 

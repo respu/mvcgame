@@ -21,6 +21,7 @@ namespace mvcgame {
     class BaseView : public IView
     {
     private:
+        IView* _parent;
         IView::Children _children;
         Rect _frame;
         Scale _scale;        
@@ -51,6 +52,11 @@ namespace mvcgame {
         
         virtual void addChild(IView* child, unsigned layer=0);
         virtual void removeChild(const IView& child);
+
+        virtual IView& getParent();
+        virtual const IView& getParent() const;
+        virtual void removeFromParent();
+        virtual void setParent(IView& parent);
         
     };
 }

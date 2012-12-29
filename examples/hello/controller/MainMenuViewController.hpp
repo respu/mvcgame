@@ -9,6 +9,7 @@ class MainMenuViewController : public mvcgame::ViewController
 {
 public:
 	MainMenuViewController();
+	void controllerAdded();
 };
 
 #endif

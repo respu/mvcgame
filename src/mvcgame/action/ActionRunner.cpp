@@ -57,10 +57,8 @@ namespace mvcgame {
 
     void ActionRunner::update(IView& view, UpdateEvent& event)
     {
-        ActionList::iterator itr;
-        for(itr=_actions.begin(); itr!=_actions.end(); ++itr)
+        for(RunningAction& running : _actions)
         {
-            RunningAction& running = *itr;
             if(!running.start)
             {
                 running.start = event.getTime();

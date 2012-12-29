@@ -2,6 +2,7 @@
 
 #include <mvcgame/platform/cocos2dx/Application.hpp>
 #include <mvcgame/controller/ViewController.hpp>
+#include <mvcgame/view/BaseView.hpp>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -49,18 +50,38 @@ namespace mvcgame {
 		}
 	};
 
-	Application::Application()	
+	Application::Application() : _appController(nullptr), _rootController(nullptr)
 	{
 	}
 
 	Application::~Application()
 	{
-		delete _root;
+		if(_rootController != nullptr)
+		{
+			delete _rootController;
+		}
+		if(_appController != nullptr)
+		{
+			delete _appController;
+		}
 	}
 
 	void Application::setRootViewController(ViewController* root)
 	{
-		_root = root;
+		if(_rootController != nullptr)
+		{
+			delete _rootController;
+		}		
+		_rootController = root;
+		if(_appController != nullptr)
+		{
+			_appController->addChild(root);
+		}
+	}
+
+	void Application::setSize(const Size& size)
+	{
+		_size = size;
 	}
 
 	void Application::run()
@@ -79,9 +100,20 @@ namespace mvcgame {
 	    AppDelegate app;
 	    cocos2d::CCApplication::sharedApplication()->setResourceRootPath(resourcePath.c_str());
 	    cocos2d::CCEGLView* eglView = cocos2d::CCEGLView::sharedOpenGLView();
-	    eglView->setFrameSize(480, 320);
+	    eglView->setFrameSize(_size.width, _size.height);
 
 	    cocos2d::CCApplication::sharedApplication()->run();
+
+	    // setup fake app controller
+	    _appController = new ViewController();
+	    BaseView* appView = new BaseView();
+	    appView->setFrame(Rect(Point(), _size));
+	    _appController->setView(appView);
+
+	    if(_rootController != nullptr)
+	    {
+	    	_appController->addChild(_rootController);
+	    }
 	}
 
 }

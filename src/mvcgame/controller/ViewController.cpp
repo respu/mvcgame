@@ -13,24 +13,51 @@
 
 namespace mvcgame {
 
-    ViewController::ViewController()
+    ViewController::ViewController() : _parent(nullptr), _view(nullptr)
     {
 
     }
 
     ViewController::~ViewController()
     {
+        removeFromParent();
     	clearChildren();
         clearActions();
-        delete _view;
+        if(_view != nullptr)
+        {
+            delete _view;
+        }
+    }
+
+    void ViewController::removeFromParent()
+    {
+        if(_parent != nullptr)
+        {
+            _parent->removeChild(*this);
+            _parent = nullptr;
+        }
+    }
+
+    void ViewController::setParent(ViewController& parent)
+    {
+        _parent = &parent;
+    }
+
+    ViewController& ViewController::getParent()
+    {
+        return *_parent;
+    }
+
+    const ViewController& ViewController::getParent() const
+    {
+        return *_parent;
     }
 
     void ViewController::clearChildren()
     {
-        ChildrenList::const_iterator itr;
-        for(itr=_children.begin(); itr!=_children.end(); ++itr)
+        for(const ViewController* child : _children)
         {
-            delete *itr;
+            delete child;
         }
         _children.clear();
     }
@@ -42,6 +69,10 @@ namespace mvcgame {
 
     void ViewController::setView(IView* view)
     {
+        if(_view != nullptr)
+        {
+            delete _view;
+        }
         _view = view;
     }
         
@@ -57,7 +88,20 @@ namespace mvcgame {
  
     void ViewController::addChild(ViewController* child)
     {
+        child->setParent(*this);
     	_children.push_back(child);
+        if(_view != nullptr)
+        {
+            _view->addChild(&child->getView());
+        }
+        child->controllerAdded();
+    }
+
+    void ViewController::removeChild(const ViewController& child)
+    {
+        std::remove_if(_children.begin(), _children.end(), [&child](const ViewController* elm){
+            return elm == &child;
+        });
     }
 
     const ViewController::ChildrenList& ViewController::getChildren() const
@@ -83,5 +127,10 @@ namespace mvcgame {
     void ViewController::updateActions(UpdateEvent& event)
     {
         _actions.update(getView(), event);
+    }
+
+    void ViewController::controllerAdded()
+    {
+
     }
 }

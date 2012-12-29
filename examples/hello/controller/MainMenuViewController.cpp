@@ -7,13 +7,18 @@
 
 MainMenuViewController::MainMenuViewController()
 {
-	setView(new mvcgame::View());
+}
+
+void MainMenuViewController::controllerAdded()
+{
+	mvcgame::ColorView* view = new mvcgame::ColorView();
+	setView(view);
+	view->setBackgroundColor(mvcgame::Color::Red);	
+	view->setFrame(getParent().getView().getFrame());
 
 	mvcgame::TextView* label = new mvcgame::TextView();
-
+	view->addChild(label);
 	label->setText("mvcgame test");
 	label->setTextColor(mvcgame::Color::White);
 	label->setTextSize(20);
-
-	getView().addChild(label);
 }

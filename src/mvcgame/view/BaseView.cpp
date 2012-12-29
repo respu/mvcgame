@@ -28,10 +28,10 @@ namespace mvcgame {
 
     BaseView::~BaseView()
     {
-        IView::Children::const_iterator itr;
-        for(itr=_children.begin(); itr!=_children.end(); ++itr)
+        removeFromParent();
+        for(const ChildWithLayer& child : _children)
         {
-            delete itr->first;
+            delete child.first;
         }
     }
 
@@ -81,6 +81,7 @@ namespace mvcgame {
 
     void BaseView::addChild(IView* child, unsigned layer)
     {
+        child->setParent(*this);
         _children.push_back(IView::ChildWithLayer(child, layer));
     }
 
@@ -94,5 +95,29 @@ namespace mvcgame {
         return std::find_if(_children.begin(), _children.end(), [&child](const IView::ChildWithLayer& elm){
             return elm.first == &child;
         });
+    }
+
+    void BaseView::setParent(IView& parent)
+    {
+        _parent = &parent;
+    }
+    
+    IView& BaseView::getParent()
+    {
+        return *_parent;
+    }
+    
+    const IView& BaseView::getParent() const
+    {
+        return *_parent;
+    }
+
+    void BaseView::removeFromParent()
+    {
+        if(_parent != nullptr)
+        {
+            _parent->removeChild(*this);
+            _parent = nullptr;
+        }
     }
 }

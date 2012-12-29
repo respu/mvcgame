@@ -22,13 +22,11 @@ namespace mvcgame {
         typedef std::vector<ViewController*> ChildrenList;
 
     private:
+        ViewController* _parent;
         ChildrenList _children;
         ActionRunner _actions;
         IView* _view;
     protected:
-        void setView(IView* view);
-        void clearChildren();
-        void clearActions();
     public:
         ViewController();
 
@@ -36,8 +34,14 @@ namespace mvcgame {
         
         const IView& getView() const;
         IView& getView();
+        void setView(IView* view);
+
+        const ViewController& getParent() const;
+        ViewController& getParent();
+        void setParent(ViewController& parent);
         
         void addChild(ViewController* child);
+        void removeChild(const ViewController& child);
 
         const ChildrenList& getChildren() const;
         ChildrenList& getChildren();
@@ -45,6 +49,15 @@ namespace mvcgame {
         void runAction(IAction* action);
         void runAction(IAction* action, const Duration& duration);
         void updateActions(UpdateEvent& event);
+
+        void clearChildren();
+        void clearActions();
+        void removeFromParent();
+
+        /**
+         * called after the controller is added to a parent controller
+         */
+        virtual void controllerAdded();
     };
 }
 

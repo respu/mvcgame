@@ -1,7 +1,6 @@
 
 #include <mvcgame/view/Color.hpp>
 
-
 namespace mvcgame {
 
 	Color::Color(color_t pr, color_t pg, color_t pb, color_t pa) :
@@ -23,4 +22,7 @@ namespace mvcgame {
 
 	const Color Color::White(255, 255, 255);
 	const Color Color::Black(0, 0, 0);
+	const Color Color::Red(255, 0, 0);
+	const Color Color::Green(0, 255, 0);
+	const Color Color::Blue(0, 0, 255);
 }

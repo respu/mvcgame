@@ -22,7 +22,10 @@ namespace mvcgame {
 		Color(colors_t c);
 
 		static const Color White;
-		static const Color Black;		
+		static const Color Black;	
+		static const Color Red;
+		static const Color Green;
+		static const Color Blue;
 	};
 
 }
