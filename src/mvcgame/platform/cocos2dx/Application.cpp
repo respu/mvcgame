@@ -46,7 +46,9 @@ namespace mvcgame {
 			// setup root controller
 			cocos2d::CCSize size = glView->getFrameSize();
 		    View* rootView = new View();
-		    rootView->setFrame(Rect(Point(), Size(size.width, size.height)));
+		    rootView->setFrame(Rect(
+		    	Point(size.width/2, size.height/2),
+		    	Size(size.width, size.height)));
 		    scene->addChild(rootView->getNode());
 		    _rootCtrl.setView(IViewPtr(rootView));
 		    _rootCtrl.addChild(std::move(_appCtrl));
@@ -72,7 +74,7 @@ namespace mvcgame {
 
 		void update(float dt)
 		{
-			
+			_rootCtrl.emitUpdate();
 		}
 	};
 

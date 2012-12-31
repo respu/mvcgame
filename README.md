@@ -12,5 +12,6 @@ Installation
 
 ```
 apt-get install libglu1-mesa-dev libglfw-dev libglew-dev libfontconfig1-dev
-sudo ln -s /usr/include/freetype2 /usr/include/freetype
+cmake .
+make
 ```

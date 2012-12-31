@@ -22,15 +22,20 @@ namespace mvcgame {
   
     class View : public BaseView
     {
-    private:
-        IView::Children _children;
+    protected:
         cocos2d::CCNode* _node;
+
+        virtual void updateNode(cocos2d::CCNode* node);        
+        virtual void updateNodeFrame(cocos2d::CCNode* node);
+        virtual void updateNodeRotation(cocos2d::CCNode* node);
+        virtual void updateNodeAnchor(cocos2d::CCNode* node);
+        virtual void updateNodeScale(cocos2d::CCNode* node);
     public:
         View(cocos2d::CCNode* node);
         View();
         ~View();
 
-        void setFrame(const Rect& rect);
+        void setFrame(const Rect& f);
         void setRotation(const Rotation& r);
         void setScale(const Scale& s);
         void setAnchor(const Anchor& a);
@@ -40,7 +45,6 @@ namespace mvcgame {
         void setParent(IView& parent);
 
         void setNode(cocos2d::CCNode* node);
-        void updateNode(cocos2d::CCNode* node);
         cocos2d::CCNode* getNode() const;
     };
     

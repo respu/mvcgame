@@ -38,11 +38,14 @@ namespace mvcgame {
         const Point operator+(const gunit_t& p) const;
         Point& operator+=(const Distance& d);
         const Point operator+(const Distance& d) const;
+        Point& operator+=(const Point& p);
+        const Point operator+(const Point& p) const;        
 
-        Point& operator-=(const Distance& d);
-        const Distance operator-(const Point& p) const;
         Point& operator-=(const gunit_t& p);
         const Point operator-(const gunit_t& p) const;
+        Point& operator-=(const Distance& d);
+        const Distance operator-(const Point& p) const;
+        Point& operator-=(const Point& p);
 
         Point& operator*=(const gunit_t& s);
         const Point operator*(const gunit_t& s) const;
@@ -165,6 +168,7 @@ namespace mvcgame {
         Size size;
         
         Rect();
+        Rect(const Size& s);
         Rect(const Point& p, const Size& s);
         Rect(gunit_t x, gunit_t y, gunit_t w, gunit_t h);
         Rect(const Point& bl, const Point& tr);

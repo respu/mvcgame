@@ -7,6 +7,9 @@
 
 namespace cocos2d {
     class CCLabelTTF;
+    class CCLabelAtlas;
+    class CCLabelIBMFont;
+    class CCLabelProtocol;
 }
 
 namespace mvcgame {
@@ -15,6 +18,15 @@ namespace mvcgame {
     {
     private:
         cocos2d::CCLabelTTF* _label;
+    protected:
+        void updateNodeFrame(cocos2d::CCNode* node);        
+        void updateLabel(cocos2d::CCLabelTTF* label);
+        void updateLabelHorizontalAlign(cocos2d::CCLabelTTF* label);
+        void updateLabelVerticalAlign(cocos2d::CCLabelTTF* label);
+        void updateLabelFont(cocos2d::CCLabelTTF* label);
+        void updateLabelSize(cocos2d::CCLabelTTF* label);
+        void updateLabelText(cocos2d::CCLabelTTF* label);
+        void updateLabelColor(cocos2d::CCLabelTTF* label);
     public:
         TextView(cocos2d::CCLabelTTF* label);
         TextView();
@@ -23,7 +35,7 @@ namespace mvcgame {
         void setTextFont(const std::string& font);
         void setTextSize(unsigned short size);
         void setText(const std::string& text);
-        void setTextColor(const Color& color);
+        void setTextColor(const Color& color);       
     };
     
 }

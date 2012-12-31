@@ -11,12 +11,12 @@ namespace mvcgame {
 	class BaseTextView : public ITextView
 	{
 	protected:
-		ITextView::HorizontalAlign _textHorizAlign;
-		ITextView::VerticalAlign _textVertiAlign;
+		ITextView::HorizontalAlign _textHorizAlign = ITextView::HorizontalAlign::Left;
+		ITextView::VerticalAlign _textVertiAlign = ITextView::VerticalAlign::Top;
 		std::string _text;
 		Color _textColor = Colors::White;
 		std::string _textFont;
-		unsigned short _textSize;
+		unsigned short _textSize = 20;
 	public:
 		virtual void setTextHorizontalAlign(ITextView::HorizontalAlign align);
 		virtual void setTextVerticalAlign(ITextView::VerticalAlign align);

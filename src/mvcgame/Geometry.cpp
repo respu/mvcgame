@@ -69,12 +69,31 @@ namespace mvcgame {
         return Point(x+d.x, y+d.y);
     }
 
+    Point& Point::operator+=(const Point& p)
+    {
+        x += p.x;
+        y += p.y;
+        return *this;
+    }
+
+    const Point Point::operator+(const Point& p) const
+    {
+        return Point(x+p.x, y+p.y);
+    }
+
     Point& Point::operator-=(const Distance& d)
     {
         x -= d.x;
         y -= d.y;
         return *this;
     }
+
+    Point& Point::operator-=(const Point& p)
+    {
+        x -= p.x;
+        y -= p.y;
+        return *this;
+    }    
 
     const Distance Point::operator-(const Point& p) const
     {
@@ -433,6 +452,10 @@ namespace mvcgame {
 #pragma mark - Rect
     
     Rect::Rect()
+    {
+    }
+
+    Rect::Rect(const Size& s) : Rect(Point(), s)
     {
     }
     
