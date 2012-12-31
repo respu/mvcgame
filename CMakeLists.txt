@@ -33,6 +33,7 @@ if("${LIBRARY}" STREQUAL "cocos2dx")
 		"${COCOS2DX_SOURCE_DIR}/kazmath/src/*.c*"
 		"${COCOS2DX_SOURCE_DIR}/kazmath/src/GL/*.c*"
 		"${COCOS2DX_SOURCE_DIR}/keypad_dispatcher/*.c*"
+		"${COCOS2DX_SOURCE_DIR}/draw_nodes/*.c*"		
 		"${COCOS2DX_SOURCE_DIR}/label_nodes/*.c*"
 		"${COCOS2DX_SOURCE_DIR}/layers_scenes_transitions_nodes/*.c*"
 		"${COCOS2DX_SOURCE_DIR}/menu_nodes/*.c*"

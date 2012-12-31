@@ -14,6 +14,8 @@ namespace mvcgame {
 		Color _bgColor = Colors::Black;
 	public:
 		virtual void setBackgroundColor(const Color& color);
+		virtual const Color& getBackgroundColor() const;
+		virtual Color& getBackgroundColor();
 	};
 
 }

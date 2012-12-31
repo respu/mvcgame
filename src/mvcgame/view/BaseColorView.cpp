@@ -8,4 +8,14 @@ namespace mvcgame {
 	{
 		_bgColor = color;
 	}
+
+	const Color& BaseColorView::getBackgroundColor() const
+	{
+		return _bgColor;
+	}
+
+	Color& BaseColorView::getBackgroundColor()
+	{
+		return _bgColor;
+	}
 }

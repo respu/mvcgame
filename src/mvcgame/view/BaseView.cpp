@@ -39,6 +39,11 @@ namespace mvcgame {
     {
     }
 
+    Rect& BaseView::getFrame()
+    {
+        return _frame;
+    }
+
     const Rect& BaseView::getFrame() const
     {
         return _frame;
@@ -49,6 +54,11 @@ namespace mvcgame {
         _frame = rect;
     }
     
+    Rotation& BaseView::getRotation()
+    {
+        return _rotation;
+    }
+
     const Rotation& BaseView::getRotation() const
     {
         return _rotation;
@@ -58,7 +68,12 @@ namespace mvcgame {
     {
         _rotation = r;
     }
-    
+        
+    Scale& BaseView::getScale()
+    {
+        return _scale;
+    }
+
     const Scale& BaseView::getScale() const
     {
         return _scale;
@@ -67,6 +82,11 @@ namespace mvcgame {
     void BaseView::setScale(const Scale& s)
     {
         _scale = s;
+    }
+
+    Anchor& BaseView::getAnchor()
+    {
+        return _anchor;
     }
 
     const Anchor& BaseView::getAnchor() const

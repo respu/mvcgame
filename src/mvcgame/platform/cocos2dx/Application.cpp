@@ -13,7 +13,7 @@
 
 namespace mvcgame {
 
-	class AppDelegate : public cocos2d::CCApplication
+	class AppDelegate : public cocos2d::CCApplication, public cocos2d::CCObject
 	{
 	private:
 		IViewControllerPtr _appCtrl;
@@ -51,17 +51,28 @@ namespace mvcgame {
 		    _rootCtrl.setView(IViewPtr(rootView));
 		    _rootCtrl.addChild(std::move(_appCtrl));
 
+		    director->getScheduler()->scheduleUpdateForTarget(this, 1, false);
+
 		    return true;
 		}
 
 		void applicationDidEnterBackground()
 		{
-		    cocos2d::CCDirector::sharedDirector()->stopAnimation();
+			cocos2d::CCDirector* director = cocos2d::CCDirector::sharedDirector();
+		    director->stopAnimation();
+		    director->getScheduler()->pauseTarget(this);
 		}
 
 		void applicationWillEnterForeground()
 		{
-		    cocos2d::CCDirector::sharedDirector()->startAnimation();
+			cocos2d::CCDirector* director = cocos2d::CCDirector::sharedDirector();
+		    director->startAnimation();
+		    director->getScheduler()->resumeTarget(this);
+		}
+
+		void update(float dt)
+		{
+			
 		}
 	};
 

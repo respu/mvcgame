@@ -20,7 +20,7 @@ namespace mvcgame {
      */
     class BaseView : public IView
     {
-    private:
+    protected:
         IView* _parent;
         IView::Children _children;
         Rect _frame;
@@ -28,7 +28,6 @@ namespace mvcgame {
         Anchor _anchor;
         Rotation _rotation;
 
-    protected:
         IView::Children::iterator findChild(const IView& child);
     public:
         BaseView();
@@ -38,15 +37,19 @@ namespace mvcgame {
 
         virtual void draw();
 
+        virtual Rect& getFrame();
         virtual const Rect& getFrame() const;
         virtual void setFrame(const Rect& rect);
-        
+
+        virtual Rotation& getRotation();
         virtual const Rotation& getRotation() const;
         virtual void setRotation(const Rotation& r);
-        
+
+        virtual Scale& getScale();        
         virtual const Scale& getScale() const;
         virtual void setScale(const Scale& s);
 
+        virtual Anchor& getAnchor();
         virtual const Anchor& getAnchor() const;
         virtual void setAnchor(const Anchor& a);        
         

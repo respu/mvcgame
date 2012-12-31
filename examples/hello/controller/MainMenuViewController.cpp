@@ -13,9 +13,9 @@ MainMenuViewController::MainMenuViewController()
 void MainMenuViewController::controllerAdded()
 {
 	mvcgame::ColorView* view = new mvcgame::ColorView();
-	view->setBackgroundColor(mvcgame::Color(mvcgame::Colors::Red));
 	view->setFrame(getParent().getView().getFrame());
-	setView(mvcgame::ViewPtr(view));
+	view->setBackgroundColor(mvcgame::Color(mvcgame::Colors::Red));	
+	setView(mvcgame::IViewPtr(view));
 	
 	/*
 	mvcgame::TextView* label = new mvcgame::TextView();

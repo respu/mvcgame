@@ -1,4 +1,6 @@
 #include <mvcgame/platform/cocos2dx/view/ColorView.hpp>
+#include <mvcgame/view/Color.hpp>
+
 #include <cocos2dx/layers_scenes_transitions_nodes/CCLayer.h>
 
 namespace mvcgame {
@@ -15,8 +17,7 @@ namespace mvcgame {
 
 	void ColorView::setBackgroundColor(const Color& color)
 	{
-        _layer->setColor(cocos2d::ccc3(color.r,color.g,color.b));
-        _layer->setOpacity((float)color.a/255.0f);
+        _layer->initWithColor(cocos2d::ccc4(color.r,color.g,color.b,color.a));
 		BaseColorView::setBackgroundColor(color);
 	}
 }
