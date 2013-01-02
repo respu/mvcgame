@@ -7,7 +7,6 @@ namespace mvcgame {
 
     ColorView::ColorView(cocos2d::CCLayerColor* layer) : View(layer), _layer(layer)
     {
-
     }
 
     ColorView::ColorView() : ColorView(new cocos2d::CCLayerColor())

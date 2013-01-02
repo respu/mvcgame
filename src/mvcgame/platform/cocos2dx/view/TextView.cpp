@@ -26,8 +26,8 @@ namespace mvcgame {
 
     void TextView::updateNodeFrame(cocos2d::CCNode* node)
     {
-    	View::updateNodeFrame(node);
     	_label->setDimensions(cocos2d::CCSizeMake(_frame.size.width, _frame.size.height));
+    	View::updateNodeFrame(node);
     }
 
     void TextView::updateLabelHorizontalAlign(cocos2d::CCLabelTTF* label)

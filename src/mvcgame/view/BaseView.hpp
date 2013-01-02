@@ -26,6 +26,7 @@ namespace mvcgame {
         Rect _frame;
         Scale _scale;        
         Anchor _anchor;
+        Anchor _parentAnchor;        
         Rotation _rotation;
 
         IView::Children::iterator findChild(const IView& child);
@@ -51,8 +52,12 @@ namespace mvcgame {
 
         virtual Anchor& getAnchor();
         virtual const Anchor& getAnchor() const;
-        virtual void setAnchor(const Anchor& a);        
+        virtual void setAnchor(const Anchor& a);      
         
+        virtual Anchor& getParentAnchor();
+        virtual const Anchor& getParentAnchor() const;
+        virtual void setParentAnchor(const Anchor& a);
+
         virtual void addChild(IViewPtr child, unsigned layer=0);
         virtual IViewPtr removeChild(const IView& child);
 
@@ -60,6 +65,8 @@ namespace mvcgame {
         virtual const IView& getParent() const;
         virtual void removeFromParent();
         virtual void setParent(IView& parent);
+
+        virtual bool respondToTouchPoint(const Point& p, const TouchEvent& event);
         
     };
 }

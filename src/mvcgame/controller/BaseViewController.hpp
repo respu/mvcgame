@@ -29,6 +29,7 @@ namespace mvcgame {
         void clearChildren();
         void clearActions();
 
+        virtual bool respondToTouchPoint(const Point& p, const TouchEvent& event);
     };
 }
 

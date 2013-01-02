@@ -13,7 +13,7 @@
 
 namespace mvcgame {
 
-	class AppDelegate : public cocos2d::CCApplication, public cocos2d::CCObject
+	class AppDelegate : public cocos2d::CCApplication, public cocos2d::CCObject, public cocos2d::CCTouchDelegate
 	{
 	private:
 		IViewControllerPtr _appCtrl;
@@ -33,9 +33,11 @@ namespace mvcgame {
 		    director->setOpenGLView(glView);
 		    director->setDisplayStats(true);
 		    director->setAnimationInterval(1.0 / 60);
+			cocos2d::CCSize size = glView->getFrameSize();
 
 		    // create root scene
 		    cocos2d::CCScene* scene = new cocos2d::CCScene();
+		    scene->setPosition(cocos2d::CCPointMake(size.width/2, size.height/2));
 		    if(!scene->init())
 		    {
 		    	CC_SAFE_DELETE(scene);
@@ -44,16 +46,14 @@ namespace mvcgame {
 		    director->runWithScene(scene);
 
 			// setup root controller
-			cocos2d::CCSize size = glView->getFrameSize();
 		    View* rootView = new View();
-		    rootView->setFrame(Rect(
-		    	Point(size.width/2, size.height/2),
-		    	Size(size.width, size.height)));
+		    rootView->setFrame(Rect(Size(size.width, size.height)));
 		    scene->addChild(rootView->getNode());
 		    _rootCtrl.setView(IViewPtr(rootView));
 		    _rootCtrl.addChild(std::move(_appCtrl));
 
 		    director->getScheduler()->scheduleUpdateForTarget(this, 1, false);
+		    director->getTouchDispatcher()->addStandardDelegate(this, 0);
 
 		    return true;
 		}
@@ -76,6 +76,17 @@ namespace mvcgame {
 		{
 			_rootCtrl.emitUpdate();
 		}
+
+		void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+		{
+
+		}
+   
+     	void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+     	{
+     		
+     	}
+    
 	};
 
 	Application::Application() : _ctrl(nullptr), _running(false)

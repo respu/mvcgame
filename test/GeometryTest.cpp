@@ -191,6 +191,22 @@ TEST(Geometry, rect) {
     ASSERT_TRUE(r2.contains(p));
 }
 
+TEST(Geometry, rectCopy) {
+    Rect r(Size(100, 200));
+
+    ASSERT_FLOAT_EQ(0, r.origin.x);
+    ASSERT_FLOAT_EQ(0, r.origin.y);
+    ASSERT_FLOAT_EQ(100, r.size.width);
+    ASSERT_FLOAT_EQ(200, r.size.height);
+
+    Rect r2(r);
+
+    ASSERT_FLOAT_EQ(0, r2.origin.x);
+    ASSERT_FLOAT_EQ(0, r2.origin.y);
+    ASSERT_FLOAT_EQ(100, r2.size.width);
+    ASSERT_FLOAT_EQ(200, r2.size.height);
+}
+
 TEST(Geometry, rotation) {
     
     Rotation r;

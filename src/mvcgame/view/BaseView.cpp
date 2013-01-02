@@ -99,6 +99,21 @@ namespace mvcgame {
         _anchor = a;
     }
 
+    Anchor& BaseView::getParentAnchor()
+    {
+        return _parentAnchor;
+    }
+
+    const Anchor& BaseView::getParentAnchor() const
+    {
+        return _parentAnchor;
+    }
+
+    void BaseView::setParentAnchor(const Anchor& a)
+    {
+        _parentAnchor = a;
+    }    
+
     void BaseView::addChild(IViewPtr child, unsigned layer)
     {
         child->setParent(*this);
@@ -146,5 +161,10 @@ namespace mvcgame {
             _parent->removeChild(*this);
             _parent = nullptr;
         }
+    }
+
+    bool BaseView::respondToTouchPoint(const Point& p, const TouchEvent& event)
+    {
+        return _frame.contains(p);
     }
 }

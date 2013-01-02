@@ -38,6 +38,7 @@ namespace mvcgame {
         void setFrame(const Rect& f);
         void setRotation(const Rotation& r);
         void setScale(const Scale& s);
+        void setParentAnchor(const Anchor& a);
         void setAnchor(const Anchor& a);
         
         void addChild(IViewPtr child, unsigned layer=0);
@@ -46,6 +47,8 @@ namespace mvcgame {
 
         void setNode(cocos2d::CCNode* node);
         cocos2d::CCNode* getNode() const;
+
+        void respondOnUpdate(UpdateEvent& event);
     };
     
 }

@@ -24,7 +24,12 @@ namespace mvcgame {
     View::~View()
     {
     	CC_SAFE_RELEASE(_node);
-    }    
+    }
+
+    void View::respondOnUpdate(UpdateEvent& event)
+    {
+        updateNode(_node);
+    }
 
     void View::updateNode(cocos2d::CCNode* node)
     {
@@ -36,46 +41,47 @@ namespace mvcgame {
 
     void View::updateNodeFrame(cocos2d::CCNode* node)
     {
-        Rect f = _frame;
+        Rect f(_frame);
 
         /*
-         in cocos2d, the child coordinates are from the child origin to the parent
-         origin (0,0). In mvcgame the child coordinates are from the child anchor
-         point to the parent anchor point.
+         in cocos2d, the child coordinates are from the child anchor to the parent
+         origin (0,0). In mvcgame the child coordinates are from the child parentAnchor
+         to the parent anchor.
         */
         if(_parent != nullptr)
         {
             // so if the view has a parent, we need to add the parent anchor
             f.origin += _parent->getAnchor()*_parent->getFrame().size;
-
         }
-
-        // substract the anchor of the node
-        f.origin -= _anchor*f.size;        
+        Anchor a = getParentAnchor();
+        if(!_node->isIgnoreAnchorPointForPosition())
+        {
+            a -= getAnchor();
+        }
+        f.origin -= a*_frame.size;
         
-        _node->setPosition(cocos2d::CCPointMake(f.origin.x, f.origin.y));
-        _node->setContentSize(cocos2d::CCSizeMake(f.size.width, f.size.height));        
+        node->setPosition(cocos2d::CCPointMake(f.origin.x, f.origin.y));
+        node->setContentSize(cocos2d::CCSizeMake(f.size.width, f.size.height));
     }
 
     void View::updateNodeRotation(cocos2d::CCNode* node)
     {
         const Rotation& r = _rotation;
-        _node->setRotation(r.x);        
+        node->setRotation(r.x);        
     }
 
     void View::updateNodeScale(cocos2d::CCNode* node)
     {
         const Scale& s = _scale;
-        _node->setScaleX(s.x);
-        _node->setScaleY(s.y);        
+        node->setScaleX(s.x);
+        node->setScaleY(s.y);        
     }    
 
     void View::updateNodeAnchor(cocos2d::CCNode* node)
     {
         const Anchor& a = _anchor;
-        _node->setAnchorPoint(cocos2d::CCPointMake(a.x, a.y));
-        // update the frame since the cocos2d origin changes also
-        updateNodeFrame(node);
+        node->setAnchorPoint(cocos2d::CCPointMake(a.x, a.y));
+        updateNodeFrame(_node);
     }    
 
     void View::setNode(cocos2d::CCNode* node)
@@ -120,6 +126,12 @@ namespace mvcgame {
     	updateNodeScale(_node);
     }
 
+    void View::setParentAnchor(const Anchor& a)
+    {
+        BaseView::setParentAnchor(a);
+        updateNodeFrame(_node);
+    }
+
     void View::setAnchor(const Anchor& a)
     {
         BaseView::setAnchor(a);
@@ -151,8 +163,7 @@ namespace mvcgame {
         assert(parentNode != nullptr);
         _node->setParent(parentNode);
         BaseView::setParent(parent);
-        // update the node position
-        // since the coordinates in cocos are different than in mvcgame
+        // update the node position, since the coordinates in cocos are different than in mvcgame
         updateNodeFrame(_node);
     }
 

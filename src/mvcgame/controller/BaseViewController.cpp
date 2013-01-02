@@ -39,9 +39,10 @@ namespace mvcgame {
     }
  
     void BaseViewController::addChild(IViewControllerPtr child)
-    {
-        child->setParent(*this);        
+    {   
+        IViewController& c = *child;
     	_children.push_back(std::move(child));
+        c.setParent(*this);
     }
 
     void BaseViewController::removeChild(const IViewController& child)
@@ -83,5 +84,10 @@ namespace mvcgame {
                 view.addChild(std::move(childView));
             }
         }
+    }
+
+    bool BaseViewController::respondToTouchPoint(const Point& p, const TouchEvent& event)
+    {
+        return getView().respondToTouchPoint(p, event);
     }
 }

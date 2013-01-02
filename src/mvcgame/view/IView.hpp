@@ -31,15 +31,27 @@ namespace mvcgame {
         virtual void draw() = 0;
 
         virtual const Rect& getFrame() const = 0;
+        virtual Rect& getFrame() = 0;
         virtual void setFrame(const Rect& rect) = 0;
         
         virtual const Rotation& getRotation() const = 0;
+        virtual Rotation& getRotation() = 0;
         virtual void setRotation(const Rotation& r) = 0;
         
         virtual const Scale& getScale() const = 0;
+        virtual Scale& getScale() = 0;
         virtual void setScale(const Scale& s) = 0;
-        
+
+        /**
+         * parent anchor represents the point that will connect
+         * to the anchor of the parent view (getParent().getAnchor())
+         */ 
+        virtual const Anchor& getParentAnchor() const = 0;
+        virtual Anchor& getParentAnchor() = 0;
+        virtual void setParentAnchor(const Anchor& a) = 0;        
+
         virtual const Anchor& getAnchor() const = 0;
+        virtual Anchor& getAnchor() = 0;
         virtual void setAnchor(const Anchor& a) = 0;
 
         virtual void addChild(IViewPtr child, unsigned layer=0) = 0;
