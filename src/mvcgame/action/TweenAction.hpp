@@ -14,11 +14,9 @@
 #include <mvcgame/action/IAction.hpp>
 
 #include <functional>
+#include <memory>
 
 namespace mvcgame {
-
-    class IView;
-    typedef std::unique_ptr<IView> IViewPtr;	
  
  	/**
  	 * This action will tween a view from the current
@@ -27,13 +25,13 @@ namespace mvcgame {
 	class TweenAction : public IAction
 	{
 	public:
-		typedef std::function<void(IView& view)> Function;
+		typedef std::function<void(View& view)> Function;
 	private:
 		Function _animate;		
 		Function _complete;
 		Easing::Function _easing;
-		IViewPtr _start;
-		IViewPtr _end;
+		std::unique_ptr<View> _start;
+		std::unique_ptr<View> _end;
 
 		float ease(float p, float b, float c);
 	public:
@@ -43,7 +41,7 @@ namespace mvcgame {
 		void setEasing(const Easing::Function& easing);
 		void setComplete(const Function& complete);
 
-		void update(IView& view, float proportion);
+		void update(View& view, float proportion);
 	};
 }
 

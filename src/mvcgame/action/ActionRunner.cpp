@@ -15,7 +15,7 @@
 
 namespace mvcgame {
 
-    RunningAction::RunningAction(IActionPtr paction, const Time& pstart, const Duration& pduration) :
+    RunningAction::RunningAction(std::unique_ptr<IAction> paction, const Time& pstart, const Duration& pduration) :
     action(std::move(paction)), start(pstart), duration(pduration) 
     {
     }
@@ -32,12 +32,12 @@ namespace mvcgame {
 	{
 	}
 
-    void ActionRunner::add(IActionPtr action)
+    void ActionRunner::add(std::unique_ptr<IAction> action)
     {
         add(std::move(action), Duration());
     }
     
-    void ActionRunner::add(IActionPtr action, const Duration& duration)
+    void ActionRunner::add(std::unique_ptr<IAction> action, const Duration& duration)
     {
         _actions.push_back(RunningActionPtr(new RunningAction(std::move(action), Time(), duration)));
     }
@@ -55,7 +55,7 @@ namespace mvcgame {
         _actions.clear();
     }
 
-    void ActionRunner::update(IView& view, UpdateEvent& event)
+    void ActionRunner::update(View& view, UpdateEvent& event)
     {
         for(RunningActionPtr& running : _actions)
         {

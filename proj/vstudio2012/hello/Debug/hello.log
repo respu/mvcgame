@@ -1,0 +1,16 @@
+﻿Compilación iniciada a las 17/05/2013 22:57:14.
+     1>Proyecto "E:\Projects\sp-mobile-mvcgraphics\proj\vstudio2012\hello\hello.vcxproj" en el nodo 2 (Build destinos).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\hello.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\examples\hello\controller\MainMenuController.cpp ..\..\..\examples\hello\controller\MainMenuOptionController.cpp ..\..\..\examples\hello\platform\linux\main.cpp
+         main.cpp
+     1>e:\projects\sp-mobile-mvcgraphics\examples\hello\platform\linux\main.cpp(15): fatal error C1010: final de archivo inesperado al buscar la directiva de encabezado precompilado. Compruebe si olvidó agregar '#include "stdafx.h"' al código fuente?
+         MainMenuOptionController.cpp
+     1>e:\projects\sp-mobile-mvcgraphics\examples\hello\controller\mainmenuoptioncontroller.cpp(35): fatal error C1010: final de archivo inesperado al buscar la directiva de encabezado precompilado. Compruebe si olvidó agregar '#include "stdafx.h"' al código fuente?
+         MainMenuController.cpp
+     1>e:\projects\sp-mobile-mvcgraphics\examples\hello\controller\mainmenucontroller.cpp(55): fatal error C1010: final de archivo inesperado al buscar la directiva de encabezado precompilado. Compruebe si olvidó agregar '#include "stdafx.h"' al código fuente?
+         Generando código...
+     1>Compilación del proyecto terminada "E:\Projects\sp-mobile-mvcgraphics\proj\vstudio2012\hello\hello.vcxproj" (Build destinos) -- ERROR.
+
+ERROR al compilar.
+
+Tiempo transcurrido 00:00:00.42

@@ -7,7 +7,7 @@
 //
 
 #include <mvcgame/action/TweenAction.hpp>
-#include <mvcgame/view/BaseView.hpp>
+#include <mvcgame/view/View.hpp>
 #include <functional>
 
 namespace mvcgame {
@@ -40,13 +40,13 @@ namespace mvcgame {
 		return _easing(p, b, c);
 	}
 
-	void TweenAction::update(IView& view, float p)
+	void TweenAction::update(View& view, float p)
 	{
 		if(p == 0)
 		{
 			// obtain the end view properties
-			_start = IViewPtr(new BaseView(view));
-			_end = IViewPtr(new BaseView(view));
+			_start = std::unique_ptr<View>(new View(view));
+			_end = std::unique_ptr<View>(new View(view));
 			_animate(*_end);
 		}
 

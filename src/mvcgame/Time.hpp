@@ -18,7 +18,8 @@ namespace mvcgame {
      * timestamp in microseconds without more precision
      */
     typedef uint64_t fixedtime_t;
-    typedef int32_t duration_t;
+    typedef int16_t duration_part_t;
+    typedef int8_t duration_t;    
     
     class Time;
     class Accel;
@@ -28,17 +29,17 @@ namespace mvcgame {
     	duration_t _value;
     public:
         
-        static const Duration years(duration_t m);
-        static const Duration months(duration_t m);
-        static const Duration days(duration_t d);
-        static const Duration hours(duration_t h);
-        static const Duration mins(duration_t m);
-        static const Duration secs(duration_t s);
+        static const Duration years(duration_part_t m);
+        static const Duration months(duration_part_t m);
+        static const Duration days(duration_part_t d);
+        static const Duration hours(duration_part_t h);
+        static const Duration mins(duration_part_t m);
+        static const Duration secs(duration_part_t s);
         static const Duration usecs(duration_t u);
         static const Duration fsecs(float s);
         
         Duration();
-    	explicit Duration(duration_t pt);
+    	Duration(duration_t pt);
 		operator bool() const;
 
         bool operator==(const Duration& i) const;
@@ -57,12 +58,12 @@ namespace mvcgame {
         
         float operator/(const Duration& d) const;
         
-        duration_t years() const;
-        duration_t months() const;
-        duration_t days() const;
-        duration_t hours() const;
-        duration_t mins() const;
-        duration_t secs() const;
+        duration_part_t years() const;
+        duration_part_t months() const;
+        duration_part_t days() const;
+        duration_part_t hours() const;
+        duration_part_t mins() const;
+        duration_part_t secs() const;
         duration_t usecs() const;
         float fsecs() const;
     };

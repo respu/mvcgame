@@ -27,7 +27,7 @@ namespace mvcgame {
     
 #pragma mark - Point
     
-    Point::Point()
+    Point::Point() : x(0.0f), y(0.0f)
     {
     }
 
@@ -165,7 +165,7 @@ namespace mvcgame {
 
 #pragma mark - Distance
     
-    Distance::Distance()
+    Distance::Distance() : x(0.0f), y(0.0f)
     {
     }
 
@@ -254,7 +254,7 @@ namespace mvcgame {
 
 #pragma mark - Anchor
     
-    Anchor::Anchor()
+    Anchor::Anchor() : x(0.5f), y(0.5f)
     {
     }
     
@@ -351,7 +351,7 @@ namespace mvcgame {
 
 #pragma mark - Size
     
-    Size::Size()
+    Size::Size() : width(0.0f), height(0.0f)
     {
     }
 
@@ -455,7 +455,7 @@ namespace mvcgame {
     {
     }
 
-    Rect::Rect(const Size& s) : Rect(Point(), s)
+    Rect::Rect(const Size& s) : size(s)
     {
     }
     
@@ -520,8 +520,10 @@ namespace mvcgame {
     }
 
 #pragma mark - Rotation
+
+	const gunit_t Rotation::Pi = 3.1415926535897932384626433832795028841971693993751;
     
-    Rotation::Rotation()
+    Rotation::Rotation() : x(0.0f), y(0.0f)
     {
     }
 
@@ -590,7 +592,7 @@ namespace mvcgame {
 
 #pragma mark - Scale
     
-    Scale::Scale()
+    Scale::Scale() : x(1.0f), y(1.0f)
     {
     }
     

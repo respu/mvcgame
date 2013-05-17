@@ -1,10 +1,3 @@
-//
-//  TimeTest.cpp
-//  hydra
-//
-//  Created by Miguel Ibero on 19/12/12.
-//
-//
 
 #include <mvcgame/Time.hpp>
 #include <mvcgame/Geometry.hpp>

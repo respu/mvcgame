@@ -1,0 +1,306 @@
+﻿Compilación iniciada a las 17/05/2013 22:59:51.
+     1>Proyecto "E:\Projects\sp-mobile-mvcgraphics\proj\vstudio2012\tests\tests.vcxproj" en el nodo 2 (Build destinos).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\test\GeometryTest.cpp ..\..\..\test\main.cpp ..\..\..\test\TimeTest.cpp
+         TimeTest.cpp
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\gtest-printers.h(547): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\gtest-printers.h(555): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4247) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator9<T1,T2,T3,T4,T5,T6,T7,T8,T9>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2955: 'testing::internal::ParamGeneratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(142) : vea la declaración de 'testing::internal::ParamGeneratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4017): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4028): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4028): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4033): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4033): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator9<T1,T2,T3,T4,T5,T6,T7,T8,T9>::Iterator' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C2955: 'testing::internal::ParamIteratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(69) : vea la declaración de 'testing::internal::ParamIteratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4042): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4042): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4075): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4075): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4117): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4117): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4121): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4121): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4202): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4202): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4503) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator10<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2955: 'testing::internal::ParamGeneratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(142) : vea la declaración de 'testing::internal::ParamGeneratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4256): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4268): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4268): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4273): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4273): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator10<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::Iterator' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C2955: 'testing::internal::ParamIteratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(69) : vea la declaración de 'testing::internal::ParamIteratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4282): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4282): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4318): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4318): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4364): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4364): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4368): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4368): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4454): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4454): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4764) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductHolder9<Generator1,Generator2,Generator3,Generator4,Generator5,Generator6,Generator7,Generator8,Generator9>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4811) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductHolder10<Generator1,Generator2,Generator3,Generator4,Generator5,Generator6,Generator7,Generator8,Generator9,Generator10>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\test\timetest.cpp(31): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\timetest.cpp(37): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\timetest.cpp(38): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\timetest.cpp(43): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+         main.cpp
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\gtest-printers.h(547): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\gtest-printers.h(555): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4247) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator9<T1,T2,T3,T4,T5,T6,T7,T8,T9>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2955: 'testing::internal::ParamGeneratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(142) : vea la declaración de 'testing::internal::ParamGeneratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4017): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4028): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4028): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4033): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4033): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator9<T1,T2,T3,T4,T5,T6,T7,T8,T9>::Iterator' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C2955: 'testing::internal::ParamIteratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(69) : vea la declaración de 'testing::internal::ParamIteratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4042): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4042): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4075): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4075): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4117): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4117): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4121): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4121): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4202): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4202): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4503) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator10<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2955: 'testing::internal::ParamGeneratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(142) : vea la declaración de 'testing::internal::ParamGeneratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4256): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4268): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4268): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4273): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4273): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator10<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::Iterator' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C2955: 'testing::internal::ParamIteratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(69) : vea la declaración de 'testing::internal::ParamIteratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4282): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4282): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4318): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4318): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4364): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4364): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4368): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4368): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4454): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4454): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4764) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductHolder9<Generator1,Generator2,Generator3,Generator4,Generator5,Generator6,Generator7,Generator8,Generator9>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4811) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductHolder10<Generator1,Generator2,Generator3,Generator4,Generator5,Generator6,Generator7,Generator8,Generator9,Generator10>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+         GeometryTest.cpp
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\gtest-printers.h(547): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\gtest-printers.h(555): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4247) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator9<T1,T2,T3,T4,T5,T6,T7,T8,T9>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4015): error C2955: 'testing::internal::ParamGeneratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(142) : vea la declaración de 'testing::internal::ParamGeneratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4017): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4028): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4028): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4033): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4033): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator9<T1,T2,T3,T4,T5,T6,T7,T8,T9>::Iterator' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4040): error C2955: 'testing::internal::ParamIteratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(69) : vea la declaración de 'testing::internal::ParamIteratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4042): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4042): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4075): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4075): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4117): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4117): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4121): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4121): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4202): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4202): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4503) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator10<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4254): error C2955: 'testing::internal::ParamGeneratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(142) : vea la declaración de 'testing::internal::ParamGeneratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4256): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4268): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4268): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4273): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4273): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductGenerator10<T1,T2,T3,T4,T5,T6,T7,T8,T9,T10>::Iterator' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4280): error C2955: 'testing::internal::ParamIteratorInterface' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util.h(69) : vea la declaración de 'testing::internal::ParamIteratorInterface'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4282): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4282): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4318): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4318): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4364): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4364): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4368): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4368): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4454): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4454): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4764) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductHolder9<Generator1,Generator2,Generator3,Generator4,Generator5,Generator6,Generator7,Generator8,Generator9>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4736): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C2977: 'std::tuple' : hay demasiados argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+                 e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4811) : vea la referencia a la creación de instancias de plantilla de clase 'testing::internal::CartesianProductHolder10<Generator1,Generator2,Generator3,Generator4,Generator5,Generator6,Generator7,Generator8,Generator9,Generator10>' que se está compilando
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C3203: 'tuple' : plantilla de clase no especializada no se puede utilizar como argumento de plantilla para el parámetro de plantilla 'T'; se esperaba un tipo real
+     1>e:\projects\sp-mobile-mvcgraphics\lib\googletest\include\gtest\internal\gtest-param-util-generated.h(4780): error C2955: 'std::tuple' : el uso de plantilla de clase requiere una lista de argumentos de plantilla
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\utility(73) : vea la declaración de 'std::tuple'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(10): warning C4305: 'argumento' : truncamiento de 'double' a 'mvcgame::gunit_t'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(11): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(12): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(14): warning C4305: 'argumento' : truncamiento de 'double' a 'mvcgame::gunit_t'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(21): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(22): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(30): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(31): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(41): warning C4305: 'argumento' : truncamiento de 'double' a 'mvcgame::gunit_t'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(212): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(213): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(217): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+     1>e:\projects\sp-mobile-mvcgraphics\test\geometrytest.cpp(218): warning C4305: 'argumento' : truncamiento de 'double' a 'float'
+         Generando código...
+     1>Compilación del proyecto terminada "E:\Projects\sp-mobile-mvcgraphics\proj\vstudio2012\tests\tests.vcxproj" (Build destinos) -- ERROR.
+
+ERROR al compilar.
+
+Tiempo transcurrido 00:00:02.28

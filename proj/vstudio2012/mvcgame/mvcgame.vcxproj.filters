@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de código fuente">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de código fuente\action">
+      <UniqueIdentifier>{5ab32fe5-0757-47a8-8573-501af66a438c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\action">
+      <UniqueIdentifier>{99460726-543e-467a-be1d-93ec80b3af3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\view">
+      <UniqueIdentifier>{70935b31-f373-4190-bd66-2fc80ac86963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\event">
+      <UniqueIdentifier>{22950b3a-2ac4-470b-8995-3e71fdef3c8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\view">
+      <UniqueIdentifier>{7ada751b-7c8c-4fd3-9819-a3a522ef79c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\event">
+      <UniqueIdentifier>{b4870d36-e07a-41d2-b904-2a13656c1ce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\controller">
+      <UniqueIdentifier>{f6cc3640-8ff1-450c-a2f0-faea6a0bf925}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\controller">
+      <UniqueIdentifier>{9e89cf73-d8ec-4d29-ac1f-5fd33d1dff7e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\mvcgame\Easing.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\Geometry.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\Time.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\action\ActionRunner.cpp">
+      <Filter>Archivos de código fuente\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\action\TweenAction.cpp">
+      <Filter>Archivos de código fuente\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\BaseColorView.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\BaseTextView.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\BaseView.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\event\Events.cpp">
+      <Filter>Archivos de código fuente\event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\event\EventEmitter.cpp">
+      <Filter>Archivos de código fuente\event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\controller\RootViewController.cpp">
+      <Filter>Archivos de código fuente\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\TextureFrame.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\controller\ViewController.cpp">
+      <Filter>Archivos de código fuente\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\Color.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\mvcgame\Application.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\Easing.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\Geometry.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\IApplication.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\Time.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\action\ActionRunner.hpp">
+      <Filter>Archivos de encabezado\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\action\IAction.hpp">
+      <Filter>Archivos de encabezado\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\BaseColorView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\BaseTextView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\BaseView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\Color.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\ColorView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\IColorView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\ISprite.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\ISpriteBatch.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\ITexture.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\ITexturePool.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\ITextView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\IView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\IViewMask.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\event\EventEmitter.hpp">
+      <Filter>Archivos de encabezado\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\event\Events.hpp">
+      <Filter>Archivos de encabezado\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\event\IResponder.hpp">
+      <Filter>Archivos de encabezado\event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\TextureFrame.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\TextView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\action\TweenAction.hpp">
+      <Filter>Archivos de encabezado\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\controller\RootViewController.hpp">
+      <Filter>Archivos de encabezado\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\controller\ViewController.hpp">
+      <Filter>Archivos de encabezado\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\View.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -8,7 +8,7 @@
 
 #include <mvcgame/Time.hpp>
 #include <math.h>
-#include <sys/time.h>
+#include <chrono>
 
 #define FLOATTIME_EQ_ULP 4
 #define FIXED_TIME_FACTOR 1000000
@@ -17,32 +17,32 @@ namespace mvcgame {
 
 #pragma mark - Duration
     
-    const Duration Duration::years(duration_t y)
+    const Duration Duration::years(duration_part_t y)
     {
         return Duration(365*24*60*60*FIXED_TIME_FACTOR*y);
     }
     
-    const Duration Duration::months(duration_t m)
+    const Duration Duration::months(duration_part_t m)
     {
         return Duration(12*24*60*60*FIXED_TIME_FACTOR*m);
     }
     
-    const Duration Duration::days(duration_t d)
+    const Duration Duration::days(duration_part_t d)
     {
         return Duration(24*60*60*FIXED_TIME_FACTOR*d);
     }
     
-    const Duration Duration::hours(duration_t h)
+    const Duration Duration::hours(duration_part_t h)
     {
         return Duration(60*60*FIXED_TIME_FACTOR*h);
     }
     
-    const Duration Duration::mins(duration_t m)
+    const Duration Duration::mins(duration_part_t m)
     {
         return Duration(60*FIXED_TIME_FACTOR*m);
     }
     
-    const Duration Duration::secs(duration_t s)
+    const Duration Duration::secs(duration_part_t s)
     {
         return Duration(FIXED_TIME_FACTOR*s);
     }
@@ -122,32 +122,32 @@ namespace mvcgame {
         return Time(_value+(fixedtime_t)s);
     }
 
-    duration_t Duration::years() const
+    duration_part_t Duration::years() const
     {
         return _value/(365*24*60*60*FIXED_TIME_FACTOR);
     }
     
-    duration_t Duration::months() const
+    duration_part_t Duration::months() const
     {
         return _value/(12*24*60*60*FIXED_TIME_FACTOR);
     }
     
-    duration_t Duration::days() const
+    duration_part_t Duration::days() const
     {
         return _value/(24*60*60*FIXED_TIME_FACTOR);
     }
     
-    duration_t Duration::hours() const
+    duration_part_t Duration::hours() const
     {
         return _value/(60*60*FIXED_TIME_FACTOR);
     }
     
-    duration_t Duration::mins() const
+    duration_part_t Duration::mins() const
     {
         return _value/(60*FIXED_TIME_FACTOR);
     }
     
-    duration_t Duration::secs() const
+    duration_part_t Duration::secs() const
     {
         return _value/(FIXED_TIME_FACTOR);
     }
@@ -171,9 +171,10 @@ namespace mvcgame {
 
     const Time Time::now()
     {
-        struct timeval tv;
-        gettimeofday(&tv, nullptr);
-        return Time(tv.tv_sec*(uint64_t)1000000+tv.tv_usec);
+		auto time = std::chrono::system_clock::now();
+		auto epoch = time.time_since_epoch();
+		auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
+		return Time(millis.count());
     }
     
     Time::Time() : _value(0)

@@ -8,33 +8,33 @@
 #include <mvcgame/view/Color.hpp>
 #include <mvcgame/Geometry.hpp>
 
+const mvcgame::gunit_t MainMenuController::_titleSize = 50;
+
 MainMenuController::MainMenuController()
 {
 }
 
 void MainMenuController::controllerAdded()
 {
-	mvcgame::ColorView* bg = new mvcgame::ColorView();
+	auto bg = std::unique_ptr<mvcgame::ColorView>(new mvcgame::ColorView());
 
 	bg->setBackgroundColor(mvcgame::Color(255, 255, 195));	
 	bg->setFrame(getParent().getView().getFrame());
 	
-	setView(mvcgame::IViewPtr(bg));
+	setView(std::move(bg));
 	
 	bg->addChild(std::move(createTitleView("mvcgame test", 0)));	
 
-	MainMenuOptionController* option = nullptr;
+	auto option = std::unique_ptr<mvcgame::ViewController>(new MainMenuOptionController("play"));
+	addChild(std::move(option));		
 
-	option = new MainMenuOptionController("play");
-	addChild(mvcgame::IViewControllerPtr(option));		
-
-	option = new MainMenuOptionController("credits");
-	addChild(mvcgame::IViewControllerPtr(option));	
+	option = std::unique_ptr<mvcgame::ViewController>(new MainMenuOptionController("credits"));
+	addChild(std::move(option));
 }
 
-mvcgame::IViewPtr MainMenuController::createTitleView(const std::string& name, mvcgame::gunit_t y)
+std::unique_ptr<mvcgame::View> MainMenuController::createTitleView(const std::string& name, mvcgame::gunit_t y)
 {
-	mvcgame::TextView* title = new mvcgame::TextView();
+	auto title = std::unique_ptr<mvcgame::TextView>(new mvcgame::TextView());
 	mvcgame::Rect f(getParent().getView().getFrame());
 
 	f.origin.y = f.size.height/2-y;
@@ -45,10 +45,10 @@ mvcgame::IViewPtr MainMenuController::createTitleView(const std::string& name, m
 
 	title->setTextFont("Arial");
 	title->setTextColor(mvcgame::Color(mvcgame::Colors::Black));
-	title->setTextHorizontalAlign(mvcgame::ITextView::HorizontalAlign::Center);
-	title->setTextVerticalAlign(mvcgame::ITextView::VerticalAlign::Center);
+	title->setTextHorizontalAlign(mvcgame::TextView::HorizontalAlign::Center);
+	title->setTextVerticalAlign(mvcgame::TextView::VerticalAlign::Center);
 	title->setTextSize(_titleSize);
 	title->setText(name);
 
-	return mvcgame::IViewPtr(title);
+	return std::move(title);
 }

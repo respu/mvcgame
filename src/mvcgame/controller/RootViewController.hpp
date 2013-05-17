@@ -1,7 +1,7 @@
 #ifndef mvcgame_RootViewController_hpp
 #define mvcgame_RootViewController_hpp
 
-#include <mvcgame/controller/BaseViewController.hpp>
+#include <mvcgame/controller/ViewController.hpp>
 #include <mvcgame/event/EventEmitter.hpp>
 #include <memory>
 
@@ -12,25 +12,20 @@ namespace mvcgame {
     class Point;
     typedef std::vector<Point> Points;
 
-    class RootViewController : public BaseViewController
+    class RootViewController : public ViewController
     {
     private:
-    	IViewPtr _view;
+    	std::unique_ptr<View> _view;
         EventEmitter _eventEmitter;
         std::unique_ptr<UpdateEvent> _lastUpdateEvent;
         std::unique_ptr<TouchEvent> _lastTouchEvent;
 
     public:
     	RootViewController();
-    	~RootViewController();
 
-        const IView& getView() const;
-        IView& getView();
-        void setView(IViewPtr view);
-
-        const IViewController& getParent() const;
-        IViewController& getParent();
-        void setParent(IViewController& parent);
+        const ViewController& getParent() const;
+        ViewController& getParent();
+        void setParent(ViewController& parent);
         void removeFromParent();
 
         void emitUpdate();

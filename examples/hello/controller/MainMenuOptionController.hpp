@@ -11,7 +11,7 @@
 class MainMenuOptionController : public mvcgame::ViewController
 {
 private:
-	static constexpr mvcgame::gunit_t _textSize = 40;
+	static const mvcgame::gunit_t _textSize;
 	std::string _text;
 public:
 	MainMenuOptionController(const std::string& text);

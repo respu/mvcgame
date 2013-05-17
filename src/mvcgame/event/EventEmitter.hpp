@@ -13,7 +13,7 @@
 
 namespace mvcgame {
 
-	class IViewController;
+	class ViewController;
 	class IResponder;
 	class UpdateEvent;
 	class TouchEvent;
@@ -26,15 +26,15 @@ namespace mvcgame {
 	class EventEmitter
 	{
 	private:
-		IViewController& _root;
+		ViewController& _root;
 
-		void emitUpdate(UpdateEvent& event, IViewController& controller);
-		void emitTouchStart(TouchEvent& event, IViewController& controller);
-        void emitTouchEnd(EndTouchEvent& event, IViewController& controller);
-        void findTouchResponders(const Point& p, TouchEvent& event, IViewController& controller);
-        void findTouchResponders(TouchEvent& event, IViewController& controller);
+		void emitUpdate(UpdateEvent& event, ViewController& controller);
+		void emitTouchStart(TouchEvent& event, ViewController& controller);
+        void emitTouchEnd(EndTouchEvent& event, ViewController& controller);
+        void findTouchResponders(const Point& p, TouchEvent& event, ViewController& controller);
+        void findTouchResponders(TouchEvent& event, ViewController& controller);
 	public:
-		EventEmitter(IViewController& root);
+		EventEmitter(ViewController& root);
 		~EventEmitter();
 
 		void emitUpdate(UpdateEvent& event);

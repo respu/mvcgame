@@ -1,8 +1,22 @@
-#ifndef mvcgame_Application_hpp
-#define mvcgame_Application_hpp
 
-#ifdef MVCGAME_PLATFORM_COCOS2DX
-#include <mvcgame/platform/cocos2dx/Application.hpp>
-#endif
+
+#ifndef mvcgame_IApplication_hpp
+#define mvcgame_IApplication_hpp
+
+#include <memory>
+
+namespace mvcgame {
+
+	class ViewController;
+	class Size;
+
+	class Application
+	{
+	public:
+		void setSize(const Size& size);
+		void setViewController(std::unique_ptr<ViewController> ctrl);
+		void run();
+	};
+}
 
 #endif

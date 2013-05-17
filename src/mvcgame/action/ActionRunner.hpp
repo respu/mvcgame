@@ -10,17 +10,16 @@
 #define mvcgame_ActionRunner_hpp
 
 #include <mvcgame/Time.hpp>
+#include <mvcgame/action/IAction.hpp>
 
 #include <vector>
 #include <memory>
 
 namespace mvcgame {
 
-    class IAction;
-    class IView;
+    class View;
     class UpdateEvent;
     class RunningAction;
-    typedef std::unique_ptr<IAction> IActionPtr;
     typedef std::unique_ptr<RunningAction> RunningActionPtr;        
 
     /**
@@ -29,11 +28,11 @@ namespace mvcgame {
     class RunningAction final
     {
     public:
-        IActionPtr action;
+        std::unique_ptr<IAction> action;
         Time start;
         Duration duration;
 
-        RunningAction(IActionPtr paction, const Time& pstart, const Duration& pduration);
+        RunningAction(std::unique_ptr<IAction> paction, const Time& pstart, const Duration& pduration);
         ~RunningAction();
     };
 
@@ -53,12 +52,12 @@ namespace mvcgame {
 
         void clear();
         
-        void add(IActionPtr action);
-        void add(IActionPtr action, const Duration& duration);
+        void add(std::unique_ptr<IAction> action);
+        void add(std::unique_ptr<IAction> action, const Duration& duration);
         
         void remove(const IAction& action);
 
-        void update(IView& view, UpdateEvent& event);
+        void update(View& view, UpdateEvent& event);
     };    
 }
 

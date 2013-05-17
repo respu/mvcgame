@@ -1,6 +1,3 @@
-[submodule "lib/cocos2d-x"]
-	path = lib/cocos2d-x
-	url = git://github.com/cocos2d/cocos2d-x.git
 [submodule "lib/googletest"]
 	path = lib/googletest
 	url = git://github.com/smarr/googletest.git

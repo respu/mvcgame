@@ -1,10 +1,3 @@
-//
-//  GeometryTest.cpp
-//  hydra
-//
-//  Created by Miguel Ibero on 17/12/12.
-//
-//
 
 #include <mvcgame/Geometry.hpp>
 #include <math.h>

@@ -25,8 +25,8 @@ namespace mvcgame {
      */
     class Point final {
     public:   
-        gunit_t x = 0.0f;
-        gunit_t y = 0.0f;
+        gunit_t x;
+        gunit_t y;
     
         Point();
         Point(gunit_t px, gunit_t py);
@@ -68,8 +68,8 @@ namespace mvcgame {
         mutable gunit_t _value;
         mutable bool _hasValue;
     public:
-        gunit_t x = 0.0f;
-        gunit_t y = 0.0f;
+        gunit_t x;
+        gunit_t y;
 
         Distance();
         Distance(gunit_t px, gunit_t py);
@@ -101,8 +101,8 @@ namespace mvcgame {
      */
     class Anchor final {
     public:
-        gunit_t x = 0.5f;
-        gunit_t y = 0.5f;
+        gunit_t x;
+        gunit_t y;
     
         Anchor();
         Anchor(gunit_t px, gunit_t py);
@@ -130,8 +130,8 @@ namespace mvcgame {
     
     class Size final {
     public:
-        gunit_t width = 0.0f;
-        gunit_t height = 0.0f;
+        gunit_t width;
+        gunit_t height;
         
         Size();
         Size(gunit_t w, gunit_t h);
@@ -195,10 +195,10 @@ namespace mvcgame {
     private:
         void correct();
     public:
-        gunit_t x = 0.0f;
-        gunit_t y = 0.0f;
+        gunit_t x;
+        gunit_t y;
 
-        static constexpr gunit_t Pi = 3.1415926535897932384626433832795028841971693993751;
+        static const gunit_t Pi;
         
         Rotation();
         Rotation(gunit_t px);
@@ -216,8 +216,8 @@ namespace mvcgame {
     
     class Scale final {
     public:        
-        gunit_t x = 1.0f;
-        gunit_t y = 1.0f;
+        gunit_t x;
+        gunit_t y;
 
         Scale();
         Scale(gunit_t px);
@@ -234,6 +234,24 @@ namespace mvcgame {
 
         const Scale operator/(const Scale& s) const;
         Scale& operator/=(const Scale& s);       
+    };
+
+    /**
+     * A transformation matrix
+     */
+    class AffineTransform final {
+    public:
+        gunit_t a;
+        gunit_t b;
+        gunit_t c;
+        gunit_t d;
+        gunit_t tx;
+        gunit_t ty;
+
+        AffineTransform();
+        AffineTransform(gunit_t pa, gunit_t pb, gunit_t pc,
+            gunit_t d, gunit_t tx, gunit_t ty);
+
     };
 }
 
