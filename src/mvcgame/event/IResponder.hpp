@@ -1,10 +1,3 @@
-//
-//  IResponder.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_IResponder_hpp
 #define mvcgame_IResponder_hpp

@@ -5,7 +5,6 @@
 #include <mvcgame/view/TextView.hpp>
 #include <mvcgame/view/ColorView.hpp>
 #include <mvcgame/view/Color.hpp>
-#include <mvcgame/Geometry.hpp>
 
 const mvcgame::gunit_t MainMenuOptionController::_textSize = 40;
 

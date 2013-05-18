@@ -1,15 +1,8 @@
-//
-//  Time.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_Time_hpp
 #define mvcgame_Time_hpp
 
-#include <mvcgame/Geometry.hpp>
+#include <mvcgame/base/Geometry.hpp>
 #include <stdint.h>
 
 namespace mvcgame {
@@ -18,8 +11,8 @@ namespace mvcgame {
      * timestamp in microseconds without more precision
      */
     typedef uint64_t fixedtime_t;
-    typedef int16_t duration_part_t;
-    typedef int8_t duration_t;    
+    typedef int8_t duration_part_t;
+    typedef int64_t duration_t;    
     
     class Time;
     class Accel;

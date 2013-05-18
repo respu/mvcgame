@@ -1,15 +1,8 @@
-//
-//  ActionRunner.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_ActionRunner_hpp
 #define mvcgame_ActionRunner_hpp
 
-#include <mvcgame/Time.hpp>
+#include <mvcgame/base/Time.hpp>
 #include <mvcgame/action/IAction.hpp>
 
 #include <vector>

@@ -4,7 +4,7 @@
 #define mvcgame_examples_hello_MainMenuController_hpp
 
 #include <mvcgame/controller/ViewController.hpp>
-#include <mvcgame/Geometry.hpp>
+#include <mvcgame/base/Geometry.hpp>
 
 class MainMenuController : public mvcgame::ViewController
 {

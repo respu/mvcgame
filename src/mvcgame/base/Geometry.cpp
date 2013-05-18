@@ -1,16 +1,11 @@
-//
-//  Geometry.cpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
-#include <mvcgame/Geometry.hpp>
-#include <mvcgame/Time.hpp>
-#include <math.h>
+#include <mvcgame/base/Geometry.hpp>
+#include <mvcgame/base/Time.hpp>
+
+#include <cmath>
 #include <limits>
 #include <algorithm>
+#include <sstream>
 
 #define GUNIT_EQ_ULP 4
 
@@ -24,14 +19,24 @@ namespace mvcgame {
         gunit_t epsilon = std::numeric_limits<gunit_t>::epsilon()*GUNIT_EQ_ULP;
         return fabs(a - b) <= epsilon * std::max(fabs(a), fabs(b));
     }
-    
-#pragma mark - Point
-    
-    Point::Point() : x(0.0f), y(0.0f)
+
+#pragma mark - Vector2
+
+    Vector2::Vector2() : x(0.0f), y(0.0f)
     {
     }
 
-    Point::Point(gunit_t px, gunit_t py) : x(px), y(py)
+    Vector2::Vector2(gunit_t px, gunit_t py) : x(px), y(py)
+    {
+    }
+
+#pragma mark - Point
+
+    Point::Point()
+    {
+    }
+
+    Point::Point(gunit_t x, gunit_t y) : Vector2(x, y)
     {
     }
 
@@ -52,7 +57,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Point Point::operator+(const gunit_t& p) const
+    Point Point::operator+(const gunit_t& p) const
     {
         return Point(x+p, y+p);
     }
@@ -64,21 +69,9 @@ namespace mvcgame {
         return *this;
     }
 
-    const Point Point::operator+(const Distance& d) const
+    Point Point::operator+(const Distance& d) const
     {
         return Point(x+d.x, y+d.y);
-    }
-
-    Point& Point::operator+=(const Point& p)
-    {
-        x += p.x;
-        y += p.y;
-        return *this;
-    }
-
-    const Point Point::operator+(const Point& p) const
-    {
-        return Point(x+p.x, y+p.y);
     }
 
     Point& Point::operator-=(const Distance& d)
@@ -95,7 +88,7 @@ namespace mvcgame {
         return *this;
     }    
 
-    const Distance Point::operator-(const Point& p) const
+    Distance Point::operator-(const Point& p) const
     {
         return Distance(x-p.x, y-p.y);
     }
@@ -107,7 +100,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Point Point::operator-(const gunit_t& p) const
+    Point Point::operator-(const gunit_t& p) const
     {
         return Point(x-p, y-p);
     }        
@@ -119,22 +112,44 @@ namespace mvcgame {
         return *this;
     }
 
-    const Point Point::operator*(const gunit_t& s) const
+    Point Point::operator*(const gunit_t& s) const
     {
         return Point(x*s, y*s);
     }
 
     Point& Point::operator*=(const Scale& s)
     {
-        x *= s.x;
-        y *= s.y;
+        return operator*=(ScaleTransform(s));
+    }
+
+    Point Point::operator*(const Scale& s) const
+    {
+        return operator*(ScaleTransform(s));
+    }
+
+    Point& Point::operator*=(const Rotation& r)
+    {
+        return operator*=(ScaleTransform(r));
+    }
+
+    Point Point::operator*(const Rotation& r) const
+    {
+        return operator*(ScaleTransform(r));
+    }
+
+    Point& Point::operator*=(const ScaleTransform& s)
+    {
+        Vector2 v = s*(*this);
+        x = v.x;
+        y = v.y;
         return *this;
     }
 
-    const Point Point::operator*(const Scale& s) const
+    Point Point::operator*(const ScaleTransform& s) const
     {
-        return Point(x*s.x, y*s.y);
-    }        
+        Vector2 v = s*(*this);
+        return Point(v.x, v.y);
+    }
 
     Point& Point::operator/=(const gunit_t& s)
     {
@@ -143,44 +158,29 @@ namespace mvcgame {
         return *this;
     }
 
-    const Point Point::operator/(const gunit_t& s) const
+    Point Point::operator/(const gunit_t& s) const
     {
         return Point(x/s, y/s);
     }
 
-    const Scale Point::operator/(const Point& p) const
+    Scale Point::operator/(const Point& p) const
     {
         return Scale(x/p.x, y/p.y);
-    }        
-
-    const Anchor Point::operator/(const Size& s) const
-    {
-        return Anchor(x/s.width, y/s.height);
-    }
-
-    const Size Point::operator/(const Anchor& a) const
-    {
-        return Size(x/a.x, y/a.y);
     }
 
 #pragma mark - Distance
-    
-    Distance::Distance() : x(0.0f), y(0.0f)
+
+    Distance::Distance()
     {
     }
 
-    Distance::Distance(gunit_t px, gunit_t py) : x(px), y(py)
+    Distance::Distance(gunit_t x, gunit_t y) : Vector2(x, y)
     {
     }
 
     Distance::operator gunit_t() const
     {
-        if(!_hasValue)
-        {
-            _value = sqrt(x*x+y*y);
-            _hasValue = true;
-        }
-        return _value;
+        return sqrt(x*x+y*y);
     }
     
     bool Distance::operator==(const Distance& d) const
@@ -193,12 +193,12 @@ namespace mvcgame {
         return !guniteq(x, d.x) || !guniteq(y, d.y);
     }
 
-    const Point Distance::operator+(const Point& p)
+    Point Distance::operator+(const Point& p)
     {
         return Point(x+p.x, y+p.y);
     }
 
-    const Speed Distance::operator/(const Duration& d)
+    Speed Distance::operator/(const Duration& d)
     {
         float dt = d.fsecs();
         return Speed(x/dt, y/dt);
@@ -211,7 +211,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Distance Distance::operator+(const Distance& d) const
+    Distance Distance::operator+(const Distance& d) const
     {
         return Distance(x+d.x, y+d.y);
     }
@@ -223,7 +223,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Distance Distance::operator+(const gunit_t& d) const
+    Distance Distance::operator+(const gunit_t& d) const
     {
         return Distance(x+d, y+d);
     }
@@ -235,7 +235,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Distance Distance::operator-(const Distance& d) const
+    Distance Distance::operator-(const Distance& d) const
     {
         return Distance(x-d.x, y-d.y);
     }
@@ -247,9 +247,75 @@ namespace mvcgame {
         return *this;
     }
 
-    const Distance Distance::operator-(const gunit_t& d) const
+    Distance Distance::operator-(const gunit_t& d) const
     {
         return Distance(x-d, y-d);
+    }
+
+    Distance Distance::operator*(const gunit_t& s) const
+    {
+        return Distance(x*s, y*s);
+    }
+
+    Distance& Distance::operator*=(const Scale& s)
+    {
+        return operator*=(ScaleTransform(s));
+    }
+
+    Distance Distance::operator*(const Scale& s) const
+    {
+        return operator*(ScaleTransform(s));
+    }
+
+    Distance& Distance::operator*=(const Rotation& r)
+    {
+        return operator*=(ScaleTransform(r));
+    }
+
+    Distance Distance::operator*(const Rotation& r) const
+    {
+        return operator*(ScaleTransform(r));
+    }
+
+    Distance& Distance::operator*=(const ScaleTransform& s)
+    {
+        Vector2 v = s*(*this);
+        x = v.x;
+        y = v.y;
+        return *this;
+    }
+
+    Distance Distance::operator*(const ScaleTransform& s) const
+    {
+        Vector2 v = s*(*this);       
+        return Distance(v.x, v.y);
+    }
+
+    Distance& Distance::operator/=(const gunit_t& s)
+    {
+        x /= s;
+        y /= s;
+        return *this;
+    }
+
+    Distance Distance::operator/(const gunit_t& s) const
+    {
+        return Distance(x/s, y/s);
+    }
+
+    Scale Distance::operator/(const Distance& d) const
+    {
+        return Scale(x/d.x, y/d.y);
+    }    
+
+    Anchor Distance::operator/(const Size& s) const
+    {
+        return Anchor(x/s.width, y/s.height);
+    }
+
+    Size Distance::operator/(const Anchor& a) const
+    {
+        return Size(x/a.x, y/a.y);
     }
 
 #pragma mark - Anchor
@@ -279,7 +345,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Anchor Anchor::operator+(const Anchor& a) const
+    Anchor Anchor::operator+(const Anchor& a) const
     {
         return Anchor(x+a.x, y+a.y);
     }
@@ -291,7 +357,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Anchor Anchor::operator+(const gunit_t& a) const
+    Anchor Anchor::operator+(const gunit_t& a) const
     {
         return Anchor(x+a, y+a);
     }
@@ -303,7 +369,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Anchor Anchor::operator-(const Anchor& a) const
+    Anchor Anchor::operator-(const Anchor& a) const
     {
         return Anchor(x-a.x, y-a.y);
     }
@@ -315,7 +381,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Anchor Anchor::operator-(const gunit_t& a) const
+    Anchor Anchor::operator-(const gunit_t& a) const
     {
         return Anchor(x-a, y-a);
     }        
@@ -327,7 +393,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Anchor Anchor::operator*(const gunit_t& s) const
+    Anchor Anchor::operator*(const gunit_t& s) const
     {
         return Anchor(x*s, y*s);
     }
@@ -339,14 +405,14 @@ namespace mvcgame {
         return *this;
     }
 
-    const Anchor Anchor::operator/(const gunit_t& s) const
+    Anchor Anchor::operator/(const gunit_t& s) const
     {
         return Anchor(x/s, y/s);
     }
 
-    const Point Anchor::operator*(const Size& s) const
+    Distance Anchor::operator*(const Size& s) const
     {
-        return Point(x*s.width, y*s.height);
+        return Distance(x*s.width, y*s.height);
     }
 
 #pragma mark - Size
@@ -376,7 +442,7 @@ namespace mvcgame {
         return *this;
     }
     
-    const Size Size::operator+(const gunit_t& s) const
+    Size Size::operator+(const gunit_t& s) const
     {
         return Size(width+s, height+s);
     }
@@ -388,17 +454,17 @@ namespace mvcgame {
         return *this;
     }
     
-    const Size Size::operator-(const gunit_t& s) const
+    Size Size::operator-(const gunit_t& s) const
     {
         return Size(width-s, height-s);
     }
 
-    const Point Size::operator*(const Anchor& a) const
+    Point Size::operator*(const Anchor& a) const
     {
         return Point(width*a.x, height*a.y);
     }
 
-    const Anchor Size::operator/(const Point& p) const
+    Anchor Size::operator/(const Point& p) const
     {
         return Anchor(width/p.x, height/p.y);
     }
@@ -410,7 +476,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Size Size::operator/(const gunit_t& s) const
+    Size Size::operator/(const gunit_t& s) const
     {
         return Size(width/s, height/s);
     }
@@ -422,12 +488,12 @@ namespace mvcgame {
         return *this;
     }
 
-    const Size Size::operator*(const gunit_t& s) const
+    Size Size::operator*(const gunit_t& s) const
     {
         return Size(width*s, width*s);
     }
 
-    const Scale Size::operator/(const Size& s) const
+    Scale Size::operator/(const Size& s) const
     {
         return Scale(width/s.width, height/s.height);
     }
@@ -439,7 +505,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Size Size::operator*(const Scale& s) const
+    Size Size::operator*(const Scale& s) const
     {
         return Size(width*s.x, height*s.y);
     }
@@ -484,7 +550,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Rect Rect::operator/(const gunit_t& s) const
+    Rect Rect::operator/(const gunit_t& s) const
     {
         return Rect(origin/s, size/s);
     }
@@ -496,7 +562,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Rect Rect::operator*(const gunit_t& s) const
+    Rect Rect::operator*(const gunit_t& s) const
     {
         return Rect(origin*s, size*s);
     }
@@ -508,7 +574,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Rect Rect::operator*(const Scale& s) const
+    Rect Rect::operator*(const Scale& s) const
     {
         return Rect(origin*s, size*s);
     }
@@ -555,7 +621,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Rotation Rotation::operator+(const gunit_t& a) const
+    Rotation Rotation::operator+(const gunit_t& a) const
     {
         return Rotation(x+a, y+a);
     }
@@ -568,9 +634,19 @@ namespace mvcgame {
         return *this;
     }
 
-    const Rotation Rotation::operator-(const gunit_t& a) const
+    Rotation Rotation::operator-(const gunit_t& a) const
     {
         return Rotation(x-a, y-a);
+    }
+
+    Point Rotation::operator*(const Point& p) const
+    {
+        return p*(*this);
+    }
+
+    ScaleTransform Rotation::operator*(const Scale& s) const
+    {
+        return ScaleTransform(s, *this);
     }
 
     void Rotation::correct()
@@ -614,23 +690,35 @@ namespace mvcgame {
         return !guniteq(x, s.x) || !guniteq(y, s.y);
     }
 
-    const Rect Scale::operator*(const Rect& r) const
+    Scale& Scale::operator*=(gunit_t r)
+    {
+        x *= r;
+        y *= r;
+        return *this;
+    }
+
+    Scale Scale::operator*(gunit_t r) const
+    {
+        return Scale(*this)*r;
+    }
+
+    Rect Scale::operator*(const Rect& r) const
     {
         return Rect(r.origin.x*x, r.origin.y*y,
             r.size.width*x, r.size.height*y);
     }
 
-    const Point Scale::operator*(const Point& p) const
+    Point Scale::operator*(const Point& p) const
     {
         return Point(p.x*x, p.y*y);
     }
 
-    const Size Scale::operator*(const Size& s) const
+    Size Scale::operator*(const Size& s) const
     {
         return Size(s.width*x, s.height*y);
     }
 
-    const Scale Scale::operator/(const Scale& s) const
+    Scale Scale::operator/(const Scale& s) const
     {
         return Scale(x/s.x, y/s.y);
     }
@@ -642,7 +730,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Scale Scale::operator*(const Scale& s) const
+    Scale Scale::operator*(const Scale& s) const
     {
         return Scale(x*s.x, y*s.y);
     }
@@ -653,5 +741,185 @@ namespace mvcgame {
         y *= s.y;
         return *this;
     }
+
+    ScaleTransform Scale::operator*(const Rotation& r) const
+    {
+        return ScaleTransform(*this, r);
+    }
+
+#pragma mark - ScaleTransform
+
+    ScaleTransform::ScaleTransform() :
+    a(0.0f),
+    b(0.0f),
+    c(0.0f),
+    d(0.0f)
+    {
+
+    }
+
+    ScaleTransform::ScaleTransform(gunit_t pa, gunit_t pb, gunit_t pc, gunit_t pd) :
+    a(pa),
+    b(pb),
+    c(pc),
+    d(pd)   
+    {
+    }
+
+    ScaleTransform::ScaleTransform(const Scale& s, const Rotation& r)
+    {
+        gunit_t cx = cosf(r.x);
+        gunit_t cy = cosf(r.y);
+        gunit_t sx = sinf(r.x);
+        gunit_t sy = sinf(r.y);
+        a = cy*s.x;
+        b = sy*s.x;
+        c = -sx*s.y;
+        d = cx*s.y;
+    }
+
+    ScaleTransform::ScaleTransform(const Scale& s) :
+    a(s.x),
+    b(0.0f),
+    c(0.0f),
+    d(s.y)
+    {
+    }
+
+    ScaleTransform::ScaleTransform(const Rotation& r)
+    {
+        gunit_t cx = cosf(r.x);
+        gunit_t cy = cosf(r.y);
+        gunit_t sx = sinf(r.x);
+        gunit_t sy = sinf(r.y);
+        a = cy;
+        b = sy;
+        c = -sx;
+        d = cx;
+    }
+
+    Vector2 ScaleTransform::operator*(const Vector2& v) const
+    {
+        return Vector2(v.x*a-v.y*c, -v.x*b+v.y*d);
+    }
+
+#pragma mark - Transform
+
+    Transform::Transform() :
+    a(0.0f),
+    b(0.0f),
+    c(0.0f),
+    d(0.0f),
+    tx(0.0f),
+    ty(0.0f)
+    {
+    }
+
+    Transform::Transform(gunit_t pa, gunit_t pb, gunit_t pc,
+        gunit_t pd, gunit_t ptx, gunit_t pty) :
+    a(pa),
+    b(pb),
+    c(pc),
+    d(pd),
+    tx(ptx),
+    ty(pty)
+    {
+    }
+
+    Transform::Transform(const Point& point, const Anchor& anchor,
+        const Size& size, const Rotation& rot, const Scale& scale)
+    {
+        init(point, anchor*size, rot, scale);
+    }
+
+    Transform::Transform(const Point& point, const Distance& anchor, const Rotation& rot, const Scale& scale)
+    {
+        init(point, anchor, rot, scale);
+    }
+
+    void Transform::init(const Point& point, const Distance& anchor, const Rotation& rot, const Scale& scale)
+    {
+        ScaleTransform st = scale*rot;
+        Point tp = (anchor*st)+point;
+        a = st.a;
+        b = st.b;
+        c = st.c;
+        d = st.d;
+        tx = tp.y;
+        ty = tp.x;
+    }
+
+#pragma mark - stream functions
+
+
+    std::ostream& operator<<(std::ostream& os, const Vector2& v)
+    {
+        os << "(" << v.x << ", " << v.y << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Point& p)
+    {
+        os << "Point(" << p.x << ", " << p.y << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Distance& d)
+    {
+        os << "Distance(" << d.x << ", " << d.y << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Scale& s)
+    {
+        os << "Scale(" << s.x << ", " << s.y << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Anchor& a)
+    {
+        os << "Anchor(" << a.x << ", " << a.y << ")";
+        return os;
+    }
+
+
+    std::ostream& operator<<(std::ostream& os, const Size& s)
+    {
+        os << "Size(" << s.width << ", " << s.height << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Rotation& r)
+    {
+        gunit_t dx = 180.0f/Rotation::Pi*r.x;
+        gunit_t dy = 180.0f/Rotation::Pi*r.y;
+        os << "Rotation(" << dx;
+        if(!guniteq(dx, dy))
+        {
+            os << ", " << dy;
+        }
+        os << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const ScaleTransform& st)
+    {
+        os << "Transform(";
+        os << " a=" << st.a << ", b=" << st.b;
+        os << " c=" << st.c << ", d=" << st.d;
+        os << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Transform& t)
+    {
+        os << "Transform(";
+        os << " a=" << t.a << ", b=" << t.b;
+        os << " c=" << t.c << ", d=" << t.d;
+        os << " tx=" << t.tx << ", ty=" << t.ty;
+        os << ")";
+        return os;
+    }
+    
               
 }

@@ -1,17 +1,10 @@
-//
-//  ITexture.h
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_ITexture_hpp
 #define mvcgame_ITexture_hpp
 
-#include <mvcgame/Geometry.hpp>
-
 namespace mvcgame {
+
+    class Size;
     
     /**
      * Represents a texture

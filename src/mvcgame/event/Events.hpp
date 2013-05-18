@@ -1,16 +1,9 @@
-//
-//  Events.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_Events_hpp
 #define mvcgame_Events_hpp
 
-#include <mvcgame/Geometry.hpp>
-#include <mvcgame/Time.hpp>
+#include <mvcgame/base/Geometry.hpp>
+#include <mvcgame/base/Time.hpp>
 #include <vector>
 
 namespace mvcgame {

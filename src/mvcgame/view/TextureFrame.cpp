@@ -1,14 +1,5 @@
-//
-//  TextureFrame.cpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
-
 #include <mvcgame/view/TextureFrame.hpp>
 #include <mvcgame/view/ITexture.hpp>
-#include <mvcgame/Geometry.hpp>
 
 namespace mvcgame {
     

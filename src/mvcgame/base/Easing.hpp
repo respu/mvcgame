@@ -1,10 +1,3 @@
-//
-//  Easing.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_Easing_hpp
 #define mvcgame_Easing_hpp

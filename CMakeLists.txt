@@ -15,6 +15,7 @@ include_directories(src)
 set(MVCGAME_SOURCE_DIR "src/mvcgame")
 file(GLOB MVCGAME_SOURCES
 	"${MVCGAME_SOURCE_DIR}/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/base/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/action/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/controller/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/event/*.cpp"

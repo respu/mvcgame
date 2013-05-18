@@ -1,15 +1,6 @@
-//
-//  IAction.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_IAction_hpp
 #define mvcgame_IAction_hpp
-
-#include <mvcgame/Time.hpp>
 
 namespace mvcgame {
 

@@ -1,10 +1,3 @@
-//
-//  EventEmitter.cpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #include <mvcgame/event/EventEmitter.hpp>
 #include <mvcgame/event/Events.hpp>

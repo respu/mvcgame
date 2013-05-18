@@ -1,6 +1,6 @@
 
-#include <mvcgame/Time.hpp>
-#include <mvcgame/Geometry.hpp>
+#include <mvcgame/base/Time.hpp>
+#include <mvcgame/base/Geometry.hpp>
 #include <math.h>
 #include <gtest/gtest.h>
 

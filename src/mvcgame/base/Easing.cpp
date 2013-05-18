@@ -1,5 +1,5 @@
 
-#include <mvcgame/Easing.hpp>
+#include <mvcgame/base/Easing.hpp>
 #include <math.h>
 
 namespace mvcgame {

@@ -1,6 +1,7 @@
 
-#include <mvcgame/Geometry.hpp>
-#include <math.h>
+#include <mvcgame/base/Geometry.hpp>
+#include <cmath>
+#include <iostream>
 #include <gtest/gtest.h>
 
 using namespace mvcgame;
@@ -31,6 +32,7 @@ TEST(Geometry, point) {
     ASSERT_FLOAT_EQ(6.8, p3.y);
     
     p3 *= Scale(0.5);
+
     ASSERT_TRUE(p == p3);
     
     Scale s = p/p2;
@@ -38,13 +40,15 @@ TEST(Geometry, point) {
     ASSERT_FLOAT_EQ(1, s.x);
     ASSERT_FLOAT_EQ(1, s.y);
     
+    Distance d = p-Point();
+
     Size s1 = Size(4.6, 3.4);
-    Anchor a = p/s1;
+    Anchor a = d/s1;
     
     ASSERT_FLOAT_EQ(0.5, a.x);
     ASSERT_FLOAT_EQ(1, a.y);
     
-    Size s2 = p/a;
+    Size s2 = d/a;
     
     ASSERT_TRUE(s1 == s2);
     
@@ -87,13 +91,11 @@ TEST(Geometry, anchor) {
     ASSERT_FLOAT_EQ(0.5, a.x);
     ASSERT_FLOAT_EQ(0.5, a.y);
     
-    Point p = a*Size(10,20);
+    Distance d = a*Size(10,20);
     
-    ASSERT_FLOAT_EQ(5, p.x);
-    ASSERT_FLOAT_EQ(10, p.y);
+    ASSERT_FLOAT_EQ(5, d.x);
+    ASSERT_FLOAT_EQ(10, d.y);
 }
-
-
 
 TEST(Geometry, size) {
     

@@ -1,15 +1,8 @@
-//
-//  View.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_View_hpp
 #define mvcgame_View_hpp
 
-#include <mvcgame/Geometry.hpp>
+#include <mvcgame/base/Geometry.hpp>
 #include <mvcgame/event/IResponder.hpp>
 
 #include <vector>

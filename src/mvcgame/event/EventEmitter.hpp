@@ -1,10 +1,3 @@
-//
-//  EventEmitter.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_EventEmitter_hpp
 #define mvcgame_EventEmitter_hpp

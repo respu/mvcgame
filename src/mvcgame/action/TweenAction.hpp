@@ -1,16 +1,8 @@
-//
-//  TweenAction.hpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
 #ifndef mvcgame_TweenAction_hpp
 #define mvcgame_TweenAction_hpp
 
-#include <mvcgame/Easing.hpp>
-#include <mvcgame/Geometry.hpp>
+#include <mvcgame/base/Easing.hpp>
 #include <mvcgame/action/IAction.hpp>
 
 #include <functional>

@@ -1,7 +1,7 @@
 #include <mvcgame/controller/RootViewController.hpp>
 #include <mvcgame/view/View.hpp>
 #include <mvcgame/event/Events.hpp>
-#include <mvcgame/Time.hpp>
+#include <mvcgame/base/Time.hpp>
 
 #include <assert.h>
 

@@ -1,17 +1,11 @@
-//
-//  Time.cpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 29/11/12.
-//
-//
 
-#include <mvcgame/Time.hpp>
+#include <mvcgame/base/Time.hpp>
 #include <math.h>
 #include <chrono>
+#include <stdio.h>
 
 #define FLOATTIME_EQ_ULP 4
-#define FIXED_TIME_FACTOR 1000000
+#define FIXED_TIME_FACTOR (duration_t)1000000
 
 namespace mvcgame {
 
@@ -19,27 +13,27 @@ namespace mvcgame {
     
     const Duration Duration::years(duration_part_t y)
     {
-        return Duration(365*24*60*60*FIXED_TIME_FACTOR*y);
+        return Duration(FIXED_TIME_FACTOR*365*24*60*60*y);
     }
     
     const Duration Duration::months(duration_part_t m)
     {
-        return Duration(12*24*60*60*FIXED_TIME_FACTOR*m);
+        return Duration(FIXED_TIME_FACTOR*12*24*60*60*m);
     }
     
     const Duration Duration::days(duration_part_t d)
     {
-        return Duration(24*60*60*FIXED_TIME_FACTOR*d);
+        return Duration(FIXED_TIME_FACTOR*24*60*60*d);
     }
     
     const Duration Duration::hours(duration_part_t h)
     {
-        return Duration(60*60*FIXED_TIME_FACTOR*h);
+        return Duration(FIXED_TIME_FACTOR*60*60*h);
     }
     
     const Duration Duration::mins(duration_part_t m)
     {
-        return Duration(60*FIXED_TIME_FACTOR*m);
+        return Duration(FIXED_TIME_FACTOR*60*m);
     }
     
     const Duration Duration::secs(duration_part_t s)

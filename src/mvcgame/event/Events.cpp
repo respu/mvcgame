@@ -1,10 +1,3 @@
-//
-//  Events.cpp
-//  mvcgame
-//
-//  Created by Miguel Ibero on 19/12/12.
-//
-//
 
 #include <mvcgame/event/Events.hpp>
 

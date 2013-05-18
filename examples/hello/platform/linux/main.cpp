@@ -1,6 +1,6 @@
 #include "hello/controller/MainMenuController.hpp"
 
-#include <mvcgame/Application.hpp>
+#include <mvcgame/base/Application.hpp>
 
 #include <memory>
 
