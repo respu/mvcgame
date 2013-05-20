@@ -20,10 +20,6 @@ namespace mvcgame {
 
     View::~View()
     {
-        for(Child& child : _children)
-        {
-            child.first->removeFromParent();
-        }
         removeFromParent();
     }
 
@@ -109,26 +105,7 @@ namespace mvcgame {
     void View::addChild(std::unique_ptr<View> child, unsigned layer)
     {
         child->setParent(*this);
-        _children.push_back(Child(std::move(child), layer));
-    }
-
-    std::unique_ptr<View> View::removeChild(const View& child)
-    {
-        Children::iterator itr = findChild(child);
-        if(itr == _children.end())
-        {
-            return std::unique_ptr<View>();
-        }
-        std::unique_ptr<View> childPtr = std::move(itr->first);
-        _children.erase(itr);
-        return childPtr;
-    }
-
-    View::Children::iterator View::findChild(const View& child)
-    {
-        return std::find_if(_children.begin(), _children.end(), [&child](const View::Child& elm){
-            return elm.first.get() == &child;
-        });
+        BaseView::addChild(std::move(child), layer);
     }
 
     void View::setParent(View& parent)
@@ -138,12 +115,24 @@ namespace mvcgame {
     
     View& View::getParent()
     {
+        assert(_parent);
         return *_parent;
     }
     
     const View& View::getParent() const
     {
+        assert(_parent);
         return *_parent;
+    }
+
+    RootView& View::getRoot()
+    {
+        return getParent().getRoot();
+    }
+
+    const RootView& View::getRoot() const
+    {
+        return getParent().getRoot();
     }
 
     void View::removeFromParent()

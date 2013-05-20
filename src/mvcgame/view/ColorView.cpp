@@ -1,4 +1,5 @@
 #include <mvcgame/view/ColorView.hpp>
+#include <mvcgame/view/RootView.hpp>
 
 namespace mvcgame {
 
@@ -19,5 +20,11 @@ namespace mvcgame {
 	Color& ColorView::getBackgroundColor()
 	{
 		return _bgColor;
+	}
+
+	void ColorView::draw()
+	{
+		std::vector<Point> vertices = getFrame().getVertices();
+		getRoot().drawPolygon(vertices, _bgColor);
 	}
 }

@@ -2,11 +2,13 @@
 #define mvcgame_ViewController_hpp
 
 #include <mvcgame/action/ActionRunner.hpp>
-#include <mvcgame/event/IResponder.hpp>
+#include <mvcgame/controller/BaseViewController.hpp>
 
 namespace mvcgame {
 
-    class ViewController : public IResponder
+    class RootViewController;
+
+    class ViewController : public BaseViewController
     {
 	public:
 		typedef std::vector<std::unique_ptr<ViewController>> Children;
@@ -18,10 +20,12 @@ namespace mvcgame {
     protected:
 
         void moveChildren(View& view);
+        
         /**
          * called after the controller is added to a parent controller
          */
         virtual void controllerAdded();
+
     public:
     	ViewController();
     	virtual ~ViewController();
@@ -30,16 +34,13 @@ namespace mvcgame {
         View& getView();
 		virtual void setView(std::unique_ptr<View> view);
 
+        const RootViewController& getRoot() const;
+        RootViewController& getRoot();
         const ViewController& getParent() const;
         ViewController& getParent();
         virtual void setParent(ViewController& parent);
         void removeFromParent();
-
         void addChild(std::unique_ptr<ViewController> child);
-        std::unique_ptr<ViewController> removeChild(const ViewController& child);
-		Children::iterator findChild(const ViewController& child);
-
-        const Children& getChildren() const;
 
         void runAction(std::unique_ptr<IAction> action, const Duration& duration);
         void updateActions(UpdateEvent& event);

@@ -2,7 +2,7 @@
 #include <mvcgame/controller/ViewController.hpp>
 #include <mvcgame/view/View.hpp>
 
-#include <assert.h>
+#include <cassert>
 #include <algorithm>
 
 namespace mvcgame {
@@ -14,7 +14,6 @@ namespace mvcgame {
     ViewController::~ViewController()
     {
         removeFromParent();
-        clearChildren();
     }    
 
     void ViewController::removeFromParent()
@@ -53,6 +52,16 @@ namespace mvcgame {
         return *_parent;
     }
 
+    RootViewController& ViewController::getRoot()
+    {
+        return getParent().getRoot();
+    }
+
+    const RootViewController& ViewController::getRoot() const
+    {
+        return getParent().getRoot();
+    }
+
     void ViewController::setView(std::unique_ptr<View> view)
     {
         assert(_parent != nullptr);
@@ -89,15 +98,6 @@ namespace mvcgame {
     {
     }
 
-    void ViewController::clearChildren()
-    {
-        for(std::unique_ptr<ViewController>& child : _children)
-        {
-            child->getView().removeFromParent();
-        }
-        _children.clear();
-    }
-
     void ViewController::clearActions()
     {
         _actions.clear();
@@ -105,33 +105,8 @@ namespace mvcgame {
  
     void ViewController::addChild(std::unique_ptr<ViewController> child)
     {   
-        ViewController& c = *child;
-        _children.push_back(std::move(child));
-        c.setParent(*this);
-    }
-
-    std::unique_ptr<ViewController> ViewController::removeChild(const ViewController& child)
-    {
-        Children::iterator itr = findChild(child);
-        if(itr == _children.end())
-        {
-            return std::unique_ptr<ViewController>();
-        }
-        std::unique_ptr<ViewController> childPtr = std::move(*itr);
-        _children.erase(itr);
-        return childPtr;
-    }
-
-    ViewController::Children::iterator ViewController::findChild(const ViewController& child)
-    {
-		return std::find_if(_children.begin(), _children.end(), [&child](const std::unique_ptr<ViewController>& elm){
-            return elm.get() == &child;
-        });
-    }
-
-    const ViewController::Children& ViewController::getChildren() const
-    {
-        return _children;
+        child->setParent(*this);        
+        BaseViewController::addChild(std::move(child));
     }
 
     void ViewController::runAction(std::unique_ptr<IAction> action, const Duration& duration)

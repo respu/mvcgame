@@ -579,6 +579,16 @@ namespace mvcgame {
         return Rect(origin*s, size*s);
     }
 
+    std::vector<Point> Rect::getVertices() const
+    {
+        std::vector<Point> vertices;
+        vertices.push_back(Point(origin.x, origin.y));
+        vertices.push_back(Point(origin.x+size.width, origin.y));
+        vertices.push_back(Point(origin.x, origin.y+size.height));
+        vertices.push_back(Point(origin.x+size.width, origin.y+size.height));
+        return vertices;
+    }
+
     bool Rect::contains(const Point& p) const
     {
         return origin.x <= p.x && origin.x+size.width >= p.x &&

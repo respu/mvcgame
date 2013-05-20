@@ -5,7 +5,7 @@
 #include <mvcgame/view/View.hpp>
 #include <mvcgame/view/TextView.hpp>
 #include <mvcgame/view/ColorView.hpp>
-#include <mvcgame/view/Color.hpp>
+#include <mvcgame/base/Color.hpp>
 
 const mvcgame::gunit_t MainMenuController::_titleSize = 50;
 

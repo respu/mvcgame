@@ -1,5 +1,5 @@
 
-#include <mvcgame/view/Color.hpp>
+#include <mvcgame/base/Color.hpp>
 
 namespace mvcgame {
 

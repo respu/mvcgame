@@ -4,7 +4,7 @@
 #define mvcgame_TextView_hpp
 
 #include <mvcgame/view/View.hpp>
-#include <mvcgame/view/Color.hpp>
+#include <mvcgame/base/Color.hpp>
 
 #include <string>
 

@@ -3,7 +3,7 @@
 #define mvcgame_View_hpp
 
 #include <mvcgame/base/Geometry.hpp>
-#include <mvcgame/event/IResponder.hpp>
+#include <mvcgame/view/BaseView.hpp>
 
 #include <vector>
 #include <memory>
@@ -11,26 +11,18 @@
 namespace mvcgame {
 
     class TouchEvent;
+    class RootView;
 
-    /**
-     * This is a basic view class that doesn't draw anything
-     * Can be used by the different platforms to inherit from.
-     */
-    class View : public IResponder
+    class View : public BaseView
     {
-    public:
-        typedef std::pair<std::unique_ptr<View>, unsigned> Child;
-        typedef std::vector<Child> Children;
     protected:
         View* _parent;
-        View::Children _children;
         Rect _frame;
         Scale _scale;        
         Anchor _anchor;
         Anchor _parentAnchor;        
         Rotation _rotation;
-
-        View::Children::iterator findChild(const View& child);
+        Transform _transform;
 
         void setParent(View& parent);
     public:
@@ -61,12 +53,13 @@ namespace mvcgame {
         const Anchor& getParentAnchor() const;
         void setParentAnchor(const Anchor& a);
 
-        void addChild(std::unique_ptr<View> child, unsigned layer=0);
-        std::unique_ptr<View> removeChild(const View& child);
-
         View& getParent();
         const View& getParent() const;
         void removeFromParent();
+        void addChild(std::unique_ptr<View> child, unsigned layer=0);
+
+        RootView& getRoot();
+        const RootView& getRoot() const;
 
         bool respondToTouchPoint(const Point& p, const TouchEvent& event);
     };

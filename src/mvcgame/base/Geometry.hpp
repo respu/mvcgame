@@ -2,6 +2,7 @@
 #define mvcgame_Geometry_hpp
 
 #include <iostream>
+#include <vector>
 
 namespace mvcgame {
     
@@ -204,6 +205,8 @@ namespace mvcgame {
         Rect operator*(const gunit_t& s) const;
         Rect& operator*=(const Scale& s);
         Rect operator*(const Scale& s) const;
+
+        std::vector<Point> getVertices() const;
 
         bool contains(const Point& p) const;
     };

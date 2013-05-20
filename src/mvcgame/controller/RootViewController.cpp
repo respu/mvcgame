@@ -1,36 +1,26 @@
 #include <mvcgame/controller/RootViewController.hpp>
-#include <mvcgame/view/View.hpp>
-#include <mvcgame/event/Events.hpp>
+#include <mvcgame/base/Application.hpp>
 #include <mvcgame/base/Time.hpp>
 
-#include <assert.h>
+#include <cassert>
+#include <algorithm>
 
 namespace mvcgame {
 
-	RootViewController::RootViewController() :
-    _view(nullptr), _eventEmitter(*this), _lastUpdateEvent(nullptr), _lastTouchEvent(nullptr)
+	RootViewController::RootViewController(Application& app) :
+    _app(app), _view(app.getViewBridge()), _eventEmitter(*this),
+    _lastUpdateEvent(nullptr), _lastTouchEvent(nullptr)
 	{
 	}
 
-    const ViewController& RootViewController::getParent() const
+    const RootView& RootViewController::getView() const
     {
-		assert(false);
-		return *this;
+        return _view;
     }
 
-    ViewController& RootViewController::getParent()
+    RootView& RootViewController::getView()
     {
-    	assert(false);
-		return *this;
-    }
-
-    void RootViewController::removeFromParent()
-    {
-    }
-
-    void RootViewController::setParent(ViewController& parent)
-    {
-    	assert(false);
+        return _view;
     }
 
     void RootViewController::emitUpdate()

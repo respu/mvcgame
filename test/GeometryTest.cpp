@@ -218,7 +218,13 @@ TEST(Geometry, rotation) {
     
     ASSERT_FLOAT_EQ(3.141592, r.x);
     ASSERT_FLOAT_EQ(3.141592, r.y);
-    
+
+    Point p(0, 5);
+
+    p *= r;
+
+    ASSERT_FLOAT_EQ(0, p.x);
+    ASSERT_FLOAT_EQ(-5, p.y);
 }
 
 TEST(Geometry, scale) {
