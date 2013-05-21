@@ -12,26 +12,30 @@ namespace mvcgame {
 
     class TouchEvent;
     class RootView;
+    class IViewBridge;
 
     class View : public BaseView
     {
     protected:
         View* _parent;
+        RootView* _root;
         Rect _frame;
-        Scale _scale;        
+        Scale _scale;
         Anchor _anchor;
-        Anchor _parentAnchor;        
         Rotation _rotation;
         Transform _transform;
 
         void setParent(View& parent);
+        IViewBridge& getBridge();
+
     public:
         View();
-        View(const View& view);
+        View(const View& other);
         View(const Rect& f, const Scale& s, const Anchor& a, const Rotation& r);
         virtual ~View();
 
-        virtual void draw();
+        virtual void update();
+        void drawAsChild();
 
         Rect& getFrame();
         const Rect& getFrame() const;
@@ -47,17 +51,14 @@ namespace mvcgame {
 
         Anchor& getAnchor();
         const Anchor& getAnchor() const;
-        void setAnchor(const Anchor& a);      
-        
-        Anchor& getParentAnchor();
-        const Anchor& getParentAnchor() const;
-        void setParentAnchor(const Anchor& a);
+        void setAnchor(const Anchor& a);
 
         View& getParent();
         const View& getParent() const;
         void removeFromParent();
         void addChild(std::unique_ptr<View> child, unsigned layer=0);
 
+        void setRoot(RootView& root);
         RootView& getRoot();
         const RootView& getRoot() const;
 

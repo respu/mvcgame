@@ -20,24 +20,23 @@ namespace mvcgame {
         return fabs(a - b) <= epsilon * std::max(fabs(a), fabs(b));
     }
 
-#pragma mark - Vector2
-
-    Vector2::Vector2() : x(0.0f), y(0.0f)
-    {
-    }
-
-    Vector2::Vector2(gunit_t px, gunit_t py) : x(px), y(py)
-    {
-    }
-
 #pragma mark - Point
 
-    Point::Point()
+    Point::Point() : x(0.0f), y(0.0f)
     {
     }
 
-    Point::Point(gunit_t x, gunit_t y) : Vector2(x, y)
+    Point::Point(gunit_t px, gunit_t py) : x(px), y(py)
     {
+    }
+
+    Point::Point(const Size& size) : x(size.width), y(size.height)
+    {
+    }
+
+    gunit_t Point::distance() const
+    {
+        return sqrt(x*x+y*y);
     }
 
     bool Point::operator==(const Point& p) const
@@ -48,6 +47,13 @@ namespace mvcgame {
     bool Point::operator!=(const Point& p) const
     {
         return !guniteq(x, p.x) || !guniteq(y, p.y);
+    }
+
+    Point& Point::operator=(const Size& s)
+    {
+        x = s.width;
+        y = s.height;
+        return *this;
     }
 
     Point& Point::operator+=(const gunit_t& p)
@@ -62,23 +68,16 @@ namespace mvcgame {
         return Point(x+p, y+p);
     }
 
-    Point& Point::operator+=(const Distance& d)
+    Point& Point::operator+=(const Point& p)
     {
-        x += d.x;
-        y += d.y;
+        x += p.x;
+        y += p.y;
         return *this;
     }
 
-    Point Point::operator+(const Distance& d) const
+    Point Point::operator+(const Point& p) const
     {
-        return Point(x+d.x, y+d.y);
-    }
-
-    Point& Point::operator-=(const Distance& d)
-    {
-        x -= d.x;
-        y -= d.y;
-        return *this;
+        return Point(x+p.x, y+p.y);
     }
 
     Point& Point::operator-=(const Point& p)
@@ -86,11 +85,11 @@ namespace mvcgame {
         x -= p.x;
         y -= p.y;
         return *this;
-    }    
+    }
 
-    Distance Point::operator-(const Point& p) const
+    Point Point::operator-(const Point& p) const
     {
-        return Distance(x-p.x, y-p.y);
+        return Point(x-p.x, y-p.y);
     }
 
     Point& Point::operator-=(const gunit_t& p)
@@ -139,16 +138,21 @@ namespace mvcgame {
 
     Point& Point::operator*=(const ScaleTransform& s)
     {
-        Vector2 v = s*(*this);
-        x = v.x;
-        y = v.y;
+        Point p = s*(*this);
+        x = p.x;
+        y = p.y;
         return *this;
     }
 
     Point Point::operator*(const ScaleTransform& s) const
     {
-        Vector2 v = s*(*this);
-        return Point(v.x, v.y);
+        Point p = s*(*this);
+        return Point(p.x, p.y);
+    }
+
+    Size Point::operator*(const Anchor& a) const
+    {
+        return Size(x*a.x, y*a.y);
     }
 
     Point& Point::operator/=(const gunit_t& s)
@@ -168,154 +172,20 @@ namespace mvcgame {
         return Scale(x/p.x, y/p.y);
     }
 
-#pragma mark - Distance
-
-    Distance::Distance()
-    {
-    }
-
-    Distance::Distance(gunit_t x, gunit_t y) : Vector2(x, y)
-    {
-    }
-
-    Distance::operator gunit_t() const
-    {
-        return sqrt(x*x+y*y);
-    }
-    
-    bool Distance::operator==(const Distance& d) const
-    {
-        return guniteq(x, d.x) && guniteq(y, d.y);
-    }
-    
-    bool Distance::operator!=(const Distance& d) const
-    {
-        return !guniteq(x, d.x) || !guniteq(y, d.y);
-    }
-
-    Point Distance::operator+(const Point& p)
-    {
-        return Point(x+p.x, y+p.y);
-    }
-
-    Speed Distance::operator/(const Duration& d)
-    {
-        float dt = d.fsecs();
-        return Speed(x/dt, y/dt);
-    }
-
-    Distance& Distance::operator+=(const Distance& d)
-    {
-        x += d.x;
-        y += d.y;
-        return *this;
-    }
-
-    Distance Distance::operator+(const Distance& d) const
-    {
-        return Distance(x+d.x, y+d.y);
-    }
-
-    Distance& Distance::operator+=(const gunit_t& d)
-    {
-        x += d;
-        y += d;
-        return *this;
-    }
-
-    Distance Distance::operator+(const gunit_t& d) const
-    {
-        return Distance(x+d, y+d);
-    }
-
-    Distance& Distance::operator-=(const Distance& d)
-    {
-        x -= d.x;
-        y -= d.y;
-        return *this;
-    }
-
-    Distance Distance::operator-(const Distance& d) const
-    {
-        return Distance(x-d.x, y-d.y);
-    }
-
-    Distance& Distance::operator-=(const gunit_t& d)
-    {
-        x -= d;
-        y -= d;
-        return *this;
-    }
-
-    Distance Distance::operator-(const gunit_t& d) const
-    {
-        return Distance(x-d, y-d);
-    }
-
-    Distance Distance::operator*(const gunit_t& s) const
-    {
-        return Distance(x*s, y*s);
-    }
-
-    Distance& Distance::operator*=(const Scale& s)
-    {
-        return operator*=(ScaleTransform(s));
-    }
-
-    Distance Distance::operator*(const Scale& s) const
-    {
-        return operator*(ScaleTransform(s));
-    }
-
-    Distance& Distance::operator*=(const Rotation& r)
-    {
-        return operator*=(ScaleTransform(r));
-    }
-
-    Distance Distance::operator*(const Rotation& r) const
-    {
-        return operator*(ScaleTransform(r));
-    }
-
-    Distance& Distance::operator*=(const ScaleTransform& s)
-    {
-        Vector2 v = s*(*this);
-        x = v.x;
-        y = v.y;
-        return *this;
-    }
-
-    Distance Distance::operator*(const ScaleTransform& s) const
-    {
-        Vector2 v = s*(*this);       
-        return Distance(v.x, v.y);
-    }
-
-    Distance& Distance::operator/=(const gunit_t& s)
-    {
-        x /= s;
-        y /= s;
-        return *this;
-    }
-
-    Distance Distance::operator/(const gunit_t& s) const
-    {
-        return Distance(x/s, y/s);
-    }
-
-    Scale Distance::operator/(const Distance& d) const
-    {
-        return Scale(x/d.x, y/d.y);
-    }    
-
-    Anchor Distance::operator/(const Size& s) const
+    Anchor Point::operator/(const Size& s) const
     {
         return Anchor(x/s.width, y/s.height);
     }
 
-    Size Distance::operator/(const Anchor& a) const
+    Size Point::operator/(const Anchor& a) const
     {
         return Size(x/a.x, y/a.y);
+    }
+
+    Speed Point::operator/(const Duration& d) const
+    {
+        float dt = d.fsecs();
+        return Speed(x/dt, y/dt);
     }
 
 #pragma mark - Anchor
@@ -410,14 +280,18 @@ namespace mvcgame {
         return Anchor(x/s, y/s);
     }
 
-    Distance Anchor::operator*(const Size& s) const
+    Point Anchor::operator*(const Size& s) const
     {
-        return Distance(x*s.width, y*s.height);
+        return Point(x*s.width, y*s.height);
     }
 
 #pragma mark - Size
     
     Size::Size() : width(0.0f), height(0.0f)
+    {
+    }
+
+    Size::Size(const Point& p) : width(p.x), height(p.y)
     {
     }
 
@@ -433,6 +307,13 @@ namespace mvcgame {
     bool Size::operator!=(const Size& s) const
     {
         return !guniteq(width, s.width) || !guniteq(height, s.height);
+    }
+
+    Size& Size::operator=(const Point& p)
+    {
+        width = p.x;
+        height = p.y;
+        return *this;        
     }
     
     Size& Size::operator+=(const gunit_t& s)
@@ -584,8 +465,8 @@ namespace mvcgame {
         std::vector<Point> vertices;
         vertices.push_back(Point(origin.x, origin.y));
         vertices.push_back(Point(origin.x+size.width, origin.y));
-        vertices.push_back(Point(origin.x, origin.y+size.height));
         vertices.push_back(Point(origin.x+size.width, origin.y+size.height));
+        vertices.push_back(Point(origin.x, origin.y+size.height));        
         return vertices;
     }
 
@@ -788,38 +669,46 @@ namespace mvcgame {
         d = cx*s.y;
     }
 
-    ScaleTransform::ScaleTransform(const Scale& s) :
-    a(s.x),
-    b(0.0f),
-    c(0.0f),
-    d(s.y)
+    ScaleTransform::ScaleTransform(const Scale& s)
     {
+        *this = s;
     }
 
     ScaleTransform::ScaleTransform(const Rotation& r)
     {
-        gunit_t cx = cosf(r.x);
-        gunit_t cy = cosf(r.y);
-        gunit_t sx = sinf(r.x);
-        gunit_t sy = sinf(r.y);
-        a = cy;
-        b = sy;
-        c = -sx;
-        d = cx;
+        *this = r;
     }
 
-    Vector2 ScaleTransform::operator*(const Vector2& v) const
+    ScaleTransform& ScaleTransform::operator=(const Rotation& r)
     {
-        return Vector2(v.x*a-v.y*c, -v.x*b+v.y*d);
+        a = cosf(r.y);
+        b = sinf(r.y);
+        c = -sinf(r.x);
+        d = cosf(r.x);
+        return *this;
+    }
+
+    ScaleTransform& ScaleTransform::operator=(const Scale& s)
+    {
+        a = s.x;
+        b = 0.0f;
+        c = 0.0f;
+        d = s.y;
+        return *this;
+    }
+
+    Point ScaleTransform::operator*(const Point& p) const
+    {
+        return Point(p.x*a-p.y*c, -p.x*b+p.y*d);
     }
 
 #pragma mark - Transform
 
     Transform::Transform() :
-    a(0.0f),
+    a(1.0f),
     b(0.0f),
     c(0.0f),
-    d(0.0f),
+    d(1.0f),
     tx(0.0f),
     ty(0.0f)
     {
@@ -836,18 +725,27 @@ namespace mvcgame {
     {
     }
 
-    Transform::Transform(const Point& point, const Anchor& anchor,
-        const Size& size, const Rotation& rot, const Scale& scale)
+    Transform::Transform(const ScaleTransform& st)
     {
-        init(point, anchor*size, rot, scale);
+        *this = st;
     }
 
-    Transform::Transform(const Point& point, const Distance& anchor, const Rotation& rot, const Scale& scale)
+    Transform::Transform(const Point& p)
     {
-        init(point, anchor, rot, scale);
+        *this = p;
     }
 
-    void Transform::init(const Point& point, const Distance& anchor, const Rotation& rot, const Scale& scale)
+    void Transform::update(const Rect& frame, const Anchor& anchor, const Rotation& rot, const Scale& scale)
+    {
+        update(frame.origin, anchor*frame.size, rot, scale);
+    }
+
+    void Transform::update(const Point& point, const Anchor& anchor, const Size& size, const Rotation& rot, const Scale& scale)
+    {
+        update(point, anchor*size, rot, scale);
+    }
+
+    void Transform::update(const Point& point, const Point& anchor, const Rotation& rot, const Scale& scale)
     {
         ScaleTransform st = scale*rot;
         Point tp = (anchor*st)+point;
@@ -859,24 +757,41 @@ namespace mvcgame {
         ty = tp.x;
     }
 
-#pragma mark - stream functions
-
-
-    std::ostream& operator<<(std::ostream& os, const Vector2& v)
+    Transform& Transform::operator=(const ScaleTransform& st)
     {
-        os << "(" << v.x << ", " << v.y << ")";
-        return os;
+        a = st.a;
+        b = st.b;
+        c = st.c;
+        d = st.d;
+        tx = 0;
+        ty = 0;
+        return *this;
     }
+
+    Transform& Transform::operator=(const Point& p)
+    {
+        a = 1.0f;
+        b = 0.0f;
+        c = 0.0f;
+        d = 1.0f;
+        tx = p.x;
+        ty = p.y;
+        return *this;        
+    }
+
+    Transform Transform::invert() const
+    {
+        float det = 1 / (a * d - b * c);
+
+        return Transform(det * d, -det * b, -det * c, det * a,
+                            det * (c * ty - d * tx), det * (b * tx - a * ty) );
+    }
+
+#pragma mark - stream functions
 
     std::ostream& operator<<(std::ostream& os, const Point& p)
     {
         os << "Point(" << p.x << ", " << p.y << ")";
-        return os;
-    }
-
-    std::ostream& operator<<(std::ostream& os, const Distance& d)
-    {
-        os << "Distance(" << d.x << ", " << d.y << ")";
         return os;
     }
 

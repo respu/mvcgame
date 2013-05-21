@@ -4,6 +4,7 @@
 
 #include <mvcgame/base/Easing.hpp>
 #include <mvcgame/action/IAction.hpp>
+#include <mvcgame/view/View.hpp>
 
 #include <functional>
 #include <memory>

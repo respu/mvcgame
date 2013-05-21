@@ -8,7 +8,6 @@ namespace mvcgame {
     
     typedef float gunit_t;
 
-    class Distance;
     class Scale;
     class Anchor;
     class Size;
@@ -16,42 +15,36 @@ namespace mvcgame {
     class Speed;
     class Rotation;
     class ScaleTransform;
-
+  
     /**
-     Basic 2d vector inherited by Point and Distance
+     * Represents a point in 2d space
      */
-    class Vector2
+    class Point final
     {
     public:
         gunit_t x;
         gunit_t y;
 
-        Vector2();
-        Vector2(gunit_t x, gunit_t y);
-    };
-  
-    /**
-     * Represents a point in 2d space
-     */
-    class Point final : public Vector2
-    {
-    public:
         Point();
         Point(gunit_t x, gunit_t y);
+        Point(const Size& size);
+
+        gunit_t distance() const;
 
         bool operator==(const Point& p) const;
         bool operator!=(const Point& p) const;
 
+        Point& operator=(const Size& s);
+
         Point& operator+=(const gunit_t& p);
         Point operator+(const gunit_t& p) const;
-        Point& operator+=(const Distance& d);
-        Point operator+(const Distance& d) const;       
+        Point& operator+=(const Point& p);
+        Point operator+(const Point& p) const;       
 
         Point& operator-=(const gunit_t& p);
         Point operator-(const gunit_t& p) const;
-        Point& operator-=(const Distance& d);
-        Distance operator-(const Point& p) const;
         Point& operator-=(const Point& p);
+        Point operator-(const Point& p) const;
 
         Point& operator*=(const gunit_t& s);
         Point operator*(const gunit_t& s) const;
@@ -61,57 +54,15 @@ namespace mvcgame {
         Point operator*(const Rotation& r) const;
         Point& operator*=(const ScaleTransform& s);
         Point operator*(const ScaleTransform& s) const;
+        Size operator*(const Anchor& a) const;
 
         Point& operator/=(const gunit_t& s);
         Point operator/(const gunit_t& s) const;
         Scale operator/(const Point& p) const;
-
-    };
-
-    /**
-     * Represents the difference between two points
-     */
-    class Distance final : public Vector2
-    {
-    public:
-        Distance();
-        Distance(gunit_t x, gunit_t y);
-
-        operator gunit_t() const;
-
-        bool operator==(const Distance& d) const;
-        bool operator!=(const Distance& d) const;        
-
-        Point operator+(const Point& p);
-        Speed operator/(const Duration& d);
-        Distance operator/(const gunit_t& v);
-
-        Distance& operator+=(const Distance& d);
-        Distance operator+(const Distance& d) const;
-        Distance& operator+=(const gunit_t& d);
-        Distance operator+(const gunit_t& d) const;     
-
-        Distance& operator-=(const Distance& d);
-        Distance operator-(const Distance& d) const;
-        Distance& operator-=(const gunit_t& d);
-        Distance operator-(const gunit_t& d) const;
-
-        Distance& operator*=(const gunit_t& s);
-        Distance operator*(const gunit_t& s) const;
-        Distance& operator*=(const Scale& s);
-        Distance operator*(const Scale& s) const;
-        Distance& operator*=(const Rotation& r);
-        Distance operator*(const Rotation& r) const;
-        Distance& operator*=(const ScaleTransform& s);
-        Distance operator*(const ScaleTransform& s) const;
-
-        Distance& operator/=(const gunit_t& s);
-        Distance operator/(const gunit_t& s) const;
-        Scale operator/(const Distance& d) const;
         Anchor operator/(const Size& s) const;
         Size operator/(const Anchor& a) const;
-
-    };    
+        Speed operator/(const Duration& d) const;
+    };
 
     /**
      * Anchor point should be a value pair between 0 and 1
@@ -142,7 +93,7 @@ namespace mvcgame {
 
         Anchor& operator*=(const gunit_t& s);
         Anchor operator*(const gunit_t& s) const;
-        Distance operator*(const Size& s) const;
+        Point operator*(const Size& s) const;
 
         Anchor& operator/=(const gunit_t& s);
         Anchor operator/(const gunit_t& s) const;
@@ -155,10 +106,13 @@ namespace mvcgame {
         gunit_t height;
         
         Size();
+        Size(const Point& p);
         Size(gunit_t w, gunit_t h);
 
         bool operator==(const Size& s) const;
         bool operator!=(const Size& s) const;
+
+        Size& operator=(const Point& p);
         
         Size& operator+=(const gunit_t& s);
         Size operator+(const gunit_t& s) const;
@@ -287,16 +241,16 @@ namespace mvcgame {
         ScaleTransform(const Scale& s);
         ScaleTransform(const Rotation& r);
 
-        Vector2 operator*(const Vector2& v) const;
+        ScaleTransform& operator=(const Rotation& r);
+        ScaleTransform& operator=(const Scale& s);
+
+        Point operator*(const Point& p) const;
     };
 
     /**
      * A transformation matrix
      */
     class Transform final {
-    private:
-        void init(const Point& p, const Distance& a,
-            const Rotation& r, const Scale& c);
     public:
         gunit_t a;
         gunit_t b;
@@ -305,23 +259,31 @@ namespace mvcgame {
         gunit_t tx;
         gunit_t ty;
 
-        Transform();
+        Transform();        
         Transform(gunit_t a, gunit_t b, gunit_t c,
             gunit_t d, gunit_t tx, gunit_t ty);
-        Transform(const Point& p, const Anchor& a,
-            const Size& s, const Rotation& r,
-            const Scale& c);
-        Transform(const Point& p, const Distance& a,
+        Transform(const ScaleTransform& st);
+        Transform(const Point& p);
+
+        void update(const Rect& f, const Anchor& a,
             const Rotation& r, const Scale& c);        
 
+        void update(const Point& p, const Anchor& a,
+            const Size& s, const Rotation& r, const Scale& c);
+
+        void update(const Point& p, const Point& a,
+            const Rotation& r, const Scale& c);
+
+        Transform& operator=(const ScaleTransform& st);
+        Transform& operator=(const Point& p);
+
+        Transform invert() const;
     };
 
     /**
      Stream functions
      */
-    std::ostream& operator<<(std::ostream& os, const Vector2& v);
     std::ostream& operator<<(std::ostream& os, const Point& p);
-    std::ostream& operator<<(std::ostream& os, const Distance& d);
     std::ostream& operator<<(std::ostream& os, const Scale& s);
     std::ostream& operator<<(std::ostream& os, const Anchor& a);
     std::ostream& operator<<(std::ostream& os, const Size& s);

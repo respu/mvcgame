@@ -30,6 +30,8 @@ namespace mvcgame {
         const RootView& getView() const;
         RootView& getView();
 
+        void addChild(std::unique_ptr<ViewController> child);
+
         void emitUpdate();
         void emitTouchStart(const Points& points);
         void emitTouchEnd(const Points& points);

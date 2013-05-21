@@ -18,7 +18,6 @@ namespace mvcgame {
         typedef std::vector<Child> Children;
     protected:
         Children _children;
-
         Children::iterator findChild(const View& child);
 
     public:
@@ -29,6 +28,8 @@ namespace mvcgame {
         std::unique_ptr<View> removeChild(const View& child);
         void removeChildren();
 
+        virtual void update();
+        virtual void draw();
     };
 }
 

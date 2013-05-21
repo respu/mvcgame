@@ -40,7 +40,7 @@ TEST(Geometry, point) {
     ASSERT_FLOAT_EQ(1, s.x);
     ASSERT_FLOAT_EQ(1, s.y);
     
-    Distance d = p-Point();
+    Point d = p-Point();
 
     Size s1 = Size(4.6, 3.4);
     Anchor a = d/s1;
@@ -63,11 +63,11 @@ TEST(Geometry, distance) {
     Point p1(4,4);
     Point p2(8,9);
     
-    Distance d = p1-p2;
+    Point d = p1-p2;
     
     ASSERT_FLOAT_EQ(-4, d.x);
     ASSERT_FLOAT_EQ(-5, d.y);
-    ASSERT_FLOAT_EQ(sqrtf(5*5+4*4), d);
+    ASSERT_FLOAT_EQ(sqrtf(5*5+4*4), d.distance());
     
     ASSERT_TRUE(d+p2 == p1);
     
@@ -76,8 +76,7 @@ TEST(Geometry, distance) {
     ASSERT_FLOAT_EQ(-3, d.x);
     ASSERT_FLOAT_EQ(-4, d.y);
     
-    
-    Distance d2 = d + Distance(2,3);
+    Point d2 = d + Point(2,3);
     
     ASSERT_FLOAT_EQ(-1, d2.x);
     ASSERT_FLOAT_EQ(-1, d2.y);
@@ -91,7 +90,7 @@ TEST(Geometry, anchor) {
     ASSERT_FLOAT_EQ(0.5, a.x);
     ASSERT_FLOAT_EQ(0.5, a.y);
     
-    Distance d = a*Size(10,20);
+    Point d = a*Size(10,20);
     
     ASSERT_FLOAT_EQ(5, d.x);
     ASSERT_FLOAT_EQ(10, d.y);

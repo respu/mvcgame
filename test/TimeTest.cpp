@@ -24,7 +24,7 @@ TEST(Time, timestamp) {
 
 TEST(Time, speed) {
     Duration t = Duration::secs(1) + Duration::usecs(250000);
-    Distance d = Distance(4, 5);
+    Point d = Point(4, 5);
     Speed s = d/t;
     
     ASSERT_EQ(1, s.d);

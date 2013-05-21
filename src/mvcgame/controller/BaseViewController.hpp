@@ -7,6 +7,7 @@
 namespace mvcgame {
 
     class ViewController;
+    class RootViewController;
 
     class BaseViewController : public IResponder
     {

@@ -17,6 +17,16 @@ namespace mvcgame {
 	{
 	}
 
+    std::ostream& operator<<(std::ostream& os, const Color& c)
+    {
+        unsigned ur = c.r;
+        unsigned ug = c.g;
+        unsigned ub = c.b;
+        unsigned ua = c.a;
+    	os << "Color(r=" << ur << ", g=" << ug << "b=" << ub << ", a=" << ua << ")";
+    	return os;
+    }
+
 	const Color Colors::White = Color(255, 255, 255);
 	const Color Colors::Black = Color(0, 0, 0);
 	const Color Colors::Red = Color(255, 0, 0);

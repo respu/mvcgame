@@ -18,7 +18,6 @@ void MainMenuOptionController::controllerAdded()
 	bg->setBackgroundColor(mvcgame::Color(0, 255, 195));
 	bg->getFrame().size.width = getParent().getView().getFrame().size.width-20;
 	bg->getFrame().size.height = _textSize;
-	bg->getParentAnchor().y = 1;
 	setView(std::move(bg));
 
 	auto text = std::unique_ptr<mvcgame::TextView>(new mvcgame::TextView());

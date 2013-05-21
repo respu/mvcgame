@@ -1,13 +1,16 @@
 
 #include <mvcgame/controller/ViewController.hpp>
+#include <mvcgame/controller/RootViewController.hpp>
 #include <mvcgame/view/View.hpp>
+#include <mvcgame/view/RootView.hpp>
 
 #include <cassert>
 #include <algorithm>
 
 namespace mvcgame {
 
-    ViewController::ViewController() : _parent(nullptr), _view(nullptr)
+    ViewController::ViewController() :
+    _parent(nullptr), _root(nullptr), _view(nullptr)
     {
     }
 
@@ -37,7 +40,6 @@ namespace mvcgame {
             parent.getView().addChild(std::unique_ptr<View>(_view));
         }
         _parent = &parent;
-        controllerAdded();
     }
 
     ViewController& ViewController::getParent()
@@ -52,19 +54,47 @@ namespace mvcgame {
         return *_parent;
     }
 
+    void ViewController::setRoot(RootViewController& root)
+    {
+        _root = &root;
+    }
+
     RootViewController& ViewController::getRoot()
     {
-        return getParent().getRoot();
+        if(_root)
+        {
+            return *_root;
+        }
+        else
+        {
+            return getParent().getRoot();
+        }
     }
 
     const RootViewController& ViewController::getRoot() const
     {
-        return getParent().getRoot();
+        if(_root)
+        {
+            return *_root;
+        }
+        else
+        {
+            return getParent().getRoot();
+        }
     }
 
     void ViewController::setView(std::unique_ptr<View> view)
     {
-        assert(_parent != nullptr);
+        BaseView* parentView = nullptr;
+        if(_parent)
+        {
+            parentView = &_parent->getView();
+        }
+        else
+        {
+            parentView = &_root->getView();
+        }
+        assert(parentView);
 
         // set new view pointer
         View* oldView = _view;
@@ -75,11 +105,11 @@ namespace mvcgame {
             // move all the child controller views to the new view
             moveChildren(*oldView);
             // remove the old view from the parent controller view
-            _parent->getView().removeChild(*oldView);
+            parentView->removeChild(*oldView);
         }
 
         // add the new view
-        _parent->getView().addChild(std::move(view));
+        parentView->addChild(std::move(view));
     }
         
     const View& ViewController::getView() const

@@ -3,6 +3,7 @@
 #define mvcgame_Color_hpp
 
 #include <cstdint>
+#include <iostream>
 
 namespace mvcgame {
 
@@ -21,6 +22,11 @@ namespace mvcgame {
 		Color(color_t pr, color_t pg, color_t pb, color_t pa=255);
 		Color(colors_t c);
 	};
+
+	/**
+     Stream functions
+     */
+    std::ostream& operator<<(std::ostream& os, const Color& c);
 
 	class Colors final
 	{

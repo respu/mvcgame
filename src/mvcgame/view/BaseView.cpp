@@ -40,11 +40,27 @@ namespace mvcgame {
         return childPtr;
     }
 
-    View::Children::iterator BaseView::findChild(const View& child)
+    BaseView::Children::iterator BaseView::findChild(const View& child)
     {
         return std::find_if(_children.begin(), _children.end(), [&child](const View::Child& elm){
             return elm.first.get() == &child;
         });
+    }
+
+    void BaseView::update()
+    {
+        for(Child& child : _children)
+        {
+            child.first->update();
+        }
+    }
+
+    void BaseView::draw()
+    {
+        for(Child& child : _children)
+        {
+            child.first->drawAsChild();
+        }
     }
 
 }

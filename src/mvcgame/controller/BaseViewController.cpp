@@ -23,7 +23,9 @@ namespace mvcgame {
 
     void BaseViewController::addChild(std::unique_ptr<ViewController> child)
     {   
+        ViewController* c = child.get();
         _children.push_back(std::move(child));
+        c->controllerAdded();
     }
 
     std::unique_ptr<ViewController> BaseViewController::removeChild(const ViewController& child)

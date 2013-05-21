@@ -19,14 +19,17 @@ namespace mvcgame {
         Size _size;
         IViewBridge& _bridge;
     public:
-
         RootView(IViewBridge& bridge);
 
         Size& getSize();
         const Size& getSize() const;
         void setSize(const Size& size);
 
-        void drawPolygon(const std::vector<Point>& poly, const Color& color);
+        void addChild(std::unique_ptr<View> child, unsigned layer=0);
+
+        void draw();
+
+        IViewBridge& getBridge();
     };
 }
 

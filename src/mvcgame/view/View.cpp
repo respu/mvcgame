@@ -1,20 +1,25 @@
 #include <mvcgame/view/View.hpp>
-#include <assert.h>
+#include <mvcgame/view/RootView.hpp>
+#include <mvcgame/platform/IViewBridge.hpp>
+
+#include <cassert>
 #include <algorithm>
 
 namespace mvcgame {
 
-    View::View() : _parent(nullptr)
+    View::View() : _parent(nullptr), _root(nullptr)
     {
     }
 
     View::View(const View& v) :
-	_parent(nullptr), _frame(v.getFrame()), _scale(v.getScale()), _anchor(v.getAnchor()), _rotation(v.getRotation())
+    _parent(v._parent), _root(v._root), _frame(v._frame), _scale(v._scale),
+    _anchor(v._anchor), _rotation(v._rotation)
     {
+
     }
 
     View::View(const Rect& f, const Scale& s, const Anchor& a, const Rotation& r) :
-    _parent(nullptr), _frame(f), _scale(s), _anchor(a), _rotation(r)
+    _parent(nullptr), _root(nullptr), _frame(f), _scale(s), _anchor(a), _rotation(r)
     {
     }
 
@@ -23,8 +28,17 @@ namespace mvcgame {
         removeFromParent();
     }
 
-    void View::draw()
+    void View::update()
     {
+        _transform.update(_frame, _anchor, _rotation, _scale);
+        BaseView::update();
+    }
+
+    void View::drawAsChild()
+    {
+        getBridge().pushTransform(_transform);
+        draw();
+        getBridge().popTransform(_transform);
     }
 
     Rect& View::getFrame()
@@ -85,22 +99,7 @@ namespace mvcgame {
     void View::setAnchor(const Anchor& a)
     {
         _anchor = a;
-    }
-
-    Anchor& View::getParentAnchor()
-    {
-        return _parentAnchor;
-    }
-
-    const Anchor& View::getParentAnchor() const
-    {
-        return _parentAnchor;
-    }
-
-    void View::setParentAnchor(const Anchor& a)
-    {
-        _parentAnchor = a;
-    }    
+    }  
 
     void View::addChild(std::unique_ptr<View> child, unsigned layer)
     {
@@ -125,14 +124,38 @@ namespace mvcgame {
         return *_parent;
     }
 
+    void View::setRoot(RootView& root)
+    {
+        _root = &root;
+    }
+
     RootView& View::getRoot()
     {
-        return getParent().getRoot();
+        if(_root)
+        {
+            return *_root;
+        }
+        else
+        {
+            return getParent().getRoot();
+        }
     }
 
     const RootView& View::getRoot() const
     {
-        return getParent().getRoot();
+        if(_root)
+        {
+            return *_root;
+        }
+        else
+        {
+            return getParent().getRoot();
+        }
+    }
+
+    IViewBridge& View::getBridge()
+    {
+        return getRoot().getBridge();
     }
 
     void View::removeFromParent()

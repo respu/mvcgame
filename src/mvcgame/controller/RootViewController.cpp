@@ -23,6 +23,12 @@ namespace mvcgame {
         return _view;
     }
 
+    void RootViewController::addChild(std::unique_ptr<ViewController> child)
+    {   
+        child->setRoot(*this);        
+        BaseViewController::addChild(std::move(child));
+    }
+
     void RootViewController::emitUpdate()
     {
         Time now = Time::now();
@@ -31,10 +37,12 @@ namespace mvcgame {
         {
             last = _lastUpdateEvent->getTime();
         }
-        
         std::unique_ptr<UpdateEvent> event(new UpdateEvent(now, now-last));
         _eventEmitter.emitUpdate(*event);
         _lastUpdateEvent = std::move(event);
+
+        _view.update();
+        _view.draw();
     }
 
     void RootViewController::emitTouchStart(const Points& points)

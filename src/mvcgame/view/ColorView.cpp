@@ -1,5 +1,5 @@
 #include <mvcgame/view/ColorView.hpp>
-#include <mvcgame/view/RootView.hpp>
+#include <mvcgame/platform/IViewBridge.hpp>
 
 namespace mvcgame {
 
@@ -24,7 +24,8 @@ namespace mvcgame {
 
 	void ColorView::draw()
 	{
+		View::draw();
 		std::vector<Point> vertices = getFrame().getVertices();
-		getRoot().drawPolygon(vertices, _bgColor);
+		getBridge().drawPolygon(vertices, _bgColor);
 	}
 }
