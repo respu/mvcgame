@@ -263,6 +263,8 @@ namespace mvcgame {
         Transform(gunit_t a, gunit_t b, gunit_t c,
             gunit_t d, gunit_t tx, gunit_t ty);
         Transform(const ScaleTransform& st);
+        Transform(const Scale& s);
+        Transform(const Rotation& r);
         Transform(const Point& p);
 
         void update(const Rect& f, const Anchor& a,
@@ -276,6 +278,12 @@ namespace mvcgame {
 
         Transform& operator=(const ScaleTransform& st);
         Transform& operator=(const Point& p);
+
+        Transform operator+(const Point& p);
+        Transform& operator+=(const Point& p);
+        Transform operator-(const Point& p);
+        Transform& operator-=(const Point& p);
+
 
         Transform invert() const;
     };

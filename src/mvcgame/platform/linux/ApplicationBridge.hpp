@@ -2,7 +2,7 @@
 #define mvcgame_linux_ApplicationBridge_hpp
 
 #include <mvcgame/platform/IApplicationBridge.hpp>
-#include <mvcgame/platform/linux/ViewBridge.hpp>
+#include <mvcgame/platform/gl/ViewBridge.hpp>
 
 namespace mvcgame {
 

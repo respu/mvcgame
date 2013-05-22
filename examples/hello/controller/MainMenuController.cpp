@@ -19,16 +19,13 @@ void MainMenuController::controllerAdded()
 {
 	auto bg = std::unique_ptr<mvcgame::ColorView>(new mvcgame::ColorView());
 	bg->setBackgroundColor(mvcgame::Color(255, 255, 195));	
-	bg->getFrame().size = getRoot().getView().getSize();
-	// bg->getFrame().origin = mvcgame::Point(5, 5);
+	bg->setFrame(getRoot().getView().getSize());
 
-	/*
 	auto square = std::unique_ptr<mvcgame::ColorView>(new mvcgame::ColorView());
 	square->setBackgroundColor(mvcgame::Colors::Red);	
 	square->setFrame(getRoot().getView().getSize());
 	square->setScale(0.5);
 	bg->addChild(std::move(square));
-	*/
 	
 	setView(std::move(bg));
 

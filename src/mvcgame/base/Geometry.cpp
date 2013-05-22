@@ -699,7 +699,7 @@ namespace mvcgame {
 
     Point ScaleTransform::operator*(const Point& p) const
     {
-        return Point(p.x*a-p.y*c, -p.x*b+p.y*d);
+        return Point(p.x*a-p.y*c, p.y*d-p.x*b);
     }
 
 #pragma mark - Transform
@@ -735,6 +735,16 @@ namespace mvcgame {
         *this = p;
     }
 
+    Transform::Transform(const Scale& s)
+    {
+        *this = ScaleTransform(s);
+    }
+
+    Transform::Transform(const Rotation& r)
+    {
+        *this = ScaleTransform(r);
+    }
+
     void Transform::update(const Rect& frame, const Anchor& anchor, const Rotation& rot, const Scale& scale)
     {
         update(frame.origin, anchor*frame.size, rot, scale);
@@ -748,13 +758,13 @@ namespace mvcgame {
     void Transform::update(const Point& point, const Point& anchor, const Rotation& rot, const Scale& scale)
     {
         ScaleTransform st = scale*rot;
-        Point tp = (anchor*st)+point;
+        Point tp = anchor-(anchor*st)+point;
         a = st.a;
         b = st.b;
         c = st.c;
         d = st.d;
-        tx = tp.y;
-        ty = tp.x;
+        tx = tp.x;
+        ty = tp.y;
     }
 
     Transform& Transform::operator=(const ScaleTransform& st)
@@ -776,7 +786,31 @@ namespace mvcgame {
         d = 1.0f;
         tx = p.x;
         ty = p.y;
-        return *this;        
+        return *this;
+    }
+
+    Transform Transform::operator+(const Point& p)
+    {
+        return Transform(a, b, c, d, tx+p.x, ty+p.y);
+    }
+
+    Transform& Transform::operator+=(const Point& p)
+    {
+        tx += p.x;
+        ty += p.y;
+        return *this;
+    }
+
+    Transform Transform::operator-(const Point& p)
+    {
+        return Transform(a, b, c, d, tx-p.x, ty-p.y);
+    }
+
+    Transform& Transform::operator-=(const Point& p)
+    {
+        tx -= p.x;
+        ty -= p.y;
+        return *this;
     }
 
     Transform Transform::invert() const
@@ -830,8 +864,8 @@ namespace mvcgame {
     std::ostream& operator<<(std::ostream& os, const ScaleTransform& st)
     {
         os << "Transform(";
-        os << " a=" << st.a << ", b=" << st.b;
-        os << " c=" << st.c << ", d=" << st.d;
+        os << " a=" << st.a << " b=" << st.b;
+        os << " c=" << st.c << " d=" << st.d;
         os << ")";
         return os;
     }
@@ -839,9 +873,9 @@ namespace mvcgame {
     std::ostream& operator<<(std::ostream& os, const Transform& t)
     {
         os << "Transform(";
-        os << " a=" << t.a << ", b=" << t.b;
-        os << " c=" << t.c << ", d=" << t.d;
-        os << " tx=" << t.tx << ", ty=" << t.ty;
+        os << " a=" << t.a << " b=" << t.b;
+        os << " c=" << t.c << " d=" << t.d;
+        os << " tx=" << t.tx << " ty=" << t.ty;
         os << ")";
         return os;
     }

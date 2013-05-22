@@ -23,7 +23,7 @@ namespace mvcgame {
         unsigned ug = c.g;
         unsigned ub = c.b;
         unsigned ua = c.a;
-    	os << "Color(r=" << ur << ", g=" << ug << "b=" << ub << ", a=" << ua << ")";
+    	os << "Color(r=" << ur << " g=" << ug << " b=" << ub << " a=" << ua << ")";
     	return os;
     }
 
