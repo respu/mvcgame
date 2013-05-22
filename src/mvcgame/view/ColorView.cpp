@@ -25,7 +25,7 @@ namespace mvcgame {
 	void ColorView::draw()
 	{
 		View::draw();
-		std::vector<Point> vertices = getFrame().getVertices();
+		Points vertices = getFrame().size.getVertices();
 		getBridge().drawPolygon(vertices, _bgColor);
 	}
 }

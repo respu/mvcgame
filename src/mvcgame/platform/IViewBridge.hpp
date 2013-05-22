@@ -12,6 +12,7 @@ namespace mvcgame {
     class Point;
     class Color;
     class Transform;
+    typedef std::vector<Point> Points;
 
     class IViewBridge
     {
@@ -20,7 +21,7 @@ namespace mvcgame {
         virtual void loadRootTransform(const Size& size) = 0;
         virtual void pushTransform(const Transform& transform) = 0;
         virtual void popTransform(const Transform& transform) = 0;        
-        virtual void drawPolygon(const std::vector<Point>& poly, const Color& color) = 0;
+        virtual void drawPolygon(const Points& vertices, const Color& color) = 0;
     };
 
 }

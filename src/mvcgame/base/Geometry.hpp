@@ -6,8 +6,7 @@
 
 namespace mvcgame {
     
-    typedef float gunit_t;
-
+    class Point;
     class Scale;
     class Anchor;
     class Size;
@@ -15,6 +14,9 @@ namespace mvcgame {
     class Speed;
     class Rotation;
     class ScaleTransform;
+
+    typedef float gunit_t;
+    typedef std::vector<Point> Points;
   
     /**
      * Represents a point in 2d space
@@ -132,6 +134,8 @@ namespace mvcgame {
         Scale operator/(const Size& s) const;
 
         gunit_t area() const;
+
+        Points getVertices() const;
     };
     
     /**
@@ -160,7 +164,7 @@ namespace mvcgame {
         Rect& operator*=(const Scale& s);
         Rect operator*(const Scale& s) const;
 
-        std::vector<Point> getVertices() const;
+        Points getVertices() const;
 
         bool contains(const Point& p) const;
     };

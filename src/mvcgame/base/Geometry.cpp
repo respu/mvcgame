@@ -22,7 +22,7 @@ namespace mvcgame {
 
 #pragma mark - Point
 
-    Point::Point() : x(0.0f), y(0.0f)
+    Point::Point() : x(0), y(0)
     {
     }
 
@@ -287,7 +287,7 @@ namespace mvcgame {
 
 #pragma mark - Size
     
-    Size::Size() : width(0.0f), height(0.0f)
+    Size::Size() : width(0), height(0)
     {
     }
 
@@ -396,6 +396,16 @@ namespace mvcgame {
         return width*height;
     }
 
+    Points Size::getVertices() const
+    {
+        Points vertices;
+        vertices.push_back(Point(0, 0));
+        vertices.push_back(Point(width, 0));
+        vertices.push_back(Point(width, height));
+        vertices.push_back(Point(0, height));        
+        return vertices;
+    }
+
 #pragma mark - Rect
     
     Rect::Rect()
@@ -460,9 +470,9 @@ namespace mvcgame {
         return Rect(origin*s, size*s);
     }
 
-    std::vector<Point> Rect::getVertices() const
+    Points Rect::getVertices() const
     {
-        std::vector<Point> vertices;
+        Points vertices;
         vertices.push_back(Point(origin.x, origin.y));
         vertices.push_back(Point(origin.x+size.width, origin.y));
         vertices.push_back(Point(origin.x+size.width, origin.y+size.height));
@@ -480,7 +490,7 @@ namespace mvcgame {
 
 	const gunit_t Rotation::Pi = 3.1415926535897932384626433832795028841971693993751;
     
-    Rotation::Rotation() : x(0.0f), y(0.0f)
+    Rotation::Rotation() : x(0), y(0)
     {
     }
 
@@ -559,7 +569,7 @@ namespace mvcgame {
 
 #pragma mark - Scale
     
-    Scale::Scale() : x(1.0f), y(1.0f)
+    Scale::Scale() : x(1), y(1)
     {
     }
     
@@ -641,10 +651,10 @@ namespace mvcgame {
 #pragma mark - ScaleTransform
 
     ScaleTransform::ScaleTransform() :
-    a(0.0f),
-    b(0.0f),
-    c(0.0f),
-    d(0.0f)
+    a(0),
+    b(0),
+    c(0),
+    d(0)
     {
 
     }
@@ -691,26 +701,26 @@ namespace mvcgame {
     ScaleTransform& ScaleTransform::operator=(const Scale& s)
     {
         a = s.x;
-        b = 0.0f;
-        c = 0.0f;
+        b = 0;
+        c = 0;
         d = s.y;
         return *this;
     }
 
     Point ScaleTransform::operator*(const Point& p) const
     {
-        return Point(p.x*a-p.y*c, p.y*d-p.x*b);
+        return Point(p.x*a+p.y*c, p.y*d+p.x*b);
     }
 
 #pragma mark - Transform
 
     Transform::Transform() :
-    a(1.0f),
-    b(0.0f),
-    c(0.0f),
-    d(1.0f),
-    tx(0.0f),
-    ty(0.0f)
+    a(1),
+    b(0),
+    c(0),
+    d(1),
+    tx(0),
+    ty(0)
     {
     }
 
@@ -758,7 +768,7 @@ namespace mvcgame {
     void Transform::update(const Point& point, const Point& anchor, const Rotation& rot, const Scale& scale)
     {
         ScaleTransform st = scale*rot;
-        Point tp = anchor-(anchor*st)+point;
+        Point tp = point-(anchor*st);
         a = st.a;
         b = st.b;
         c = st.c;
@@ -780,10 +790,10 @@ namespace mvcgame {
 
     Transform& Transform::operator=(const Point& p)
     {
-        a = 1.0f;
-        b = 0.0f;
-        c = 0.0f;
-        d = 1.0f;
+        a = 1;
+        b = 0;
+        c = 0;
+        d = 1;
         tx = p.x;
         ty = p.y;
         return *this;
@@ -850,8 +860,8 @@ namespace mvcgame {
 
     std::ostream& operator<<(std::ostream& os, const Rotation& r)
     {
-        gunit_t dx = 180.0f/Rotation::Pi*r.x;
-        gunit_t dy = 180.0f/Rotation::Pi*r.y;
+        gunit_t dx = 180/Rotation::Pi*r.x;
+        gunit_t dy = 180/Rotation::Pi*r.y;
         os << "Rotation(" << dx;
         if(!guniteq(dx, dy))
         {
