@@ -8,6 +8,10 @@
 #include <mvcgame/view/TextView.hpp>
 #include <mvcgame/view/ColorView.hpp>
 #include <mvcgame/base/Color.hpp>
+#include <mvcgame/texture/PngTextureLoader.hpp>
+#include <mvcgame/texture/Texture.hpp>
+
+#include <fstream>
 
 const mvcgame::gunit_t MainMenuController::_titleSize = 50;
 
@@ -28,6 +32,15 @@ void MainMenuController::controllerAdded()
 	square->setScale(0.5);
 	square->getFrame().origin = bg->getFrame().size/2;
 	bg->addChild(std::move(square));
+
+	std::ifstream tfstream("./examples/hello/resources/trollface.png", std::ios::binary);
+	tfstream.seekg(0, std::ios::beg);
+
+	mvcgame::PngTextureLoader loader;
+	loader.validate(tfstream);
+
+	tfstream.seekg(0, std::ios::beg);
+	std::unique_ptr<mvcgame::Texture> tftexture = loader.load(tfstream);
 	
 	setView(std::move(bg));
 
