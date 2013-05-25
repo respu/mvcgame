@@ -57,9 +57,10 @@ namespace mvcgame {
 
     void BaseView::draw()
     {
-        for(Child& child : _children)
+        Children::reverse_iterator itr;
+        for(itr=_children.rbegin(); itr!=_children.rend(); ++itr)
         {
-            child.first->drawAsChild();
+            itr->first->drawAsChild();
         }
     }
 

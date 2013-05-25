@@ -7,6 +7,7 @@
 #include <mvcgame/view/RootView.hpp>
 #include <mvcgame/view/TextView.hpp>
 #include <mvcgame/view/ColorView.hpp>
+#include <mvcgame/view/Sprite.hpp>
 #include <mvcgame/base/Color.hpp>
 #include <mvcgame/texture/PngTextureLoader.hpp>
 #include <mvcgame/texture/Texture.hpp>
@@ -34,13 +35,17 @@ void MainMenuController::controllerAdded()
 	bg->addChild(std::move(square));
 
 	std::ifstream tfstream("./examples/hello/resources/trollface.png", std::ios::binary);
-	tfstream.seekg(0, std::ios::beg);
-
 	mvcgame::PngTextureLoader loader;
 	loader.validate(tfstream);
-
 	tfstream.seekg(0, std::ios::beg);
-	std::unique_ptr<mvcgame::Texture> tftexture = loader.load(tfstream);
+	std::shared_ptr<mvcgame::Texture> tftexture = loader.load(tfstream);
+
+	auto troll = std::unique_ptr<mvcgame::Sprite>(new mvcgame::Sprite());
+	troll->setTexture(tftexture);
+	troll->setFrame(getRoot().getView().getSize());
+	troll->setScale(0.3);
+	troll->getFrame().origin = bg->getFrame().size/2;	
+	bg->addChild(std::move(troll));
 	
 	setView(std::move(bg));
 

@@ -2,6 +2,7 @@
 
 #include <mvcgame/texture/PngTextureLoader.hpp>
 #include <mvcgame/texture/Texture.hpp>
+#include <mvcgame/texture/Texture.hpp>
 #include <png.h>
 
 /**
@@ -25,14 +26,14 @@ namespace mvcgame {
         }
         
 #ifdef MVCGAME_DEBUG_TEXTURE_PNG
-        std::cout << "----" << std::endl;        
+        std::cout << ">>>>" << std::endl;        
         std::cout << "PngTextureLoader validate " << (isPng?"yes":"no") << std::endl;
         std::cout << "signature " << std::hex;
         for(unsigned i=0; i<PNGSIGSIZE; i++)
         {
             std::cout << (int) pngSig[i];    
         }
-        std::cout << std::dec << std::endl << "----" << std::endl;
+        std::cout << std::dec << std::endl << "<<<<" << std::endl;
 #endif
         return isPng;
     }
@@ -78,32 +79,35 @@ namespace mvcgame {
         png_read_info(pngPtr, infoPtr);
         png_uint_32 imgWidth   = png_get_image_width(pngPtr, infoPtr);
         png_uint_32 imgHeight  = png_get_image_height(pngPtr, infoPtr);
-        png_uint_32 bitdepth   = png_get_bit_depth(pngPtr, infoPtr);
+        png_uint_32 bitDepth   = png_get_bit_depth(pngPtr, infoPtr);
         png_uint_32 channels   = png_get_channels(pngPtr, infoPtr);
         png_uint_32 colorType = png_get_color_type(pngPtr, infoPtr);
-        
+        bool hasAlpha = false;
+
         switch (colorType)
         {
         case PNG_COLOR_TYPE_PALETTE:
             png_set_palette_to_rgb(pngPtr);
             channels = 3;           
             break;
+        case PNG_COLOR_TYPE_RGB_ALPHA:
+            hasAlpha = true;
+            break;            
+        case PNG_COLOR_TYPE_GRAY_ALPHA:
+            hasAlpha = true;            
         case PNG_COLOR_TYPE_GRAY:
-            if (bitdepth < 8)
-            png_set_expand_gray_1_2_4_to_8(pngPtr);
-            bitdepth = 8;
+            if (bitDepth < 8)
+            {
+                png_set_expand_gray_1_2_4_to_8(pngPtr);
+            }
+            bitDepth = 8;
             break;
-        }
-        if (png_get_valid(pngPtr, infoPtr, PNG_INFO_tRNS))
-        {
-            png_set_tRNS_to_alpha(pngPtr);
-            channels += 1;
         }
 
         rowPtrs = new png_bytep[imgHeight];
-        const unsigned int stride = imgWidth * bitdepth * channels / 8;        
-        const size_t size = stride * imgHeight;
-        data = new uint8_t[size];
+        const unsigned int stride = imgWidth * bitDepth * channels / 8;        
+        const size_t len = stride * imgHeight;
+        data = new uint8_t[len];
 
         for (size_t i = 0; i < imgHeight; i++)
         {
@@ -113,7 +117,6 @@ namespace mvcgame {
         png_read_image(pngPtr, rowPtrs);
 
 #ifdef MVCGAME_DEBUG_TEXTURE_PNG
-
         std::string colorTypeStr;
         switch (colorType)
         {
@@ -133,18 +136,15 @@ namespace mvcgame {
             colorTypeStr = "rgb with alpha";
             break;        
         }
-
-        std::cout << "----" << std::endl;        
-        std::cout << "PngTextureLoader loaded " << size << " bytes " << colorTypeStr << std::endl;
-        std::cout << "size " << imgWidth << "x" << imgHeight << ", depth " << bitdepth;
+        std::cout << ">>>>" << std::endl;        
+        std::cout << "PngTextureLoader load " << colorTypeStr << ", " << len << " bytes " << std::endl;
+        std::cout << "size " << imgWidth << "x" << imgHeight << ", depth " << bitDepth;
         std::cout << ", channels " << channels << std::endl;
-        std::cout << "----" << std::endl;
+        std::cout << "<<<<" << std::endl;
 #endif
-
         delete[] rowPtrs;
         png_destroy_read_struct(&pngPtr, &infoPtr, nullptr);        
-
-        return std::unique_ptr<Texture>(new Texture(std::unique_ptr<uint8_t []>(data), size));
+        return std::unique_ptr<Texture>(new Texture(std::unique_ptr<uint8_t>(data), len, Size(imgWidth, imgHeight), hasAlpha));
     }
 
 }

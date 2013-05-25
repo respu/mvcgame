@@ -299,6 +299,7 @@ namespace mvcgame {
     std::ostream& operator<<(std::ostream& os, const Scale& s);
     std::ostream& operator<<(std::ostream& os, const Anchor& a);
     std::ostream& operator<<(std::ostream& os, const Size& s);
+    std::ostream& operator<<(std::ostream& os, const Rect& r);    
     std::ostream& operator<<(std::ostream& os, const Rotation& r);
     std::ostream& operator<<(std::ostream& os, const ScaleTransform& st);
     std::ostream& operator<<(std::ostream& os, const Transform& t);

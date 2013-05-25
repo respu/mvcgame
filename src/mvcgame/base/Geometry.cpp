@@ -851,12 +851,17 @@ namespace mvcgame {
         return os;
     }
 
-
     std::ostream& operator<<(std::ostream& os, const Size& s)
     {
         os << "Size(" << s.width << ", " << s.height << ")";
         return os;
     }
+
+    std::ostream& operator<<(std::ostream& os, const Rect& r)
+    {
+        os << "Rect(origin=" << r.origin << " size=" << r.size << ")";
+        return os;
+    }    
 
     std::ostream& operator<<(std::ostream& os, const Rotation& r)
     {

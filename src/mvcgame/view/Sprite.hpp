@@ -14,6 +14,7 @@ namespace mvcgame {
     private:
         std::shared_ptr<const Texture> _texture;
     public:
+        Sprite();
         Sprite(std::shared_ptr<const Texture> texture);
 
         const Texture& getTexture() const;

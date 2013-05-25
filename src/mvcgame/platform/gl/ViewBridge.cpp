@@ -3,10 +3,13 @@
 #include <mvcgame/platform/gl/ViewBridge.hpp>
 #include <mvcgame/base/Geometry.hpp>
 #include <mvcgame/base/Color.hpp>
+#include <mvcgame/texture/Texture.hpp>
 
 #include <GL/gl.h>
 #include <GL/glx.h>
 #include <GL/glu.h>
+
+#include <map>
 
 #ifdef MVCGAME_DEBUG_DRAW
 #include <iostream>
@@ -29,11 +32,11 @@ namespace mvcgame {
         transform -= norm;
 
 #ifdef MVCGAME_DEBUG_DRAW
-        std::cout << "----" << std::endl;        
+        std::cout << ">>>>" << std::endl;        
         std::cout << "GlViewBridge::loadRootTransform " << std::endl;
         std::cout << size << std::endl;
         std::cout << transform << std::endl;
-        std::cout << "----" << std::endl;
+        std::cout << "<<<<" << std::endl;
 #endif
         float glt[16];
         getGlTransform(transform, glt);
@@ -43,10 +46,10 @@ namespace mvcgame {
     void ViewBridge::pushTransform(const Transform& transform)
     {
 #ifdef MVCGAME_DEBUG_DRAW
-        std::cout << "----" << std::endl;        
+        std::cout << ">>>>" << std::endl;        
         std::cout << "GlViewBridge::pushTransform " << std::endl;
         std::cout << transform << std::endl;
-        std::cout << "----" << std::endl;
+        std::cout << "<<<<" << std::endl;
 #endif
         float glt[16];
         getGlTransform(transform, glt);
@@ -57,11 +60,11 @@ namespace mvcgame {
     {
         Transform inverse = transform.invert();
 #ifdef MVCGAME_DEBUG_DRAW
-        std::cout << "----" << std::endl;
+        std::cout << ">>>>" << std::endl;
         std::cout << "GlViewBridge::popTransform " << std::endl;
         std::cout << transform << std::endl;
         std::cout << inverse << std::endl;
-        std::cout << "----" << std::endl;
+        std::cout << "<<<<" << std::endl;
 #endif
         float glt[16];
         getGlTransform(inverse, glt);
@@ -71,13 +74,13 @@ namespace mvcgame {
     void ViewBridge::drawPolygon(const Points& verts, const Color& color)
     {
 #ifdef MVCGAME_DEBUG_DRAW
-        std::cout << "----" << std::endl;        
+        std::cout << ">>>>" << std::endl;        
         std::cout << "GlViewBridge::drawPolygon " << color << std::endl;
         for(const Point& p : verts)
         {
             std::cout << p << std::endl;
         }
-        std::cout << "----" << std::endl;
+        std::cout << "<<<<" << std::endl;
 #endif
 
         glBegin(GL_QUADS);
@@ -88,6 +91,96 @@ namespace mvcgame {
             glVertex3f(p.x, p.y, 0.);
         }   
         glEnd();
+    }
+
+    typedef std::map<const Texture*, GLuint> Textures;
+    static Textures _textures;
+
+    void ViewBridge::loadTexture(const Texture& t)
+    {
+        Textures::const_iterator itr = _textures.find(&t);
+        if(itr != _textures.end())
+        {
+            return;
+        }            
+    
+        GLuint id;        
+        glGenTextures(1, &id);
+        _textures.insert(itr, Textures::value_type(&t, id));
+
+        glBindTexture(GL_TEXTURE_2D, id);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        GLenum target = GL_TEXTURE_2D;
+        GLint level = 0;
+        GLint internalFormat = t.getComponents();
+        GLsizei width = t.getSize().width;
+        GLsizei height = t.getSize().height;
+        GLint border = 0;
+        GLenum format = t.hasAlpha() ? GL_RGBA : GL_RGB;
+        GLenum type = GL_UNSIGNED_BYTE;
+        const GLvoid* data = t.getData();
+
+        glTexImage2D(target, level, internalFormat, width, height, border, format, type, data);
+        
+#ifdef MVCGAME_DEBUG_DRAW
+        std::cout << ">>>>" << std::endl;
+        std::cout << "GlViewBridge::loadTexture " << id << std::endl;
+        std::cout << "level " << level << ", ";        
+        std::cout << "internalFormat " << internalFormat << ", ";
+        std::cout << "size " << width << "x" << height << ", ";
+        std::cout << "border " << border << ", ";
+        std::cout << "format " << format << ", ";
+        std::cout << "type " << type << std::endl;
+        GLenum err = glGetError();
+        if(err != GL_NO_ERROR)
+        {
+            std::cout << "error " << err << std::endl;
+        }
+        std::cout << "<<<<" << std::endl;
+#endif        
+    }
+
+    void ViewBridge::drawTexture(const Rect& rect, const Texture& texture, const Rect& trect)
+    {
+        loadTexture(texture);
+        GLuint id = _textures.at(&texture);
+
+        glEnable(GL_TEXTURE_2D);        
+        glBindTexture(GL_TEXTURE_2D, id);
+
+        const Size& s = texture.getSize();
+        Rect turect(trect.origin.x/s.width, trect.origin.y/s.height,
+            trect.size.width/s.width, trect.size.height/s.height);
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(turect.origin.x, turect.origin.y);
+        glVertex3f(rect.origin.x, rect.origin.y, 0);
+        glTexCoord2f(turect.origin.x, turect.origin.y+turect.size.height);
+        glVertex3f(rect.origin.x, rect.origin.y+rect.size.height, 0);
+        glTexCoord2f(turect.origin.x+turect.size.width, turect.origin.y+turect.size.height);
+        glVertex3f(rect.origin.x+rect.size.width, rect.origin.y+rect.size.height, 0);
+        glTexCoord2f(turect.origin.x+turect.size.width, turect.origin.y);
+        glVertex3f(rect.origin.x+rect.size.width, rect.origin.y, 0);
+        glEnd();
+
+        glDisable(GL_TEXTURE_2D);
+
+#ifdef MVCGAME_DEBUG_DRAW
+        std::cout << ">>>>" << std::endl;
+        std::cout << "GlViewBridge::drawTexture " << id << std::endl;
+        std::cout << "rect " << rect << std::endl;
+        std::cout << "textureRect " << turect << std::endl;
+        GLenum err = glGetError();
+        if(err != GL_NO_ERROR)
+        {
+            std::cout << "error " << err << std::endl;
+        }        
+        std::cout << "<<<<" << std::endl;
+#endif        
     }
 
 }
