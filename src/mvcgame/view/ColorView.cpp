@@ -24,8 +24,8 @@ namespace mvcgame {
 
 	void ColorView::draw()
 	{
-		View::draw();
 		Points vertices = getFrame().size.getVertices();
 		getBridge().drawPolygon(vertices, _bgColor);
+		View::draw();
 	}
 }

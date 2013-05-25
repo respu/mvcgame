@@ -43,8 +43,9 @@ void MainMenuController::controllerAdded()
 	auto troll = std::unique_ptr<mvcgame::Sprite>(new mvcgame::Sprite());
 	troll->setTexture(tftexture);
 	troll->setFrame(getRoot().getView().getSize());
-	troll->setScale(0.3);
-	troll->getFrame().origin = bg->getFrame().size/2;	
+	troll->setScale(mvcgame::Scale(0.2, 0.3));
+	troll->getFrame().origin = bg->getFrame().size/2;
+	troll->setRotation(mvcgame::Rotation::Pi/4);
 	bg->addChild(std::move(troll));
 	
 	setView(std::move(bg));

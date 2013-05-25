@@ -25,7 +25,6 @@ namespace mvcgame {
         bool hasAlpha() const;
         unsigned getComponents() const;
     };
-
 }
 
 #endif

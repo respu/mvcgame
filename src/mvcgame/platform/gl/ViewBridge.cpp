@@ -41,6 +41,7 @@ namespace mvcgame {
         float glt[16];
         getGlTransform(transform, glt);
         glLoadMatrixf(glt);
+        glDisable(GL_DEPTH_TEST);    
     }
 
     void ViewBridge::pushTransform(const Transform& transform)
@@ -84,12 +85,11 @@ namespace mvcgame {
 #endif
 
         glBegin(GL_QUADS);
-        glColor3f(color.r/255.0f, color.g/255.0f, color.b/255.0f); 
-
+        glColor4f(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f); 
         for(const Point& p : verts)
         {
             glVertex3f(p.x, p.y, 0.);
-        }   
+        }
         glEnd();
     }
 
@@ -109,14 +109,15 @@ namespace mvcgame {
         _textures.insert(itr, Textures::value_type(&t, id));
 
         glBindTexture(GL_TEXTURE_2D, id);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);        
 
         GLenum target = GL_TEXTURE_2D;
         GLint level = 0;
-        GLint internalFormat = t.getComponents();
         GLsizei width = t.getSize().width;
         GLsizei height = t.getSize().height;
         GLint border = 0;
@@ -124,13 +125,12 @@ namespace mvcgame {
         GLenum type = GL_UNSIGNED_BYTE;
         const GLvoid* data = t.getData();
 
-        glTexImage2D(target, level, internalFormat, width, height, border, format, type, data);
+        glTexImage2D(target, level, format, width, height, border, format, type, data);
         
 #ifdef MVCGAME_DEBUG_DRAW
         std::cout << ">>>>" << std::endl;
         std::cout << "GlViewBridge::loadTexture " << id << std::endl;
         std::cout << "level " << level << ", ";        
-        std::cout << "internalFormat " << internalFormat << ", ";
         std::cout << "size " << width << "x" << height << ", ";
         std::cout << "border " << border << ", ";
         std::cout << "format " << format << ", ";
@@ -149,7 +149,12 @@ namespace mvcgame {
         loadTexture(texture);
         GLuint id = _textures.at(&texture);
 
-        glEnable(GL_TEXTURE_2D);        
+        glEnable(GL_TEXTURE_2D);
+        if(texture.hasAlpha())
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
         glBindTexture(GL_TEXTURE_2D, id);
 
         const Size& s = texture.getSize();
@@ -166,8 +171,13 @@ namespace mvcgame {
         glTexCoord2f(turect.origin.x+turect.size.width, turect.origin.y);
         glVertex3f(rect.origin.x+rect.size.width, rect.origin.y, 0);
         glEnd();
+        glFlush();
 
         glDisable(GL_TEXTURE_2D);
+        if(texture.hasAlpha())
+        {
+            glDisable(GL_BLEND);
+        }
 
 #ifdef MVCGAME_DEBUG_DRAW
         std::cout << ">>>>" << std::endl;
