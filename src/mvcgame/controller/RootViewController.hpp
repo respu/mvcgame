@@ -30,6 +30,9 @@ namespace mvcgame {
         const RootView& getView() const;
         RootView& getView();
 
+        const Application& getApp() const;
+        Application& getApp();
+
         void addChild(std::unique_ptr<ViewController> child);
 
         void emitUpdate();

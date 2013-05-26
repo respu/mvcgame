@@ -5,8 +5,8 @@
 namespace mvcgame
 {
 
-    Texture::Texture(std::unique_ptr<uint8_t> data, std::size_t length, const Size& size, bool alpha) :
-    _data(std::move(data)), _length(length), _size(size), _alpha(alpha)
+    Texture::Texture(std::unique_ptr<uint8_t> data, std::size_t length, unsigned width, unsigned height, bool alpha) :
+    _data(std::move(data)), _length(length), _width(width), _height(height), _alpha(alpha)
     {
     }
 
@@ -20,10 +20,16 @@ namespace mvcgame
         return _length;
     }    
 
-    const Size& Texture::getSize() const
+    unsigned Texture::getWidth() const
     {
-        return _size;
+        return _width;
     }
+
+    unsigned Texture::getHeight() const
+    {
+        return _height;
+    }
+
 
     bool Texture::hasAlpha() const
     {

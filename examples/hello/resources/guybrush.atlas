@@ -1,0 +1,46 @@
+g.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gb_walk
+  rotate: false
+  xy: 154, 154
+  size: 56, 150
+  orig: 104, 150
+  offset: 27, 0
+  index: 3
+gb_walk
+  rotate: true
+  xy: 2, 172
+  size: 56, 150
+  orig: 104, 150
+  offset: 21, 0
+  index: 0
+gb_walk
+  rotate: true
+  xy: 2, 108
+  size: 62, 150
+  orig: 104, 150
+  offset: 17, 0
+  index: 1
+gb_walk
+  rotate: false
+  xy: 154, 2
+  size: 62, 150
+  orig: 104, 150
+  offset: 17, 0
+  index: 4
+gb_walk
+  rotate: true
+  xy: 2, 230
+  size: 104, 148
+  orig: 104, 150
+  offset: 0, 0
+  index: 2
+gb_walk
+  rotate: true
+  xy: 2, 2
+  size: 104, 150
+  orig: 104, 150
+  offset: 0, 0
+  index: 5

@@ -21,6 +21,11 @@ namespace mvcgame {
         return _viewBridge;
     }
 
+    IFilesystemBridge& ApplicationBridge::getFilesystemBridge()
+    {
+        return _fsBridge;
+    }
+
     void ApplicationBridge::exit()
     {
         _finished = true;

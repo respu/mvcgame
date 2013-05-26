@@ -4,6 +4,13 @@ MVCGame
 MVCGame strives to be a MVC Game engine
 using all the neat features of the C++11 standard.
 
+Guidelines
+----------
+
+* no naked pointers (use std::unique_ptr and std::shared_ptr)
+* no polymorphism (use std::function and std::bind as a substitute for delegates)
+* try to have limited dependencies
+* try not to crash when things go wrong
 
 Installation
 ------------
@@ -11,7 +18,7 @@ Installation
 ### Linux (Ubuntu)
 
 ```
-apt-get install libglu1-mesa-dev libglfw-dev libglew-dev libfontconfig1-dev
+apt-get install libglu1-mesa-dev libglfw-dev libglew-dev
 cmake .
 make
 ```

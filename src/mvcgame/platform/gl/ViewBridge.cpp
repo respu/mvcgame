@@ -4,6 +4,7 @@
 #include <mvcgame/base/Geometry.hpp>
 #include <mvcgame/base/Color.hpp>
 #include <mvcgame/texture/Texture.hpp>
+#include <mvcgame/texture/TextureRegion.hpp>
 
 #include <GL/gl.h>
 #include <GL/glx.h>
@@ -117,8 +118,8 @@ namespace mvcgame {
 
         GLenum target = GL_TEXTURE_2D;
         GLint level = 0;
-        GLsizei width = t.getSize().width;
-        GLsizei height = t.getSize().height;
+        GLsizei width = t.getWidth();
+        GLsizei height = t.getHeight();
         GLint border = 0;
         GLenum format = t.hasAlpha() ? GL_RGBA : GL_RGB;
         GLenum type = GL_UNSIGNED_BYTE;
@@ -143,7 +144,7 @@ namespace mvcgame {
 #endif        
     }
 
-    void ViewBridge::drawTexture(const Rect& rect, const Texture& texture, const Rect& trect)
+    void ViewBridge::drawTexture(const Rect& rect, const Texture& texture, const TextureRegion& region)
     {
         loadTexture(texture);
         GLuint id = _textures.at(&texture);
@@ -155,19 +156,16 @@ namespace mvcgame {
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         }
         glBindTexture(GL_TEXTURE_2D, id);
-
-        const Size& s = texture.getSize();
-        Rect turect(trect.origin.x/s.width, trect.origin.y/s.height,
-            trect.size.width/s.width, trect.size.height/s.height);
+        Rect trect = region / texture;
 
         glBegin(GL_QUADS);
-        glTexCoord2f(turect.origin.x, turect.origin.y);
+        glTexCoord2f(trect.origin.x, trect.origin.y);
         glVertex3f(rect.origin.x, rect.origin.y, 0);
-        glTexCoord2f(turect.origin.x, turect.origin.y+turect.size.height);
+        glTexCoord2f(trect.origin.x, trect.origin.y+trect.size.height);
         glVertex3f(rect.origin.x, rect.origin.y+rect.size.height, 0);
-        glTexCoord2f(turect.origin.x+turect.size.width, turect.origin.y+turect.size.height);
+        glTexCoord2f(trect.origin.x+trect.size.width, trect.origin.y+trect.size.height);
         glVertex3f(rect.origin.x+rect.size.width, rect.origin.y+rect.size.height, 0);
-        glTexCoord2f(turect.origin.x+turect.size.width, turect.origin.y);
+        glTexCoord2f(trect.origin.x+trect.size.width, trect.origin.y);
         glVertex3f(rect.origin.x+rect.size.width, rect.origin.y, 0);
         glEnd();
         glFlush();
@@ -182,7 +180,7 @@ namespace mvcgame {
         std::cout << ">>>>" << std::endl;
         std::cout << "GlViewBridge::drawTexture " << id << std::endl;
         std::cout << "rect " << rect << std::endl;
-        std::cout << "textureRect " << turect << std::endl;
+        std::cout << "region " << region << std::endl;
         GLenum err = glGetError();
         if(err != GL_NO_ERROR)
         {

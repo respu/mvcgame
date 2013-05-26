@@ -3,6 +3,7 @@
 #include <mvcgame/controller/RootViewController.hpp>
 #include <mvcgame/view/View.hpp>
 #include <mvcgame/view/RootView.hpp>
+#include <mvcgame/base/Application.hpp>
 
 #include <cassert>
 #include <algorithm>
@@ -81,6 +82,26 @@ namespace mvcgame {
         {
             return getParent().getRoot();
         }
+    }
+
+    const Application& ViewController::getApp() const
+    {
+        return getRoot().getApp();
+    }
+
+    Application& ViewController::getApp()
+    {
+        return getRoot().getApp();
+    }
+
+    const AssetsManager& ViewController::getAssetsManager() const
+    {
+        return getApp().getAssetsManager();
+    }
+
+    AssetsManager& ViewController::getAssetsManager()
+    {
+        return getApp().getAssetsManager();
     }
 
     void ViewController::setView(std::unique_ptr<View> view)

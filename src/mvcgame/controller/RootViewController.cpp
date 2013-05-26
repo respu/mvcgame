@@ -8,7 +8,7 @@
 namespace mvcgame {
 
 	RootViewController::RootViewController(Application& app) :
-    _app(app), _view(app.getViewBridge()), _eventEmitter(*this),
+    _app(app), _view(app.getBridge().getViewBridge()), _eventEmitter(*this),
     _lastUpdateEvent(nullptr), _lastTouchEvent(nullptr)
 	{
 	}
@@ -27,6 +27,16 @@ namespace mvcgame {
     {   
         child->setRoot(*this);        
         BaseViewController::addChild(std::move(child));
+    }
+
+    const Application& RootViewController::getApp() const
+    {
+        return _app;
+    }
+
+    Application& RootViewController::getApp()
+    {
+        return _app;
     }
 
     void RootViewController::emitUpdate()

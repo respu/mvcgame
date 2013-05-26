@@ -13,7 +13,7 @@ namespace mvcgame {
         void popTransform(const Transform& transform);        
         void drawPolygon(const Points& verts, const Color& color);
         void loadTexture(const Texture& texture);
-        void drawTexture(const Rect& rect, const Texture& texture, const Rect& textureRect);
+        void drawTexture(const Rect& rect, const Texture& texture, const TextureRegion& region);
     };
 
 }

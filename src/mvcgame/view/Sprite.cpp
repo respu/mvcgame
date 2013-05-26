@@ -25,7 +25,10 @@ namespace mvcgame {
 
     void Sprite::draw()
     {
-        getBridge().drawTexture(getFrame().size, *_texture);
+        if(_texture)
+        {
+            getBridge().drawTexture(getFrame().size, *_texture);
+        }
     }
 
 }

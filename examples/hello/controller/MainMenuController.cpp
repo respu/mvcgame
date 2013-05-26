@@ -9,7 +9,7 @@
 #include <mvcgame/view/ColorView.hpp>
 #include <mvcgame/view/Sprite.hpp>
 #include <mvcgame/base/Color.hpp>
-#include <mvcgame/texture/PngTextureLoader.hpp>
+#include <mvcgame/asset/AssetsManager.hpp>
 #include <mvcgame/texture/Texture.hpp>
 #include <mvcgame/action/TweenAction.hpp>
 
@@ -37,12 +37,7 @@ void MainMenuController::controllerAdded()
 	square->getFrame().origin = bg->getFrame().size/2;
 	bg->addChild(std::move(square));
 
-	std::ifstream tfstream("./examples/hello/resources/trollface.png", std::ios::binary);
-	PngTextureLoader loader;
-	loader.validate(tfstream);
-	tfstream.seekg(0, std::ios::beg);
-	std::shared_ptr<Texture> tftexture = loader.load(tfstream);
-
+	std::shared_ptr<Texture> tftexture = getAssetsManager().loadTexture("trollface.png");
 	auto troll = std::unique_ptr<Sprite>(new Sprite());
 	troll->setTexture(tftexture);
 	troll->setFrame(getRoot().getView().getSize());
@@ -52,7 +47,7 @@ void MainMenuController::controllerAdded()
 
 	auto trollRotate = std::unique_ptr<IAction>(new TweenAction([](View& view){
 		view.setRotation(-Rotation::Pi/4);
-		view.getFrame().origin += 100;
+		view.getFrame().origin.x += 100;
 	}));
 	runAction(std::move(trollRotate), *troll, Duration::secs(10));
 

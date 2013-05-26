@@ -2,7 +2,6 @@
 
 #include <mvcgame/texture/PngTextureLoader.hpp>
 #include <mvcgame/texture/Texture.hpp>
-#include <mvcgame/texture/Texture.hpp>
 #include <png.h>
 
 /**
@@ -153,7 +152,7 @@ namespace mvcgame {
 #endif
         delete[] rowPtrs;
         png_destroy_read_struct(&pngPtr, &infoPtr, nullptr);        
-        return std::unique_ptr<Texture>(new Texture(std::unique_ptr<uint8_t>(data), len, Size(imgWidth, imgHeight), hasAlpha));
+        return std::unique_ptr<Texture>(new Texture(std::unique_ptr<uint8_t>(data), len, imgWidth, imgHeight, hasAlpha));
     }
 
 }

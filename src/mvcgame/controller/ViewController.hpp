@@ -6,6 +6,8 @@
 
 namespace mvcgame {
 
+    class Application;
+    class AssetsManager;
     class RootViewController;
 
     class ViewController : public BaseViewController
@@ -33,6 +35,12 @@ namespace mvcgame {
         void setRoot(RootViewController& root);
         const RootViewController& getRoot() const;
         RootViewController& getRoot();
+
+        const Application& getApp() const;
+        Application& getApp();
+
+        const AssetsManager& getAssetsManager() const;
+        AssetsManager& getAssetsManager();
 
         const ViewController& getParent() const;
         ViewController& getParent();

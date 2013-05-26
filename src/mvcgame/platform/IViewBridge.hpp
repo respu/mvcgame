@@ -14,6 +14,7 @@ namespace mvcgame {
     class Transform;
     class Texture;
     class Rect;
+    class TextureRegion;
     typedef std::vector<Point> Points;
 
     class IViewBridge
@@ -50,12 +51,12 @@ namespace mvcgame {
          Should draw a texture, the texture should be loaded if it isn't already
          @param rectangle wit hthe position of the texture
          @param texture to draw
-         @param rectangle inside the texture
+         @param region inside the texture
          */
-        virtual void drawTexture(const Rect& rect, const Texture& texture, const Rect& textureRect) = 0;
+        virtual void drawTexture(const Rect& rect, const Texture& texture, const TextureRegion& region) = 0;
 
         /**
-         Utility method that will st the texture rectangle to the entire texture
+         Utility method that will st the texture region to the entire texture
          */
         void drawTexture(const Rect& rect, const Texture& texture);
     };

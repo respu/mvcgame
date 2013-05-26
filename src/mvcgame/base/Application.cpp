@@ -6,7 +6,8 @@
 namespace mvcgame {
 
     Application::Application() :
-    _bridge(new ApplicationBridge()), _root(*this)
+    _bridge(new ApplicationBridge()),
+    _root(*this), _assets(*this)
     {
         _bridge->setApplication(*this);
     }
@@ -21,14 +22,29 @@ namespace mvcgame {
         return _root;
     }
 
+    IApplicationBridge& Application::getBridge()
+    {
+        return *_bridge;
+    }
+    
+    const IApplicationBridge& Application::getBridge() const
+    {
+        return *_bridge;
+    }
+
+    AssetsManager& Application::getAssetsManager()
+    {
+        return _assets;
+    }
+
+    const AssetsManager& Application::getAssetsManager() const
+    {
+        return _assets;
+    }
+
     const Size& Application::getSize() const
     {
         return _root.getView().getSize();
-    }
-
-    IViewBridge& Application::getViewBridge()
-    {
-        return _bridge->getViewBridge();
     }
 
     void Application::run()
