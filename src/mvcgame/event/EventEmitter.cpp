@@ -21,7 +21,6 @@ namespace mvcgame {
         {
             return;
         }
-
         const BaseViewController::Children& children = controller.getChildren();
         BaseViewController::Children::const_iterator itr;
         for(itr=children.begin(); itr!=children.end(); ++itr)

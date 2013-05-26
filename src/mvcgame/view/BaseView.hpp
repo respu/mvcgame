@@ -13,13 +13,13 @@ namespace mvcgame {
 
     class BaseView : public IResponder
     {
-    public:
+    public:       
         typedef std::pair<std::unique_ptr<View>, unsigned> Child;
         typedef std::vector<Child> Children;
-    protected:
+    private:
         Children _children;
+    protected:
         Children::iterator findChild(const View& child);
-
     public:
         BaseView();
         virtual ~BaseView();

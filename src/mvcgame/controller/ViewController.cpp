@@ -108,6 +108,10 @@ namespace mvcgame {
             parentView->removeChild(*oldView);
         }
 
+        // get notifications when a view is removed so that
+        // the controller can stop actions and clear its view ref
+        view->setRemovalCallback(std::bind(&ViewController::onViewRemoved, this, std::placeholders::_1));
+
         // add the new view
         parentView->addChild(std::move(view));
     }
@@ -139,14 +143,19 @@ namespace mvcgame {
         BaseViewController::addChild(std::move(child));
     }
 
-    void ViewController::runAction(std::unique_ptr<IAction> action, const Duration& duration)
+    void ViewController::runAction(std::unique_ptr<IAction> action, View& view)
     {
-        _actions.add(std::move(action), duration);
+        _actions.add(std::move(action), view);
+    }
+
+    void ViewController::runAction(std::unique_ptr<IAction> action, View& view, const Duration& duration)
+    {
+        _actions.add(std::move(action), view, duration);
     }
 
     void ViewController::updateActions(UpdateEvent& event)
     {
-        _actions.update(getView(), event);
+        _actions.update(event);
     }
 
     void ViewController::moveChildren(View& oldView)
@@ -162,9 +171,23 @@ namespace mvcgame {
         }
     }
 
+    void ViewController::respondOnUpdate(UpdateEvent& event)
+    {
+        updateActions(event);
+    }
+
     bool ViewController::respondToTouchPoint(const Point& p, const TouchEvent& event)
     {
         return getView().respondToTouchPoint(p, event);
+    }
+
+    void ViewController::onViewRemoved(View& view)
+    {
+        if(_view == &view)
+        {
+            _view = nullptr;
+        }
+        _actions.remove(view);
     }
 
 }

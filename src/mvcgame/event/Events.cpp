@@ -5,7 +5,8 @@ namespace mvcgame {
     
 #pragma mark - Event
     
-    Event::Event()
+    Event::Event() :
+    _stopPropagation(false)
     {
     }
     

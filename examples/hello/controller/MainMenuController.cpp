@@ -11,10 +11,13 @@
 #include <mvcgame/base/Color.hpp>
 #include <mvcgame/texture/PngTextureLoader.hpp>
 #include <mvcgame/texture/Texture.hpp>
+#include <mvcgame/action/TweenAction.hpp>
 
 #include <fstream>
 
-const mvcgame::gunit_t MainMenuController::_titleSize = 50;
+using namespace mvcgame;
+
+const gunit_t MainMenuController::_titleSize = 50;
 
 MainMenuController::MainMenuController()
 {
@@ -22,30 +25,38 @@ MainMenuController::MainMenuController()
 
 void MainMenuController::controllerAdded()
 {
-	auto bg = std::unique_ptr<mvcgame::ColorView>(new mvcgame::ColorView());
-	bg->setBackgroundColor(mvcgame::Color(255, 255, 195));	
+	auto bg = std::unique_ptr<ColorView>(new ColorView());
+	bg->setBackgroundColor(Color(255, 255, 195));	
 	bg->getFrame().size = getRoot().getView().getSize();
 	bg->getFrame().origin = bg->getFrame().size/2;
 
-	auto square = std::unique_ptr<mvcgame::ColorView>(new mvcgame::ColorView());
-	square->setBackgroundColor(mvcgame::Colors::Red);	
+	auto square = std::unique_ptr<ColorView>(new ColorView());
+	square->setBackgroundColor(Colors::Red);	
 	square->setFrame(getRoot().getView().getSize());
 	square->setScale(0.5);
 	square->getFrame().origin = bg->getFrame().size/2;
 	bg->addChild(std::move(square));
 
 	std::ifstream tfstream("./examples/hello/resources/trollface.png", std::ios::binary);
-	mvcgame::PngTextureLoader loader;
+	PngTextureLoader loader;
 	loader.validate(tfstream);
 	tfstream.seekg(0, std::ios::beg);
-	std::shared_ptr<mvcgame::Texture> tftexture = loader.load(tfstream);
+	std::shared_ptr<Texture> tftexture = loader.load(tfstream);
 
-	auto troll = std::unique_ptr<mvcgame::Sprite>(new mvcgame::Sprite());
+	auto troll = std::unique_ptr<Sprite>(new Sprite());
 	troll->setTexture(tftexture);
 	troll->setFrame(getRoot().getView().getSize());
-	troll->setScale(mvcgame::Scale(0.2, 0.3));
+	troll->setScale(Scale(0.2, 0.3));
 	troll->getFrame().origin = bg->getFrame().size/2;
-	troll->setRotation(mvcgame::Rotation::Pi/4);
+	troll->setRotation(Rotation::Pi/4);
+
+	auto trollRotate = std::unique_ptr<IAction>(new TweenAction([](View& view){
+		view.setRotation(-Rotation::Pi/4);
+		view.getFrame().origin += 100;
+	}));
+	runAction(std::move(trollRotate), *troll, Duration::secs(10));
+
+
 	bg->addChild(std::move(troll));
 	
 	setView(std::move(bg));
@@ -53,18 +64,18 @@ void MainMenuController::controllerAdded()
 	/*
 	bg->addChild(std::move(createTitleView("mvcgame test", 0)));	
 
-	auto option = std::unique_ptr<mvcgame::ViewController>(new MainMenuOptionController("play"));
+	auto option = std::unique_ptr<ViewController>(new MainMenuOptionController("play"));
 	addChild(std::move(option));		
 
-	option = std::unique_ptr<mvcgame::ViewController>(new MainMenuOptionController("credits"));
+	option = std::unique_ptr<ViewController>(new MainMenuOptionController("credits"));
 	addChild(std::move(option));
 	*/
 }
 
-std::unique_ptr<mvcgame::View> MainMenuController::createTitleView(const std::string& name, mvcgame::gunit_t y)
+std::unique_ptr<View> MainMenuController::createTitleView(const std::string& name, gunit_t y)
 {
-	auto title = std::unique_ptr<mvcgame::TextView>(new mvcgame::TextView());
-	mvcgame::Rect f(getRoot().getView().getSize());
+	auto title = std::unique_ptr<TextView>(new TextView());
+	Rect f(getRoot().getView().getSize());
 
 	f.origin.y = f.size.height/2-y;
 	f.size.height = _titleSize*2;
@@ -72,9 +83,9 @@ std::unique_ptr<mvcgame::View> MainMenuController::createTitleView(const std::st
 	title->setFrame(f);
 
 	title->setTextFont("Arial");
-	title->setTextColor(mvcgame::Color(mvcgame::Colors::Black));
-	title->setTextHorizontalAlign(mvcgame::TextView::HorizontalAlign::Center);
-	title->setTextVerticalAlign(mvcgame::TextView::VerticalAlign::Center);
+	title->setTextColor(Color(Colors::Black));
+	title->setTextHorizontalAlign(TextView::HorizontalAlign::Center);
+	title->setTextVerticalAlign(TextView::VerticalAlign::Center);
 	title->setTextSize(_titleSize);
 	title->setText(name);
 

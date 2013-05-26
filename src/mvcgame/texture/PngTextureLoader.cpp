@@ -122,8 +122,6 @@ namespace mvcgame {
         png_read_image(pngPtr, rowPtrs);
         png_read_end(pngPtr, NULL);
 
-        png_uint_32 channels = rowBytes/imgWidth;
-
 #ifdef MVCGAME_DEBUG_TEXTURE_PNG
 
         std::string colorTypeStr;
@@ -145,6 +143,8 @@ namespace mvcgame {
             colorTypeStr = "rgb with alpha";
             break;        
         }
+        png_uint_32 channels = rowBytes/imgWidth;
+        
         std::cout << ">>>>" << std::endl;        
         std::cout << "PngTextureLoader::load " << colorTypeStr << ", " << len << " bytes " << std::endl;
         std::cout << "size " << imgWidth << "x" << imgHeight << ", depth " << bitDepth;

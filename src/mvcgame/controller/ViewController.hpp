@@ -21,7 +21,7 @@ namespace mvcgame {
     protected:
 
         void moveChildren(View& view);
-
+        void onViewRemoved(View& view);
     public:
     	ViewController();
     	virtual ~ViewController();
@@ -41,13 +41,16 @@ namespace mvcgame {
         
         void addChild(std::unique_ptr<ViewController> child);
 
-        void runAction(std::unique_ptr<IAction> action, const Duration& duration);
+        void runAction(std::unique_ptr<IAction> action, View& view);
+        void runAction(std::unique_ptr<IAction> action, View& view, const Duration& duration);
+
         void updateActions(UpdateEvent& event);
 
         void clearChildren();
         void clearActions();
 
         virtual bool respondToTouchPoint(const Point& p, const TouchEvent& event);
+        virtual void respondOnUpdate(UpdateEvent& event);        
 
         /**
          * called after the controller is added to a parent controller

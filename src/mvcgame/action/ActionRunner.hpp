@@ -11,9 +11,7 @@
 namespace mvcgame {
 
     class View;
-    class UpdateEvent;
-    class RunningAction;
-    typedef std::unique_ptr<RunningAction> RunningActionPtr;        
+    class UpdateEvent;     
 
     /**
      * Represents a running action
@@ -22,11 +20,14 @@ namespace mvcgame {
     {
     public:
         std::unique_ptr<IAction> action;
+        View& view;
         Time start;
         Duration duration;
 
-        RunningAction(std::unique_ptr<IAction> paction, const Time& pstart, const Duration& pduration);
+        RunningAction(std::unique_ptr<IAction> action, View& view, const Duration& duration);
         ~RunningAction();
+
+        void update(UpdateEvent& event);
     };
 
     /**
@@ -35,7 +36,7 @@ namespace mvcgame {
     class ActionRunner
     {
     public:
-        typedef std::vector<RunningActionPtr> ActionList;       
+        typedef std::vector<std::unique_ptr<RunningAction>> ActionList;       
     private:
         ActionList _actions;
     public:
@@ -45,12 +46,13 @@ namespace mvcgame {
 
         void clear();
         
-        void add(std::unique_ptr<IAction> action);
-        void add(std::unique_ptr<IAction> action, const Duration& duration);
+        void add(std::unique_ptr<IAction> action, View& view);
+        void add(std::unique_ptr<IAction> action, View& view, const Duration& duration);
         
+        void remove(View& view);
         void remove(const IAction& action);
 
-        void update(View& view, UpdateEvent& event);
+        void update(UpdateEvent& event);
     };    
 }
 

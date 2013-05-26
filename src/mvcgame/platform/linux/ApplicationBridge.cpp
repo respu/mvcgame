@@ -77,19 +77,29 @@ namespace mvcgame {
         XStoreName(dpy, win, "mvcgame");
         glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
         glXMakeCurrent(dpy, win, glc);
-        glEnable(GL_DEPTH_TEST); 
  
+        fd_set inFds;
+        struct timeval tv;
+        tv.tv_usec = 1000000.0f/60;
+        tv.tv_sec = 0;
+        int x11Fd = ConnectionNumber(dpy);
+
         while(!_finished)
         {
+            FD_ZERO(&inFds);
+            FD_SET(x11Fd, &inFds);
+            select(x11Fd+1, &inFds, 0, 0, &tv);
+
             _app->update();
-            XNextEvent(dpy, &xev);
-        
-            if(xev.type == Expose)
+
+            while(XPending(dpy))
             {
-                XGetWindowAttributes(dpy, win, &gwa);
-                glViewport(0, 0, gwa.width, gwa.height);
-                glXSwapBuffers(dpy, win);
+                XNextEvent(dpy, &xev);
             }
+
+            XGetWindowAttributes(dpy, win, &gwa);
+            glViewport(0, 0, gwa.width, gwa.height);
+            glXSwapBuffers(dpy, win);
         }
 
         glXMakeCurrent(dpy, None, NULL);

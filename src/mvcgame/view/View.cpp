@@ -160,6 +160,7 @@ namespace mvcgame {
 
     void View::removeFromParent()
     {
+        notifyRemoval(*this);
         if(_parent != nullptr)
         {
             _parent->removeChild(*this);
@@ -171,4 +172,21 @@ namespace mvcgame {
     {
         return _frame.contains(p);
     }
+
+    void View::setRemovalCallback(ViewCallback callback)
+    {
+        _removalCallback = callback;
+    }
+
+    void View::notifyRemoval(View& view)
+    {
+        if(_removalCallback)
+        {
+            _removalCallback(view);
+        }
+        if(_parent)
+        {
+            _parent->notifyRemoval(view);
+        }
+    }    
 }

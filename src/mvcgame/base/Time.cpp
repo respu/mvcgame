@@ -56,7 +56,17 @@ namespace mvcgame {
     
     Duration::operator bool() const
     {
-        return _value == 0;
+        return _value != 0;
+    }
+
+    bool Duration::operator==(bool b) const
+    {
+        return (_value != 0) == b;
+    }
+
+    bool Duration::operator!=(bool b) const
+    {
+        return !((*this) == b);
     }
 
     bool Duration::operator==(const Duration& i) const
@@ -158,7 +168,14 @@ namespace mvcgame {
     
     float Duration::operator/(const Duration& d) const
     {
-        return _value/d._value;
+        if(d._value)
+        {
+            return (double)_value/(double)d._value;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
 #pragma mark - Time
@@ -167,8 +184,8 @@ namespace mvcgame {
     {
 		auto time = std::chrono::system_clock::now();
 		auto epoch = time.time_since_epoch();
-		auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-		return Time(millis.count());
+		auto micros = std::chrono::duration_cast<std::chrono::microseconds>(epoch);
+		return Time(micros.count());
     }
     
     Time::Time() : _value(0)
@@ -283,7 +300,7 @@ namespace mvcgame {
     
     fixedtime_t Time::months() const
     {
-        return _value/(12*24*60*60*FIXED_TIME_FACTOR);
+        return _value/(30*24*60*60*FIXED_TIME_FACTOR);
     }
     
     fixedtime_t Time::days() const
@@ -354,6 +371,62 @@ namespace mvcgame {
     {
         gunit_t dt = dur.fsecs();
         return Speed(x/dt, y/dt, d+1);
+    }
+
+
+#pragma mark - stream functions
+
+    std::ostream& operator<<(std::ostream& os, const Time& t)
+    {
+        os << "Time(";
+        os << t.day() << "/" << t.month() << "/" << t.year() << " ";
+        os << t.hour() << ":" << t.min() << ":" << t.sec() << ":" << t.usec();
+        os << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Duration& d)
+    {
+        os << "Duration(";
+        int p;
+        p = d.years();
+        if(p)
+        {
+            os << " " << p << " years";
+        }
+        p = d.months();
+        if(p)
+        {
+            os << " " << p << " months";
+        }        
+        p = d.days();
+        if(p)
+        {
+            os << " " << p << " days";
+        }        
+        p = d.hours();
+        if(p)
+        {
+            os << " " << p << " hours";
+        }        
+        p = d.mins();
+        if(p)
+        {
+            os << " " << p << " mins";
+        }        
+        p = d.secs();
+        if(p)
+        {
+            os << " " << p << " secs";
+        }        
+        os << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Speed& s)
+    {
+        os << "Speed(" << s.x << ", " << s.y << ", " << s.d <<")";
+        return os;
     }
 
 }

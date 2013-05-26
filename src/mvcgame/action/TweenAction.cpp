@@ -42,7 +42,7 @@ namespace mvcgame {
 
 	void TweenAction::update(View& view, float p)
 	{
-		if(p == 0)
+		if(p == 0 || !_start || !_end)
 		{
 			// obtain the end view properties
 			_start = std::unique_ptr<View>(new View(view));
@@ -71,6 +71,15 @@ namespace mvcgame {
 			ease(p, sscale.x, escale.x-sscale.x),
 			ease(p, sscale.y, escale.y-sscale.y)
 		);
+
+#ifdef MVCGAME_DEBUG_TWEENACTION
+		std::cout << ">>>>" << std::endl;        
+        std::cout << "TweenAction::update " << p << std::endl;
+        std::cout << "frame " << rect << std::endl;
+        std::cout << "rotation " << rot << std::endl;
+        std::cout << "scale " << scale << std::endl;        
+        std::cout << "<<<<" << std::endl;
+#endif		
 
 		view.setFrame(rect);
 		view.setRotation(rot);

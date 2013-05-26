@@ -41,7 +41,6 @@ namespace mvcgame {
         float glt[16];
         getGlTransform(transform, glt);
         glLoadMatrixf(glt);
-        glDisable(GL_DEPTH_TEST);    
     }
 
     void ViewBridge::pushTransform(const Transform& transform)

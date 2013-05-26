@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <memory>
+#include <functional>
 
 namespace mvcgame {
 
@@ -16,7 +17,9 @@ namespace mvcgame {
 
     class View : public BaseView
     {
-    protected:
+    public:
+        typedef std::function<void(View& view)> ViewCallback;
+    private:
         View* _parent;
         RootView* _root;
         Rect _frame;
@@ -24,10 +27,11 @@ namespace mvcgame {
         Anchor _anchor;
         Rotation _rotation;
         Transform _transform;
-
+        ViewCallback _removalCallback;
+    protected:
         void setParent(View& parent);
         IViewBridge& getBridge();
-
+        void notifyRemoval(View& view);
     public:
         View();
         View(const View& other);
@@ -63,6 +67,7 @@ namespace mvcgame {
         const RootView& getRoot() const;
 
         bool respondToTouchPoint(const Point& p, const TouchEvent& event);
+        void setRemovalCallback(ViewCallback callback);
     };
 }
 

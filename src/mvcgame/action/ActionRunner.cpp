@@ -10,18 +10,38 @@
 #include <mvcgame/action/IAction.hpp>
 #include <mvcgame/event/Events.hpp>
 
-#include <assert.h>
+#include <cassert>
 #include <algorithm>
 
 namespace mvcgame {
 
-    RunningAction::RunningAction(std::unique_ptr<IAction> paction, const Time& pstart, const Duration& pduration) :
-    action(std::move(paction)), start(pstart), duration(pduration) 
+    RunningAction::RunningAction(std::unique_ptr<IAction> paction, View& pview, const Duration& pduration) :
+    action(std::move(paction)), view(pview), duration(pduration) 
     {
     }
 
     RunningAction::~RunningAction()
     {
+    }
+
+    void RunningAction::update(UpdateEvent& event)
+    {
+        if(!start)
+        {
+            start = event.getTime();
+        }
+        Duration passed = event.getTime() - start;      
+        float proportion = 1.0f;
+        if(duration != false)
+        {
+            proportion = passed/duration;
+        }
+        action->update(view, proportion);
+        if(proportion >= 1.0f)
+        {
+            // mark all finished actions with duration 0
+            duration = Duration();
+        }
     }
 
 	ActionRunner::ActionRunner()
@@ -32,22 +52,32 @@ namespace mvcgame {
 	{
 	}
 
-    void ActionRunner::add(std::unique_ptr<IAction> action)
+    void ActionRunner::add(std::unique_ptr<IAction> action, View& view)
     {
-        add(std::move(action), Duration());
+        add(std::move(action), view, Duration());
     }
     
-    void ActionRunner::add(std::unique_ptr<IAction> action, const Duration& duration)
+    void ActionRunner::add(std::unique_ptr<IAction> action, View& view, const Duration& duration)
     {
-        _actions.push_back(RunningActionPtr(new RunningAction(std::move(action), Time(), duration)));
+        _actions.push_back(std::unique_ptr<RunningAction>(new RunningAction(std::move(action), view, duration)));
+    }
+
+    void ActionRunner::remove(View& view)
+    {
+        _actions.erase(std::remove_if(_actions.begin(), _actions.end(),
+        [&view](std::unique_ptr<RunningAction>& running)
+        {
+            return &running->view == &view;
+        }), _actions.end());
     }
 
     void ActionRunner::remove(const IAction& action)
     {
-        std::remove_if(_actions.begin(), _actions.end(), [&action](const RunningActionPtr& running)
+        _actions.erase(std::remove_if(_actions.begin(), _actions.end(),
+        [&action](std::unique_ptr<RunningAction>& running)
         {
             return running->action.get() == &action;
-        });
+        }), _actions.end());
     }
 
     void ActionRunner::clear()
@@ -55,33 +85,18 @@ namespace mvcgame {
         _actions.clear();
     }
 
-    void ActionRunner::update(View& view, UpdateEvent& event)
+    void ActionRunner::update(UpdateEvent& event)
     {
-        for(RunningActionPtr& running : _actions)
+        for(std::unique_ptr<RunningAction>& running : _actions)
         {
-            if(!running->start)
-            {
-                running->start = event.getTime();
-            }
-            Duration passed = event.getTime() - Time(running->start);
-            float proportion = 1.0f;
-            if(running->duration)
-            {
-                proportion = passed/running->duration;
-            }
-            running->action->update(view, proportion);
-            if(proportion >= 1.0f)
-            {
-                // mark all finished actions with duration 0
-                running->duration = Duration();
-            }
+            running->update(event);
         }
-
         // remove all actions with duration 0
-        std::remove_if(_actions.begin(), _actions.end(), [](const RunningActionPtr& running)
+        _actions.erase(std::remove_if(_actions.begin(), _actions.end(),
+        [](std::unique_ptr<RunningAction>& running)
         {
-            return !running->duration;
-        });
+            return running->duration == false;
+        }), _actions.end());
     }
 
 }

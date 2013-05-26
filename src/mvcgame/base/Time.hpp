@@ -3,7 +3,8 @@
 #define mvcgame_Time_hpp
 
 #include <mvcgame/base/Geometry.hpp>
-#include <stdint.h>
+#include <cstdint>
+#include <iostream>
 
 namespace mvcgame {
 
@@ -33,7 +34,10 @@ namespace mvcgame {
         
         Duration();
     	Duration(duration_t pt);
+
 		operator bool() const;
+        bool operator==(bool b) const;
+        bool operator!=(bool b) const;
 
         bool operator==(const Duration& i) const;
         bool operator!=(const Duration& i) const;
@@ -118,6 +122,14 @@ namespace mvcgame {
         const Speed operator*(const Duration& d);
         const Speed operator/(const Duration& d);
     };
+
+    /**
+     Stream functions
+     */
+    std::ostream& operator<<(std::ostream& os, const Time& t);
+    std::ostream& operator<<(std::ostream& os, const Duration& d);
+    std::ostream& operator<<(std::ostream& os, const Speed& s);
+
 
 }
 
