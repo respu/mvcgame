@@ -1,9 +1,11 @@
 #ifndef mvcgame_AssetsManager_hpp
 #define mvcgame_AssetsManager_hpp
 
-#include <mvcgame/texture/FilesystemTextureLoader.hpp>
+#include <mvcgame/texture/INameTextureLoader.hpp>
 #include <mvcgame/texture/Texture.hpp>
+
 #include <memory>
+#include <vector>
 
 namespace mvcgame {
 
@@ -12,12 +14,13 @@ namespace mvcgame {
     class AssetsManager
     {
     private:
+        typedef std::vector<std::unique_ptr<INameTextureLoader>> TextureLoaders;
+        TextureLoaders _textureLoaders;
         Application& _app;
-        FilesystemTextureLoader _fsTextureLoader;
     public:
         AssetsManager(Application& app);
-        FilesystemTextureLoader& getFilesystemTextureLoader();
-        const FilesystemTextureLoader& getFilesystemTextureLoader() const;
+
+        void registerLoader(std::unique_ptr<INameTextureLoader> loader);
 
         std::unique_ptr<Texture> loadTexture(const std::string& name);
     };

@@ -16,16 +16,13 @@ using namespace mvcgame;
 int main(int argc, char **argv)
 {
     std::unique_ptr<ApplicationBridge> bridge(new ApplicationBridge());
-
-    // setup the filesystem bridge
-    FilesystemBridge& fsBridge = static_cast<FilesystemBridge&>(bridge->getFilesystem());
-    fsBridge.setBasePath("../examples/hello/resources");
-
     mvcgame::Application app(std::move(bridge));
 
     // setup the assets manager
-    FilesystemTextureLoader& fsTex = app.getAssetsManager().getFilesystemTextureLoader();
-    fsTex.registerLoader(std::unique_ptr<ITextureLoader>(new PngTextureLoader()), "png");
+     std::unique_ptr<FilesystemTextureLoader> fsTex(new FilesystemTextureLoader(app.getBridge().getFilesystem()));
+    fsTex->registerLoader(std::unique_ptr<IStreamTextureLoader>(new PngTextureLoader()), "png");
+    fsTex->addPath("../examples/hello/resources");
+    app.getAssetsManager().registerLoader(std::move(fsTex));
 
     app.getRoot().getView().setSize(mvcgame::Size(480, 320));
     app.getRoot().addChild(std::unique_ptr<MainMenuController>(new MainMenuController()));

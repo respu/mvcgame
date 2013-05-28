@@ -7,24 +7,26 @@
 namespace mvcgame {
 
     AssetsManager::AssetsManager(Application& app) :
-    _app(app), _fsTextureLoader(app.getBridge().getFilesystem())
+    _app(app)
     {
 
     }
 
-    FilesystemTextureLoader& AssetsManager::getFilesystemTextureLoader()
+    void AssetsManager::registerLoader(std::unique_ptr<INameTextureLoader> loader)
     {
-        return _fsTextureLoader;
-    }
-
-    const FilesystemTextureLoader& AssetsManager::getFilesystemTextureLoader() const
-    {
-        return _fsTextureLoader;
+        _textureLoaders.push_back(std::move(loader));
     }
 
     std::unique_ptr<Texture> AssetsManager::loadTexture(const std::string& name)
     {
-        return _fsTextureLoader.load(name);
+        for(std::unique_ptr<INameTextureLoader>& loader : _textureLoaders)
+        {
+            if(loader->validate(name))
+            {
+                return loader->load(name);
+            }
+        }
+        return std::unique_ptr<Texture>();
     }
 
 }

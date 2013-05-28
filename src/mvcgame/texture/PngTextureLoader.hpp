@@ -2,11 +2,11 @@
 #ifndef mvcgame_PngTextureLoader_hpp
 #define mvcgame_PngTextureLoader_hpp
 
-#include <mvcgame/texture/ITextureLoader.hpp>
+#include <mvcgame/texture/IStreamTextureLoader.hpp>
 
 namespace mvcgame {
 
-    class PngTextureLoader : public ITextureLoader
+    class PngTextureLoader : public IStreamTextureLoader
     {
     public:
         bool validate(std::istream& input);

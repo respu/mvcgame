@@ -1,7 +1,7 @@
 
 
-#ifndef mvcgame_ITextureLoader_hpp
-#define mvcgame_ITextureLoader_hpp
+#ifndef mvcgame_IStreamTextureLoader_hpp
+#define mvcgame_IStreamTextureLoader_hpp
 
 #include <memory>
 #include <iostream>
@@ -11,10 +11,10 @@ namespace mvcgame {
 
     class Texture;
 
-    class ITextureLoader
+    class IStreamTextureLoader
     {
     public:
-        virtual ~ITextureLoader(){};
+        virtual ~IStreamTextureLoader(){};
 
         /**
          * The stream should be at the start

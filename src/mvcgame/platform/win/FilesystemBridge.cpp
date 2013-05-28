@@ -18,8 +18,9 @@ namespace mvcgame {
         return false;
     }
 
-    void FilesystemBridge::setBasePath(const std::string& path)
+    Paths FilesystemBridge::findResource(const std::string& name, const std::string& path)
     {
-        _basePath = path;
+        return Paths();
     }
+
 }

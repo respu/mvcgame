@@ -10,7 +10,6 @@ namespace mvcgame {
     class FilesystemBridge : public IFilesystemBridge
     {
     private:
-        std::string _basePath;
         std::string _exePath;
     public:
 
@@ -18,7 +17,7 @@ namespace mvcgame {
 
         bool readResource(const std::string& path, std::ifstream& in);
 
-        void setBasePath(const std::string& path);
+        Paths findResource(const std::string& name, const std::string& path);
     };
 
 }

@@ -10,15 +10,15 @@ namespace mvcgame {
     {
     }
 
-    void FilesystemTextureLoader::registerLoader(std::unique_ptr<ITextureLoader> loader, const std::string& ext)
+    void FilesystemTextureLoader::registerLoader(std::unique_ptr<IChildLoader> loader, const std::string& ext)
     {
         LoaderList& list = _loaders[ext];
         list.push_back(std::move(loader));
     }
 
-    std::unique_ptr<Texture> FilesystemTextureLoader::load(std::ifstream& in, LoaderList& loaders)
+    std::unique_ptr<Texture> FilesystemTextureLoader::loadStream(std::ifstream& in, LoaderList& loaders)
     {
-        for(std::unique_ptr<ITextureLoader>& loader : loaders)
+        for(std::unique_ptr<IChildLoader>& loader : loaders)
         {
             in.seekg(0, std::ios::beg);
             if(loader->validate(in))
@@ -30,7 +30,7 @@ namespace mvcgame {
         return std::unique_ptr<Texture>();
     }
 
-    std::unique_ptr<Texture> FilesystemTextureLoader::load(const std::string& path)
+    std::unique_ptr<Texture> FilesystemTextureLoader::loadPath(const std::string& path)
     {
         std::ifstream in;
         if(!_bridge.readResource(path, in))
@@ -41,7 +41,7 @@ namespace mvcgame {
         LoaderMap::iterator itr = _loaders.find(ext);
         if(itr != _loaders.end())
         {
-            std::unique_ptr<Texture> t = std::move(load(in, itr->second));
+            std::unique_ptr<Texture> t = loadStream(in, itr->second);
             if(t)
             {
                 return std::move(t);
@@ -50,9 +50,33 @@ namespace mvcgame {
         itr = _loaders.find("");
         if(itr != _loaders.end())
         {
-            return std::move(load(in, itr->second));
+            return std::move(loadStream(in, itr->second));
         }
         return std::unique_ptr<Texture>();
+    }
+
+    std::unique_ptr<Texture> FilesystemTextureLoader::load(const std::string& name)
+    {
+        Paths results;
+        for(const std::string& path : _paths)
+        {
+            Paths pathResults = _bridge.findResource(name, path);
+            results.insert(results.end(), pathResults.begin(), pathResults.end());
+        }
+        for(const std::string& path : results)
+        {
+            std::unique_ptr<Texture> t = loadPath(path);
+            if(t)
+            {
+                return std::move(t);
+            }
+        }
+        return std::unique_ptr<Texture>();
+    }
+
+    void FilesystemTextureLoader::addPath(const std::string& path)
+    {
+        _paths.push_back(path);
     }
 
 }

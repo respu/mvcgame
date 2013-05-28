@@ -37,7 +37,7 @@ void MainMenuController::controllerAdded()
 	square->getFrame().origin = bg->getFrame().size/2;
 	bg->addChild(std::move(square));
 
-	std::shared_ptr<Texture> tftexture = getAssetsManager().loadTexture("trollface.png");
+	std::shared_ptr<Texture> tftexture = getAssetsManager().loadTexture("trollface");
 	auto troll = std::unique_ptr<Sprite>(new Sprite());
 	troll->setTexture(tftexture);
 	troll->setFrame(getRoot().getView().getSize());
