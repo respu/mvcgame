@@ -7,7 +7,7 @@
 namespace mvcgame {
 
     AssetsManager::AssetsManager(Application& app) :
-    _app(app), _fsTextureLoader(app.getBridge().getFilesystemBridge())
+    _app(app), _fsTextureLoader(app.getBridge().getFilesystem())
     {
 
     }

@@ -7,6 +7,7 @@
 #include <mvcgame/texture/TextureRegion.hpp>
 
 #include <map>
+#include <string>
 
 namespace mvcgame {
 

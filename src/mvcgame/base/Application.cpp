@@ -1,12 +1,11 @@
 
 #include <mvcgame/base/Application.hpp>
-#include <mvcgame/platform/ApplicationBridge.hpp>
 #include <mvcgame/view/RootView.hpp>
 
 namespace mvcgame {
 
-    Application::Application() :
-    _bridge(new ApplicationBridge()),
+    Application::Application(std::unique_ptr<IApplicationBridge> bridge) :
+    _bridge(std::move(bridge)),
     _root(*this), _assets(*this)
     {
         _bridge->setApplication(*this);

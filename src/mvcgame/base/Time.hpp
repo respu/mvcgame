@@ -80,7 +80,7 @@ namespace mvcgame {
         fixedtime_t month() const;
         fixedtime_t day() const;
         fixedtime_t hour() const;
-        fixedtime_t min() const;
+        fixedtime_t minu() const;
         fixedtime_t sec() const;
         fixedtime_t usec() const;
         fixedtime_t stamp() const;

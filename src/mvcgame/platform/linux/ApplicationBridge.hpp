@@ -2,7 +2,7 @@
 #define mvcgame_linux_ApplicationBridge_hpp
 
 #include <mvcgame/platform/IApplicationBridge.hpp>
-#include <mvcgame/platform/gl/ViewBridge.hpp>
+#include <mvcgame/platform/gl/RenderBridge.hpp>
 #include <mvcgame/platform/linux/FilesystemBridge.hpp>
 
 namespace mvcgame {
@@ -12,7 +12,7 @@ namespace mvcgame {
     private:
         Application* _app;
         bool _finished;
-        ViewBridge _viewBridge;
+        RenderBridge _renderBridge;
         FilesystemBridge _fsBridge;
     public:
         ApplicationBridge();
@@ -20,8 +20,8 @@ namespace mvcgame {
         void exit();
         void setApplication(Application& app);
         void showError(const std::string& error);
-        IViewBridge& getViewBridge();
-        IFilesystemBridge& getFilesystemBridge();
+        IRenderBridge& getRender();
+        IFilesystemBridge& getFilesystem();
     };
 }
 

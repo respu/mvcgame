@@ -13,7 +13,7 @@ namespace mvcgame {
 
     class TouchEvent;
     class RootView;
-    class IViewBridge;
+    class IRenderBridge;
 
     class View : public BaseView
     {
@@ -30,7 +30,7 @@ namespace mvcgame {
         ViewCallback _removalCallback;
     protected:
         void setParent(View& parent);
-        IViewBridge& getBridge();
+        IRenderBridge& getBridge();
         void notifyRemoval(View& view);
     public:
         View();

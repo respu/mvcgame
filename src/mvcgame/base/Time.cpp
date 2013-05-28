@@ -273,7 +273,7 @@ namespace mvcgame {
         return hours() - days()*24;
     }
     
-    fixedtime_t Time::min() const
+    fixedtime_t Time::minu() const
     {
         return mins() - hours()*60;
     }
@@ -380,7 +380,7 @@ namespace mvcgame {
     {
         os << "Time(";
         os << t.day() << "/" << t.month() << "/" << t.year() << " ";
-        os << t.hour() << ":" << t.min() << ":" << t.sec() << ":" << t.usec();
+        os << t.hour() << ":" << t.minu() << ":" << t.sec() << ":" << t.usec();
         os << ")";
         return os;
     }

@@ -600,7 +600,7 @@ namespace mvcgame {
 
     Scale Scale::operator*(gunit_t r) const
     {
-        return Scale(*this)*r;
+        return Scale(x*r, y*r);
     }
 
     Rect Scale::operator*(const Rect& r) const

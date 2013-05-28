@@ -1,11 +1,11 @@
 
 #include <mvcgame/view/RootView.hpp>
 #include <mvcgame/view/View.hpp>
-#include <mvcgame/platform/IViewBridge.hpp>
+#include <mvcgame/platform/IRenderBridge.hpp>
 
 namespace mvcgame {
 
-    RootView::RootView(IViewBridge& bridge) :
+    RootView::RootView(IRenderBridge& bridge) :
      _bridge(bridge)
     {
     }
@@ -37,7 +37,7 @@ namespace mvcgame {
         BaseView::draw();
     }
 
-    IViewBridge& RootView::getBridge()
+    IRenderBridge& RootView::getBridge()
     {
         return _bridge;
     }

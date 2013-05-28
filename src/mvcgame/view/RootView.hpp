@@ -11,15 +11,15 @@
 namespace mvcgame {
 
     class Color;
-    class IViewBridge;
+    class IRenderBridge;
 
     class RootView : public BaseView
     {
     private:
         Size _size;
-        IViewBridge& _bridge;
+        IRenderBridge& _bridge;
     public:
-        RootView(IViewBridge& bridge);
+        RootView(IRenderBridge& bridge);
 
         Size& getSize();
         const Size& getSize() const;
@@ -29,7 +29,7 @@ namespace mvcgame {
 
         void draw();
 
-        IViewBridge& getBridge();
+        IRenderBridge& getBridge();
     };
 }
 

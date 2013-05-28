@@ -8,7 +8,7 @@
 namespace mvcgame {
 
     class Application;
-    class IViewBridge;
+    class IRenderBridge;
     class IFilesystemBridge;
 
     class IApplicationBridge
@@ -21,8 +21,8 @@ namespace mvcgame {
         virtual void setApplication(Application& app) = 0;
         virtual void showError(const std::string& error) = 0;
         
-        virtual IViewBridge& getViewBridge() = 0;
-        virtual IFilesystemBridge& getFilesystemBridge() = 0;
+        virtual IRenderBridge& getRender() = 0;
+        virtual IFilesystemBridge& getFilesystem() = 0;
     };
 
 }

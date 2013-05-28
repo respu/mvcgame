@@ -17,7 +17,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -52,7 +52,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_ALLOW_KEYWORD_MACROS;constexpr;WIN32;_DEBUG;_WINDOWS;_USRDLL;MVCGAME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MVCGAME_PLATFORM_WIN;_ALLOW_KEYWORD_MACROS;constexpr;WIN32;_DEBUG;_WINDOWS;_USRDLL;MVCGAME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -79,47 +79,67 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\mvcgame\action\ActionRunner.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\action\TweenAction.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\asset\AssetsManager.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\base\Application.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\base\Color.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\base\Easing.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\base\Geometry.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\base\Time.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\controller\BaseViewController.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\controller\RootViewController.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\controller\ViewController.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\Easing.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\event\EventEmitter.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\event\Events.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\Geometry.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\Time.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\view\BaseColorView.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\view\BaseTextView.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\platform\dx\ViewBridge.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\platform\IViewBridge.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\platform\win\ApplicationBridge.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\platform\win\FilesystemBridge.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\texture\FilesystemTextureLoader.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\texture\Texture.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\texture\TextureAtlas.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\texture\TextureRegion.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\view\BaseView.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\view\Color.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\view\TextureFrame.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\view\ColorView.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\view\RootView.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\view\Sprite.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\view\TextView.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\view\View.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\mvcgame\action\ActionRunner.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\action\IAction.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\action\TweenAction.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\Application.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\asset\AssetsManager.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\base\Application.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\base\Color.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\base\Easing.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\base\Geometry.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\base\ObservedValue.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\base\Time.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\controller\BaseViewController.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\controller\RootViewController.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\controller\ViewController.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\Easing.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\event\EventEmitter.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\event\Events.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\event\IResponder.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\Geometry.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\IApplication.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\Time.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\BaseColorView.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\BaseTextView.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\platform\ApplicationBridge.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\platform\dx\ViewBridge.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\platform\IApplicationBridge.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\platform\IFilesystemBridge.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\platform\IViewBridge.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\platform\win\ApplicationBridge.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\platform\win\FilesystemBridge.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\FilesystemTextureLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\ITextureAtlasLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\ITextureLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\Texture.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\TextureAtlas.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\TextureRegion.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\view\BaseView.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\Color.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\view\ColorView.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\IColorView.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\ISprite.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\ISpriteBatch.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\ITexture.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\ITexturePool.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\ITextView.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\IView.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\view\IViewMask.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\view\TextureFrame.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\view\RootView.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\view\Sprite.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\view\TextView.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\view\View.hpp" />
   </ItemGroup>

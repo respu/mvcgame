@@ -13,37 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de código fuente\controller">
+      <UniqueIdentifier>{a3ee6f18-5e71-4ff5-b3bd-78705d593375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\controller">
+      <UniqueIdentifier>{dd7fe7c3-ed2e-41be-a6fe-168b0a0ad64e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="hello.rc">
-      <Filter>Archivos de recursos</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Archivos de recursos</Filter>
-    </Image>
-    <Image Include="hello.ico">
-      <Filter>Archivos de recursos</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\examples\hello\controller\MainMenuController.cpp">
+    <ClCompile Include="..\..\..\examples\hello\platform\win\main.cpp">
       <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\hello\controller\MainMenuController.cpp">
+      <Filter>Archivos de código fuente\controller</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\examples\hello\controller\MainMenuOptionController.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\examples\hello\platform\linux\main.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Archivos de código fuente\controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\examples\hello\controller\MainMenuController.hpp">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\examples\hello\controller\MainMenuOptionController.hpp">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\hello\controller\MainMenuController.hpp">
+      <Filter>Archivos de encabezado\controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

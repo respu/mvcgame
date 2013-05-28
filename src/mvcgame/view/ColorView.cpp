@@ -1,5 +1,5 @@
 #include <mvcgame/view/ColorView.hpp>
-#include <mvcgame/platform/IViewBridge.hpp>
+#include <mvcgame/platform/IRenderBridge.hpp>
 
 namespace mvcgame {
 

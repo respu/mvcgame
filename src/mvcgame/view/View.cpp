@@ -1,6 +1,6 @@
 #include <mvcgame/view/View.hpp>
 #include <mvcgame/view/RootView.hpp>
-#include <mvcgame/platform/IViewBridge.hpp>
+#include <mvcgame/platform/IRenderBridge.hpp>
 
 #include <cassert>
 #include <algorithm>
@@ -153,7 +153,7 @@ namespace mvcgame {
         }
     }
 
-    IViewBridge& View::getBridge()
+    IRenderBridge& View::getBridge()
     {
         return getRoot().getBridge();
     }

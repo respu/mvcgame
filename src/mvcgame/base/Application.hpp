@@ -21,7 +21,7 @@ namespace mvcgame {
         RootViewController _root;
         AssetsManager _assets;
 	public:
-        Application();
+        Application(std::unique_ptr<IApplicationBridge> bridge);
         const Size& getSize() const;
 
 		void run();

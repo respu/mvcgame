@@ -37,28 +37,49 @@
     <Filter Include="Archivos de código fuente\controller">
       <UniqueIdentifier>{9e89cf73-d8ec-4d29-ac1f-5fd33d1dff7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\base">
+      <UniqueIdentifier>{fb5dc796-1271-493e-9d8f-d3dcf25e4f15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\base">
+      <UniqueIdentifier>{51de289f-d855-4100-9c25-693308eb75e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\asset">
+      <UniqueIdentifier>{42e5c001-9342-4194-b5f3-c572a68f1433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\asset">
+      <UniqueIdentifier>{523ef50e-9f51-4a45-bf1c-1f883c4a3203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\texture">
+      <UniqueIdentifier>{c3587467-9dc9-412f-9305-79c4fa380cd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\texture">
+      <UniqueIdentifier>{ecfb4f61-e98c-455c-948a-d2e850050f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\platform">
+      <UniqueIdentifier>{51039853-c021-4d0b-88b0-a421518b964b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\platform">
+      <UniqueIdentifier>{1bf246ed-754c-4dc1-a172-9ffa9a409068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\platform\win">
+      <UniqueIdentifier>{7b9932aa-40ea-4b21-8d2b-d542a13f66b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\platform\win">
+      <UniqueIdentifier>{02e72565-5fb3-4c9a-b914-67eb23afd502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\platform\dx">
+      <UniqueIdentifier>{7e10b726-e921-4a04-ac9f-6f72bfb5d4d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\platform\dx">
+      <UniqueIdentifier>{3a0c218a-f8aa-4cd4-a875-12e979bb054a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\mvcgame\Easing.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\mvcgame\Geometry.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\mvcgame\Time.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\mvcgame\action\ActionRunner.cpp">
       <Filter>Archivos de código fuente\action</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\mvcgame\action\TweenAction.cpp">
       <Filter>Archivos de código fuente\action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\mvcgame\view\BaseColorView.cpp">
-      <Filter>Archivos de código fuente\view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\mvcgame\view\BaseTextView.cpp">
-      <Filter>Archivos de código fuente\view</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\mvcgame\view\BaseView.cpp">
       <Filter>Archivos de código fuente\view</Filter>
@@ -72,72 +93,81 @@
     <ClCompile Include="..\..\..\src\mvcgame\controller\RootViewController.cpp">
       <Filter>Archivos de código fuente\controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\mvcgame\view\TextureFrame.cpp">
-      <Filter>Archivos de código fuente\view</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\mvcgame\controller\ViewController.cpp">
       <Filter>Archivos de código fuente\controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\mvcgame\view\Color.cpp">
+    <ClCompile Include="..\..\..\src\mvcgame\asset\AssetsManager.cpp">
+      <Filter>Archivos de código fuente\asset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\controller\BaseViewController.cpp">
+      <Filter>Archivos de código fuente\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\base\Application.cpp">
+      <Filter>Archivos de código fuente\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\base\Color.cpp">
+      <Filter>Archivos de código fuente\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\base\Easing.cpp">
+      <Filter>Archivos de código fuente\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\base\Geometry.cpp">
+      <Filter>Archivos de código fuente\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\base\Time.cpp">
+      <Filter>Archivos de código fuente\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\platform\IViewBridge.cpp">
+      <Filter>Archivos de código fuente\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\texture\FilesystemTextureLoader.cpp">
+      <Filter>Archivos de código fuente\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\texture\Texture.cpp">
+      <Filter>Archivos de código fuente\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\texture\TextureAtlas.cpp">
+      <Filter>Archivos de código fuente\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\texture\TextureRegion.cpp">
+      <Filter>Archivos de código fuente\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\ColorView.cpp">
       <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\RootView.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\Sprite.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\TextView.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\view\View.cpp">
+      <Filter>Archivos de código fuente\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\platform\win\ApplicationBridge.cpp">
+      <Filter>Archivos de código fuente\platform\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\platform\win\FilesystemBridge.cpp">
+      <Filter>Archivos de código fuente\platform\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mvcgame\platform\dx\ViewBridge.cpp">
+      <Filter>Archivos de código fuente\platform\dx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\mvcgame\Application.hpp">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\Easing.hpp">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\Geometry.hpp">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\IApplication.hpp">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\Time.hpp">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\mvcgame\action\ActionRunner.hpp">
       <Filter>Archivos de encabezado\action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\mvcgame\action\IAction.hpp">
       <Filter>Archivos de encabezado\action</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\BaseColorView.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\BaseTextView.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\mvcgame\view\BaseView.hpp">
       <Filter>Archivos de encabezado\view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\Color.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\mvcgame\view\ColorView.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\IColorView.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\ISprite.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\ISpriteBatch.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\ITexture.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\ITexturePool.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\ITextView.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\IView.hpp">
       <Filter>Archivos de encabezado\view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\mvcgame\view\IViewMask.hpp">
@@ -151,9 +181,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\mvcgame\event\IResponder.hpp">
       <Filter>Archivos de encabezado\event</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\mvcgame\view\TextureFrame.hpp">
-      <Filter>Archivos de encabezado\view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\mvcgame\view\TextView.hpp">
       <Filter>Archivos de encabezado\view</Filter>
@@ -169,6 +196,75 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\mvcgame\view\View.hpp">
       <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\asset\AssetsManager.hpp">
+      <Filter>Archivos de encabezado\asset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\controller\BaseViewController.hpp">
+      <Filter>Archivos de encabezado\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\base\Application.hpp">
+      <Filter>Archivos de encabezado\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\base\Color.hpp">
+      <Filter>Archivos de encabezado\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\base\Easing.hpp">
+      <Filter>Archivos de encabezado\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\base\Geometry.hpp">
+      <Filter>Archivos de encabezado\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\base\ObservedValue.hpp">
+      <Filter>Archivos de encabezado\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\base\Time.hpp">
+      <Filter>Archivos de encabezado\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\platform\ApplicationBridge.hpp">
+      <Filter>Archivos de encabezado\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\platform\IApplicationBridge.hpp">
+      <Filter>Archivos de encabezado\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\platform\IFilesystemBridge.hpp">
+      <Filter>Archivos de encabezado\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\platform\IViewBridge.hpp">
+      <Filter>Archivos de encabezado\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\texture\FilesystemTextureLoader.hpp">
+      <Filter>Archivos de encabezado\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\texture\ITextureAtlasLoader.hpp">
+      <Filter>Archivos de encabezado\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\texture\ITextureLoader.hpp">
+      <Filter>Archivos de encabezado\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\texture\Texture.hpp">
+      <Filter>Archivos de encabezado\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\texture\TextureAtlas.hpp">
+      <Filter>Archivos de encabezado\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\texture\TextureRegion.hpp">
+      <Filter>Archivos de encabezado\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\RootView.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\view\Sprite.hpp">
+      <Filter>Archivos de encabezado\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\platform\win\ApplicationBridge.hpp">
+      <Filter>Archivos de encabezado\platform\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\platform\win\FilesystemBridge.hpp">
+      <Filter>Archivos de encabezado\platform\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mvcgame\platform\dx\ViewBridge.hpp">
+      <Filter>Archivos de encabezado\platform\dx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
