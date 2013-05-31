@@ -12,21 +12,46 @@ namespace mvcgame {
 
     }
 
-    void AssetsManager::registerLoader(std::unique_ptr<INameTextureLoader> loader)
+    void AssetsManager::registerLoader(std::unique_ptr<IAssetLoader> loader)
+    {
+        _assetLoaders.push_back(std::move(loader));
+    }
+
+    void AssetsManager::registerLoader(std::unique_ptr<ITextureLoader> loader)
     {
         _textureLoaders.push_back(std::move(loader));
     }
 
-    std::unique_ptr<Texture> AssetsManager::loadTexture(const std::string& name)
+    bool AssetsManager::loadTextureStream(std::istream& in, std::unique_ptr<Texture>* texture)
     {
-        for(std::unique_ptr<INameTextureLoader>& loader : _textureLoaders)
+        for(std::unique_ptr<ITextureLoader>& textureLoader : _textureLoaders)
         {
-            if(loader->validate(name))
+            in.seekg(0, std::ios::beg);
+            if(textureLoader->validate(in))
             {
-                return loader->load(name);
+                in.seekg(0, std::ios::beg);
+                *texture = textureLoader->load(in);
+                if(*texture)
+                {
+                    return true;
+                }
             }
         }
-        return std::unique_ptr<Texture>();
+        return false;
+    }
+
+    std::unique_ptr<Texture> AssetsManager::loadTexture(const std::string& name)
+    {
+        std::unique_ptr<Texture> texture;
+        IAssetLoader::Callback callback = std::bind(&AssetsManager::loadTextureStream, this, std::placeholders::_1, &texture);
+        for(std::unique_ptr<IAssetLoader>& assetLoader : _assetLoaders)
+        {
+            if(assetLoader->load(name, callback))
+            {
+                break;
+            }
+        }
+        return std::move(texture);
     }
 
 }
