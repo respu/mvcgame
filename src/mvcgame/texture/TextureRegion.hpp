@@ -30,7 +30,7 @@ namespace mvcgame {
         TextureRegion(const Texture& texture);
 
         Rect operator/(const Texture& t) const;
-        Rect operator/(const Size& s) const;
+        Rect operator/(const Rect& r) const;
 
         bool operator<(const TextureRegion& region);
     };

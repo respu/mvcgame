@@ -3,23 +3,34 @@
 #define mvcgame_Sprite_hpp
 
 #include <mvcgame/view/View.hpp>
+#include <mvcgame/texture/SpriteSheet.hpp>
 #include <memory>
 
 namespace mvcgame {
 
-    class Texture;
-    
     class Sprite : public View
     {
+    public:
+        typedef SpriteSheet Sheet;
     private:
-        std::shared_ptr<const Texture> _texture;
+        unsigned _sheetFrame;        
+        std::shared_ptr<Sheet> _sheet;
+        bool _paused;
     public:
         Sprite();
-        Sprite(std::shared_ptr<const Texture> texture);
+        Sprite(std::shared_ptr<Sheet> Sheet);
 
-        const Texture& getTexture() const;
-        void setTexture(std::shared_ptr<const Texture> texture);
+        const Sheet& getSheet() const;
+        void setSheet(std::shared_ptr<Sheet> sheet);
+        void setSheet(std::shared_ptr<Texture> texture);
 
+        unsigned getSheetFrame() const;
+        void setSheetFrame(unsigned frame);
+
+        void setPaused(bool paused);
+        bool getPaused() const;
+
+        void update();
         void draw();
     };
     

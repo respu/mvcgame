@@ -11,6 +11,7 @@
 #include <mvcgame/base/Color.hpp>
 #include <mvcgame/asset/AssetsManager.hpp>
 #include <mvcgame/texture/Texture.hpp>
+#include <mvcgame/texture/SpriteSheet.hpp>
 #include <mvcgame/action/TweenAction.hpp>
 
 #include <fstream>
@@ -30,6 +31,7 @@ void MainMenuController::controllerAdded()
 	bg->getFrame().size = getRoot().getView().getSize();
 	bg->getFrame().origin = bg->getFrame().size/2;
 
+	/*
 	auto square = std::unique_ptr<ColorView>(new ColorView());
 	square->setBackgroundColor(Colors::Red);	
 	square->setFrame(getRoot().getView().getSize());
@@ -39,7 +41,7 @@ void MainMenuController::controllerAdded()
 
 	std::shared_ptr<Texture> trollTexture = getAssets().load<Texture>("trollface");
 	auto troll = std::unique_ptr<Sprite>(new Sprite());
-	troll->setTexture(trollTexture);
+	troll->setSheet(trollTexture);
 	troll->setFrame(getRoot().getView().getSize());
 	troll->setScale(Scale(0.2, 0.3));
 	troll->getFrame().origin = bg->getFrame().size/2;
@@ -52,10 +54,20 @@ void MainMenuController::controllerAdded()
 	runAction(std::move(trollRotate), *troll, Duration::secs(10));
 
 	bg->addChild(std::move(troll));
+	*/
 
-	std::shared_ptr<TextureAtlas> guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
-	
-	std::cout << *guybrushAtlas << std::endl;
+	std::unique_ptr<TextureAtlas> guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
+	std::shared_ptr<Texture> guybrushTexture = getAssets().load<Texture>(guybrushAtlas->getTextureName());
+	std::shared_ptr<SpriteSheet> guybrushSheet(new SpriteSheet(guybrushTexture, *guybrushAtlas));
+
+	auto guybrush = std::unique_ptr<Sprite>(new Sprite());
+	guybrush->setSheet(guybrushSheet);
+	guybrush->setFrame(getRoot().getView().getSize());
+	guybrush->setScale(Scale(0.2, 0.3));
+	guybrush->getFrame().origin = bg->getFrame().size/2;
+	guybrush->setPaused(true);
+
+	bg->addChild(std::move(guybrush));
 
 	setView(std::move(bg));
 

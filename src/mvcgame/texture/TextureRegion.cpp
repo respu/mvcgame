@@ -25,9 +25,10 @@ namespace mvcgame {
             (float)width/t.getWidth(), (float)height/t.getHeight());
     }
 
-    Rect TextureRegion::operator/(const Size& s) const
+    Rect TextureRegion::operator/(const Rect& r) const
     {
-        return Rect(x/s.width, y/s.height, width/s.width, height/s.height);
+        return Rect(r.origin.x+offsetX, r.origin.y+offsetY,
+            r.size.width*width/originalWidth, r.size.height*height/originalHeight);
     }
 
     bool TextureRegion::operator<(const TextureRegion& region)

@@ -6,6 +6,11 @@
 #include <string>
 
 namespace mvcgame {
+
+    const std::string& GdxTextureAtlasLoader::getTag() const
+    {
+        return "gdx";
+    }
     
     bool GdxTextureAtlasLoader::validate(std::istream& input)
     {
@@ -19,6 +24,7 @@ namespace mvcgame {
 
         // texture name
         std::getline(in, line);
+        atlas->setTextureName(line);
 
         bool inRegion = false;
         TextureRegion region;

@@ -15,6 +15,11 @@ namespace mvcgame {
         virtual ~IAssetLoader(){};
 
         /**
+         * should return an unique tag to identify assets if this type
+         */
+        virtual const std::string& getTag() const = 0;
+
+        /**
          * The stream should be at the start
          * @return true if the asset can be loaded
          */

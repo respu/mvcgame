@@ -7,6 +7,16 @@ namespace mvcgame {
     {
     }
 
+    const std::string& TextureAtlas::getTextureName() const
+    {
+        return _textureName;
+    }
+
+    void TextureAtlas::setTextureName(const std::string& name)
+    {
+        _textureName = name;
+    }
+
     void TextureAtlas::addRegion(const Region& region)
     {
         _regions.push_back(region);
@@ -22,7 +32,7 @@ namespace mvcgame {
         return _regions;
     }
 
-    TextureAtlas::RegionList TextureAtlas::getRegions(std::string& name) const
+    TextureAtlas::RegionList TextureAtlas::getRegions(const std::string& name) const
     {
         RegionList regions;
         for(const TextureRegion& region : getRegions())

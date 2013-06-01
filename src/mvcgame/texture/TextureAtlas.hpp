@@ -17,15 +17,19 @@ namespace mvcgame {
     {
     public:
         typedef TextureRegion Region;
-        typedef std::vector<Region> RegionList;        
+        typedef std::vector<Region> RegionList;
     private:
+        std::string _textureName;
         RegionList _regions;
     public:
         TextureAtlas();
+
+        const std::string& getTextureName() const;
+        void setTextureName(const std::string& name);
         void addRegion(const Region& region);
         RegionList& getRegions();
         const RegionList& getRegions() const;
-        RegionList getRegions(std::string& name) const;
+        RegionList getRegions(const std::string& name) const;
     };
 
     /**

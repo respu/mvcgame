@@ -9,6 +9,7 @@ namespace mvcgame {
     class GdxTextureAtlasLoader : public ITextureAtlasLoader
     {
     public:
+        const std::string& getTag() const;
         bool validate(std::istream& input);
         std::unique_ptr<TextureAtlas> load(std::istream& input);
     };

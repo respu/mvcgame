@@ -13,6 +13,11 @@
 
 namespace mvcgame {
 
+    const std::string& PngTextureLoader::getTag() const
+    {
+        return "png";
+    }
+
     bool PngTextureLoader::validate(std::istream& input)
     {
         png_byte pngSig[PNGSIGSIZE];

@@ -4,30 +4,69 @@
 
 namespace mvcgame {
 
-    Sprite::Sprite()
+    Sprite::Sprite() :
+    _sheetFrame(0)
     {
     }
 
-    Sprite::Sprite(std::shared_ptr<const Texture> texture)
+    Sprite::Sprite(std::shared_ptr<Sheet> sheet) :
+    _sheetFrame(0), _sheet(sheet)
     {
-        setTexture(texture);
-    }
-    
-    const Texture& Sprite::getTexture() const
-    {
-        return *_texture;
     }
 
-    void Sprite::setTexture(std::shared_ptr<const Texture> texture)
+    const Sprite::Sheet& Sprite::getSheet() const
     {
-        _texture = texture;
+        return *_sheet;
+    }
+
+    void Sprite::setSheet(std::shared_ptr<Sheet> sheet)
+    {
+        _sheet = sheet;
+    }
+
+    void Sprite::setSheet(std::shared_ptr<Texture> texture)
+    {
+        _sheet = std::shared_ptr<Sheet>(new Sheet(texture));
+    }
+
+    unsigned Sprite::getSheetFrame() const
+    {
+        return _sheetFrame;
+    }
+
+    void Sprite::setSheetFrame(unsigned frame)
+    {
+        _sheetFrame = frame;
+    }
+
+    void Sprite::setPaused(bool paused)
+    {
+        _paused = paused;
+    }
+
+    bool Sprite::getPaused() const
+    {
+        return _paused;
+    }
+
+    void Sprite::update()
+    {
+        if(!_paused)
+        {
+            _sheetFrame++;
+        }
+        if(_sheetFrame >= _sheet->getLength())
+        {
+            _sheetFrame = 0;
+        }
     }
 
     void Sprite::draw()
     {
-        if(_texture)
+        if(_sheet)
         {
-            getBridge().drawTexture(getFrame().size, *_texture);
+            const SpriteFrame& frame = _sheet->getFrame(_sheetFrame);
+            getBridge().drawTexture(getFrame().size, frame.getTexture(), frame.getRegion());
         }
     }
 

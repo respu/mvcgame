@@ -157,16 +157,17 @@ namespace mvcgame {
         }
         glBindTexture(GL_TEXTURE_2D, id);
         Rect trect = region / texture;
+        Rect rrect = region / rect;
 
         glBegin(GL_QUADS);
         glTexCoord2f(trect.origin.x, trect.origin.y);
-        glVertex3f(rect.origin.x, rect.origin.y, 0);
+        glVertex3f(rrect.origin.x, rrect.origin.y, 0);
         glTexCoord2f(trect.origin.x, trect.origin.y+trect.size.height);
-        glVertex3f(rect.origin.x, rect.origin.y+rect.size.height, 0);
+        glVertex3f(rrect.origin.x, rrect.origin.y+rrect.size.height, 0);
         glTexCoord2f(trect.origin.x+trect.size.width, trect.origin.y+trect.size.height);
-        glVertex3f(rect.origin.x+rect.size.width, rect.origin.y+rect.size.height, 0);
+        glVertex3f(rrect.origin.x+rrect.size.width, rrect.origin.y+rrect.size.height, 0);
         glTexCoord2f(trect.origin.x+trect.size.width, trect.origin.y);
-        glVertex3f(rect.origin.x+rect.size.width, rect.origin.y, 0);
+        glVertex3f(rrect.origin.x+rrect.size.width, rrect.origin.y, 0);
         glEnd();
         glFlush();
 
