@@ -6,12 +6,12 @@
 #include <mvcgame/base/Geometry.hpp>
 #include <mvcgame/platform/IApplicationBridge.hpp>
 #include <mvcgame/controller/RootViewController.hpp>
-#include <mvcgame/asset/AssetsManager.hpp>
 #include <memory>
 
 namespace mvcgame {
 
 	class ViewController;
+    class AssetsManager;
 
 	class Application
 	{
@@ -19,12 +19,11 @@ namespace mvcgame {
         Size _size;
         std::unique_ptr<IApplicationBridge> _bridge;
         RootViewController _root;
-        AssetsManager _assets;
 	public:
         Application(std::unique_ptr<IApplicationBridge> bridge);
         const Size& getSize() const;
 
-		void run();
+		virtual void run();
         void update();
 
         RootViewController& getRoot();
@@ -33,8 +32,8 @@ namespace mvcgame {
         IApplicationBridge& getBridge();
         const IApplicationBridge& getBridge() const;
 
-        AssetsManager& getAssetsManager();
-        const AssetsManager& getAssetsManager() const;
+        virtual AssetsManager& getAssets() = 0;
+        virtual const AssetsManager& getAssets() const = 0;
 	};
 }
 

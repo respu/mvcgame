@@ -6,7 +6,7 @@ namespace mvcgame {
 
     Application::Application(std::unique_ptr<IApplicationBridge> bridge) :
     _bridge(std::move(bridge)),
-    _root(*this), _assets(*this)
+    _root(*this)
     {
         _bridge->setApplication(*this);
     }
@@ -29,16 +29,6 @@ namespace mvcgame {
     const IApplicationBridge& Application::getBridge() const
     {
         return *_bridge;
-    }
-
-    AssetsManager& Application::getAssetsManager()
-    {
-        return _assets;
-    }
-
-    const AssetsManager& Application::getAssetsManager() const
-    {
-        return _assets;
     }
 
     const Size& Application::getSize() const

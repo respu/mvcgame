@@ -39,8 +39,8 @@ namespace mvcgame {
         const Application& getApp() const;
         Application& getApp();
 
-        const AssetsManager& getAssetsManager() const;
-        AssetsManager& getAssetsManager();
+        const AssetsManager& getAssets() const;
+        AssetsManager& getAssets();
 
         const ViewController& getParent() const;
         ViewController& getParent();

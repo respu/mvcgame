@@ -1,47 +1,28 @@
 #ifndef mvcgame_AssetsManager_hpp
 #define mvcgame_AssetsManager_hpp
 
-#include <mvcgame/asset/IAssetLoader.hpp>
-#include <mvcgame/texture/ITextureLoader.hpp>
+#include <mvcgame/asset/BaseAssetsManager.hpp>
+#include <mvcgame/asset/AssetTypeManager.hpp>
 #include <mvcgame/texture/Texture.hpp>
-
-#include <memory>
-#include <vector>
-#include <map>
+#include <mvcgame/texture/TextureAtlas.hpp>
 
 namespace mvcgame {
 
-    class Application;
-
-    class AssetsManager
+    class AssetsManager : public BaseAssetsManager
     {
     private:
-        typedef std::vector<std::unique_ptr<ITextureLoader>> TextureLoaders;
-        typedef std::vector<std::unique_ptr<IAssetLoader>> AssetLoaders;
+        AssetTypeManager<Texture> _textures;
+        AssetTypeManager<TextureAtlas> _textureAtlases;
 
-        AssetLoaders _assetLoaders;
-        TextureLoaders _textureLoaders;
-        Application& _app;
-
-
-        bool loadTextureStream(std::istream& in, std::unique_ptr<Texture>* texture);
     public:
-        AssetsManager(Application& app);
+        AssetsManager();
+        virtual ~AssetsManager();
 
-        /**
-         * Registers an asset loader
-         */
-        void registerLoader(std::unique_ptr<IAssetLoader> loader);
+        template<typename Asset>
+        void addLoader(std::unique_ptr<IAssetLoader<Asset>> loader);
 
-        /**
-         * Registers a texture loader
-         */
-        void registerLoader(std::unique_ptr<ITextureLoader> loader);
-
-        /**
-         * Tries to load a texture
-         */
-        std::unique_ptr<Texture> loadTexture(const std::string& name);
+        template<typename Asset>
+        std::unique_ptr<Asset> load(const std::string& name);
     };
 }
 

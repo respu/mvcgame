@@ -94,14 +94,14 @@ namespace mvcgame {
         return getRoot().getApp();
     }
 
-    const AssetsManager& ViewController::getAssetsManager() const
+    const AssetsManager& ViewController::getAssets() const
     {
-        return getApp().getAssetsManager();
+        return getApp().getAssets();
     }
 
-    AssetsManager& ViewController::getAssetsManager()
+    AssetsManager& ViewController::getAssets()
     {
-        return getApp().getAssetsManager();
+        return getApp().getAssets();
     }
 
     void ViewController::setView(std::unique_ptr<View> view)

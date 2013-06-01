@@ -1,57 +1,39 @@
 
-
 #include <mvcgame/asset/AssetsManager.hpp>
-#include <mvcgame/platform/IApplicationBridge.hpp>
-#include <mvcgame/base/Application.hpp>
+
 
 namespace mvcgame {
 
-    AssetsManager::AssetsManager(Application& app) :
-    _app(app)
+    AssetsManager::AssetsManager() :
+    _textures(*this), _textureAtlases(*this)
     {
-
     }
 
-    void AssetsManager::registerLoader(std::unique_ptr<IAssetLoader> loader)
+    AssetsManager::~AssetsManager()
     {
-        _assetLoaders.push_back(std::move(loader));
     }
 
-    void AssetsManager::registerLoader(std::unique_ptr<ITextureLoader> loader)
+    template<>
+    void AssetsManager::addLoader(std::unique_ptr<IAssetLoader<Texture>> loader)
     {
-        _textureLoaders.push_back(std::move(loader));
+        return _textures.add(std::move(loader));
     }
 
-    bool AssetsManager::loadTextureStream(std::istream& in, std::unique_ptr<Texture>* texture)
+    template<>
+    void AssetsManager::addLoader(std::unique_ptr<IAssetLoader<TextureAtlas>> loader)
     {
-        for(std::unique_ptr<ITextureLoader>& textureLoader : _textureLoaders)
-        {
-            in.seekg(0, std::ios::beg);
-            if(textureLoader->validate(in))
-            {
-                in.seekg(0, std::ios::beg);
-                *texture = textureLoader->load(in);
-                if(*texture)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return _textureAtlases.add(std::move(loader));
     }
 
-    std::unique_ptr<Texture> AssetsManager::loadTexture(const std::string& name)
+    template<>
+    std::unique_ptr<Texture> AssetsManager::load(const std::string& name)
     {
-        std::unique_ptr<Texture> texture;
-        IAssetLoader::Callback callback = std::bind(&AssetsManager::loadTextureStream, this, std::placeholders::_1, &texture);
-        for(std::unique_ptr<IAssetLoader>& assetLoader : _assetLoaders)
-        {
-            if(assetLoader->load(name, callback))
-            {
-                break;
-            }
-        }
-        return std::move(texture);
+        return _textures.load(name);
     }
 
+    template<>
+    std::unique_ptr<TextureAtlas> AssetsManager::load(const std::string& name)
+    {
+        return _textureAtlases.load(name);
+    }
 }

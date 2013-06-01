@@ -1,28 +1,23 @@
-#include "hello/controller/MainMenuController.hpp"
+#include "hello/base/Application.hpp"
 
 #include <mvcgame/platform/win/ApplicationBridge.hpp>
-#include <mvcgame/base/Application.hpp>
 #include <mvcgame/controller/RootViewController.hpp>
 #include <mvcgame/view/RootView.hpp>
 
 #include <memory>
 #include <windows.h>
 
-using namespace mvcgame;
-
 int WINAPI WinMain(HINSTANCE hInstance,
                    HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine,
                    int nCmdShow)
 {
-	std::unique_ptr<ApplicationBridge> bridge(new ApplicationBridge());
+	std::unique_ptr<mvcgame::ApplicationBridge> bridge(new mvcgame::ApplicationBridge());
 	bridge->setInstance(hInstance);
 	bridge->setCmdShow(nCmdShow);
-	ApplicationBridge& bridgeRef = *bridge;
+	mvcgame::ApplicationBridge& bridgeRef = *bridge;
 
-	mvcgame::Application app(std::move(bridge));
-    app.getRoot().getView().setSize(Size(480, 320));
-    app.getRoot().addChild(std::unique_ptr<MainMenuController>(new MainMenuController()));
+	Application app(std::move(bridge));
     app.run();
 
 	return bridgeRef.getCmdQuit();
