@@ -58,7 +58,6 @@ namespace mvcgame {
             while ((ent = readdir (dir)) != NULL)
             {
                 std::string filename = ent->d_name;
-                std::cout << filename << std::endl;
                 if (filename.find(name) != std::string::npos)
                 {
                     results.push_back(p+DIR_SEP+filename);

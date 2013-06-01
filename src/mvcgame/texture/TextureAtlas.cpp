@@ -7,19 +7,44 @@ namespace mvcgame {
     {
     }
 
-    void TextureAtlas::setRegion(const std::string& name, const Region& region)
+    void TextureAtlas::addRegion(const Region& region)
     {
-        _regions[name] = region;
+        _regions.push_back(region);
     }
 
-    const TextureAtlas::Region& TextureAtlas::getRegion(const std::string& name) const
+    TextureAtlas::RegionList& TextureAtlas::getRegions()
     {
-        return _regions.at(name);
+        return _regions;
     }
 
-    bool TextureAtlas::hasRegion(const std::string& name) const
+    const TextureAtlas::RegionList& TextureAtlas::getRegions() const
     {
-        return _regions.find(name) != _regions.end();
+        return _regions;
+    }
+
+    TextureAtlas::RegionList TextureAtlas::getRegions(std::string& name) const
+    {
+        RegionList regions;
+        for(const TextureRegion& region : getRegions())
+        {
+            if(region.name == name)
+            {
+                regions.push_back(region);
+            }
+        }
+        return regions;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const TextureAtlas& t)
+    {
+        os << "TextureAtlas( " << std::endl;
+        for(const TextureRegion& region : t.getRegions())
+        {
+            os << region << std::endl;
+        }
+
+        os << ")";
+        return os;
     }
 
 }

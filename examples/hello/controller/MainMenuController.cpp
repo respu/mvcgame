@@ -37,9 +37,9 @@ void MainMenuController::controllerAdded()
 	square->getFrame().origin = bg->getFrame().size/2;
 	bg->addChild(std::move(square));
 
-	std::shared_ptr<Texture> tftexture = getAssets().load<Texture>("trollface");
+	std::shared_ptr<Texture> trollTexture = getAssets().load<Texture>("trollface");
 	auto troll = std::unique_ptr<Sprite>(new Sprite());
-	troll->setTexture(tftexture);
+	troll->setTexture(trollTexture);
 	troll->setFrame(getRoot().getView().getSize());
 	troll->setScale(Scale(0.2, 0.3));
 	troll->getFrame().origin = bg->getFrame().size/2;
@@ -51,9 +51,12 @@ void MainMenuController::controllerAdded()
 	}));
 	runAction(std::move(trollRotate), *troll, Duration::secs(10));
 
-
 	bg->addChild(std::move(troll));
+
+	std::shared_ptr<TextureAtlas> guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
 	
+	std::cout << *guybrushAtlas << std::endl;
+
 	setView(std::move(bg));
 
 	/*

@@ -23,7 +23,8 @@ file(GLOB MVCGAME_SOURCES
 	"${MVCGAME_SOURCE_DIR}/texture/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/asset/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/view/*.cpp"
-	"${MVCGAME_SOURCE_DIR}/platform/*.cpp"	
+	"${MVCGAME_SOURCE_DIR}/platform/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/util/*.cpp"
 )
 
 # examples

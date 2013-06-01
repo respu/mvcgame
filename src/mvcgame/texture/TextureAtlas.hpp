@@ -6,7 +6,7 @@
 #include <mvcgame/base/Geometry.hpp>
 #include <mvcgame/texture/TextureRegion.hpp>
 
-#include <map>
+#include <vector>
 #include <string>
 
 namespace mvcgame {
@@ -17,16 +17,21 @@ namespace mvcgame {
     {
     public:
         typedef TextureRegion Region;
+        typedef std::vector<Region> RegionList;        
     private:
-        typedef std::map<std::string, Region> RegionMap;
-        RegionMap _regions;
+        RegionList _regions;
     public:
         TextureAtlas();
-        void setRegion(const std::string& name, const Region& region);
-        const Region& getRegion(const std::string& name) const;
-        bool hasRegion(const std::string& name) const;
+        void addRegion(const Region& region);
+        RegionList& getRegions();
+        const RegionList& getRegions() const;
+        RegionList getRegions(std::string& name) const;
     };
 
+    /**
+     Stream functions
+     */
+    std::ostream& operator<<(std::ostream& os, const TextureAtlas& t);
 }
 
 #endif

@@ -6,17 +6,16 @@
 namespace mvcgame {
 
     TextureRegion::TextureRegion() :
-    x(0), y(0), width(0), height(0)
+    x(0), y(0), width(0), height(0),
+    originalWidth(0), originalHeight(0),
+    offsetX(0), offsetY(0), index(0), rotate(false)
     {
     }
 
     TextureRegion::TextureRegion(const Texture& texture) :
-    x(0), y(0), width(texture.getWidth()), height(texture.getHeight())
-    {
-    }
-
-    TextureRegion::TextureRegion(unsigned px, unsigned py, unsigned pwidth, unsigned pheight) :
-    x(px), y(py), width(pwidth), height(pheight)
+    x(0), y(0), width(texture.getWidth()), height(texture.getHeight()),
+    originalWidth(texture.getWidth()), originalHeight(texture.getHeight()),
+    offsetX(0), offsetY(0), index(0), rotate(false)
     {
     }
 
@@ -31,10 +30,22 @@ namespace mvcgame {
         return Rect(x/s.width, y/s.height, width/s.width, height/s.height);
     }
 
+    bool TextureRegion::operator<(const TextureRegion& region)
+    {
+        return index<region.index;
+    }
+
     std::ostream& operator<<(std::ostream& os, const TextureRegion& t)
     {
-        os << "TextureRegion( " << t.x << "x" << t.y << ", ";
-        os << t.width << "x" << t.height << ")";
+        os << "TextureRegion( " << t.name << " xy " << t.x << "x" << t.y << ", ";
+        os << "size " << t.width << "x" << t.height << ", ";
+        os << "offset " << t.offsetX << "x" << t.offsetY << ", ";
+        os << "original " << t.originalWidth << "x" << t.originalHeight;
+        if(t.rotate)
+        {
+            os << " rotate";
+        }
+        os << ")";
         return os;
     }
 }

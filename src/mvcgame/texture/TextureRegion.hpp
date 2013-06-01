@@ -14,17 +14,25 @@ namespace mvcgame {
     class TextureRegion
     {
     public:
+        std::string name;
         unsigned x;
         unsigned y;
         unsigned width;
         unsigned height;
+        unsigned originalWidth;
+        unsigned originalHeight;
+        unsigned offsetX;
+        unsigned offsetY;
+        unsigned index;
+        bool rotate;
 
         TextureRegion();
         TextureRegion(const Texture& texture);
-        TextureRegion(unsigned x, unsigned y, unsigned width, unsigned height);
 
         Rect operator/(const Texture& t) const;
         Rect operator/(const Size& s) const;
+
+        bool operator<(const TextureRegion& region);
     };
 
     /**
