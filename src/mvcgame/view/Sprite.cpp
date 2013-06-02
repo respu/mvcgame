@@ -5,12 +5,14 @@
 namespace mvcgame {
 
     Sprite::Sprite() :
-    _sheetFrame(0)
+    _paused(false), _spriteFrame(0),
+    _spriteFrameDuration(1), _spriteFrameUpdates(0)
     {
     }
 
     Sprite::Sprite(std::shared_ptr<Sheet> sheet) :
-    _sheetFrame(0), _sheet(sheet)
+    _paused(false), _spriteFrame(0), _sheet(sheet),
+    _spriteFrameDuration(1), _spriteFrameUpdates(0)    
     {
     }
 
@@ -29,14 +31,24 @@ namespace mvcgame {
         _sheet = std::shared_ptr<Sheet>(new Sheet(texture));
     }
 
-    unsigned Sprite::getSheetFrame() const
+    unsigned Sprite::setSpriteFrame() const
     {
-        return _sheetFrame;
+        return _spriteFrame;
     }
 
-    void Sprite::setSheetFrame(unsigned frame)
+    void Sprite::setSpriteFrame(unsigned frame)
     {
-        _sheetFrame = frame;
+        _spriteFrame = frame;
+    }
+
+    void Sprite::setSpriteFrameDuration(unsigned num)
+    {
+        _spriteFrameDuration = num;
+    }
+
+    unsigned Sprite::getSpriteFrameDuration() const
+    {
+        return _spriteFrameDuration;
     }
 
     void Sprite::setPaused(bool paused)
@@ -53,21 +65,28 @@ namespace mvcgame {
     {
         if(!_paused)
         {
-            _sheetFrame++;
+            _spriteFrameUpdates++;
         }
-        if(_sheetFrame >= _sheet->getLength())
+        if(_spriteFrameUpdates >=_spriteFrameDuration)
         {
-            _sheetFrame = 0;
+            _spriteFrame++;
+            _spriteFrameUpdates = 0;
         }
+        if(_spriteFrame >= _sheet->getLength())
+        {
+            _spriteFrame = 0;
+        }
+        View::update();
     }
 
     void Sprite::draw()
     {
         if(_sheet)
         {
-            const SpriteFrame& frame = _sheet->getFrame(_sheetFrame);
+            const SpriteFrame& frame = _sheet->getFrame(_spriteFrame);
             getBridge().drawTexture(getFrame().size, frame.getTexture(), frame.getRegion());
         }
+        View::draw();
     }
 
 }

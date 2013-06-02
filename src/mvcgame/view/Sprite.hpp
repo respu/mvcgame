@@ -13,9 +13,11 @@ namespace mvcgame {
     public:
         typedef SpriteSheet Sheet;
     private:
-        unsigned _sheetFrame;        
-        std::shared_ptr<Sheet> _sheet;
-        bool _paused;
+        bool _paused;        
+        unsigned _spriteFrame;
+        std::shared_ptr<Sheet> _sheet;        
+        unsigned _spriteFrameDuration;
+        unsigned _spriteFrameUpdates;
     public:
         Sprite();
         Sprite(std::shared_ptr<Sheet> Sheet);
@@ -24,11 +26,17 @@ namespace mvcgame {
         void setSheet(std::shared_ptr<Sheet> sheet);
         void setSheet(std::shared_ptr<Texture> texture);
 
-        unsigned getSheetFrame() const;
-        void setSheetFrame(unsigned frame);
+        unsigned setSpriteFrame() const;
+        void setSpriteFrame(unsigned frame);
 
         void setPaused(bool paused);
         bool getPaused() const;
+
+        /**
+         * the amount of updated needed to change frame
+         */
+        void setSpriteFrameDuration(unsigned num);
+        unsigned getSpriteFrameDuration() const;
 
         void update();
         void draw();

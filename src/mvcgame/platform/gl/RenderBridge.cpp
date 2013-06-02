@@ -54,12 +54,12 @@ namespace mvcgame {
 #endif
         float glt[16];
         getGlTransform(transform, glt);
+        glPushMatrix();
         glMultMatrixf(glt);
     }
 
     void RenderBridge::popTransform(const Transform& transform)
     {
-        Transform inverse = transform.invert();
 #ifdef MVCGAME_DEBUG_DRAW
         std::cout << ">>>>" << std::endl;
         std::cout << "GlRenderBridge::popTransform " << std::endl;
@@ -67,9 +67,7 @@ namespace mvcgame {
         std::cout << inverse << std::endl;
         std::cout << "<<<<" << std::endl;
 #endif
-        float glt[16];
-        getGlTransform(inverse, glt);
-        glMultMatrixf(glt);
+        glPopMatrix();
     }
 
     void RenderBridge::drawPolygon(const Points& verts, const Color& color)
@@ -159,7 +157,15 @@ namespace mvcgame {
         Rect trect = region / texture;
         Rect rrect = region / rect;
 
+        if(region.rotate)
+        {
+            glPushMatrix();
+            glTranslatef(0, rect.size.height, 0);
+            glRotatef(-90, 0, 0, 1);
+        }
+
         glBegin(GL_QUADS);
+
         glTexCoord2f(trect.origin.x, trect.origin.y);
         glVertex3f(rrect.origin.x, rrect.origin.y, 0);
         glTexCoord2f(trect.origin.x, trect.origin.y+trect.size.height);
@@ -170,6 +176,11 @@ namespace mvcgame {
         glVertex3f(rrect.origin.x+rrect.size.width, rrect.origin.y, 0);
         glEnd();
         glFlush();
+
+        if(region.rotate)
+        {
+            glPopMatrix();
+        }
 
         glDisable(GL_TEXTURE_2D);
         if(texture.hasAlpha())

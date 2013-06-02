@@ -90,6 +90,7 @@ namespace mvcgame {
                 }
                 else
                 {
+                    region.origin = TextureRegion::Origin::TopLeft;
                     atlas->addRegion(region);
                     region = TextureRegion();
                     region.name = line;

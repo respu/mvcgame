@@ -24,6 +24,8 @@ namespace mvcgame {
         EventEmitter _eventEmitter;
         std::unique_ptr<UpdateEvent> _lastUpdateEvent;
         std::unique_ptr<TouchEvent> _lastTouchEvent;
+        float _frameDelay;
+        float _framePassed;
     public:
     	RootViewController(Application& app);
 
@@ -38,6 +40,8 @@ namespace mvcgame {
         void emitUpdate();
         void emitTouchStart(const Points& points);
         void emitTouchEnd(const Points& points);
+
+        void setFrameDelay(float delay);
     };
 }
 

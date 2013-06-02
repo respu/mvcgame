@@ -14,6 +14,14 @@ namespace mvcgame {
     class TextureRegion
     {
     public:
+        enum class Origin
+        {
+            TopLeft,
+            BottomLeft,
+            TopRight,
+            BottomRight
+        };
+
         std::string name;
         unsigned x;
         unsigned y;
@@ -25,14 +33,24 @@ namespace mvcgame {
         unsigned offsetY;
         unsigned index;
         bool rotate;
+        Origin origin;
 
         TextureRegion();
         TextureRegion(const Texture& texture);
 
+        /**
+         * Returns a unitary rectangle (as if the texture was size 1x1)
+         * and with coordinates from the bottom left corner
+         */
         Rect operator/(const Texture& t) const;
+
+        /**
+         * given a rect to draw the region in
+         * corrects it depending on the original size and offset
+         */
         Rect operator/(const Rect& r) const;
 
-        bool operator<(const TextureRegion& region);
+        bool operator<(const TextureRegion& region) const;
     };
 
     /**

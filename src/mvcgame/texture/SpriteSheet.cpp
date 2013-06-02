@@ -2,6 +2,8 @@
 #include <mvcgame/texture/SpriteSheet.hpp>
 #include <mvcgame/texture/TextureAtlas.hpp>
 
+#include <algorithm>
+
 namespace mvcgame {
 
     SpriteFrame::SpriteFrame(std::shared_ptr<Texture> texture) :
@@ -46,12 +48,16 @@ namespace mvcgame {
 
     SpriteSheet::SpriteSheet(std::shared_ptr<Texture> texture, const TextureAtlas& atlas)
     {
-        setRegions(texture, atlas.getRegions());
+        TextureRegions regions(atlas.getRegions());
+        std::sort(regions.begin(), regions.end());
+        setRegions(texture, regions);
     }
 
     SpriteSheet::SpriteSheet(std::shared_ptr<Texture> texture, const TextureAtlas& atlas, const std::string& name)
     {
-        setRegions(texture, atlas.getRegions(name));
+        TextureRegions regions(atlas.getRegions(name));
+        std::sort(regions.begin(), regions.end());
+        setRegions(texture, regions);
     }
 
     void SpriteSheet::setRegions(std::shared_ptr<Texture> texture, const TextureRegions& regions)
@@ -85,5 +91,18 @@ namespace mvcgame {
     unsigned SpriteSheet::getLength() const
     {
         return _frames.size();
+    }
+
+    Size SpriteSheet::getSize() const
+    {
+        Size size;
+        for(const Frame& frame : _frames)
+        {
+            float w = frame.getRegion().originalWidth;
+            float h = frame.getRegion().originalHeight;
+            size.width = std::max(w, size.width);
+            size.height = std::max(h, size.height);
+        }
+        return size;
     }
 }

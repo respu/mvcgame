@@ -11,6 +11,7 @@
 
 namespace mvcgame {
 
+    class Size;
     class TextureAtlas;
 
     class SpriteFrame
@@ -53,6 +54,8 @@ namespace mvcgame {
         Frame& getFrame(unsigned i);
 
         unsigned getLength() const;
+
+        Size getSize() const;
     };
 }
 

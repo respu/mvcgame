@@ -62,13 +62,23 @@ void MainMenuController::controllerAdded()
 
 	auto guybrush = std::unique_ptr<Sprite>(new Sprite());
 	guybrush->setSheet(guybrushSheet);
-	guybrush->setFrame(getRoot().getView().getSize());
-	guybrush->setScale(Scale(0.2, 0.3));
+	guybrush->getFrame().size = guybrushSheet->getSize();
 	guybrush->getFrame().origin = bg->getFrame().size/2;
-	guybrush->setPaused(true);
+	guybrush->getFrame().origin.x -= 150;
+	guybrush->setSpriteFrameDuration(20);
 
 	bg->addChild(std::move(guybrush));
 
+	
+	auto guybrush2 = std::unique_ptr<Sprite>(new Sprite());
+	guybrush2->setSheet(guybrushSheet);
+	guybrush2->getFrame().size = guybrushSheet->getSize();
+	guybrush2->getFrame().origin = bg->getFrame().size/2;
+	guybrush2->getFrame().origin.x += 150;
+	guybrush2->setSpriteFrameDuration(20);
+
+	bg->addChild(std::move(guybrush2));
+	
 	setView(std::move(bg));
 
 	/*

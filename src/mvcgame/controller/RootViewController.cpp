@@ -9,9 +9,15 @@ namespace mvcgame {
 
 	RootViewController::RootViewController(Application& app) :
     _app(app), _view(app.getBridge().getRender()), _eventEmitter(*this),
-    _lastUpdateEvent(nullptr), _lastTouchEvent(nullptr)
+    _lastUpdateEvent(nullptr), _lastTouchEvent(nullptr),
+    _frameDelay(1.0f/60.0f), _framePassed(0.0f)
 	{
 	}
+
+    void RootViewController::setFrameDelay(float delay)
+    {
+        _frameDelay = delay;
+    }
 
     const RootView& RootViewController::getView() const
     {
@@ -51,8 +57,13 @@ namespace mvcgame {
         _eventEmitter.emitUpdate(*event);
         _lastUpdateEvent = std::move(event);
 
-        _view.update();
-        _view.draw();
+        _framePassed += _lastUpdateEvent->getInterval().fsecs();
+        if(_framePassed > _frameDelay)
+        {
+            _view.update();
+            _framePassed = 0.0f;
+            _view.draw();            
+        }
     }
 
     void RootViewController::emitTouchStart(const Points& points)
