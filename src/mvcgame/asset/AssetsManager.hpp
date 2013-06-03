@@ -19,7 +19,7 @@ namespace mvcgame {
         virtual ~AssetsManager();
 
         template<typename Asset>
-        void addLoader(std::unique_ptr<IAssetLoader<Asset>> loader);
+        void addLoader(std::unique_ptr<IAssetLoader<Asset>> loader, const std::string& tag="");
 
         template<typename Asset>
         std::unique_ptr<Asset> load(const std::string& name);

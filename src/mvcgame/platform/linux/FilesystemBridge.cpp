@@ -53,12 +53,12 @@ namespace mvcgame {
         Paths results;
         std::string p = fixPath(path);
 
-        if ((dir = opendir (p.c_str())) != NULL)
+        if((dir = opendir(p.c_str())) != nullptr)
         {
-            while ((ent = readdir (dir)) != NULL)
+            while((ent = readdir(dir)) != nullptr)
             {
                 std::string filename = ent->d_name;
-                if (filename.find(name) != std::string::npos)
+                if(filename.find(name) != std::string::npos)
                 {
                     results.push_back(p+DIR_SEP+filename);
                 }

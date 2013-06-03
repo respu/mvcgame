@@ -1,12 +1,12 @@
 
-#ifndef mvcgame_GdxTextureAtlasLoader_hpp
-#define mvcgame_GdxTextureAtlasLoader_hpp
+#ifndef mvcgame_FntTextureAtlasLoader_hpp
+#define mvcgame_FntTextureAtlasLoader_hpp
 
 #include <mvcgame/texture/ITextureAtlasLoader.hpp>
 
 namespace mvcgame {
 
-    class GdxTextureAtlasLoader : public ITextureAtlasLoader
+    class FntTextureAtlasLoader : public ITextureAtlasLoader
     {
     public:
         bool validate(std::istream& input) const;

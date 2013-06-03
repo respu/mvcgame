@@ -14,15 +14,15 @@ namespace mvcgame {
     }
 
     template<>
-    void AssetsManager::addLoader(std::unique_ptr<IAssetLoader<Texture>> loader)
+    void AssetsManager::addLoader(std::unique_ptr<IAssetLoader<Texture>> loader, const std::string& tag)
     {
-        return _textures.add(std::move(loader));
+        return _textures.add(std::move(loader), tag);
     }
 
     template<>
-    void AssetsManager::addLoader(std::unique_ptr<IAssetLoader<TextureAtlas>> loader)
+    void AssetsManager::addLoader(std::unique_ptr<IAssetLoader<TextureAtlas>> loader, const std::string& tag)
     {
-        return _textureAtlases.add(std::move(loader));
+        return _textureAtlases.add(std::move(loader), tag);
     }
 
     template<>

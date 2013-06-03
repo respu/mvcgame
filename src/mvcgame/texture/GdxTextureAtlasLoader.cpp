@@ -6,18 +6,13 @@
 #include <string>
 
 namespace mvcgame {
-
-    const std::string& GdxTextureAtlasLoader::getTag() const
-    {
-        return "gdx";
-    }
     
-    bool GdxTextureAtlasLoader::validate(std::istream& input)
+    bool GdxTextureAtlasLoader::validate(std::istream& input) const
     {
         return true;
     }
 
-    std::unique_ptr<TextureAtlas> GdxTextureAtlasLoader::load(std::istream& in)
+    std::unique_ptr<TextureAtlas> GdxTextureAtlasLoader::load(std::istream& in) const
     {
         std::unique_ptr<TextureAtlas> atlas(new TextureAtlas());
         std::string line;

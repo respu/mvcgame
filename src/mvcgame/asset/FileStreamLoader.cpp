@@ -1,7 +1,7 @@
 
 #include <mvcgame/asset/FileStreamLoader.hpp>
 #include <mvcgame/platform/IFilesystemBridge.hpp>
-
+#include <iostream>
 namespace mvcgame {
 
     FileStreamLoader::FileStreamLoader(IFilesystemBridge& bridge) :
@@ -22,7 +22,13 @@ namespace mvcgame {
             std::ifstream in;
             if(_bridge.readResource(path, in))
             {
-                if(callback(in))
+                std::string tag;
+                std::size_t pos = path.find_last_of('.');
+                if(pos != std::string::npos)
+                {
+                    tag = path.substr(pos+1);
+                }
+                if(callback(in, tag))
                 {
                     return true;
                 }

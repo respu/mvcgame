@@ -17,6 +17,9 @@ namespace mvcgame {
      * To load an asset it will ask the asset stream loaders of the main manager
      * for possible streams, then it will ask the list of asset loaders if they can
      * load the given streams.
+     *
+     * The tag value can be set by the IStreamLoader
+     * and similar to a file extension
      */
     template<typename Asset>
     class AssetTypeManager
@@ -24,13 +27,14 @@ namespace mvcgame {
     private:
         typedef IAssetLoader<Asset> Loader;
         typedef std::vector<std::unique_ptr<Loader>> Loaders;
+        typedef std::map<std::string, Loaders> LoaderMap;
 
         BaseAssetsManager& _mng;
-        Loaders _loaders;
+        LoaderMap _loaders;
 
-        bool loadStream(std::istream& in, std::unique_ptr<Asset>* asset)
+        bool doLoadStream(std::istream& in, const Loaders& loaders, std::unique_ptr<Asset>* asset)
         {
-            for(std::unique_ptr<Loader>& loader : _loaders)
+            for(const std::unique_ptr<Loader>& loader : loaders)
             {
                 in.seekg(0, std::ios::beg);
                 if(loader->validate(in))
@@ -46,21 +50,37 @@ namespace mvcgame {
             return false;
         }
 
+        bool loadStream(std::istream& in, const std::string& tag, std::unique_ptr<Asset>* asset)
+        {
+            typename LoaderMap::const_iterator itr = _loaders.find(tag);
+            if(itr != _loaders.end() && doLoadStream(in, itr->second, asset))
+            {
+                return true;
+            }
+            itr = _loaders.find("");
+            if(itr != _loaders.end() && doLoadStream(in, itr->second, asset))
+            {
+                return true;
+            }
+            return false;
+        }
+
     public:
         AssetTypeManager(BaseAssetsManager& mng) :
         _mng(mng)
         {
         }
 
-        void add(std::unique_ptr<Loader> loader)
+        void add(std::unique_ptr<Loader> loader, const std::string& tag="")
         {
-            _loaders.push_back(std::move(loader));
+            _loaders[tag].push_back(std::move(loader));
         }
 
         std::unique_ptr<Asset> load(const std::string& name)
         {
-            std::unique_ptr<Asset> asset;
-            _mng.loadStream(name, std::bind(&AssetTypeManager<Asset>::loadStream, this, std::placeholders::_1, &asset));
+            std::unique_ptr<Asset> asset = nullptr;
+            _mng.loadStream(name, std::bind(&AssetTypeManager<Asset>::loadStream,
+                this, std::placeholders::_1, std::placeholders::_2, &asset));
             return std::move(asset);
         }
 

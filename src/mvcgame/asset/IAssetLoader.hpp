@@ -15,15 +15,11 @@ namespace mvcgame {
         virtual ~IAssetLoader(){};
 
         /**
-         * should return an unique tag to identify assets if this type
-         */
-        virtual const std::string& getTag() const = 0;
-
-        /**
          * The stream should be at the start
+         *
          * @return true if the asset can be loaded
          */
-        virtual bool validate(std::istream& input)
+        virtual bool validate(std::istream& input) const
         {
             return true;
         }
@@ -32,7 +28,7 @@ namespace mvcgame {
          * The stream should be at the start
          * @return the new asset
          */
-        virtual std::unique_ptr<Asset> load(std::istream& input) = 0;
+        virtual std::unique_ptr<Asset> load(std::istream& input) const= 0;
     };
 
 }

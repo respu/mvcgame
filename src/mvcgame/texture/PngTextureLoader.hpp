@@ -9,9 +9,8 @@ namespace mvcgame {
     class PngTextureLoader : public ITextureLoader
     {
     public:
-        const std::string& getTag() const;
-        bool validate(std::istream& input);
-        std::unique_ptr<Texture> load(std::istream& input);
+        bool validate(std::istream& input) const;
+        std::unique_ptr<Texture> load(std::istream& input) const;
     };
 }
 
