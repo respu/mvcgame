@@ -3,26 +3,25 @@
 namespace mvcgame {
 
 	TextView::TextView() :
-	_textHorizAlign(HorizontalAlign::Left),
-	_textVertiAlign(VerticalAlign::Top),
-	_textColor(Colors::White),
+	_horizAlign(HorizontalAlign::Left),
+	_vertiAlign(VerticalAlign::Top),
 	_textSize(20)
 	{
 	}
 
-	void TextView::setTextHorizontalAlign(HorizontalAlign align)
+	void TextView::setHorizontalAlign(HorizontalAlign align)
 	{
-		_textHorizAlign = align;
+		_horizAlign = align;
 	}
 
-	void TextView::setTextVerticalAlign(VerticalAlign align)
+	void TextView::setVerticalAlign(VerticalAlign align)
 	{
-		_textVertiAlign = align;
+		_vertiAlign = align;
 	}
 
-	void TextView::setTextFont(const std::string& font)
+	void TextView::setFont(std::shared_ptr<Font> font)
 	{
-		_textFont = font;
+		_font = font;
 	}
 
 	void TextView::setTextSize(unsigned short size)
@@ -35,8 +34,4 @@ namespace mvcgame {
 		_text = text;
 	}
 
-	void TextView::setTextColor(const Color& color)
-	{
-		_textColor = color;
-	}
 }
