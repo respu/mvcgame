@@ -12,6 +12,7 @@
 #include <mvcgame/asset/AssetsManager.hpp>
 #include <mvcgame/texture/Texture.hpp>
 #include <mvcgame/texture/SpriteSheet.hpp>
+#include <mvcgame/texture/FontAtlas.hpp>
 #include <mvcgame/action/TweenAction.hpp>
 
 #include <fstream>
@@ -56,7 +57,7 @@ void MainMenuController::controllerAdded()
 	bg->addChild(std::move(troll));
 	*/
 
-	std::unique_ptr<TextureAtlas> guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
+	auto guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
 	std::shared_ptr<Texture> guybrushTexture = getAssets().load<Texture>(guybrushAtlas->getTextureName());
 	std::shared_ptr<SpriteSheet> guybrushSheet(new SpriteSheet(guybrushTexture, *guybrushAtlas));
 
@@ -69,7 +70,6 @@ void MainMenuController::controllerAdded()
 
 	bg->addChild(std::move(guybrush));
 
-	
 	auto guybrush2 = std::unique_ptr<Sprite>(new Sprite());
 	guybrush2->setSheet(guybrushSheet);
 	guybrush2->getFrame().size = guybrushSheet->getSize();
@@ -78,6 +78,10 @@ void MainMenuController::controllerAdded()
 	guybrush2->setSpriteFrameDuration(20);
 
 	bg->addChild(std::move(guybrush2));
+
+	auto fontAtlas = getAssets().load<FontAtlas>("font");
+
+	std::cout << *fontAtlas << std::endl;
 	
 	setView(std::move(bg));
 

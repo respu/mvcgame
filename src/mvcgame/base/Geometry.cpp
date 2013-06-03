@@ -486,6 +486,28 @@ namespace mvcgame {
         origin.y <= p.y && origin.y+size.height >= p.y;
     }
 
+#pragma mark - RectBorder
+
+    RectBorder::RectBorder() :
+    top(0), right(0), bottom(0), left(0)
+    {
+    }
+
+    RectBorder::RectBorder(gunit_t t, gunit_t r, gunit_t b, gunit_t l) :
+    top(t), right(r), bottom(b), left(l)
+    {
+    }
+
+    bool RectBorder::operator==(const RectBorder& r) const
+    {
+        return top == r.top && right == r.right && bottom == r.bottom && left == r.left;
+    }
+
+    bool RectBorder::operator!=(const RectBorder& r) const
+    {
+        return !(*this==r);
+    }
+
 #pragma mark - Rotation
 
 	const gunit_t Rotation::Pi = 3.1415926535897932384626433832795028841971693993751;
@@ -861,7 +883,16 @@ namespace mvcgame {
     {
         os << "Rect(origin=" << r.origin << " size=" << r.size << ")";
         return os;
-    }    
+    }
+
+    std::ostream& operator<<(std::ostream& os, const RectBorder& r)
+    {
+        os << "RectBorder(";
+        os << " top=" << r.top << " right=" << r.right;
+        os << " bottom=" << r.bottom << " left=" << r.left;
+        os << ")";
+        return os;
+    }
 
     std::ostream& operator<<(std::ostream& os, const Rotation& r)
     {

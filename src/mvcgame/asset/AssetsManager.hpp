@@ -5,6 +5,7 @@
 #include <mvcgame/asset/AssetTypeManager.hpp>
 #include <mvcgame/texture/Texture.hpp>
 #include <mvcgame/texture/TextureAtlas.hpp>
+#include <mvcgame/texture/FontAtlas.hpp>
 
 namespace mvcgame {
 
@@ -13,6 +14,7 @@ namespace mvcgame {
     private:
         AssetTypeManager<Texture> _textures;
         AssetTypeManager<TextureAtlas> _textureAtlases;
+        AssetTypeManager<FontAtlas> _fontAtlases;
 
     public:
         AssetsManager();

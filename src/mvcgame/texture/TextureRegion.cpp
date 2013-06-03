@@ -63,7 +63,7 @@ namespace mvcgame {
 
     std::ostream& operator<<(std::ostream& os, const TextureRegion& t)
     {
-        os << "TextureRegion( " << t.name << " xy " << t.x << "x" << t.y << ", ";
+        os << "TextureRegion(" << t.name << " xy " << t.x << "x" << t.y << ", ";
         os << "size " << t.width << "x" << t.height << ", ";
         os << "offset " << t.offsetX << "x" << t.offsetY << ", ";
         os << "original " << t.originalWidth << "x" << t.originalHeight;

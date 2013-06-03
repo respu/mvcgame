@@ -29,8 +29,8 @@ namespace mvcgame {
         unsigned height;
         unsigned originalWidth;
         unsigned originalHeight;
-        unsigned offsetX;
-        unsigned offsetY;
+        int offsetX;
+        int offsetY;
         unsigned index;
         bool rotate;
         Origin origin;

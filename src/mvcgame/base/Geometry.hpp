@@ -168,6 +168,24 @@ namespace mvcgame {
 
         bool contains(const Point& p) const;
     };
+
+    /**
+     * Represents a rectangle border
+     */
+    class RectBorder final
+    {
+    public:
+        gunit_t top;
+        gunit_t right;        
+        gunit_t bottom;
+        gunit_t left;
+
+        RectBorder();
+        RectBorder(gunit_t t, gunit_t r, gunit_t b, gunit_t l);
+
+        bool operator==(const RectBorder& r) const;
+        bool operator!=(const RectBorder& r) const; 
+    };
     
     /**
      * Rotation should be in radians
@@ -299,7 +317,8 @@ namespace mvcgame {
     std::ostream& operator<<(std::ostream& os, const Scale& s);
     std::ostream& operator<<(std::ostream& os, const Anchor& a);
     std::ostream& operator<<(std::ostream& os, const Size& s);
-    std::ostream& operator<<(std::ostream& os, const Rect& r);    
+    std::ostream& operator<<(std::ostream& os, const Rect& r); 
+    std::ostream& operator<<(std::ostream& os, const RectBorder& r);
     std::ostream& operator<<(std::ostream& os, const Rotation& r);
     std::ostream& operator<<(std::ostream& os, const ScaleTransform& st);
     std::ostream& operator<<(std::ostream& os, const Transform& t);

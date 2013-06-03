@@ -2,11 +2,13 @@
 #ifndef mvcgame_PngTextureLoader_hpp
 #define mvcgame_PngTextureLoader_hpp
 
-#include <mvcgame/texture/ITextureLoader.hpp>
+#include <mvcgame/asset/IAssetLoader.hpp>
 
 namespace mvcgame {
 
-    class PngTextureLoader : public ITextureLoader
+    class Texture;
+
+    class PngTextureLoader : public IAssetLoader<Texture>
     {
     public:
         bool validate(std::istream& input) const;
