@@ -2,6 +2,7 @@
 #include <mvcgame/view/BaseView.hpp>
 #include <mvcgame/view/View.hpp>
 #include <algorithm>
+#include <cassert>
 
 namespace mvcgame {
 
@@ -16,15 +17,12 @@ namespace mvcgame {
 
     void BaseView::removeChildren()
     {
-        for(Child& child : _children)
-        {
-            child.first->removeFromParent();
-        }
         _children.clear();
     }
 
     void BaseView::addChild(std::unique_ptr<View> child, unsigned layer)
     {
+        assert(child);
         _children.push_back(Child(std::move(child), layer));
     }
 

@@ -23,8 +23,8 @@ namespace mvcgame {
         Sprite(std::shared_ptr<Sheet> Sheet);
 
         const Sheet& getSheet() const;
-        void setSheet(std::shared_ptr<Sheet> sheet);
-        void setSheet(std::shared_ptr<Texture> texture);
+        void setSheet(std::shared_ptr<Sheet> sheet, bool changeSize=true);
+        void setSheet(std::shared_ptr<Texture> texture, bool changeSize=true);
 
         unsigned setSpriteFrame() const;
         void setSpriteFrame(unsigned frame);

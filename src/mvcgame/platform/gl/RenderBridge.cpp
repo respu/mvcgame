@@ -64,7 +64,6 @@ namespace mvcgame {
         std::cout << ">>>>" << std::endl;
         std::cout << "GlRenderBridge::popTransform " << std::endl;
         std::cout << transform << std::endl;
-        std::cout << inverse << std::endl;
         std::cout << "<<<<" << std::endl;
 #endif
         glPopMatrix();
@@ -88,6 +87,7 @@ namespace mvcgame {
         {
             glVertex3f(p.x, p.y, 0.);
         }
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f); 
         glEnd();
     }
 

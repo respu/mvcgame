@@ -4,6 +4,7 @@
 #define mvcgame_TextureRegion_hpp
 
 #include <iostream>
+#include <string>
 
 namespace mvcgame {
 

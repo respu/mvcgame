@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)/../../src;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)/../../src;$(SolutionDir)/../../lib/platform/win/libpng/include;$(SolutionDir)/../../lib/platform/win/libzlib/include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -80,6 +80,8 @@
     <ClCompile Include="..\..\..\src\mvcgame\action\ActionRunner.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\action\TweenAction.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\asset\AssetsManager.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\asset\BaseAssetsManager.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\asset\FileStreamLoader.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\base\Application.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\base\Color.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\base\Easing.cpp" />
@@ -90,14 +92,21 @@
     <ClCompile Include="..\..\..\src\mvcgame\controller\ViewController.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\event\EventEmitter.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\event\Events.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\platform\dx\ViewBridge.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\platform\IViewBridge.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\font\FntFontAtlasLoader.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\font\FontAtlas.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\font\FontInfo.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\font\FontSheet.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\platform\dx\RenderBridge.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\platform\win\ApplicationBridge.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\platform\win\FilesystemBridge.cpp" />
-    <ClCompile Include="..\..\..\src\mvcgame\texture\FilesystemTextureLoader.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\texture\GdxTextureAtlasLoader.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\texture\PngTextureLoader.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\texture\SpriteFrame.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\texture\SpriteSheet.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\texture\Texture.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\texture\TextureAtlas.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\texture\TextureRegion.cpp" />
+    <ClCompile Include="..\..\..\src\mvcgame\util\StringUtils.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\view\BaseView.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\view\ColorView.cpp" />
     <ClCompile Include="..\..\..\src\mvcgame\view\RootView.cpp" />
@@ -110,6 +119,11 @@
     <ClInclude Include="..\..\..\src\mvcgame\action\IAction.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\action\TweenAction.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\asset\AssetsManager.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\asset\AssetTypeManager.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\asset\BaseAssetsManager.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\asset\FileStreamLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\asset\IAssetLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\asset\IStreamLoader.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\base\Application.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\base\Color.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\base\Easing.hpp" />
@@ -122,19 +136,24 @@
     <ClInclude Include="..\..\..\src\mvcgame\event\EventEmitter.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\event\Events.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\event\IResponder.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\font\FntFontAtlasLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\font\FontAtlas.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\font\FontInfo.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\font\FontSheet.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\platform\ApplicationBridge.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\platform\dx\ViewBridge.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\platform\dx\RenderBridge.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\platform\IApplicationBridge.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\platform\IFilesystemBridge.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\platform\IViewBridge.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\platform\win\ApplicationBridge.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\platform\win\FilesystemBridge.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\texture\FilesystemTextureLoader.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\texture\ITextureAtlasLoader.hpp" />
-    <ClInclude Include="..\..\..\src\mvcgame\texture\ITextureLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\GdxTextureAtlasLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\PngTextureLoader.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\SpriteFrame.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\texture\SpriteSheet.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\texture\Texture.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\texture\TextureAtlas.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\texture\TextureRegion.hpp" />
+    <ClInclude Include="..\..\..\src\mvcgame\util\StringUtils.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\view\BaseView.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\view\ColorView.hpp" />
     <ClInclude Include="..\..\..\src\mvcgame\view\IViewMask.hpp" />

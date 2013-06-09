@@ -11,7 +11,8 @@
 #include <mvcgame/asset/AssetsManager.hpp>
 #include <mvcgame/texture/Texture.hpp>
 #include <mvcgame/texture/SpriteSheet.hpp>
-#include <mvcgame/texture/FontAtlas.hpp>
+#include <mvcgame/font/FontAtlas.hpp>
+#include <mvcgame/font/FontSheet.hpp>
 #include <mvcgame/action/TweenAction.hpp>
 
 #include <fstream>
@@ -26,37 +27,40 @@ MainController::MainController()
 
 void MainController::controllerAdded()
 {
-	auto bg = std::unique_ptr<ColorView>(new ColorView());
-	bg->setBackgroundColor(Color(255, 255, 195));	
-	bg->getFrame().size = getRoot().getView().getSize();
-	bg->getFrame().origin = bg->getFrame().size/2;
+    std::unique_ptr<ColorView> bg(new ColorView());
+    bg->setBackgroundColor(Color(0, 0, 0));
+    bg->getFrame().size = getRoot().getView().getSize();
+    bg->getFrame().origin = bg->getFrame().size/2;
 
-	auto guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
-	std::shared_ptr<Texture> guybrushTexture = getAssets().load<Texture>(guybrushAtlas->getTextureName());
-	std::shared_ptr<SpriteSheet> guybrushSheet(new SpriteSheet(guybrushTexture, *guybrushAtlas));
+    auto guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
+    auto guybrushSheet = getAssets().loadSheet(*guybrushAtlas);
+    std::unique_ptr<Sprite> guybrush(new Sprite());
+    guybrush->setSheet(guybrushSheet);
+    guybrush->getFrame().origin = bg->getFrame().size/2;
+    guybrush->getFrame().origin.x -= 150;
+    guybrush->setSpriteFrameDuration(20);
 
-	std::unique_ptr<Sprite> guybrush(new Sprite());
-	guybrush->setSheet(guybrushSheet);
-	guybrush->getFrame().size = guybrushSheet->getSize();
-	guybrush->getFrame().origin = bg->getFrame().size/2;
-	guybrush->getFrame().origin.x -= 150;
-	guybrush->setSpriteFrameDuration(20);
+    bg->addChild(std::move(guybrush));
 
-	bg->addChild(std::move(guybrush));
+    std::unique_ptr<Sprite> guybrush2(new Sprite());
+    guybrush2->setSheet(guybrushSheet);
+    guybrush2->getFrame().origin = bg->getFrame().size/2;
+    guybrush2->getFrame().origin.x += 150;
+    guybrush2->setSpriteFrameDuration(20);
 
-	std::unique_ptr<Sprite> guybrush2(new Sprite());
-	guybrush2->setSheet(guybrushSheet);
-	guybrush2->getFrame().size = guybrushSheet->getSize();
-	guybrush2->getFrame().origin = bg->getFrame().size/2;
-	guybrush2->getFrame().origin.x += 150;
-	guybrush2->setSpriteFrameDuration(20);
+    bg->addChild(std::move(guybrush2));
 
-	bg->addChild(std::move(guybrush2));
+    auto fontAtlas = getAssets().load<FontAtlas>("font");
+    auto fontSheet = getAssets().loadSheet(*fontAtlas);
+    std::unique_ptr<TextView> title(new TextView());
+    title->setSheet(fontSheet);
+    title->getFrame().size = Size(50, 50);
+    title->getFrame().origin = bg->getFrame().size/2;
+    title->getFrame().origin.x -= 50;
+    title->getFrame().origin.y += 100;
+    title->setText("mvcgame says hello!");
 
-	auto fontAtlas = getAssets().load<FontAtlas>("font");
-	std::unique_ptr<TextView> title(new TextView());
-
-	bg->addChild(std::move(title));
-	
-	setView(std::move(bg));
+    bg->addChild(std::move(title));
+    
+    setView(std::move(bg));
 }

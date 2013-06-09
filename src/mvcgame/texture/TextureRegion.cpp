@@ -24,7 +24,7 @@ namespace mvcgame {
 
     Rect TextureRegion::operator/(const Texture& t) const
     {
-        float rw = rotate?height:width;
+        float rw =  rotate?height:width;
         float rh = rotate?width:height;
 
         Rect r((float)x/t.getWidth(), (float)y/t.getHeight(),

@@ -5,16 +5,18 @@
 
 #include <mvcgame/view/View.hpp>
 #include <mvcgame/base/Color.hpp>
-#include <mvcgame/texture/FontAtlas.hpp>
+#include <mvcgame/font/FontSheet.hpp>
 
 #include <string>
+#include <vector>
 
 namespace mvcgame {
 
 	class TextView : public View
 	{
 	public:
-		typedef FontAtlas Font;
+        typedef FontSheet Sheet;
+
 		enum class HorizontalAlign
 		{
 			Left,
@@ -29,19 +31,23 @@ namespace mvcgame {
 		};
 
 	protected:
+		bool _changed;
 		HorizontalAlign _horizAlign;
 		VerticalAlign _vertiAlign;
 		std::string _text;
-		std::shared_ptr<Font> _font;
-		unsigned short _textSize;
+		std::shared_ptr<Sheet> _sheet;
+
+		std::vector<const FontLetter*> getLetters(const std::string& text) const;
 	public:
 		TextView();
 
 		void setHorizontalAlign(HorizontalAlign align);
 		void setVerticalAlign(VerticalAlign align);
-		void setFont(std::shared_ptr<Font> font);
-		void setTextSize(unsigned short size);
-		void setText(const std::string& text);
+		void setText(const std::string& text, bool changeSize=true);
+
+		const Sheet& getSheet() const;
+        void setSheet(std::shared_ptr<Sheet> sheet);
+        void update();
 	};
 
 }

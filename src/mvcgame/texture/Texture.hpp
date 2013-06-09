@@ -5,6 +5,7 @@
 
 #include <memory>
 #include <cstdint>
+#include <iostream>
 
 namespace mvcgame {
 
@@ -26,6 +27,11 @@ namespace mvcgame {
         bool hasAlpha() const;
         unsigned getComponents() const;
     };
+
+    /**
+     Stream functions
+     */
+    std::ostream& operator<<(std::ostream& os, const Texture& t);
 }
 
 #endif

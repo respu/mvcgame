@@ -11,8 +11,6 @@
 
 namespace mvcgame {
 
-    class Texture;
-
     class TextureAtlas
     {
     public:

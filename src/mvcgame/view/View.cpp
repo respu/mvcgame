@@ -25,7 +25,6 @@ namespace mvcgame {
 
     View::~View()
     {
-        removeFromParent();
     }
 
     void View::update()

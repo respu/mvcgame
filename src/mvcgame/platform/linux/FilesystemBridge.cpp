@@ -51,16 +51,16 @@ namespace mvcgame {
         DIR *dir;
         struct dirent *ent;
         Paths results;
-        std::string p = fixPath(path);
+        std::string rpath = fixPath(path);
 
-        if((dir = opendir(p.c_str())) != nullptr)
+        if((dir = opendir(rpath.c_str())) != nullptr)
         {
             while((ent = readdir(dir)) != nullptr)
             {
                 std::string filename = ent->d_name;
                 if(filename.find(name) != std::string::npos)
                 {
-                    results.push_back(p+DIR_SEP+filename);
+                    results.push_back(rpath+DIR_SEP+filename);
                 }
             }
             closedir (dir);

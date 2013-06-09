@@ -2,6 +2,7 @@
 
 #include <mvcgame/platform/win/ApplicationBridge.hpp>
 #include <mvcgame/controller/RootViewController.hpp>
+#include <mvcgame/asset/FileStreamLoader.hpp>
 #include <mvcgame/view/RootView.hpp>
 
 #include <memory>
@@ -18,6 +19,11 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	mvcgame::ApplicationBridge& bridgeRef = *bridge;
 
 	Application app(std::move(bridge));
+
+	std::unique_ptr<mvcgame::FileStreamLoader> fs(new mvcgame::FileStreamLoader(app.getBridge().getFilesystem()));
+    fs->addPath("../../../examples/hello/resources");
+    app.getAssets().addStreamLoader(std::move(fs));
+
     app.run();
 
 	return bridgeRef.getCmdQuit();

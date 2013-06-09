@@ -33,20 +33,41 @@ namespace mvcgame {
     }
 
     template<>
-    std::unique_ptr<Texture> AssetsManager::load(const std::string& name)
+    std::shared_ptr<Texture> AssetsManager::load(const std::string& name)
     {
         return _textures.load(name);
     }
 
     template<>
-    std::unique_ptr<TextureAtlas> AssetsManager::load(const std::string& name)
+    std::shared_ptr<TextureAtlas> AssetsManager::load(const std::string& name)
     {
         return _textureAtlases.load(name);
     }
 
     template<>
-    std::unique_ptr<FontAtlas> AssetsManager::load(const std::string& name)
+    std::shared_ptr<FontAtlas> AssetsManager::load(const std::string& name)
     {
         return _fontAtlases.load(name);
-    }    
+    }
+
+    std::shared_ptr<SpriteSheet> AssetsManager::loadSheet(const TextureAtlas& atlas)
+    {
+        std::shared_ptr<Texture> texture = load<Texture>(atlas.getTextureName());
+        return std::shared_ptr<SpriteSheet>(new SpriteSheet(texture, atlas));
+    }
+
+    std::shared_ptr<FontSheet> AssetsManager::loadSheet(const FontAtlas& atlas)
+    {
+        std::shared_ptr<FontSheet> sheet(new FontSheet());
+        sheet->setInfo(atlas.getInfo());
+        for(const FontAtlas::Page& page : atlas.getPages())
+        {
+            std::shared_ptr<Texture> texture = load<Texture>(page.getTextureName());
+            for(const FontAtlas::Page::Region& region : page.getRegions())
+            {
+                sheet->setLetter(region.name, FontLetter(texture, region));
+            }
+        }
+        return sheet;
+    }
 }

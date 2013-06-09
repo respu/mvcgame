@@ -5,7 +5,9 @@
 #include <mvcgame/asset/AssetTypeManager.hpp>
 #include <mvcgame/texture/Texture.hpp>
 #include <mvcgame/texture/TextureAtlas.hpp>
-#include <mvcgame/texture/FontAtlas.hpp>
+#include <mvcgame/texture/SpriteSheet.hpp>
+#include <mvcgame/font/FontAtlas.hpp>
+#include <mvcgame/font/FontSheet.hpp>
 
 namespace mvcgame {
 
@@ -24,7 +26,10 @@ namespace mvcgame {
         void addLoader(std::unique_ptr<IAssetLoader<Asset>> loader, const std::string& tag="");
 
         template<typename Asset>
-        std::unique_ptr<Asset> load(const std::string& name);
+        std::shared_ptr<Asset> load(const std::string& name);
+
+        std::shared_ptr<SpriteSheet> loadSheet(const TextureAtlas& atlas);
+        std::shared_ptr<FontSheet> loadSheet(const FontAtlas& atlas);
     };
 }
 

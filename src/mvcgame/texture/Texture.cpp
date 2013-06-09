@@ -41,4 +41,11 @@ namespace mvcgame
         return hasAlpha() ? 4 : 3;
     }
 
+    std::ostream& operator<<(std::ostream& os, const Texture& t)
+    {
+        os << "Texture(" << t.getWidth() << "x" << t.getHeight();
+        os << " len " << t.getLength() << ", comp " << t.getComponents();
+        os << ")";
+        return os;
+    }
 }

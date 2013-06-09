@@ -7,6 +7,7 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <stdexcept>
 
 namespace mvcgame {
 
@@ -79,8 +80,12 @@ namespace mvcgame {
         std::unique_ptr<Asset> load(const std::string& name)
         {
             std::unique_ptr<Asset> asset = nullptr;
-            _mng.loadStream(name, std::bind(&AssetTypeManager<Asset>::loadStream,
+            bool success = _mng.loadStream(name, std::bind(&AssetTypeManager<Asset>::loadStream,
                 this, std::placeholders::_1, std::placeholders::_2, &asset));
+			if(!success)
+			{
+				throw std::runtime_error("Could not load asset");
+			}
             return std::move(asset);
         }
 

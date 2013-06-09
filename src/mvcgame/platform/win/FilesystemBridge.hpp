@@ -11,6 +11,8 @@ namespace mvcgame {
     {
     private:
         std::string _exePath;
+
+        std::string fixPath(const std::string& path);
     public:
 
         FilesystemBridge();

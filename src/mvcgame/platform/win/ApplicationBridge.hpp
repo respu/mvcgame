@@ -26,8 +26,8 @@ namespace mvcgame {
         void setApplication(Application& app);
         void showError(const std::string& error);
 
-        IRenderBridge& getRenderBridge();
-        IFilesystemBridge& getFilesystemBridge();
+        IRenderBridge& getRender();
+        IFilesystemBridge& getFilesystem();
 
 		/**
 		 windows specific stuff

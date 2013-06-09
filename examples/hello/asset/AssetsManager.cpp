@@ -3,7 +3,7 @@
 
 #include <mvcgame/texture/PngTextureLoader.hpp>
 #include <mvcgame/texture/GdxTextureAtlasLoader.hpp>
-#include <mvcgame/texture/FntFontAtlasLoader.hpp>
+#include <mvcgame/font/FntFontAtlasLoader.hpp>
 
 AssetsManager::AssetsManager()
 {

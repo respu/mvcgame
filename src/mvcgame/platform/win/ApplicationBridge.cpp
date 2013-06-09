@@ -18,12 +18,12 @@ namespace mvcgame {
     {
     }
 
-    IRenderBridge& ApplicationBridge::geRenderBridge()
+    IRenderBridge& ApplicationBridge::getRender()
     {
         return _renderBridge;
     }
 
-    IFilesystemBridge& ApplicationBridge::getFilesystemBridge()
+    IFilesystemBridge& ApplicationBridge::getFilesystem()
     {
         return _fsBridge;
     }

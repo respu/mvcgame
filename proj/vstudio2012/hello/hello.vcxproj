@@ -40,6 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)..\..\examples;$(SolutionDir)..\..\src;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)..\..\lib\platform\win\libpng;$(SolutionDir)..\..\lib\platform\win\libzlib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -49,6 +50,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libpng.lib;libzlib.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -66,18 +68,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\examples\hello\controller\MainMenuController.cpp" />
-    <ClCompile Include="..\..\..\examples\hello\controller\MainMenuOptionController.cpp" />
+    <ClCompile Include="..\..\..\examples\hello\asset\AssetsManager.cpp" />
+    <ClCompile Include="..\..\..\examples\hello\base\Application.cpp" />
+    <ClCompile Include="..\..\..\examples\hello\controller\MainController.cpp" />
     <ClCompile Include="..\..\..\examples\hello\platform\win\main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\examples\hello\controller\MainMenuController.hpp" />
-    <ClInclude Include="..\..\..\examples\hello\controller\MainMenuOptionController.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\mvcgame\mvcgame.vcxproj">
       <Project>{72d9c7e6-0687-49b6-90fb-98db445605d7}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\examples\hello\asset\AssetsManager.hpp" />
+    <ClInclude Include="..\..\..\examples\hello\base\Application.hpp" />
+    <ClInclude Include="..\..\..\examples\hello\controller\MainController.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

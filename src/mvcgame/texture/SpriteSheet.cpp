@@ -6,39 +6,14 @@
 
 namespace mvcgame {
 
-    SpriteFrame::SpriteFrame(std::shared_ptr<Texture> texture) :
-    _texture(texture), _region(*texture)
-    {
-    }    
-
-    SpriteFrame::SpriteFrame(std::shared_ptr<Texture> texture, const TextureRegion& region) :
-    _texture(texture), _region(region)
-    {
-    }
-
-    const Texture& SpriteFrame::getTexture() const
-    {
-        return *_texture;
-    }
-
-    Texture& SpriteFrame::getTexture()
-    {
-        return *_texture;
-    }
-
-    const TextureRegion& SpriteFrame::getRegion() const
-    {
-        return _region;
-    }
-
-    TextureRegion& SpriteFrame::getRegion()
-    {
-        return _region;
-    }
-
     SpriteSheet::SpriteSheet(std::shared_ptr<Texture> texture)
     {
         _frames.push_back(Frame(texture));
+    }
+
+    SpriteSheet::SpriteSheet(const Frame& frame)
+    {
+        _frames.push_back(frame);
     }
 
     SpriteSheet::SpriteSheet(std::shared_ptr<Texture> texture, const TextureRegions& regions)

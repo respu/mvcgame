@@ -9,11 +9,11 @@
 class MainController : public mvcgame::ViewController
 {
 private:
-	static const mvcgame::gunit_t _titleSize;
+    static const mvcgame::gunit_t _titleSize;
 
 public:
-	MainController();
-	void controllerAdded();
+    MainController();
+    void controllerAdded();
 };
 
 #endif
