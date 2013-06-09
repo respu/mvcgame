@@ -15,11 +15,7 @@
 #include <mvcgame/font/FontSheet.hpp>
 #include <mvcgame/action/TweenAction.hpp>
 
-#include <fstream>
-
 using namespace mvcgame;
-
-const gunit_t MainController::_titleSize = 50;
 
 MainController::MainController()
 {

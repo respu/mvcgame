@@ -45,7 +45,7 @@ namespace mvcgame {
         {
             return def;
         }
-        return stoi(itr->second);
+        return std::ceil(std::stof(itr->second));
     }
 
     template<>
@@ -56,7 +56,7 @@ namespace mvcgame {
         {
             return def;
         }
-        return stof(itr->second);
+        return std::stof(itr->second);
     }    
 
     template<>
@@ -153,14 +153,6 @@ namespace mvcgame {
                 atlas->getPage(page).addRegion(charTex);
             }
         }
-
-/*
-info face="font" size=32 bold=0 italic=0 charset="" unicode=0 stretchH=50 smooth=1 aa=1 padding=0,0,0,0 spacing=0,0
-common lineHeight=37 base=30.5 scaleW=512 scaleH=256 pages=1 packed=0
-page id=0 file="CurseCasualDF.png"
-chars count=83
-char id=32     x=470.5   y=161.5   width=0     height=0     xoffset=0     yoffset=30.5    xadvance=5.5    page=0 chnl=0 letter="space"
-*/
 
         return atlas;
     }

@@ -43,7 +43,8 @@ namespace mvcgame {
     SpriteFrame FontLetter::getSpriteFrame(const FontInfo& info) const
     {
         TextureRegion region(_region);
-        region.offsetY = info.baseHeight-region.height-region.offsetY;      
+        region.offsetY = info.baseHeight-region.height-region.offsetY;
+        region.offsetX = -region.offsetX;
         return SpriteFrame(_texture, region);
     }
 
