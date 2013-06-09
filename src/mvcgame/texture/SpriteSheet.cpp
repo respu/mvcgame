@@ -6,6 +6,10 @@
 
 namespace mvcgame {
 
+    SpriteSheet::SpriteSheet()
+    {
+    }    
+
     SpriteSheet::SpriteSheet(std::shared_ptr<Texture> texture)
     {
         _frames.push_back(Frame(texture));

@@ -15,15 +15,15 @@ namespace mvcgame {
     private:
         bool _paused;        
         unsigned _spriteFrame;
-        std::shared_ptr<Sheet> _sheet;        
+        Sheet _sheet;        
         unsigned _spriteFrameDuration;
         unsigned _spriteFrameUpdates;
     public:
         Sprite();
-        Sprite(std::shared_ptr<Sheet> Sheet);
+        Sprite(const Sheet& Sheet);
 
         const Sheet& getSheet() const;
-        void setSheet(std::shared_ptr<Sheet> sheet, bool changeSize=true);
+        void setSheet(const Sheet& sheet, bool changeSize=true);
         void setSheet(std::shared_ptr<Texture> texture, bool changeSize=true);
 
         unsigned setSpriteFrame() const;

@@ -50,22 +50,22 @@ namespace mvcgame {
         return _fontAtlases.load(name);
     }
 
-    std::shared_ptr<SpriteSheet> AssetsManager::loadSheet(const TextureAtlas& atlas)
+    SpriteSheet AssetsManager::loadSheet(const TextureAtlas& atlas)
     {
         std::shared_ptr<Texture> texture = load<Texture>(atlas.getTextureName());
-        return std::shared_ptr<SpriteSheet>(new SpriteSheet(texture, atlas));
+        return SpriteSheet(texture, atlas);
     }
 
-    std::shared_ptr<FontSheet> AssetsManager::loadSheet(const FontAtlas& atlas)
+    FontSheet AssetsManager::loadSheet(const FontAtlas& atlas)
     {
-        std::shared_ptr<FontSheet> sheet(new FontSheet());
-        sheet->setInfo(atlas.getInfo());
+        FontSheet sheet;
+        sheet.setInfo(atlas.getInfo());
         for(const FontAtlas::Page& page : atlas.getPages())
         {
             std::shared_ptr<Texture> texture = load<Texture>(page.getTextureName());
             for(const FontAtlas::Page::Region& region : page.getRegions())
             {
-                sheet->setLetter(region.name, FontLetter(texture, region));
+                sheet.setLetter(region.name, FontLetter(texture, region));
             }
         }
         return sheet;

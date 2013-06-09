@@ -28,8 +28,8 @@ namespace mvcgame {
         template<typename Asset>
         std::shared_ptr<Asset> load(const std::string& name);
 
-        std::shared_ptr<SpriteSheet> loadSheet(const TextureAtlas& atlas);
-        std::shared_ptr<FontSheet> loadSheet(const FontAtlas& atlas);
+        SpriteSheet loadSheet(const TextureAtlas& atlas);
+        FontSheet loadSheet(const FontAtlas& atlas);
     };
 }
 

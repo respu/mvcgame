@@ -35,7 +35,7 @@ namespace mvcgame {
 		HorizontalAlign _horizAlign;
 		VerticalAlign _vertiAlign;
 		std::string _text;
-		std::shared_ptr<Sheet> _sheet;
+		Sheet _sheet;
 
 		std::vector<const FontLetter*> getLetters(const std::string& text) const;
 	public:
@@ -46,7 +46,7 @@ namespace mvcgame {
 		void setText(const std::string& text, bool changeSize=true);
 
 		const Sheet& getSheet() const;
-        void setSheet(std::shared_ptr<Sheet> sheet);
+        void setSheet(const Sheet& sheet);
         void update();
 	};
 

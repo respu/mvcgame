@@ -28,10 +28,10 @@ namespace mvcgame {
 
 	const TextView::Sheet& TextView::getSheet() const
 	{
-		return *_sheet;
+		return _sheet;
 	}
 
-    void TextView::setSheet(std::shared_ptr<Sheet> sheet)
+    void TextView::setSheet(const Sheet& sheet)
     {
     	_sheet = sheet;
     	_changed = true;
@@ -47,9 +47,9 @@ namespace mvcgame {
 			while(true)
 			{
 				letterName = text.substr(i, j);
-				if(_sheet->hasLetter(letterName))
+				if(_sheet.hasLetter(letterName))
 				{
-					letters.push_back(&_sheet->getLetter(letterName));
+					letters.push_back(&_sheet.getLetter(letterName));
 					i += j;
 					break;					
 				}
@@ -72,13 +72,13 @@ namespace mvcgame {
 	    	removeChildren();
 	    	std::vector<const FontLetter*> letters = getLetters(_text);
 	    	Point p;
-	    	const FontInfo& info = _sheet->getInfo();
+	    	const FontInfo& info = _sheet.getInfo();
 	    	for(const FontLetter* letter : letters)
 			{
 				if(letter)
 				{
 					std::unique_ptr<Sprite> letterSprite(new Sprite());
-					std::shared_ptr<SpriteSheet> letterSheet(new SpriteSheet(_sheet->getSpriteFrame(*letter)));
+					SpriteSheet letterSheet(_sheet.getSpriteFrame(*letter));
 					letterSprite->setSheet(letterSheet);
 					letterSprite->setAnchor(Anchor(0, 0));
 					letterSprite->getFrame().origin = p;
