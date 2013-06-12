@@ -17,8 +17,6 @@ namespace mvcgame {
 
     class View : public BaseView
     {
-    public:
-        typedef std::function<void(View& view)> ViewCallback;
     private:
         View* _parent;
         RootView* _root;
@@ -27,11 +25,9 @@ namespace mvcgame {
         Anchor _anchor;
         Rotation _rotation;
         Transform _transform;
-        ViewCallback _removalCallback;
     protected:
         void setParent(View& parent);
         IRenderBridge& getBridge();
-        void notifyRemoval(View& view);
     public:
         View();
         View(const View& other);
@@ -60,14 +56,13 @@ namespace mvcgame {
         View& getParent();
         const View& getParent() const;
         void removeFromParent();
-        void addChild(std::unique_ptr<View> child, unsigned layer=0);
+        void addChild(std::shared_ptr<View> view, unsigned layer=0);
 
         void setRoot(RootView& root);
         RootView& getRoot();
         const RootView& getRoot() const;
 
         bool respondToTouchPoint(const Point& p, const TouchEvent& event);
-        void setRemovalCallback(ViewCallback callback);
     };
 }
 

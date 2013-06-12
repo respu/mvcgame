@@ -25,10 +25,10 @@ namespace mvcgame {
         _size = size;
     }
 
-    void RootView::addChild(std::unique_ptr<View> child, unsigned layer)
+    void RootView::addChild(std::shared_ptr<View> view, unsigned layer)
     {
-        child->setRoot(*this);
-        BaseView::addChild(std::move(child), layer);
+        view->setRoot(*this);
+        BaseView::addChild(view, layer);
     }
 
     void RootView::draw()

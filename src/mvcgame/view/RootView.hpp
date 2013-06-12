@@ -25,7 +25,7 @@ namespace mvcgame {
         const Size& getSize() const;
         void setSize(const Size& size);
 
-        void addChild(std::unique_ptr<View> child, unsigned layer=0);
+        void addChild(std::shared_ptr<View> view, unsigned layer=0);
 
         void draw();
 

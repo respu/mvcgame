@@ -100,14 +100,15 @@ namespace mvcgame {
         _anchor = a;
     }  
 
-    void View::addChild(std::unique_ptr<View> child, unsigned layer)
+    void View::addChild(std::shared_ptr<View> child, unsigned layer)
     {
         child->setParent(*this);
-        BaseView::addChild(std::move(child), layer);
+        BaseView::addChild(child, layer);
     }
 
     void View::setParent(View& parent)
     {
+        assert(!_parent);
         _parent = &parent;
     }
     
@@ -159,33 +160,16 @@ namespace mvcgame {
 
     void View::removeFromParent()
     {
-        notifyRemoval(*this);
         if(_parent != nullptr)
         {
-            _parent->removeChild(*this);
-            _parent = nullptr;
+            View* p = _parent;
+            _parent = nullptr;            
+            p->removeChild(*this);
         }
     }
 
     bool View::respondToTouchPoint(const Point& p, const TouchEvent& event)
     {
         return _frame.contains(p);
-    }
-
-    void View::setRemovalCallback(ViewCallback callback)
-    {
-        _removalCallback = callback;
-    }
-
-    void View::notifyRemoval(View& view)
-    {
-        if(_removalCallback)
-        {
-            _removalCallback(view);
-        }
-        if(_parent)
-        {
-            _parent->notifyRemoval(view);
-        }
-    }    
+    }  
 }

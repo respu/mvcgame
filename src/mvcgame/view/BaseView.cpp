@@ -20,28 +20,28 @@ namespace mvcgame {
         _children.clear();
     }
 
-    void BaseView::addChild(std::unique_ptr<View> child, unsigned layer)
+    void BaseView::addChild(std::shared_ptr<View> view, unsigned layer)
     {
-        assert(child);
-        _children.push_back(Child(std::move(child), layer));
+        assert(view);
+        _children.push_back(Child(view, layer));
     }
 
-    std::unique_ptr<View> BaseView::removeChild(const View& child)
+    std::shared_ptr<View> BaseView::removeChild(const View& view)
     {
-        Children::iterator itr = findChild(child);
+        Children::iterator itr = findChild(view);
         if(itr == _children.end())
         {
-            return std::unique_ptr<View>();
+            return std::shared_ptr<View>();
         }
-        std::unique_ptr<View> childPtr = std::move(itr->first);
+        std::shared_ptr<View> childPtr = itr->first;
         _children.erase(itr);
         return childPtr;
     }
 
-    BaseView::Children::iterator BaseView::findChild(const View& child)
+    BaseView::Children::iterator BaseView::findChild(const View& view)
     {
-        return std::find_if(_children.begin(), _children.end(), [&child](const View::Child& elm){
-            return elm.first.get() == &child;
+        return std::find_if(_children.begin(), _children.end(), [&view](const View::Child& elm){
+            return elm.first.get() == &view;
         });
     }
 

@@ -19,18 +19,17 @@ namespace mvcgame {
         ActionRunner _actions;        
    		ViewController* _parent;
         RootViewController* _root;
-   		View* _view;
+   		std::shared_ptr<View> _view;
     protected:
 
         void moveChildren(View& view);
-        void onViewRemoved(View& view);
     public:
     	ViewController();
     	virtual ~ViewController();
 
         const View& getView() const;
         View& getView();
-		virtual void setView(std::unique_ptr<View> view);
+		virtual void setView(std::shared_ptr<View> view);
 
         void setRoot(RootViewController& root);
         const RootViewController& getRoot() const;
