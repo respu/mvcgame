@@ -6,6 +6,7 @@
 #include <limits>
 #include <algorithm>
 #include <sstream>
+#include <stdexcept>
 
 #define GUNIT_EQ_ULP 4
 
@@ -750,6 +751,8 @@ namespace mvcgame {
 
 #pragma mark - Transform
 
+    const Transform Transform::Identity = Transform();
+
     Transform::Transform() :
     a(1),
     b(0),
@@ -805,14 +808,23 @@ namespace mvcgame {
     {
         ScaleTransform st = scale*rot;
         Point tp = point-(anchor*st);
-        bool changed = a != st.a || b != st.b || c != st.c || d != st.d || tx != tp.x || ty != tp.y;
+        bool same = guniteq(a, st.a) && guniteq(b, st.b) &&
+        guniteq(c, st.c) && guniteq(d, st.d) &&
+        guniteq(tx, tp.x) && guniteq(ty, tp.y);
         a = st.a;
         b = st.b;
         c = st.c;
         d = st.d;
         tx = tp.x;
         ty = tp.y;
-        return changed;
+        return !same;
+    }
+
+    bool Transform::operator==(const Transform& t) const
+    {
+        return guniteq(a, t.a) && guniteq(b, t.b) &&
+        guniteq(c, t.c) && guniteq(d, t.d) &&
+        guniteq(tx, t.tx) && guniteq(ty, t.ty);
     }
 
     Transform& Transform::operator=(const ScaleTransform& st)
@@ -869,12 +881,12 @@ namespace mvcgame {
     Transform Transform::operator*(const Transform& t) const
     {
         return Transform(
-            a * t.a + b * t.c,
-            a * t.b + b * t.d,
-            c * t.a + d * t.c,
-            c * t.b + d * t.d,
-            a * t.tx + b * t.ty + tx,
-            c * t.tx + d * t.ty + ty
+            a * t.a + c * t.b,
+            a * t.c + c * t.d,
+            b * t.a + d * t.b,
+            b * t.c + d * t.d,
+            tx * t.a + ty * t.b + t.tx,
+            tx * t.c + ty * t.d + t.ty
         );
     }
 
@@ -892,6 +904,10 @@ namespace mvcgame {
 
     Transform Transform::operator/(const Transform& t) const
     {
+        if(t == *this)
+        {
+            return Identity;
+        }
         return *this * t.invert();
     }
 
@@ -902,10 +918,16 @@ namespace mvcgame {
 
     Transform Transform::invert() const
     {
-        float det = 1 / (a * d - b * c);
+        gunit_t det = a * d - b * c;
 
+        if(det == 0)
+        {
+            throw std::runtime_error("Could not invert transform");
+        }
+
+        det = 1 / det;
         return Transform(det * d, -det * b, -det * c, det * a,
-                            det * (c * ty - d * tx), det * (b * tx - a * ty) );
+                            det * (b * ty - d * tx), det * (c * tx - a * ty) );
     }
 
 #pragma mark - stream functions
@@ -964,20 +986,27 @@ namespace mvcgame {
 
     std::ostream& operator<<(std::ostream& os, const ScaleTransform& st)
     {
-        os << "Transform(";
-        os << " a=" << st.a << " b=" << st.b;
-        os << " c=" << st.c << " d=" << st.d;
-        os << ")";
+        os.setf( std::ios::fixed, std::ios::floatfield );
+        os << std::showpos;
+        os << "ScaleTransform" << std::endl;
+        os << "[ " << st.a << " " << st.b << " " << 0.0f << " ]" << std::endl;
+        os << "[ " << st.c << " " << st.d << " " << 0.0f << " ]" << std::endl;
+        os << "[ " << 0.0f << " " << 0.0f << " " << 1.0f << " ]" << std::endl;
+        std::cout.unsetf( std::ios::floatfield ); 
+        os << std::noshowpos;
         return os;
     }
 
     std::ostream& operator<<(std::ostream& os, const Transform& t)
     {
-        os << "Transform(";
-        os << " a=" << t.a << " b=" << t.b;
-        os << " c=" << t.c << " d=" << t.d;
-        os << " tx=" << t.tx << " ty=" << t.ty;
-        os << ")";
+        os.setf( std::ios::fixed, std::ios::floatfield );
+        os << std::showpos;        
+        os << "Transform" << std::endl;
+        os << "[ " << t.a << " " << t.b << " " << t.tx << " ]" << std::endl;
+        os << "[ " << t.c << " " << t.d << " " << t.ty << " ]" << std::endl;
+        os << "[ " << 0.0f << " " << 0.0f << " " << 1.0f << " ]" << std::endl;
+        std::cout.unsetf( std::ios::floatfield ); 
+        os << std::noshowpos;        
         return os;
     }
     

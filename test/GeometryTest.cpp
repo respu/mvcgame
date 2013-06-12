@@ -222,8 +222,7 @@ TEST(Geometry, rotation) {
 
     p *= r;
 
-    ASSERT_FLOAT_EQ(0, p.x);
-    ASSERT_FLOAT_EQ(-5, p.y);
+    ASSERT_EQ(Point(0, -5), p);
 }
 
 TEST(Geometry, scale) {
@@ -248,5 +247,15 @@ TEST(Geometry, scale) {
     ASSERT_FLOAT_EQ(2, s.x);
     ASSERT_FLOAT_EQ(2, s.y);
 
+}
 
+TEST(Geometry, transform) {
+
+    Transform t(1, 2, 3, 4, 5, 6);
+
+    ASSERT_EQ(Transform(-2, 1, 1.5, -0.5, 4, -4.5), t.invert());
+
+    t = Transform(2.5 , 343.4, 2125.43434, 123123.123 , 8783.3, 3434);
+
+    ASSERT_EQ(t/t, Transform::Identity);
 }

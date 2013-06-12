@@ -287,6 +287,8 @@ namespace mvcgame {
         gunit_t tx;
         gunit_t ty;
 
+        static const Transform Identity;
+
         Transform();        
         Transform(gunit_t a, gunit_t b, gunit_t c,
             gunit_t d, gunit_t tx, gunit_t ty);
@@ -303,6 +305,8 @@ namespace mvcgame {
 
         bool update(const Point& p, const Point& a,
             const Rotation& r, const Scale& c);
+
+        bool operator==(const Transform& t) const;
 
         Transform& operator=(const ScaleTransform& st);
         Transform& operator=(const Point& p);
