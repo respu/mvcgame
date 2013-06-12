@@ -73,10 +73,17 @@ namespace mvcgame {
         _lastTouchEvent = std::move(event);
     }
 
+    void RootViewController::emitTouchUpdate(const Points& points)
+    {
+        assert(_lastTouchEvent != nullptr);
+        UpdateTouchEvent event(points, *_lastTouchEvent);
+        _eventEmitter.emitTouchUpdate(event);
+    }    
+
     void RootViewController::emitTouchEnd(const Points& points)
     {
         assert(_lastTouchEvent != nullptr);
-        EndTouchEvent event(points, *_lastTouchEvent);
+        UpdateTouchEvent event(points, *_lastTouchEvent);
         _eventEmitter.emitTouchEnd(event);
         _lastTouchEvent = nullptr;
     }

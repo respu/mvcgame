@@ -5,6 +5,7 @@
 #include <mvcgame/base/Geometry.hpp>
 #include <mvcgame/base/Time.hpp>
 #include <vector>
+#include <iostream>
 
 namespace mvcgame {
     
@@ -51,16 +52,22 @@ namespace mvcgame {
         void addResponder(IResponder& responder);
 	};
     
-	class EndTouchEvent : public TouchEvent
+	class UpdateTouchEvent : public TouchEvent
 	{
     private:
 		TouchEvent& _start;
     public:
-		EndTouchEvent(const Points& points, TouchEvent& start);
+		UpdateTouchEvent(const Points& points, TouchEvent& start);
         const TouchEvent& getStart() const;
         TouchEvent& getStart();
     };
 
+    /**
+     Stream functions
+     */
+    std::ostream& operator<<(std::ostream& os, const UpdateEvent& e);
+    std::ostream& operator<<(std::ostream& os, const TouchEvent& e);
+    std::ostream& operator<<(std::ostream& os, const UpdateTouchEvent& e);
 }
 
 #endif

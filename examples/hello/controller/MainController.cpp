@@ -23,32 +23,32 @@ MainController::MainController()
 
 void MainController::controllerAdded()
 {
-    std::unique_ptr<ColorView> bg(new ColorView());
+    auto bg = std::make_shared<ColorView>();
     bg->setBackgroundColor(Color(0, 0, 0));
     bg->getFrame().size = getRoot().getView().getSize();
     bg->getFrame().origin = bg->getFrame().size/2;
 
     auto guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
     auto guybrushSheet = getAssets().loadSheet(*guybrushAtlas);
-    std::unique_ptr<Sprite> guybrush(new Sprite());
-    guybrush->setSheet(guybrushSheet);
-    guybrush->getFrame().origin = bg->getFrame().size/2;
-    guybrush->getFrame().origin.x -= 150;
-    guybrush->setSpriteFrameDuration(20);
+    _guybrush = std::make_shared<Sprite>();
+    _guybrush->setSheet(guybrushSheet);
+    _guybrush->getFrame().origin = bg->getFrame().size/2;
+    _guybrush->getFrame().origin.x -= 150;
+    _guybrush->setSpriteFrameDuration(20);
 
-    bg->addChild(std::move(guybrush));
+    bg->addChild(_guybrush);
 
-    std::unique_ptr<Sprite> guybrush2(new Sprite());
+    auto guybrush2 = std::make_shared<Sprite>();
     guybrush2->setSheet(guybrushSheet);
     guybrush2->getFrame().origin = bg->getFrame().size/2;
     guybrush2->getFrame().origin.x += 150;
     guybrush2->setSpriteFrameDuration(20);
 
-    bg->addChild(std::move(guybrush2));
+    bg->addChild(guybrush2);
 
     auto fontAtlas = getAssets().load<FontAtlas>("font");
     auto fontSheet = getAssets().loadSheet(*fontAtlas);
-    std::unique_ptr<TextView> title(new TextView());
+    auto title = std::make_shared<TextView>();
     title->setSheet(fontSheet);
     title->getFrame().size = Size(50, 50);
     title->getFrame().origin = bg->getFrame().size/2;
@@ -56,7 +56,11 @@ void MainController::controllerAdded()
     title->getFrame().origin.y += 100;
     title->setText("mvcgame says hello!");
 
-    bg->addChild(std::move(title));
+    bg->addChild(title);
     
-    setView(std::move(bg));
+    setView(bg);
+}
+
+void MainController::respondOnTouchStart(TouchEvent& event)
+{
 }

@@ -39,6 +39,7 @@ namespace mvcgame {
 
         void emitUpdate();
         void emitTouchStart(const Points& points);
+        void emitTouchUpdate(const Points& points);        
         void emitTouchEnd(const Points& points);
 
         void setFrameDelay(float delay);

@@ -7,19 +7,22 @@
 
 namespace mvcgame {
 
-    View::View() : _parent(nullptr), _root(nullptr)
+    View::View() : _parent(nullptr), _root(nullptr),
+    _inverseDirty(false), _rootTransformDirty(false), _rootInverseDirty(false)
     {
     }
 
     View::View(const View& v) :
     _parent(v._parent), _root(v._root), _frame(v._frame), _scale(v._scale),
-    _anchor(v._anchor), _rotation(v._rotation)
+    _anchor(v._anchor), _rotation(v._rotation),
+    _inverseDirty(false), _rootTransformDirty(false), _rootInverseDirty(false)
     {
 
     }
 
     View::View(const Rect& f, const Scale& s, const Anchor& a, const Rotation& r) :
-    _parent(nullptr), _root(nullptr), _frame(f), _scale(s), _anchor(a), _rotation(r)
+    _parent(nullptr), _root(nullptr), _frame(f), _scale(s), _anchor(a), _rotation(r),
+    _inverseDirty(false), _rootTransformDirty(false), _rootInverseDirty(false)    
     {
     }
 
@@ -29,7 +32,12 @@ namespace mvcgame {
 
     void View::update()
     {
-        _transform.update(_frame, _anchor, _rotation, _scale);
+        if(_transform.update(_frame, _anchor, _rotation, _scale))
+        {
+            _inverseDirty = true;
+            _rootTransformDirty = true;
+            _rootInverseDirty = true;
+        }
         BaseView::update();
     }
 
@@ -98,7 +106,42 @@ namespace mvcgame {
     void View::setAnchor(const Anchor& a)
     {
         _anchor = a;
-    }  
+    }
+
+    const Transform& View::getParentTransform() const
+    {
+        return _transform;
+    }
+
+    const Transform& View::getRootTransform() const
+    {
+        if(_rootTransformDirty)
+        {
+            _rootTransform = getParent().getParentTransform()*_transform;        
+            _rootTransformDirty = false;
+        }
+        return _rootTransform;        
+    }
+
+    const Transform& View::getParentInverse() const
+    {
+        if(_inverseDirty)
+        {
+            _inverse = _transform.invert();        
+            _inverseDirty = false;
+        }
+        return _inverse;        
+    }
+
+    const Transform& View::getRootInverse() const
+    {
+        if(_rootInverseDirty)
+        {
+            _rootInverse = getRootTransform().invert();
+            _rootInverseDirty = false;
+        }
+        return _rootInverse;
+    }
 
     void View::addChild(std::shared_ptr<View> child, unsigned layer)
     {

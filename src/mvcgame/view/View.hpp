@@ -25,6 +25,13 @@ namespace mvcgame {
         Anchor _anchor;
         Rotation _rotation;
         Transform _transform;
+
+        mutable bool _inverseDirty;
+        mutable Transform _inverse;
+        mutable bool _rootTransformDirty;
+        mutable Transform _rootTransform;
+        mutable bool _rootInverseDirty;        
+        mutable Transform _rootInverse;
     protected:
         void setParent(View& parent);
         IRenderBridge& getBridge();
@@ -61,6 +68,11 @@ namespace mvcgame {
         void setRoot(RootView& root);
         RootView& getRoot();
         const RootView& getRoot() const;
+
+        const Transform& getParentTransform() const;
+        const Transform& getRootTransform() const;
+        const Transform& getParentInverse() const;
+        const Transform& getRootInverse() const;
 
         bool respondToTouchPoint(const Point& p, const TouchEvent& event);
     };

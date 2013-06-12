@@ -31,7 +31,11 @@ namespace mvcgame {
         {
         }
 
-        virtual void respondOnTouchEnd(TouchEvent& event)
+        virtual void respondOnTouchUpdate(UpdateTouchEvent& event)
+        {
+        }        
+
+        virtual void respondOnTouchEnd(UpdateTouchEvent& event)
         {
         }
         

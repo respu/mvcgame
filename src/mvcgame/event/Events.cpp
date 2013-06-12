@@ -78,20 +78,67 @@ namespace mvcgame {
         _responders.push_back(&responder);
     }
     
-#pragma mark - EndTouchEvent
+#pragma mark - UpdateTouchEvent
     
-    EndTouchEvent::EndTouchEvent(const Points& points, TouchEvent& start) :
+    UpdateTouchEvent::UpdateTouchEvent(const Points& points, TouchEvent& start) :
     TouchEvent(points), _start(start)
     {
     }
     
-    const TouchEvent& EndTouchEvent::getStart() const
+    const TouchEvent& UpdateTouchEvent::getStart() const
     {
         return _start;
     }
     
-    TouchEvent& EndTouchEvent::getStart()
+    TouchEvent& UpdateTouchEvent::getStart()
     {
         return _start;
+    }
+
+
+    std::ostream& operator<<(std::ostream& os, const UpdateEvent& e)
+    {
+        os << "UpdateEvent( ";
+        if(e.getStopPropagation())
+        {
+            os << "stopped";
+        }
+        os << std::endl << e.getInterval() << std::endl;
+        os << e.getTime() << std::endl;
+        os << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const TouchEvent& e)
+    {
+        os << "TouchEvent( ";
+        if(e.getStopPropagation())
+        {
+            os << "stopped";
+        }
+        os << std::endl;
+        for(const Point& p : e.getPoints())
+        {
+            os << p << std::endl;
+        }
+        os << ")";
+        return os;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const UpdateTouchEvent& e)
+    {
+        os << "UpdateTouchEvent( ";
+        if(e.getStopPropagation())
+        {
+            os << "stopped";
+        }
+        os << std::endl;
+        for(const Point& p : e.getPoints())
+        {
+            os << p << std::endl;
+        }
+        os << "start:" << e.getStart();
+        os << ")";
+        return os;
     }
 }

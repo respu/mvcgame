@@ -1,10 +1,11 @@
 
 #include <mvcgame/platform/linux/ApplicationBridge.hpp>
 #include <mvcgame/base/Application.hpp>
+#include <mvcgame/base/Geometry.hpp>
+#include <mvcgame/controller/RootViewController.hpp>
 #include <cassert>
 
 #include <X11/X.h>
-#include <X11/Xlib.h>
 #include <GL/gl.h>
 #include <GL/glx.h>
 #include <GL/glu.h>
@@ -39,6 +40,37 @@ namespace mvcgame {
     void ApplicationBridge::showError(const std::string& error)
     {
         printf("mvcgame error: %s\n", error.c_str());
+    }
+
+
+    void ApplicationBridge::processEvent(XEvent& xev)
+    {     
+        static bool buttonPressed = false;
+
+        std::vector<Point> points;
+        const Size& size = _app->getSize();
+        RootViewController& root = _app->getRoot();
+        points.push_back(Point(xev.xmotion.x, size.height-xev.xmotion.y));
+        switch(xev.type)
+        {
+        case MotionNotify:
+            if(buttonPressed)
+            {
+               root.emitTouchUpdate(points); 
+            }
+        break;
+        case ButtonPress:
+            buttonPressed = true;
+            root.emitTouchStart(points);
+        break;
+        case ButtonRelease:
+            buttonPressed = false;
+            root.emitTouchEnd(points);
+        break;
+        case KeyPress:
+            // keyboard
+        break;
+        }
     }
 
     void ApplicationBridge::run()
@@ -76,7 +108,7 @@ namespace mvcgame {
         const Size& size = _app->getSize();
         cmap = XCreateColormap(dpy, root, vi->visual, AllocNone);
         swa.colormap = cmap;
-        swa.event_mask = ExposureMask | KeyPressMask;
+        swa.event_mask = ExposureMask | KeyPressMask | PointerMotionMask | ButtonPressMask | ButtonReleaseMask;
         win = XCreateWindow(dpy, root, 0, 0, size.width, size.height, 0, vi->depth, InputOutput, vi->visual, CWColormap | CWEventMask, &swa);
         XMapWindow(dpy, win);
         XStoreName(dpy, win, "mvcgame");
@@ -100,6 +132,7 @@ namespace mvcgame {
             while(XPending(dpy))
             {
                 XNextEvent(dpy, &xev);
+                processEvent(xev);
             }
 
             XGetWindowAttributes(dpy, win, &gwa);

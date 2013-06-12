@@ -64,6 +64,13 @@ namespace mvcgame {
 
     void EventEmitter::emitTouchStart(TouchEvent& event, BaseViewController& controller)
     {
+#ifdef MVCGAME_DEBUG_EVENTS
+        std::cout << ">>>>" << std::endl;        
+        std::cout << "EventEmitter::emitTouchStart " << std::endl;
+        std::cout << event << std::endl;
+        std::cout << "<<<<" << std::endl;
+#endif
+
         findTouchResponders(event, _root);
         TouchEvent::Responders& list = event.getResponders();
         TouchEvent::Responders::iterator itr;
@@ -76,14 +83,42 @@ namespace mvcgame {
             }
         }
     }
-    
-    void EventEmitter::emitTouchEnd(EndTouchEvent &event, BaseViewController &controller)
+
+void EventEmitter::emitTouchUpdate(UpdateTouchEvent &event, BaseViewController &controller)
     {
+#ifdef MVCGAME_DEBUG_EVENTS
+        std::cout << ">>>>" << std::endl;        
+        std::cout << "EventEmitter::emitTouchUpdate " << std::endl;
+        std::cout << event << std::endl;
+        std::cout << "<<<<" << std::endl;
+#endif
+
         TouchEvent::Responders list = event.getStart().getResponders();
         TouchEvent::Responders::iterator itr;
         for(itr=list.begin(); itr!=list.end(); ++itr)
         {
-            (**itr).respondOnTouchStart(event);
+            (**itr).respondOnTouchUpdate(event);
+            if(event.getStopPropagation())
+            {
+                break;
+            }
+        }
+    }    
+    
+    void EventEmitter::emitTouchEnd(UpdateTouchEvent &event, BaseViewController &controller)
+    {
+#ifdef MVCGAME_DEBUG_EVENTS
+        std::cout << ">>>>" << std::endl;        
+        std::cout << "EventEmitter::emitTouchEnd " << std::endl;
+        std::cout << event << std::endl;
+        std::cout << "<<<<" << std::endl;
+#endif
+
+        TouchEvent::Responders list = event.getStart().getResponders();
+        TouchEvent::Responders::iterator itr;
+        for(itr=list.begin(); itr!=list.end(); ++itr)
+        {
+            (**itr).respondOnTouchEnd(event);
             if(event.getStopPropagation())
             {
                 break;
@@ -100,8 +135,13 @@ namespace mvcgame {
     {
         emitTouchStart(event, _root);
     }
+
+    void EventEmitter::emitTouchUpdate(UpdateTouchEvent& event)
+    {
+        emitTouchUpdate(event, _root);
+    }    
     
-    void EventEmitter::emitTouchEnd(EndTouchEvent& event)
+    void EventEmitter::emitTouchEnd(UpdateTouchEvent& event)
     {
         emitTouchEnd(event, _root);
     }

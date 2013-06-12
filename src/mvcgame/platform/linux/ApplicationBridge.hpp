@@ -5,6 +5,8 @@
 #include <mvcgame/platform/gl/RenderBridge.hpp>
 #include <mvcgame/platform/linux/FilesystemBridge.hpp>
 
+#include <X11/Xlib.h>
+
 namespace mvcgame {
 
     class ApplicationBridge : public IApplicationBridge
@@ -14,6 +16,8 @@ namespace mvcgame {
         bool _finished;
         RenderBridge _renderBridge;
         FilesystemBridge _fsBridge;
+
+        void processEvent(XEvent& xev);
     public:
         ApplicationBridge();
         void run();

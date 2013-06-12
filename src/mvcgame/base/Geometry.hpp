@@ -14,6 +14,7 @@ namespace mvcgame {
     class Speed;
     class Rotation;
     class ScaleTransform;
+    class Transform;
 
     typedef float gunit_t;
     typedef std::vector<Point> Points;
@@ -56,6 +57,8 @@ namespace mvcgame {
         Point operator*(const Rotation& r) const;
         Point& operator*=(const ScaleTransform& s);
         Point operator*(const ScaleTransform& s) const;
+        Point& operator*=(const Transform& s);
+        Point operator*(const Transform& s) const;        
         Size operator*(const Anchor& a) const;
 
         Point& operator/=(const gunit_t& s);
@@ -271,6 +274,9 @@ namespace mvcgame {
 
     /**
      * A transformation matrix
+     * | a b tx |
+     * | c d ty |
+     * | 0 0  1 |
      */
     class Transform final {
     public:
@@ -289,23 +295,30 @@ namespace mvcgame {
         Transform(const Rotation& r);
         Transform(const Point& p);
 
-        void update(const Rect& f, const Anchor& a,
+        bool update(const Rect& f, const Anchor& a,
             const Rotation& r, const Scale& c);        
 
-        void update(const Point& p, const Anchor& a,
+        bool update(const Point& p, const Anchor& a,
             const Size& s, const Rotation& r, const Scale& c);
 
-        void update(const Point& p, const Point& a,
+        bool update(const Point& p, const Point& a,
             const Rotation& r, const Scale& c);
 
         Transform& operator=(const ScaleTransform& st);
         Transform& operator=(const Point& p);
 
-        Transform operator+(const Point& p);
+        Transform operator+(const Point& p) const;
         Transform& operator+=(const Point& p);
-        Transform operator-(const Point& p);
+        Transform operator-(const Point& p) const;
         Transform& operator-=(const Point& p);
 
+        Point operator*(const Point& p) const;
+
+        Transform operator*(const Transform& t) const;
+        Transform& operator*=(const Transform& t);
+
+        Transform operator/(const Transform& t) const;
+        Transform& operator/=(const Transform& t);
 
         Transform invert() const;
     };

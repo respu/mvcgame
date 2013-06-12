@@ -9,7 +9,7 @@ namespace mvcgame {
 	class BaseViewController;
 	class UpdateEvent;
 	class TouchEvent;
-	class EndTouchEvent;
+	class UpdateTouchEvent;
 	class Point;
 
 	/**
@@ -22,7 +22,8 @@ namespace mvcgame {
 
 		void emitUpdate(UpdateEvent& event, BaseViewController& controller);
 		void emitTouchStart(TouchEvent& event, BaseViewController& controller);
-        void emitTouchEnd(EndTouchEvent& event, BaseViewController& controller);
+        void emitTouchUpdate(UpdateTouchEvent& event, BaseViewController& controller);		
+        void emitTouchEnd(UpdateTouchEvent& event, BaseViewController& controller);
         void findTouchResponders(const Point& p, TouchEvent& event, BaseViewController& controller);
         void findTouchResponders(TouchEvent& event, BaseViewController& controller);
 	public:
@@ -31,7 +32,8 @@ namespace mvcgame {
 
 		void emitUpdate(UpdateEvent& event);
 		void emitTouchStart(TouchEvent& event);
-		void emitTouchEnd(EndTouchEvent& event);
+		void emitTouchUpdate(UpdateTouchEvent& event);
+		void emitTouchEnd(UpdateTouchEvent& event);
 	};
 
 };

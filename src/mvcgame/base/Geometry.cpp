@@ -150,6 +150,20 @@ namespace mvcgame {
         return Point(p.x, p.y);
     }
 
+    Point& Point::operator*=(const Transform& t)
+    {
+        Point p = t*(*this);
+        x = p.x;
+        y = p.y;
+        return *this;
+    }
+
+    Point Point::operator*(const Transform& t) const
+    {
+        Point p = t*(*this);
+        return Point(p.x, p.y);
+    }    
+
     Size Point::operator*(const Anchor& a) const
     {
         return Size(x*a.x, y*a.y);
@@ -777,26 +791,28 @@ namespace mvcgame {
         *this = ScaleTransform(r);
     }
 
-    void Transform::update(const Rect& frame, const Anchor& anchor, const Rotation& rot, const Scale& scale)
+    bool Transform::update(const Rect& frame, const Anchor& anchor, const Rotation& rot, const Scale& scale)
     {
-        update(frame.origin, anchor*frame.size, rot, scale);
+        return update(frame.origin, anchor*frame.size, rot, scale);
     }
 
-    void Transform::update(const Point& point, const Anchor& anchor, const Size& size, const Rotation& rot, const Scale& scale)
+    bool Transform::update(const Point& point, const Anchor& anchor, const Size& size, const Rotation& rot, const Scale& scale)
     {
-        update(point, anchor*size, rot, scale);
+        return update(point, anchor*size, rot, scale);
     }
 
-    void Transform::update(const Point& point, const Point& anchor, const Rotation& rot, const Scale& scale)
+    bool Transform::update(const Point& point, const Point& anchor, const Rotation& rot, const Scale& scale)
     {
         ScaleTransform st = scale*rot;
         Point tp = point-(anchor*st);
+        bool changed = a != st.a || b != st.b || c != st.c || d != st.d || tx != tp.x || ty != tp.y;
         a = st.a;
         b = st.b;
         c = st.c;
         d = st.d;
         tx = tp.x;
         ty = tp.y;
+        return changed;
     }
 
     Transform& Transform::operator=(const ScaleTransform& st)
@@ -821,7 +837,7 @@ namespace mvcgame {
         return *this;
     }
 
-    Transform Transform::operator+(const Point& p)
+    Transform Transform::operator+(const Point& p) const
     {
         return Transform(a, b, c, d, tx+p.x, ty+p.y);
     }
@@ -833,7 +849,7 @@ namespace mvcgame {
         return *this;
     }
 
-    Transform Transform::operator-(const Point& p)
+    Transform Transform::operator-(const Point& p) const
     {
         return Transform(a, b, c, d, tx-p.x, ty-p.y);
     }
@@ -843,6 +859,45 @@ namespace mvcgame {
         tx -= p.x;
         ty -= p.y;
         return *this;
+    }
+
+    Point Transform::operator*(const Point& p) const
+    {
+        return Point(p.x*a+p.y*c+tx, p.y*d+p.x*b+ty);
+    }    
+
+    Transform Transform::operator*(const Transform& t) const
+    {
+        return Transform(
+            a * t.a + b * t.c,
+            a * t.b + b * t.d,
+            c * t.a + d * t.c,
+            c * t.b + d * t.d,
+            a * t.tx + b * t.ty + tx,
+            c * t.tx + d * t.ty + ty
+        );
+    }
+
+    Transform& Transform::operator*=(const Transform& t)
+    {
+        Transform r = *this * t;
+        a = r.a;
+        b = r.b;
+        c = r.c;
+        d = r.d;
+        tx = r.tx;
+        ty = r.ty;
+        return *this;
+    }
+
+    Transform Transform::operator/(const Transform& t) const
+    {
+        return *this * t.invert();
+    }
+
+    Transform& Transform::operator/=(const Transform& t)
+    {
+        return *this *= t.invert();
     }
 
     Transform Transform::invert() const
