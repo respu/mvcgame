@@ -139,6 +139,8 @@ namespace mvcgame {
         gunit_t area() const;
 
         Points getVertices() const;
+
+        bool contains(const Point& p) const;
     };
     
     /**

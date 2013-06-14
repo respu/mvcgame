@@ -10,6 +10,7 @@
 namespace mvcgame {
     
     class IResponder;
+    class Transform;
 
 	class Event
 	{
@@ -29,6 +30,7 @@ namespace mvcgame {
 		Time _time;
 		Duration _interval;		
 	public:
+        UpdateEvent();
         UpdateEvent(const Time& t, const Duration& d);
 		const Duration& getInterval() const;
 		const Time& getTime() const;
@@ -38,36 +40,26 @@ namespace mvcgame {
 	{
     public:
         typedef std::vector<Point> Points;
-        typedef std::vector<IResponder*> Responders;
 	private:
 		Points _points;
-        Responders _responders;
 	public:
+        TouchEvent();
 		TouchEvent(const Points& points);
         virtual ~TouchEvent();
 		const Points& getPoints() const;
         Points& getPoints();
-		const Responders& getResponders() const;
-        Responders& getResponders();
-        void addResponder(IResponder& responder);
+
+        bool touched(const Rect& frame) const;
+
+        TouchEvent operator*(const Transform& t) const;
+        TouchEvent& operator*=(const Transform& t);
 	};
-    
-	class UpdateTouchEvent : public TouchEvent
-	{
-    private:
-		TouchEvent& _start;
-    public:
-		UpdateTouchEvent(const Points& points, TouchEvent& start);
-        const TouchEvent& getStart() const;
-        TouchEvent& getStart();
-    };
 
     /**
      Stream functions
      */
     std::ostream& operator<<(std::ostream& os, const UpdateEvent& e);
     std::ostream& operator<<(std::ostream& os, const TouchEvent& e);
-    std::ostream& operator<<(std::ostream& os, const UpdateTouchEvent& e);
 }
 
 #endif

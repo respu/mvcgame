@@ -24,7 +24,7 @@ namespace mvcgame {
     {
     }
 
-    void RunningAction::update(UpdateEvent& event)
+    void RunningAction::update(const UpdateEvent& event)
     {
         if(!start)
         {
@@ -85,7 +85,7 @@ namespace mvcgame {
         _actions.clear();
     }
 
-    void ActionRunner::update(UpdateEvent& event)
+    void ActionRunner::update(const UpdateEvent& event)
     {
         for(std::unique_ptr<RunningAction>& running : _actions)
         {

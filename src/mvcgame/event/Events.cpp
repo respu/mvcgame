@@ -1,5 +1,6 @@
 
 #include <mvcgame/event/Events.hpp>
+#include <mvcgame/base/Geometry.hpp>
 
 namespace mvcgame {
     
@@ -27,6 +28,11 @@ namespace mvcgame {
     
 #pragma mark - UpdateEvent
 
+    UpdateEvent::UpdateEvent() :
+    _time(Time::now())
+    {
+    }
+
     UpdateEvent::UpdateEvent(const Time& t, const Duration& d) :
     _time(t), _interval(d)
     {
@@ -45,6 +51,10 @@ namespace mvcgame {
 
 #pragma mark - TouchEvent
     
+    TouchEvent::TouchEvent()
+    {
+    }
+
     TouchEvent::TouchEvent(const Points& points) : _points(points)
     {
     }
@@ -62,39 +72,39 @@ namespace mvcgame {
     {
         return _points;
     }
-    
-    const TouchEvent::Responders& TouchEvent::getResponders() const
+
+    TouchEvent TouchEvent::operator*(const Transform& t) const
     {
-        return _responders;
-    }
-    
-    TouchEvent::Responders& TouchEvent::getResponders()
-    {
-        return _responders;
-    }
-    
-    void TouchEvent::addResponder(IResponder& responder)
-    {
-        _responders.push_back(&responder);
-    }
-    
-#pragma mark - UpdateTouchEvent
-    
-    UpdateTouchEvent::UpdateTouchEvent(const Points& points, TouchEvent& start) :
-    TouchEvent(points), _start(start)
-    {
-    }
-    
-    const TouchEvent& UpdateTouchEvent::getStart() const
-    {
-        return _start;
-    }
-    
-    TouchEvent& UpdateTouchEvent::getStart()
-    {
-        return _start;
+        TouchEvent ev(*this);
+        for(Point& p : ev.getPoints())
+        {
+            p *= t;
+        }
+        return ev;
     }
 
+    TouchEvent& TouchEvent::operator*=(const Transform& t)
+    {
+        for(Point& p : getPoints())
+        {
+            p *= t;
+        } 
+        return *this;
+    }
+
+    bool TouchEvent::touched(const Rect& frame) const
+    {
+        for(const Point& p : getPoints())
+        {
+            if(frame.contains(p))
+            {
+                return true;
+            }
+        } 
+        return false;
+    }
+
+#pragma mark - stream functions
 
     std::ostream& operator<<(std::ostream& os, const UpdateEvent& e)
     {
@@ -125,20 +135,4 @@ namespace mvcgame {
         return os;
     }
 
-    std::ostream& operator<<(std::ostream& os, const UpdateTouchEvent& e)
-    {
-        os << "UpdateTouchEvent( ";
-        if(e.getStopPropagation())
-        {
-            os << "stopped";
-        }
-        os << std::endl;
-        for(const Point& p : e.getPoints())
-        {
-            os << p << std::endl;
-        }
-        os << "start:" << e.getStart();
-        os << ")";
-        return os;
-    }
 }

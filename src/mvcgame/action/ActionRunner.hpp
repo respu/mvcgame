@@ -27,7 +27,7 @@ namespace mvcgame {
         RunningAction(std::unique_ptr<IAction> action, View& view, const Duration& duration);
         ~RunningAction();
 
-        void update(UpdateEvent& event);
+        void update(const UpdateEvent& event);
     };
 
     /**
@@ -52,7 +52,7 @@ namespace mvcgame {
         void remove(View& view);
         void remove(const IAction& action);
 
-        void update(UpdateEvent& event);
+        void update(const UpdateEvent& event);
     };    
 }
 

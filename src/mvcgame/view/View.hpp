@@ -69,9 +69,9 @@ namespace mvcgame {
         RootView& getRoot();
         const RootView& getRoot() const;
 
-        const Transform& getParentTransform() const;
+        const Transform& getTransform() const;
         const Transform& getRootTransform() const;
-        const Transform& getParentInverse() const;
+        const Transform& getInverse() const;
         const Transform& getRootInverse() const;
 
         bool respondToTouchPoint(const Point& p, const TouchEvent& event);

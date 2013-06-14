@@ -51,13 +51,13 @@ namespace mvcgame {
         void runAction(std::unique_ptr<IAction> action, View& view);
         void runAction(std::unique_ptr<IAction> action, View& view, const Duration& duration);
 
-        void updateActions(UpdateEvent& event);
+        void updateActions(const UpdateEvent& event);
 
         void clearChildren();
         void clearActions();
 
         virtual bool respondToTouchPoint(const Point& p, const TouchEvent& event);
-        virtual void respondOnUpdate(UpdateEvent& event);        
+        virtual void respondOnUpdate(const UpdateEvent& event);        
 
         /**
          * called after the controller is added to a parent controller

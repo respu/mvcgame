@@ -76,15 +76,20 @@ namespace mvcgame {
     void RootViewController::emitTouchUpdate(const Points& points)
     {
         assert(_lastTouchEvent != nullptr);
-        UpdateTouchEvent event(points, *_lastTouchEvent);
+        TouchEvent event(points);
         _eventEmitter.emitTouchUpdate(event);
     }    
 
     void RootViewController::emitTouchEnd(const Points& points)
     {
         assert(_lastTouchEvent != nullptr);
-        UpdateTouchEvent event(points, *_lastTouchEvent);
+        TouchEvent event(points);
         _eventEmitter.emitTouchEnd(event);
         _lastTouchEvent = nullptr;
+    }
+
+    bool RootViewController::respondToTouchPoint(const Point& p, const TouchEvent& event)
+    {
+        return true;
     }
 }

@@ -3,6 +3,7 @@
 #include <mvcgame/event/Events.hpp>
 #include <mvcgame/controller/BaseViewController.hpp>
 #include <mvcgame/controller/ViewController.hpp>
+#include <mvcgame/view/View.hpp>
 
 namespace mvcgame {
 
@@ -14,7 +15,7 @@ namespace mvcgame {
     {
     }
 
-    void EventEmitter::emitUpdate(UpdateEvent& event, BaseViewController& controller)
+    void EventEmitter::emitUpdate(const UpdateEvent& event, BaseViewController& controller)
     {
         controller.respondOnUpdate(event);
         if(event.getStopPropagation())
@@ -37,46 +38,58 @@ namespace mvcgame {
         }
     }
 
-    void EventEmitter::findTouchResponders(const Point& p, TouchEvent& event, BaseViewController& controller)
+    void EventEmitter::findTouchResponders(const Point& p, const TouchEvent& event, BaseViewController& controller, TouchResponders& responders)
     {
-        if(controller.respondToTouchPoint(p, event))
+        if(!controller.respondToTouchPoint(p, event))
         {
-            event.addResponder(controller);
+            return;
         }
-        
-        const BaseViewController::Children& children = controller.getChildren();
-        BaseViewController::Children::const_iterator itr;
-        for(itr=children.begin(); itr!=children.end(); ++itr)
+        if(event.getStopPropagation())
         {
-            findTouchResponders(p, event, **itr);
+            return;
+        }
+        responders[&controller] = event;
+        for(const std::unique_ptr<ViewController>& child : controller.getChildren())
+        {
+            const Transform& t = child->getView().getTransform();
+            Point cp = p*t;
+            TouchEvent cev = event*t;
+            findTouchResponders(cp, cev, *child, responders);
+            if(event.getStopPropagation())
+            {
+                return;
+            }
         }
     }
 
-    void EventEmitter::findTouchResponders(TouchEvent& event, BaseViewController& controller)
+    EventEmitter::TouchResponders EventEmitter::findTouchResponders(const TouchEvent& event, BaseViewController& controller)
     {
+        TouchResponders responders;
         TouchEvent::Points::const_iterator itr;
         
-        for(itr=event.getPoints().begin(); itr!=event.getPoints().end(); ++itr)
+        for(const Point& point : event.getPoints())
         {
-            findTouchResponders(*itr, event, controller);
+            findTouchResponders(point, event, controller, responders);
+            if(event.getStopPropagation())
+            {
+                break;
+            }
         }
+
+        return responders;
     }
-
-    void EventEmitter::emitTouchStart(TouchEvent& event, BaseViewController& controller)
+    
+    void EventEmitter::emitTouch(const TouchEvent &event, BaseViewController &controller, TouchResponderCallback callback)
     {
-#ifdef MVCGAME_DEBUG_EVENTS
-        std::cout << ">>>>" << std::endl;        
-        std::cout << "EventEmitter::emitTouchStart " << std::endl;
-        std::cout << event << std::endl;
-        std::cout << "<<<<" << std::endl;
-#endif
-
-        findTouchResponders(event, _root);
-        TouchEvent::Responders& list = event.getResponders();
-        TouchEvent::Responders::iterator itr;
+        TouchResponders list = findTouchResponders(event, _root);
+        if(event.getStopPropagation())
+        {
+            return;
+        }        
+        TouchResponders::iterator itr;
         for(itr=list.begin(); itr!=list.end(); ++itr)
         {
-            (**itr).respondOnTouchStart(event);
+            callback(*itr->first, itr->second);
             if(event.getStopPropagation())
             {
                 break;
@@ -84,7 +97,25 @@ namespace mvcgame {
         }
     }
 
-void EventEmitter::emitTouchUpdate(UpdateTouchEvent &event, BaseViewController &controller)
+    void EventEmitter::emitUpdate(const UpdateEvent& event)
+    {
+        emitUpdate(event, _root);
+    }
+
+    void EventEmitter::emitTouchStart(const TouchEvent& event)
+    {
+#ifdef MVCGAME_DEBUG_EVENTS
+        std::cout << ">>>>" << std::endl;        
+        std::cout << "EventEmitter::emitTouchStart " << std::endl;
+        std::cout << event << std::endl;
+        std::cout << "<<<<" << std::endl;
+#endif        
+        emitTouch(event, _root, [](IResponder& responder, const TouchEvent& ev){
+            responder.respondOnTouchStart(ev);
+        });
+    }
+
+    void EventEmitter::emitTouchUpdate(const TouchEvent& event)
     {
 #ifdef MVCGAME_DEBUG_EVENTS
         std::cout << ">>>>" << std::endl;        
@@ -92,58 +123,22 @@ void EventEmitter::emitTouchUpdate(UpdateTouchEvent &event, BaseViewController &
         std::cout << event << std::endl;
         std::cout << "<<<<" << std::endl;
 #endif
-
-        TouchEvent::Responders list = event.getStart().getResponders();
-        TouchEvent::Responders::iterator itr;
-        for(itr=list.begin(); itr!=list.end(); ++itr)
-        {
-            (**itr).respondOnTouchUpdate(event);
-            if(event.getStopPropagation())
-            {
-                break;
-            }
-        }
+        emitTouch(event, _root, [](IResponder& responder, const TouchEvent& ev){
+            responder.respondOnTouchUpdate(ev);
+        });
     }    
     
-    void EventEmitter::emitTouchEnd(UpdateTouchEvent &event, BaseViewController &controller)
+    void EventEmitter::emitTouchEnd(const TouchEvent& event)
     {
 #ifdef MVCGAME_DEBUG_EVENTS
         std::cout << ">>>>" << std::endl;        
         std::cout << "EventEmitter::emitTouchEnd " << std::endl;
         std::cout << event << std::endl;
         std::cout << "<<<<" << std::endl;
-#endif
-
-        TouchEvent::Responders list = event.getStart().getResponders();
-        TouchEvent::Responders::iterator itr;
-        for(itr=list.begin(); itr!=list.end(); ++itr)
-        {
-            (**itr).respondOnTouchEnd(event);
-            if(event.getStopPropagation())
-            {
-                break;
-            }
-        }
-    }
-
-    void EventEmitter::emitUpdate(UpdateEvent& event)
-    {
-        emitUpdate(event, _root);
-    }
-
-    void EventEmitter::emitTouchStart(TouchEvent& event)
-    {
-        emitTouchStart(event, _root);
-    }
-
-    void EventEmitter::emitTouchUpdate(UpdateTouchEvent& event)
-    {
-        emitTouchUpdate(event, _root);
-    }    
-    
-    void EventEmitter::emitTouchEnd(UpdateTouchEvent& event)
-    {
-        emitTouchEnd(event, _root);
+#endif        
+        emitTouch(event, _root, [](IResponder& responder, const TouchEvent& ev){
+            responder.respondOnTouchEnd(ev);
+        });
     }
     
 }

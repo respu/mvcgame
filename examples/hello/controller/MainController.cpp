@@ -61,6 +61,10 @@ void MainController::controllerAdded()
     setView(bg);
 }
 
-void MainController::respondOnTouchStart(TouchEvent& event)
+void MainController::respondOnTouchStart(const TouchEvent& event)
 {
+    if(event.touched(_guybrush->getFrame()))
+    {
+        std::cout << "GUYBRUSH TOUCHED!!!" << std::endl;
+    }
 }

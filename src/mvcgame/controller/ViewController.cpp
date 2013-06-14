@@ -170,7 +170,7 @@ namespace mvcgame {
         _actions.add(std::move(action), view, duration);
     }
 
-    void ViewController::updateActions(UpdateEvent& event)
+    void ViewController::updateActions(const UpdateEvent& event)
     {
         _actions.update(event);
     }
@@ -188,7 +188,7 @@ namespace mvcgame {
         }
     }
 
-    void ViewController::respondOnUpdate(UpdateEvent& event)
+    void ViewController::respondOnUpdate(const UpdateEvent& event)
     {
         updateActions(event);
     }

@@ -43,6 +43,8 @@ namespace mvcgame {
         void emitTouchEnd(const Points& points);
 
         void setFrameDelay(float delay);
+
+        virtual bool respondToTouchPoint(const Point& p, const TouchEvent& event);
     };
 }
 

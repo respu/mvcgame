@@ -13,12 +13,11 @@ namespace mvcgame {
 class MainController : public mvcgame::ViewController
 {
 private:
-    static const mvcgame::gunit_t _titleSize;
     std::shared_ptr<mvcgame::Sprite> _guybrush;
 public:
     MainController();
     void controllerAdded();
-    void respondOnTouchStart(mvcgame::TouchEvent& event);
+    void respondOnTouchStart(const mvcgame::TouchEvent& event);
 };
 
 #endif

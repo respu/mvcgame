@@ -2,9 +2,11 @@
 #ifndef mvcgame_IResponder_hpp
 #define mvcgame_IResponder_hpp
 
-#include <mvcgame/event/Events.hpp>
-
 namespace mvcgame {
+
+    class UpdateEvent;
+    class TouchEvent;
+    class Point;
 
     /**
      * Base interface that represents an object that responds to events.
@@ -13,7 +15,7 @@ namespace mvcgame {
     {
     public:
 
-        virtual void respondOnUpdate(UpdateEvent& event)
+        virtual void respondOnUpdate(const UpdateEvent& event)
         {
         }
 
@@ -27,15 +29,15 @@ namespace mvcgame {
             return false;
         }
 
-        virtual void respondOnTouchStart(TouchEvent& event)
+        virtual void respondOnTouchStart(const TouchEvent& event)
         {
         }
 
-        virtual void respondOnTouchUpdate(UpdateTouchEvent& event)
+        virtual void respondOnTouchUpdate(const TouchEvent& event)
         {
         }        
 
-        virtual void respondOnTouchEnd(UpdateTouchEvent& event)
+        virtual void respondOnTouchEnd(const TouchEvent& event)
         {
         }
         

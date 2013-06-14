@@ -108,7 +108,7 @@ namespace mvcgame {
         _anchor = a;
     }
 
-    const Transform& View::getParentTransform() const
+    const Transform& View::getTransform() const
     {
         return _transform;
     }
@@ -117,13 +117,13 @@ namespace mvcgame {
     {
         if(_rootTransformDirty)
         {
-            _rootTransform = getParent().getParentTransform()*_transform;        
+            _rootTransform = getParent().getTransform()*_transform;        
             _rootTransformDirty = false;
         }
         return _rootTransform;        
     }
 
-    const Transform& View::getParentInverse() const
+    const Transform& View::getInverse() const
     {
         if(_inverseDirty)
         {
@@ -213,6 +213,6 @@ namespace mvcgame {
 
     bool View::respondToTouchPoint(const Point& p, const TouchEvent& event)
     {
-        return _frame.contains(p);
+        return _frame.size.contains(p);
     }  
 }
