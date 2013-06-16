@@ -1,6 +1,9 @@
 
 #include <mvcgame/event/Events.hpp>
 #include <mvcgame/base/Geometry.hpp>
+#include <mvcgame/view/View.hpp>
+
+#include <stdexcept>
 
 namespace mvcgame {
     
@@ -92,16 +95,40 @@ namespace mvcgame {
         return *this;
     }
 
+    bool TouchEvent::touched(const View& view) const
+    {
+        return touched(view.getBoundingBox());
+    }
+
     bool TouchEvent::touched(const Rect& frame) const
     {
+        std::cout << frame << std::endl;
         for(const Point& p : getPoints())
         {
+            std::cout << p << std::endl;
             if(frame.contains(p))
             {
                 return true;
             }
         } 
         return false;
+    }    
+
+    Point TouchEvent::getTouchPoint(const View& view) const
+    {
+        return getTouchPoint(view.getBoundingBox());
+    }    
+
+    Point TouchEvent::getTouchPoint(const Rect& frame) const
+    {
+        for(const Point& p : getPoints())
+        {
+            if(frame.contains(p))
+            {
+                return p;
+            }
+        } 
+        throw new std::runtime_error("Frame was not touched");
     }
 
 #pragma mark - stream functions

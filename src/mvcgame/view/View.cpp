@@ -62,6 +62,13 @@ namespace mvcgame {
     {
         _frame = rect;
     }
+
+    Rect View::getBoundingBox() const
+    {
+        Rect box = _frame;
+        box.origin -= _anchor*box.size;
+        return box;
+    }
     
     Rotation& View::getRotation()
     {

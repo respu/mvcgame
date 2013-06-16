@@ -63,8 +63,28 @@ void MainController::controllerAdded()
 
 void MainController::respondOnTouchStart(const TouchEvent& event)
 {
-    if(event.touched(_guybrush->getFrame()))
+    std::cout << "GUYBRUSH" << std::endl;
+    _guybrushTouched = event.touched(*_guybrush);
+    if(_guybrushTouched)
     {
         std::cout << "GUYBRUSH TOUCHED!!!" << std::endl;
+        _guybrushTouchPoint = event.getTouchPoint(*_guybrush);
+        _guybrushTouchPoint -= _guybrush->getFrame().origin;
     }
+}
+
+void MainController::respondOnTouchUpdate(const TouchEvent& event)
+{
+    if(_guybrushTouched)
+    {
+        std::cout << "GUYBRUSH MOVED!!!" << std::endl;
+        auto point = event.getTouchPoint(*_guybrush);
+        point -= _guybrushTouchPoint;
+        _guybrush->getFrame().origin = point;
+    }
+}
+
+void MainController::respondOnTouchEnd(const TouchEvent& event)
+{
+    _guybrushTouched = false;
 }

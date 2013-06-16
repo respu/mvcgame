@@ -47,6 +47,7 @@ namespace mvcgame {
         Rect& getFrame();
         const Rect& getFrame() const;
         void setFrame(const Rect& rect);
+        Rect getBoundingBox() const;
 
         Rotation& getRotation();
         const Rotation& getRotation() const;

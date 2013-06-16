@@ -11,6 +11,7 @@ namespace mvcgame {
     
     class IResponder;
     class Transform;
+    class View;
 
 	class Event
 	{
@@ -50,6 +51,9 @@ namespace mvcgame {
         Points& getPoints();
 
         bool touched(const Rect& frame) const;
+        bool touched(const View& view) const;
+        Point getTouchPoint(const Rect& frame) const;
+        Point getTouchPoint(const View& view) const;
 
         TouchEvent operator*(const Transform& t) const;
         TouchEvent& operator*=(const Transform& t);
