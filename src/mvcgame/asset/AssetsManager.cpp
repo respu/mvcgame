@@ -6,7 +6,8 @@ namespace mvcgame {
     AssetsManager::AssetsManager() :
     _textures(*this),
     _textureAtlases(*this),
-    _fontAtlases(*this)
+    _fontAtlases(*this),
+    _tileMaps(*this)
     {
     }
 
@@ -33,6 +34,12 @@ namespace mvcgame {
     }
 
     template<>
+    void AssetsManager::addLoader(std::unique_ptr<IAssetLoader<TileMap>> loader, const std::string& tag)
+    {
+        return _tileMaps.add(std::move(loader), tag);
+    }    
+
+    template<>
     std::shared_ptr<Texture> AssetsManager::load(const std::string& name)
     {
         return _textures.load(name);
@@ -49,6 +56,12 @@ namespace mvcgame {
     {
         return _fontAtlases.load(name);
     }
+
+    template<>
+    std::shared_ptr<TileMap> AssetsManager::load(const std::string& name)
+    {
+        return _tileMaps.load(name);
+    }    
 
     SpriteSheet AssetsManager::loadSheet(const TextureAtlas& atlas)
     {

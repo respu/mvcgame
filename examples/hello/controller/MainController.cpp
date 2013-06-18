@@ -34,6 +34,7 @@ void MainController::controllerAdded()
     _guybrush->setSheet(guybrushSheet);
     _guybrush->getFrame().origin = bg->getFrame().size/2;
     _guybrush->getFrame().origin.x -= 150;
+    _guybrush->setScale(0.5);
     _guybrush->setSpriteFrameDuration(20);
 
     bg->addChild(_guybrush);

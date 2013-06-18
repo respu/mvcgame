@@ -9,8 +9,12 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 project(mvcgame)
 
+# rapidxml
+include_directories(lib/rapidxml)
+
 # library
 include_directories(src)
+include_directories(lib)
 set(MVCGAME_SOURCE_DIR "src/mvcgame")
 
 file(GLOB MVCGAME_SOURCES
@@ -21,6 +25,7 @@ file(GLOB MVCGAME_SOURCES
 	"${MVCGAME_SOURCE_DIR}/event/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/model/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/font/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/tile/*.cpp"	
 	"${MVCGAME_SOURCE_DIR}/texture/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/asset/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/view/*.cpp"
@@ -45,9 +50,24 @@ file(GLOB MVCGAME_EXAMPLE_HELLO_SOURCES
 	"${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/view/*.cpp"
 )
 
+# examples: tiled
+set(MVCGAME_EXAMPLE_TILED_SOURCE_DIR "examples/tiled")
+file(GLOB MVCGAME_EXAMPLE_TILED_SOURCES
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/*.cpp"
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/base/*.cpp"
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/asset/*.cpp"	
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/action/*.cpp"
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/controller/*.cpp"
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/event/*.cpp"
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/model/*.cpp"
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/texture/*.cpp"
+	"${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/view/*.cpp"
+)
+
 # linux
 if("${PLATFORM}" STREQUAL "linux")
 	set(MVCGAME_EXAMPLE_HELLO_PLATFORM_SOURCES "${MVCGAME_EXAMPLE_HELLO_SOURCE_DIR}/platform/linux/main.cpp")
+	set(MVCGAME_EXAMPLE_TILED_PLATFORM_SOURCES "${MVCGAME_EXAMPLE_TILED_SOURCE_DIR}/platform/linux/main.cpp")
 	file(GLOB MVCGAME_PLATFORM_SOURCES
 		"${MVCGAME_SOURCE_DIR}/platform/gl/*.cpp"
 		"${MVCGAME_SOURCE_DIR}/platform/linux/*.cpp"
@@ -59,6 +79,9 @@ add_library(mvcgame ${MVCGAME_SOURCES} ${MVCGAME_PLATFORM_SOURCES})
 
 add_executable(hello ${MVCGAME_EXAMPLE_HELLO_SOURCES} ${MVCGAME_EXAMPLE_HELLO_PLATFORM_SOURCES})
 target_link_libraries(hello mvcgame ${MVCGAME_EXAMPLE_COMPILE_FLAGS})
+
+add_executable(tiled ${MVCGAME_EXAMPLE_TILED_SOURCES} ${MVCGAME_EXAMPLE_TILED_PLATFORM_SOURCES})
+target_link_libraries(tiled mvcgame ${MVCGAME_EXAMPLE_COMPILE_FLAGS})
 
 # unit tests
 add_subdirectory(lib/googletest)

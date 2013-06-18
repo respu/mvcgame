@@ -8,6 +8,7 @@
 #include <mvcgame/texture/SpriteSheet.hpp>
 #include <mvcgame/font/FontAtlas.hpp>
 #include <mvcgame/font/FontSheet.hpp>
+#include <mvcgame/tile/TileMap.hpp>
 
 namespace mvcgame {
 
@@ -17,6 +18,7 @@ namespace mvcgame {
         AssetTypeManager<Texture> _textures;
         AssetTypeManager<TextureAtlas> _textureAtlases;
         AssetTypeManager<FontAtlas> _fontAtlases;
+        AssetTypeManager<TileMap> _tileMaps;
 
     public:
         AssetsManager();
