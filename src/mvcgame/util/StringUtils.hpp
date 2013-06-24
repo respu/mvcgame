@@ -24,8 +24,14 @@ namespace mvcgame {
 
         // decode base64
         static std::string base64Decode(const std::string& s);
-    };
 
+        // compress data
+        static std::string compress(const std::string& str);
+ 
+        // decompress data
+        static std::string decompress(const std::string& str);
+
+    };
 }
 
 #endif

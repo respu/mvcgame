@@ -72,7 +72,7 @@ if("${PLATFORM}" STREQUAL "linux")
 		"${MVCGAME_SOURCE_DIR}/platform/gl/*.cpp"
 		"${MVCGAME_SOURCE_DIR}/platform/linux/*.cpp"
 	)
-	set(MVCGAME_EXAMPLE_COMPILE_FLAGS "-lX11 -lGL -lGLU -lpng")
+	set(MVCGAME_EXAMPLE_COMPILE_FLAGS "-lX11 -lGL -lGLU -lpng -lz")
 endif()
 
 add_library(mvcgame ${MVCGAME_SOURCES} ${MVCGAME_PLATFORM_SOURCES})
@@ -89,5 +89,5 @@ enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 aux_source_directory(test MVCGAME_TESTS)
 add_executable(runUnitTests ${MVCGAME_TESTS})
-target_link_libraries(runUnitTests mvcgame gtest gtest_main)
+target_link_libraries(runUnitTests mvcgame gtest gtest_main z)
 add_test(runUnitTests runUnitTests)

@@ -2,10 +2,12 @@
 #ifndef mvcgame_TileLayer_hpp
 #define mvcgame_TileLayer_hpp
 
+#include <mvcgame/tile/Tile.hpp>
+
 #include <iostream>
+#include <vector>
 
 namespace mvcgame {
-
 
     class TileLayer
     {
@@ -13,6 +15,11 @@ namespace mvcgame {
         std::string _name;
         unsigned _width;
         unsigned _height;
+
+        typedef std::vector<Tile> Tiles;
+        typedef std::vector<Tiles> TilesMatrix;
+
+        TilesMatrix _tiles;
 
     public:
         /**
@@ -37,6 +44,10 @@ namespace mvcgame {
          */ 
         unsigned getHeight() const;
         void setHeight(unsigned h);
+
+        Tile& getTile(unsigned x, unsigned y);
+        const Tile& getTile(unsigned x, unsigned y) const;
+        void setTile(unsigned x, unsigned y, const Tile& tile);
 
     };
 

@@ -7,6 +7,10 @@
 #include <cctype>
 #include <locale>
 #include <stdexcept>
+#include <cstring>
+#include <sstream>
+
+#include <zlib.h>
 
 namespace mvcgame {
 
@@ -104,7 +108,10 @@ namespace mvcgame {
         {
             if(!isBase64(s[k]))
             {
-                throw new std::runtime_error("Invalid base64 char");
+                std::ostringstream oss;
+                oss << "Invalid base64 char: '" << s[k];
+                oss << "' at position " << k;
+                throw std::runtime_error(oss.str());
             }
             charArray4[i++] = s[k];
             k++;
@@ -150,5 +157,99 @@ namespace mvcgame {
         }
 
         return ret;
+    }
+
+    /**
+     * Compression routines taken from
+     * http://panthema.net/2007/0328-ZLibString.html
+     */
+
+    std::string StringUtils::compress(const std::string& str)
+    {
+        int compressionlevel = Z_BEST_COMPRESSION;
+        z_stream zs;
+        memset(&zs, 0, sizeof(zs));
+
+        if (deflateInit(&zs, compressionlevel) != Z_OK)
+        {
+            throw std::runtime_error("deflateInit failed while compressing.");
+        }
+
+        zs.next_in = (Bytef*)str.data();
+        zs.avail_in = str.size();
+
+        int ret;
+        char outbuffer[32768];
+        std::string outstring;
+
+        do
+        {
+            zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
+            zs.avail_out = sizeof(outbuffer);
+
+            ret = deflate(&zs, Z_FINISH);
+
+            if (outstring.size() < zs.total_out)
+            {
+                // append the block to the output string
+                outstring.append(outbuffer, zs.total_out - outstring.size());
+            }
+        } while (ret == Z_OK);
+
+        deflateEnd(&zs);
+
+        if (ret != Z_STREAM_END)
+        {        
+            // an error occurred that was not EOF
+            std::ostringstream oss;
+            oss << "Exception during zlib compression: (" << ret << ") " << zs.msg;
+            throw std::runtime_error(oss.str());
+        }
+
+        return outstring;
+    }
+
+    std::string StringUtils::decompress(const std::string& str)
+    {
+        z_stream zs;
+        memset(&zs, 0, sizeof(zs));
+
+        if (inflateInit(&zs) != Z_OK)
+        {
+            throw std::runtime_error("inflateInit failed while decompressing.");
+        }
+
+        zs.next_in = (Bytef*)str.data();
+        zs.avail_in = str.size();
+
+        int ret;
+        char outbuffer[32768];
+        std::string outstring;
+
+        do {
+            zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
+            zs.avail_out = sizeof(outbuffer);
+
+            ret = inflate(&zs, 0);
+
+            if (outstring.size() < zs.total_out)
+            {
+                outstring.append(outbuffer, zs.total_out - outstring.size());
+            }
+
+        } while (ret == Z_OK);
+
+        inflateEnd(&zs);
+
+        if (ret != Z_STREAM_END)
+        {   
+            // an error occurred that was not EOF
+            std::ostringstream oss;
+            oss << "Exception during zlib decompression: (" << ret << ") "
+                << zs.msg;
+            throw(std::runtime_error(oss.str()));
+        }
+
+        return outstring;
     }
 }

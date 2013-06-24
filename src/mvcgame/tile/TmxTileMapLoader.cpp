@@ -2,19 +2,23 @@
 #include <mvcgame/tile/TmxTileMapLoader.hpp>
 #include <mvcgame/tile/TileMap.hpp>
 #include <mvcgame/asset/BaseAssetsManager.hpp>
+#include <mvcgame/util/StringUtils.hpp>
 
 #include <rapidxml/rapidxml.hpp>
 
 #include <vector>
+#include <algorithm>
 #include <stdexcept>
 
 using namespace rapidxml;
 
 namespace mvcgame {
 
-    void loadXmlDocument(rapidxml::xml_document<>& doc, std::istream& input)
+    typedef std::vector<char> XmlBuffer;
+
+    void loadXmlDocument(rapidxml::xml_document<>& doc, std::istream& input, XmlBuffer& buffer)
     {
-        std::vector<char> buffer((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+        buffer.assign((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
         buffer.push_back('\0');
         doc.parse<0>(&buffer[0]);
     }
@@ -32,7 +36,8 @@ namespace mvcgame {
     bool TmxTileMapLoader::validate(std::istream& input) const
     {
         xml_document<> doc;
-        loadXmlDocument(doc, input);
+        XmlBuffer buffer;
+        loadXmlDocument(doc, input, buffer);
         return std::string(doc.first_node()->name()) == "map";
     }
 
@@ -64,7 +69,8 @@ namespace mvcgame {
             std::string source = attr->value();
             bool result = sourceLoader->loadStream(source, [&tileSet](std::istream& in, const std::string& tag){
                 xml_document<> doc;
-                loadXmlDocument(doc, in);
+                XmlBuffer buffer;
+                loadXmlDocument(doc, in, buffer);
                 auto rootNode = doc.first_node();
                 if(std::string(rootNode->name()) != "tileset")
                 {
@@ -83,13 +89,17 @@ namespace mvcgame {
     void loadTileSets(xml_node<>* parentNode, TileMap::Sets& tileSets, BaseAssetsManager* sourceLoader)
     {
         auto node = parentNode->first_node("tileset");
-        while (node != nullptr )
+        while (node != nullptr)
         {
             tileSets.resize(tileSets.size()+1);
             loadTileSet(node, tileSets.back(), sourceLoader);
             node = node->next_sibling("tileset");
         }   
     }
+
+    const unsigned FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+    const unsigned FLIPPED_VERTICALLY_FLAG   = 0x40000000;
+    const unsigned FLIPPED_DIAGONALLY_FLAG   = 0x20000000;    
 
     void loadTileLayer(xml_node<>* node, TileLayer& layer)
     {
@@ -98,12 +108,90 @@ namespace mvcgame {
         {
             layer.setName(attr->value());
         }
+        attr = node->first_attribute("width");
+        if(attr)
+        {
+            layer.setWidth(std::stoi(attr->value()));
+        }
+        attr = node->first_attribute("height");
+        if(attr)
+        {
+            layer.setHeight(std::stoi(attr->value()));
+        }
+        auto dataNode = node->first_node("data");      
+        if(!dataNode)
+        {
+            return;
+        }        
+        attr = dataNode->first_attribute("encoding");
+        std::string val = dataNode->value(); 
+        bool binary = false;       
+        if(attr)
+        {
+            val.erase(std::remove_if(val.begin(), val.end(), std::ptr_fun<int, int>(std::isspace)), val.end());
+            std::string enc = attr->value();  
+            if(enc == "base64")
+            {
+                val = StringUtils::base64Decode(val);
+                binary = true;
+            }
+            else
+            {
+                throw std::runtime_error("Unknown data encoding '"+enc+"'");
+            }
+        }
+        attr = dataNode->first_attribute("compression");
+        if(attr)
+        {
+            std::string comp = attr->value();
+            if(comp == "zlib")
+            {
+                val = StringUtils::decompress(val);
+                binary = true;                
+            }
+            else
+            {
+                throw std::runtime_error("Unknown data compression '"+comp+"'");
+            }
+        }
+        if(binary)
+        {
+            unsigned i = 0;
+            if(val.size() != 4*layer.getHeight()*layer.getWidth())
+            {
+                throw std::runtime_error("Incorrect layer data size");
+            }
+            for (unsigned y = 0; y < layer.getHeight(); ++y)
+            {
+                for (unsigned x = 0; x < layer.getWidth(); ++x)
+                {
+                    unsigned typeId = val[i] | val[i + 1] << 8 | val[i + 2] << 16 | val[i + 3] << 24;
+                    i += 4;
+                    Tile::Flip flip = Tile::Flip::None;
+                    if(typeId & FLIPPED_HORIZONTALLY_FLAG)
+                    {
+                        flip = Tile::Flip::Horizontal;
+                    }
+                    else if(typeId & FLIPPED_VERTICALLY_FLAG)
+                    {
+                        flip = Tile::Flip::Vertical;   
+                    }
+                    else if(typeId & FLIPPED_DIAGONALLY_FLAG)
+                    {
+                        flip = Tile::Flip::Diagonal;   
+                    }
+                    typeId &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
+                    layer.setTile(x, y, Tile(typeId, flip));
+                }
+            }
+        }
     }    
 
     void loadTileLayers(xml_node<>* parentNode, TileMap::Layers& tileLayers)
     {
         auto node = parentNode->first_node("layer");
-        while (node != nullptr )
+        std::cout << "lalala" << node << std::endl;
+        while (node != nullptr)
         {
             tileLayers.resize(tileLayers.size()+1);
             loadTileLayer(node, tileLayers.back());            
@@ -114,7 +202,8 @@ namespace mvcgame {
     std::unique_ptr<TileMap> TmxTileMapLoader::load(std::istream& input) const
     {
         xml_document<> doc;
-        loadXmlDocument(doc, input);
+        XmlBuffer buffer;
+        loadXmlDocument(doc, input, buffer);
 
         auto mapNode = doc.first_node("map");
         
