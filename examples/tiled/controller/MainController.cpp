@@ -13,4 +13,6 @@ MainController::MainController()
 void MainController::controllerAdded()
 {
     auto desertMap = getAssets().load<TileMap>("desert");
+
+    std::cout << *desertMap << std::endl;
 }

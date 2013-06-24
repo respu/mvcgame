@@ -7,5 +7,8 @@
 AssetsManager::AssetsManager()
 {
     addLoader<mvcgame::Texture>(std::unique_ptr<mvcgame::PngTextureLoader>(new mvcgame::PngTextureLoader()), "png");
-    addLoader<mvcgame::TileMap>(std::unique_ptr<mvcgame::TmxTileMapLoader>(new mvcgame::TmxTileMapLoader()), "tmx");
+
+    std::unique_ptr<mvcgame::TmxTileMapLoader> tmx(new mvcgame::TmxTileMapLoader());
+    tmx->setSourceLoader(*this);
+    addLoader<mvcgame::TileMap>(std::move(tmx), "tmx");
 }
