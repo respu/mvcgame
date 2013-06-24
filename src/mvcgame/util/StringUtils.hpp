@@ -20,10 +20,10 @@ namespace mvcgame {
         static void trim(std::string &s);
 
         // encode base64
-        static void base64Encode(std::string& s);
+        static std::string base64Encode(const std::string& s);
 
         // decode base64
-        static void base64Decode(std::string& s);
+        static std::string base64Decode(const std::string& s);
     };
 
 }
