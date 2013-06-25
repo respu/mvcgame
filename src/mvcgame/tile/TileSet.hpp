@@ -3,7 +3,10 @@
 #define mvcgame_TileSet_hpp
 
 #include <mvcgame/base/Color.hpp>
+#include <mvcgame/texture/Texture.hpp>
+
 #include <iostream>
+#include <memory>
 
 namespace mvcgame {
 
@@ -16,12 +19,19 @@ namespace mvcgame {
         unsigned _tileHeight;
         unsigned _spacing;
         unsigned _margin;
+        std::shared_ptr<const Texture> _texture;
 
     public:
         /**
          * Constructor
          */
         TileSet();
+
+        /**
+         * The texture of this tileset.
+         */
+        std::shared_ptr<const Texture> getTexture() const;
+        void setTexture(std::shared_ptr<const Texture> texture);
 
         /**
          * The name of this tileset.

@@ -12,6 +12,16 @@ namespace mvcgame {
     {
     }
 
+    std::shared_ptr<const Texture> TileSet::getTexture() const
+    {
+        return _texture;
+    }
+
+    void TileSet::setTexture(std::shared_ptr<const Texture> texture)
+    {
+        _texture = texture;
+    }
+
     const std::string& TileSet::getName() const
     {
         return _name;
@@ -65,7 +75,11 @@ namespace mvcgame {
 
     std::ostream& operator<<(std::ostream& os, const TileSet& s)
     {
-        os << "TileSet(" << s.getTileWidth() << "x" << s.getTileHeight();
+        os << "TileSet(" << s.getTileWidth() << "x" << s.getTileHeight() << std::endl;
+        if(s.getTexture())
+        {
+            os << *s.getTexture() << std::endl;
+        }
         os << ")";
         return os;
     }
