@@ -26,10 +26,10 @@ namespace mvcgame {
         SpriteSheet(std::shared_ptr<Texture> texture);
         SpriteSheet(const Frame& frame);
         SpriteSheet(std::shared_ptr<Texture> texture, const TextureRegions& regions);
-        SpriteSheet(std::shared_ptr<Texture> texture, const TextureAtlas& altas);
-        SpriteSheet(std::shared_ptr<Texture> texture, const TextureAtlas& altas, const std::string& name);
+        SpriteSheet(const TextureAtlas& altas);
+        SpriteSheet(const TextureAtlas& altas, const std::string& name);
 
-        void setRegions(std::shared_ptr<Texture> texture, const TextureRegions& regions);
+        void setRegions(std::shared_ptr<const Texture> texture, const TextureRegions& regions);
 
         const Frames& getFrames() const;
         Frames& getFrames();

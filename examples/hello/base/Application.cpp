@@ -8,16 +8,6 @@ mvcgame::Application(std::move(bridge))
 { 
 }
 
-const AssetsManager& Application::getAssets() const
-{
-    return _assets;
-}
-
-AssetsManager& Application::getAssets()
-{
-    return _assets;
-}
-
 void Application::run()
 {
     getRoot().getView().setSize(mvcgame::Size(480, 320));

@@ -8,6 +8,9 @@
 namespace mvcgame {
 
     class FontAtlas;
+    class Texture;
+    template<typename Asset>
+    class AssetManager;    
 
     class FntFontAtlasData final
     {
@@ -29,10 +32,17 @@ namespace mvcgame {
     {
     private:
         typedef FntFontAtlasData Data;
+        AssetManager<Texture>* _textureManager;     
         static Data parseData(const std::string& line);
     public:
+        FntFontAtlasLoader();
         bool validate(std::istream& input) const;
         std::unique_ptr<FontAtlas> load(std::istream& input) const;
+
+        /**
+         * Set the assets manager to load related textures
+         */        
+        void setTextureManager(AssetManager<Texture>& mng);           
     };
 }
 

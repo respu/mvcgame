@@ -7,7 +7,6 @@
 namespace mvcgame {
 
     class Application;
-    class AssetsManager;
     class RootViewController;
 
     class ViewController : public BaseViewController
@@ -37,9 +36,6 @@ namespace mvcgame {
 
         const Application& getApp() const;
         Application& getApp();
-
-        const AssetsManager& getAssets() const;
-        AssetsManager& getAssets();
 
         const ViewController& getParent() const;
         ViewController& getParent();

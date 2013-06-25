@@ -1,5 +1,5 @@
-#ifndef mvcgame_BaseAssetsManager_hpp
-#define mvcgame_BaseAssetsManager_hpp
+#ifndef mvcgame_AssetStreamManager_hpp
+#define mvcgame_AssetStreamManager_hpp
 
 #include <mvcgame/asset/IStreamLoader.hpp>
 
@@ -10,10 +10,9 @@
 namespace mvcgame {
 
     /**
-     * This is a base for the assets manager. It maintains a list
-     * of asset stream loaders.
+     * This class maintains a list of asset stream loaders.
      */
-    class BaseAssetsManager
+    class AssetStreamManager
     {
     private:
         typedef IStreamLoader Loader;
@@ -22,13 +21,12 @@ namespace mvcgame {
 
         Loaders _loaders;
     public:
-        BaseAssetsManager();
-        virtual ~BaseAssetsManager();
+        AssetStreamManager();
 
         /**
          * Registers a stream loader
          */
-        void addStreamLoader(std::unique_ptr<Loader> loader);
+        void addLoader(std::unique_ptr<Loader> loader);
 
         /**
          * Tries to load an asset
@@ -37,7 +35,7 @@ namespace mvcgame {
          * responds true it will stop and return true. It will return
          * false otherwise.
          */
-        bool loadStream(const std::string& name, Callback callback);
+        bool load(const std::string& name, Callback callback);
     };
 }
 

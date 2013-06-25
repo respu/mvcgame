@@ -1,9 +1,8 @@
 
 #include <mvcgame/tile/TmxTileMapLoader.hpp>
 #include <mvcgame/tile/TileMap.hpp>
-#include <mvcgame/asset/BaseAssetsManager.hpp>
 #include <mvcgame/util/StringUtils.hpp>
-
+#include <mvcgame/asset/AssetStreamManager.hpp>
 #include <rapidxml/rapidxml.hpp>
 
 #include <vector>
@@ -24,13 +23,18 @@ namespace mvcgame {
     }
 
     TmxTileMapLoader::TmxTileMapLoader() :
-    _sourceLoader(nullptr)
+    _streamManager(nullptr), _textureManager(nullptr)
     {
     }
 
-    void TmxTileMapLoader::setSourceLoader(BaseAssetsManager& loader)
+    void TmxTileMapLoader::setStreamManager(AssetStreamManager& mng)
     {
-        _sourceLoader = &loader;
+        _streamManager = &mng;
+    }
+
+    void TmxTileMapLoader::setTextureManager(AssetManager<Texture>& mng)
+    {
+        _textureManager = &mng;
     }
 
     bool TmxTileMapLoader::validate(std::istream& input) const
@@ -41,7 +45,7 @@ namespace mvcgame {
         return std::string(doc.first_node()->name()) == "map";
     }
 
-    void loadTileSet(xml_node<>* node, TileSet& tileSet, BaseAssetsManager* sourceLoader=nullptr)
+    void loadTileSet(xml_node<>* node, TileSet& tileSet, AssetStreamManager* streamManager=nullptr)
     {
         auto attr = node->first_attribute("name");
         if(attr)
@@ -62,12 +66,12 @@ namespace mvcgame {
         attr = node->first_attribute("source");
         if(attr)
         {
-            if(!sourceLoader)
+            if(!streamManager)
             {
                 throw new std::runtime_error("No source loader set");
             }
             std::string source = attr->value();
-            bool result = sourceLoader->loadStream(source, [&tileSet](std::istream& in, const std::string& tag){
+            bool result = streamManager->load(source, [&tileSet](std::istream& in, const std::string& tag){
                 xml_document<> doc;
                 XmlBuffer buffer;
                 loadXmlDocument(doc, in, buffer);
@@ -86,13 +90,13 @@ namespace mvcgame {
         }
     }
 
-    void loadTileSets(xml_node<>* parentNode, TileMap::Sets& tileSets, BaseAssetsManager* sourceLoader)
+    void loadTileSets(xml_node<>* parentNode, TileMap::Sets& tileSets, AssetStreamManager* streamManager)
     {
         auto node = parentNode->first_node("tileset");
         while (node != nullptr)
         {
             tileSets.resize(tileSets.size()+1);
-            loadTileSet(node, tileSets.back(), sourceLoader);
+            loadTileSet(node, tileSets.back(), streamManager);
             node = node->next_sibling("tileset");
         }   
     }
@@ -214,7 +218,7 @@ namespace mvcgame {
             std::stoi(mapNode->first_attribute("tileheight")->value())
         ));
 
-        loadTileSets(mapNode, map->getSets(), _sourceLoader);
+        loadTileSets(mapNode, map->getSets(), _streamManager);
         loadTileLayers(mapNode, map->getLayers());
         
         return map;

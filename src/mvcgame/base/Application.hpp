@@ -11,7 +11,6 @@
 namespace mvcgame {
 
 	class ViewController;
-    class AssetsManager;
 
 	class Application
 	{
@@ -32,8 +31,6 @@ namespace mvcgame {
         IApplicationBridge& getBridge();
         const IApplicationBridge& getBridge() const;
 
-        virtual AssetsManager& getAssets() = 0;
-        virtual const AssetsManager& getAssets() const = 0;
 	};
 }
 

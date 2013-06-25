@@ -11,23 +11,33 @@
  namespace mvcgame {
 
     class TileMap;
-    class BaseAssetsManager;
+    class Texture;
+    class AssetStreamManager;
+    template<typename Asset>
+    class AssetManager;
 
     class TmxTileMapLoader : public IAssetLoader<TileMap>
     {
     private:
-        BaseAssetsManager* _sourceLoader;
+        AssetStreamManager* _streamManager;
+        AssetManager<Texture>* _textureManager;
     public:
 
         TmxTileMapLoader();
 
-        /**
-         * Set the stream loader to load external source files
-         */
-        void setSourceLoader(BaseAssetsManager& loader);
-
         bool validate(std::istream& input) const;
         std::unique_ptr<TileMap> load(std::istream& input) const;
+
+
+        /**
+         * Set the assets manager to load related files
+         */
+        void setStreamManager(AssetStreamManager& mng);
+
+        /**
+         * Set the assets manager to load related textures
+         */        
+        void setTextureManager(AssetManager<Texture>& mng);        
     };
 }
 

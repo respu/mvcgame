@@ -1,13 +1,14 @@
-#ifndef mvcgame_AssetTypeManager_hpp
-#define mvcgame_AssetTypeManager_hpp
+#ifndef mvcgame_AssetManager_hpp
+#define mvcgame_AssetManager_hpp
 
-#include <mvcgame/asset/BaseAssetsManager.hpp>
+#include <mvcgame/asset/AssetStreamManager.hpp>
 #include <mvcgame/asset/IAssetLoader.hpp>
 
 #include <memory>
 #include <vector>
 #include <map>
 #include <stdexcept>
+#include <cassert>
 
 namespace mvcgame {
 
@@ -23,15 +24,15 @@ namespace mvcgame {
      * and similar to a file extension
      */
     template<typename Asset>
-    class AssetTypeManager
+    class AssetManager
     {
     private:
         typedef IAssetLoader<Asset> Loader;
         typedef std::vector<std::unique_ptr<Loader>> Loaders;
         typedef std::map<std::string, Loaders> LoaderMap;
 
-        BaseAssetsManager& _mng;
         LoaderMap _loaders;
+        AssetStreamManager* _streams;
 
         bool doLoadStream(std::istream& in, const Loaders& loaders, std::unique_ptr<Asset>* asset)
         {
@@ -67,8 +68,8 @@ namespace mvcgame {
         }
 
     public:
-        AssetTypeManager(BaseAssetsManager& mng) :
-        _mng(mng)
+        AssetManager() :
+        _streams(nullptr)
         {
         }
 
@@ -77,11 +78,21 @@ namespace mvcgame {
             _loaders[tag].push_back(std::move(loader));
         }
 
+        void setStreamManager(AssetStreamManager& mng)
+        {
+            _streams = &mng;
+        }
+
         std::unique_ptr<Asset> load(const std::string& name)
         {
             std::unique_ptr<Asset> asset = nullptr;
-            bool success = _mng.loadStream(name, std::bind(&AssetTypeManager<Asset>::loadStream,
-                this, std::placeholders::_1, std::placeholders::_2, &asset));
+            bool success = false;
+            assert(_streams);
+            if(_streams && !_loaders.empty())
+            {
+                success = _streams->load(name, std::bind(&AssetManager<Asset>::loadStream,
+                    this, std::placeholders::_1, std::placeholders::_2, &asset));
+            }
 			if(!success)
 			{
 				throw std::runtime_error("Could not load asset");
