@@ -34,7 +34,7 @@ namespace mvcgame {
         LoaderMap _loaders;
         AssetStreamManager* _streams;
 
-        bool doLoadStream(std::istream& in, const Loaders& loaders, std::unique_ptr<Asset>* asset)
+        bool doLoadStream(std::istream& in, const Loaders& loaders, std::shared_ptr<Asset>& asset)
         {
             for(const std::unique_ptr<Loader>& loader : loaders)
             {
@@ -42,8 +42,8 @@ namespace mvcgame {
                 if(loader->validate(in))
                 {
                     in.seekg(0, std::ios::beg);
-                    *asset = loader->load(in);
-                    if(*asset)
+                    asset = loader->load(in);
+                    if(asset)
                     {
                         return true;
                     }
@@ -52,7 +52,7 @@ namespace mvcgame {
             return false;
         }
 
-        bool loadStream(std::istream& in, const std::string& tag, std::unique_ptr<Asset>* asset)
+        bool loadStream(std::istream& in, const std::string& tag, std::shared_ptr<Asset>& asset)
         {
             typename LoaderMap::const_iterator itr = _loaders.find(tag);
             if(itr != _loaders.end() && doLoadStream(in, itr->second, asset))
@@ -83,21 +83,21 @@ namespace mvcgame {
             _streams = &mng;
         }
 
-        std::unique_ptr<Asset> load(const std::string& name)
+        std::shared_ptr<Asset> load(const std::string& name)
         {
-            std::unique_ptr<Asset> asset = nullptr;
+            std::shared_ptr<Asset> asset = nullptr;
             bool success = false;
             assert(_streams);
             if(_streams && !_loaders.empty())
             {
                 success = _streams->load(name, std::bind(&AssetManager<Asset>::loadStream,
-                    this, std::placeholders::_1, std::placeholders::_2, &asset));
+                    this, std::placeholders::_1, std::placeholders::_2, std::ref(asset)));
             }
 			if(!success)
 			{
 				throw std::runtime_error("Could not load asset");
 			}
-            return std::move(asset);
+            return asset;
         }
 
     };

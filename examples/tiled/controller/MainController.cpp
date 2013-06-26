@@ -2,6 +2,8 @@
 #include "tiled/controller/MainController.hpp"
 #include "tiled/base/ServiceLocator.hpp"
 
+#include <mvcgame/view/TileMapView.hpp>
+
 using namespace mvcgame;
 
 MainController::MainController()
@@ -10,6 +12,9 @@ MainController::MainController()
 
 void MainController::controllerAdded()
 {
-    auto desertMap = ServiceLocator::get().getTileMaps().load("desert");
-    std::cout << *desertMap << std::endl;
+    auto tileMap = ServiceLocator::get().getTileMaps().load("desert");
+    std::cout << *tileMap << std::endl;
+
+    auto tileMapView = std::make_shared<TileMapView>(tileMap);
+    setView(tileMapView);
 }

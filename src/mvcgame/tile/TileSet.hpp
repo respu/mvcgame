@@ -10,6 +10,7 @@
 
 namespace mvcgame {
 
+    class TextureRegion;
 
     class TileSet
     {
@@ -19,6 +20,9 @@ namespace mvcgame {
         unsigned _tileHeight;
         unsigned _spacing;
         unsigned _margin;
+        unsigned _firstTypeId;
+        unsigned _offsetX;
+        unsigned _offsetY;
         std::shared_ptr<const Texture> _texture;
 
     public:
@@ -38,6 +42,7 @@ namespace mvcgame {
          */
         const std::string& getName() const;
         void setName(const std::string& name);
+
         /**
          * Returns the horizontal size in pixels of a tile
          */
@@ -51,6 +56,18 @@ namespace mvcgame {
         void setTileHeight(unsigned h);
 
         /**
+         * Returns horizontal offset in pixels
+         */
+        unsigned getTileOffsetX() const;
+        void setTileOffsetX(unsigned x);
+
+        /**
+         * Returns vertical offset in pixels (positive is down)
+         */ 
+        unsigned getTileOffsetY() const;
+        void setTileOffsetY(unsigned y);        
+
+        /**
          * The spacing in pixels between the tiles in this tileset (applies to the tileset image).
          */
         unsigned getSpacing() const;
@@ -62,6 +79,17 @@ namespace mvcgame {
         unsigned getMargin() const;
         void setMargin(unsigned margin);
 
+        /**
+         * The id if the first (top left) tile type. Then it goes from left to right
+         * and from top to bottom
+         */
+        unsigned getFirstTypeId() const;
+        void setFirstTypeId(unsigned typeId);
+
+        /**
+         * Returns a texture region for a tile type
+         */
+        TextureRegion getRegionForTypeId(unsigned typeId);
     };
 
     /**

@@ -20,7 +20,7 @@ namespace mvcgame {
         unsigned _spriteFrameUpdates;
     public:
         Sprite();
-        Sprite(const Sheet& Sheet);
+        Sprite(const Sheet& sheet);
 
         const Sheet& getSheet() const;
         void setSheet(const Sheet& sheet, bool changeSize=true);

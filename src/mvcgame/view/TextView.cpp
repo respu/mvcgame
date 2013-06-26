@@ -10,6 +10,15 @@ namespace mvcgame {
 	{
 	}
 
+	TextView::TextView(const Sheet& sheet) :
+	_changed(true),
+	_horizAlign(HorizontalAlign::Left),
+	_vertiAlign(VerticalAlign::Top),
+	_sheet(sheet)
+	{
+
+	}
+
 	void TextView::setHorizontalAlign(HorizontalAlign align)
 	{
 		_horizAlign = align;
@@ -67,33 +76,34 @@ namespace mvcgame {
 
     void TextView::update()
     {
-    	if(_changed)
+		View::update();    	
+    	if(!_changed)
     	{
-	    	removeChildren();
-	    	std::vector<const FontLetter*> letters = getLetters(_text);
-	    	Point p;
-	    	const FontInfo& info = _sheet.getInfo();
-	    	for(const FontLetter* letter : letters)
+    		return;
+    	}
+    	removeChildren();
+    	std::vector<const FontLetter*> letters = getLetters(_text);
+    	Point p;
+    	const FontInfo& info = _sheet.getInfo();
+    	for(const FontLetter* letter : letters)
+		{
+			if(letter)
 			{
-				if(letter)
-				{
-					std::unique_ptr<Sprite> letterSprite(new Sprite());
-					SpriteSheet letterSheet(_sheet.getSpriteFrame(*letter));
-					letterSprite->setSheet(letterSheet);
-					letterSprite->setAnchor(Anchor(0, 0));
-					letterSprite->getFrame().origin = p;
-					p.x += letter->getRegion().advanceX;
-					addChild(std::move(letterSprite));
-				}
-				else
-				{
-					p.x += info.baseHeight;
-				}
+				auto letterSprite = std::make_shared<Sprite>();
+				SpriteSheet letterSheet(_sheet.getSpriteFrame(*letter));
+				letterSprite->setSheet(letterSheet);
+				letterSprite->setAnchor(Anchor(0, 0));
+				letterSprite->getFrame().origin = p;
+				p.x += letter->getRegion().advanceX;
+				addChild(letterSprite);
 			}
-			getFrame().size.width = p.x;
-			getFrame().size.height = info.lineHeight;
+			else
+			{
+				p.x += info.baseHeight;
+			}
 		}
-		View::update();
+		getFrame().size.width = p.x;
+		getFrame().size.height = info.lineHeight;
     }
 
 }

@@ -3,6 +3,7 @@
 #include <mvcgame/tile/TileMap.hpp>
 #include <mvcgame/util/StringUtils.hpp>
 #include <mvcgame/asset/AssetStreamManager.hpp>
+#include <mvcgame/asset/AssetManager.hpp>
 #include <rapidxml/rapidxml.hpp>
 
 #include <vector>
@@ -59,6 +60,26 @@ namespace mvcgame {
             {
                 tileSet.setTileHeight(std::stoi(attr->value()));
             }
+            attr = node->first_attribute("firstgid");
+            if(attr)
+            {
+                tileSet.setFirstTypeId(std::stoi(attr->value()));
+            }
+
+            auto offsetNode = node->first_node("tileoffset");
+            if(offsetNode)
+            {
+                attr = node->first_attribute("x");
+                if(attr)
+                {
+                    tileSet.setTileOffsetX(std::stoi(attr->value()));
+                }
+                attr = node->first_attribute("y");
+                if(attr)
+                {
+                    tileSet.setTileOffsetY(std::stoi(attr->value()));
+                }                
+            }
 
             auto imgNode = node->first_node("image");
             if(imgNode)
@@ -66,7 +87,7 @@ namespace mvcgame {
                 attr = imgNode->first_attribute("source");
                 if(attr && _textureManager)
                 {
-
+                    tileSet.setTexture(_textureManager->load(attr->value()));
                 }
             }
 
@@ -99,9 +120,55 @@ namespace mvcgame {
             }   
         }
 
+        enum class DataType
+        {
+            Unknown,
+            Binary,
+            Csv
+        };
+
+        DataType loadData(xml_node<>* node, std::string& data)
+        {
+            auto attr = node->first_attribute("encoding");
+            data = node->value();
+            DataType type = DataType::Unknown;
+            if(attr)
+            {
+                data.erase(std::remove_if(data.begin(), data.end(), std::ptr_fun<int, int>(std::isspace)), data.end());
+                std::string enc = attr->value();  
+                if(enc == "base64")
+                {
+                    data = StringUtils::base64Decode(data);
+                    type = DataType::Binary;
+                }
+                else if(enc == "csv")
+                {
+                    type = DataType::Csv;
+                }
+                else
+                {
+                    throw std::runtime_error("Unknown data encoding '"+enc+"'");
+                }
+            }
+            attr = node->first_attribute("compression");
+            if(attr)
+            {
+                std::string comp = attr->value();
+                if(comp == "zlib")
+                {
+                    data = StringUtils::decompress(data);              
+                }
+                else
+                {
+                    throw std::runtime_error("Unknown data compression '"+comp+"'");
+                }
+            }
+            return type;
+        }
+
         const unsigned FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
         const unsigned FLIPPED_VERTICALLY_FLAG   = 0x40000000;
-        const unsigned FLIPPED_DIAGONALLY_FLAG   = 0x20000000;    
+        const unsigned FLIPPED_DIAGONALLY_FLAG   = 0x20000000;
 
         void loadTileLayer(xml_node<>* node, TileLayer& layer)
         {
@@ -121,70 +188,49 @@ namespace mvcgame {
                 layer.setHeight(std::stoi(attr->value()));
             }
             auto dataNode = node->first_node("data");      
-            if(!dataNode)
+            if(dataNode)
             {
-                return;
-            }        
-            attr = dataNode->first_attribute("encoding");
-            std::string val = dataNode->value(); 
-            bool binary = false;       
-            if(attr)
-            {
-                val.erase(std::remove_if(val.begin(), val.end(), std::ptr_fun<int, int>(std::isspace)), val.end());
-                std::string enc = attr->value();  
-                if(enc == "base64")
+                std::string data;
+                DataType type = loadData(dataNode, data);
+
+                if(type == DataType::Binary)
                 {
-                    val = StringUtils::base64Decode(val);
-                    binary = true;
-                }
-                else
-                {
-                    throw std::runtime_error("Unknown data encoding '"+enc+"'");
-                }
-            }
-            attr = dataNode->first_attribute("compression");
-            if(attr)
-            {
-                std::string comp = attr->value();
-                if(comp == "zlib")
-                {
-                    val = StringUtils::decompress(val);
-                    binary = true;                
-                }
-                else
-                {
-                    throw std::runtime_error("Unknown data compression '"+comp+"'");
-                }
-            }
-            if(binary)
-            {
-                unsigned i = 0;
-                if(val.size() != 4*layer.getHeight()*layer.getWidth())
-                {
-                    throw std::runtime_error("Incorrect layer data size");
-                }
-                for (unsigned y = 0; y < layer.getHeight(); ++y)
-                {
-                    for (unsigned x = 0; x < layer.getWidth(); ++x)
+                    unsigned i = 0;
+                    if(data.size() != 4*layer.getHeight()*layer.getWidth())
                     {
-                        unsigned typeId = val[i] | val[i + 1] << 8 | val[i + 2] << 16 | val[i + 3] << 24;
-                        i += 4;
-                        Tile::Flip flip = Tile::Flip::None;
-                        if(typeId & FLIPPED_HORIZONTALLY_FLAG)
-                        {
-                            flip = Tile::Flip::Horizontal;
-                        }
-                        else if(typeId & FLIPPED_VERTICALLY_FLAG)
-                        {
-                            flip = Tile::Flip::Vertical;   
-                        }
-                        else if(typeId & FLIPPED_DIAGONALLY_FLAG)
-                        {
-                            flip = Tile::Flip::Diagonal;   
-                        }
-                        typeId &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
-                        layer.setTile(x, y, Tile(typeId, flip));
+                        throw std::runtime_error("Incorrect layer data size");
                     }
+                    for (unsigned y = 0; y < layer.getHeight(); ++y)
+                    {
+                        for (unsigned x = 0; x < layer.getWidth(); ++x)
+                        {
+                            unsigned typeId = data[i] | data[i + 1] << 8 | data[i + 2] << 16 | data[i + 3] << 24;
+                            i += 4;
+                            Tile::Flip flip = Tile::Flip::None;
+                            if(typeId & FLIPPED_HORIZONTALLY_FLAG)
+                            {
+                                flip = Tile::Flip::Horizontal;
+                            }
+                            else if(typeId & FLIPPED_VERTICALLY_FLAG)
+                            {
+                                flip = Tile::Flip::Vertical;   
+                            }
+                            else if(typeId & FLIPPED_DIAGONALLY_FLAG)
+                            {
+                                flip = Tile::Flip::Diagonal;   
+                            }
+                            typeId &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
+                            layer.setTile(x, y, Tile(typeId, flip));
+                        }
+                    }
+                }
+                else if(type == DataType::Csv)
+                {
+                    throw std::runtime_error("CSV tile layer data not implemented.");
+                }
+                else
+                {
+                    throw std::runtime_error("Unknown data type for TileLayer.");
                 }
             }
         }    
