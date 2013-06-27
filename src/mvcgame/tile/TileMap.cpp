@@ -1,5 +1,8 @@
 
 #include <mvcgame/tile/TileMap.hpp>
+#include <mvcgame/texture/SpriteSheet.hpp>
+
+#include <stdexcept>
 
 namespace mvcgame {
 
@@ -57,6 +60,18 @@ namespace mvcgame {
     const TileMap::Layers& TileMap::getLayers() const
     {
         return _layers;
+    }
+
+    SpriteSheet TileMap::getSheetForTypeId(unsigned typeId) const
+    {
+        for(const TileSet& set : _sets)
+        {
+            if(set.hasTypeId(typeId))
+            {
+                return set.getSheetForTypeId(typeId);
+            }
+        }
+        throw std::runtime_error("Tile type id could not be found in the sets.");
     }
 
     std::ostream& operator<<(std::ostream& os, const TileMap& t)

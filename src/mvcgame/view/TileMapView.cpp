@@ -40,6 +40,31 @@ namespace mvcgame {
         }
         removeChildren();
         TileLayer& layer = _tileMap->getLayers()[_layer];
+
+        Point p(0, getFrame().size.height);
+
+        for(unsigned ty=0; ty<layer.getHeight(); ty++)
+        {   
+            for(unsigned tx=0; tx<layer.getWidth(); tx++)
+            {
+                auto& tile = layer.getTile(tx, ty);
+                auto sheet = _tileMap->getSheetForTypeId(tile.getTypeId());
+                auto sprite = std::make_shared<Sprite>(sheet);
+                sprite->getFrame().origin = p;
+                addChild(sprite);
+                
+                if(tx < layer.getWidth()-1)
+                {
+                    p.x += sprite->getFrame().size.width;
+                }
+                else
+                {
+                    p.x = 0;
+                    p.y -= sprite->getFrame().size.height;
+                }
+            }
+        }
+        _changed = false;
     }
 
     void TileMapView::draw()

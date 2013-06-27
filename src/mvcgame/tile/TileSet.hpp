@@ -11,6 +11,7 @@
 namespace mvcgame {
 
     class TextureRegion;
+    class SpriteSheet;
 
     class TileSet
     {
@@ -87,9 +88,19 @@ namespace mvcgame {
         void setFirstTypeId(unsigned typeId);
 
         /**
+         * Returns if the set has a tile type
+         */
+        bool hasTypeId(unsigned typeId) const;
+
+        /**
          * Returns a texture region for a tile type
          */
-        TextureRegion getRegionForTypeId(unsigned typeId);
+        TextureRegion getRegionForTypeId(unsigned typeId) const;
+
+        /**
+         * Returns a SpriteSheet for a tile type
+         */
+        SpriteSheet getSheetForTypeId(unsigned typeId) const;        
     };
 
     /**

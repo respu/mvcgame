@@ -11,6 +11,7 @@
 
 namespace mvcgame {
 
+    class SpriteSheet;
 
     class TileMap
     {
@@ -81,7 +82,13 @@ namespace mvcgame {
          * Returns the list of tile layers
          */
         Layers& getLayers();
-        const Layers& getLayers() const;        
+        const Layers& getLayers() const;
+
+        /**
+         * Returns a sprite sheet for a tile type
+         */
+        SpriteSheet getSheetForTypeId(unsigned typeId) const;
+
     };
 
     /**

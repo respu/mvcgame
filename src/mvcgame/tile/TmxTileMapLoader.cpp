@@ -65,6 +65,16 @@ namespace mvcgame {
             {
                 tileSet.setFirstTypeId(std::stoi(attr->value()));
             }
+            attr = node->first_attribute("spacing");
+            if(attr)
+            {
+                tileSet.setSpacing(std::stoi(attr->value()));
+            }
+            attr = node->first_attribute("margin");
+            if(attr)
+            {
+                tileSet.setMargin(std::stoi(attr->value()));
+            }
 
             auto offsetNode = node->first_node("tileoffset");
             if(offsetNode)

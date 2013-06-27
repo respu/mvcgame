@@ -1,6 +1,8 @@
 
 #include <mvcgame/tile/TileSet.hpp>
 #include <mvcgame/texture/TextureRegion.hpp>
+#include <mvcgame/texture/SpriteSheet.hpp>
+
 #include <stdexcept>
 
 namespace mvcgame {
@@ -105,25 +107,42 @@ namespace mvcgame {
         _firstTypeId = typeId;
     }
 
-    TextureRegion TileSet::getRegionForTypeId(unsigned typeId)
+    bool TileSet::hasTypeId(unsigned typeId) const
     {
         unsigned nx = _texture->getWidth() / _tileWidth;
         unsigned ny = _texture->getHeight() / _tileHeight;
+        unsigned p = typeId - _firstTypeId;
+        return typeId >= _firstTypeId && p <= nx*ny;
+    }
+
+    TextureRegion TileSet::getRegionForTypeId(unsigned typeId) const
+    {
+        unsigned th = _texture->getHeight();
+        unsigned nx = _texture->getWidth() / _tileWidth;
+        unsigned ny = th / _tileHeight;
         unsigned p = typeId - _firstTypeId;
         if(typeId < _firstTypeId || p > nx*ny)
         {
             throw std::runtime_error("Tile type id does not fit inside the tileset texture.");
         }
-        unsigned y = p / nx;
         unsigned x = p % nx;
+        unsigned y = ny - 1 - (p - x) / nx;
         TextureRegion r;
-        r.x = _spacing + x*(_tileWidth+_spacing);
-        r.y = _spacing + y*(_tileHeight+_spacing);
+        r.x = _margin + x*(_tileWidth + _spacing);
+        r.y = _margin + y*(_tileHeight + _spacing);
+        r.width = _tileWidth;
+        r.height = _tileHeight;
         r.offsetX = _offsetX;
         r.offsetY = _offsetY;
-        r.originalWidth = r.width + _margin;
-        r.originalHeight = r.height + _margin;
+        r.originalWidth = r.width;
+        r.originalHeight = r.height;
+
         return r;
+    }
+
+    SpriteSheet TileSet::getSheetForTypeId(unsigned typeId) const
+    {
+        return SpriteSheet(getTexture(), getRegionForTypeId(typeId));
     }
     
     std::ostream& operator<<(std::ostream& os, const TileSet& s)

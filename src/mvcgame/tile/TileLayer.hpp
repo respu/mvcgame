@@ -16,10 +16,9 @@ namespace mvcgame {
         unsigned _width;
         unsigned _height;
 
-        typedef std::vector<Tile> Tiles;
-        typedef std::vector<Tiles> TilesMatrix;
-
-        TilesMatrix _tiles;
+        typedef std::vector<Tile> TileRow;
+        typedef std::vector<TileRow> TileMatrix;
+        TileMatrix _tiles;
 
     public:
         /**

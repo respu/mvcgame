@@ -39,7 +39,7 @@ namespace mvcgame {
     void TileLayer::setHeight(unsigned h)
     {
         _height = h;
-        for(Tiles& row : _tiles)
+        for(TileRow& row : _tiles)
         {
             row.resize(h);
         }

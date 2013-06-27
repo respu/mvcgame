@@ -10,7 +10,7 @@ namespace mvcgame {
     {
     }    
 
-    SpriteSheet::SpriteSheet(std::shared_ptr<Texture> texture)
+    SpriteSheet::SpriteSheet(std::shared_ptr<const Texture> texture)
     {
         _frames.push_back(Frame(texture));
     }
@@ -20,7 +20,14 @@ namespace mvcgame {
         _frames.push_back(frame);
     }
 
-    SpriteSheet::SpriteSheet(std::shared_ptr<Texture> texture, const TextureRegions& regions)
+    SpriteSheet::SpriteSheet(std::shared_ptr<const Texture> texture, const TextureRegion& region)
+    {
+        TextureRegions regions;
+        regions.push_back(region);
+        setRegions(texture, regions);
+    }
+
+    SpriteSheet::SpriteSheet(std::shared_ptr<const Texture> texture, const TextureRegions& regions)
     {
         setRegions(texture, regions);
     }
