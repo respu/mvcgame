@@ -40,6 +40,7 @@ namespace mvcgame {
 		std::vector<const FontLetter*> getLetters(const std::string& text) const;
 	public:
 		TextView();
+		TextView(const Sheet& sheet);
 
 		void setHorizontalAlign(HorizontalAlign align);
 		void setVerticalAlign(VerticalAlign align);

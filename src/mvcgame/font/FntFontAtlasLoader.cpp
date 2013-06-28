@@ -1,15 +1,20 @@
 
 #include <mvcgame/font/FntFontAtlasLoader.hpp>
 #include <mvcgame/font/FontAtlas.hpp>
+#include <mvcgame/texture/Texture.hpp>
+#include <mvcgame/asset/AssetManager.hpp>
 
 #include <string>
 #include <algorithm>
+#include <cassert>
 
 #define ATTR_SEP ' '
 #define ATTR_VAL_SEP '='
 #define ATTR_GROUP '"'
 
 namespace mvcgame {
+
+#pragma mark - FntFontAtlasData
 
     const std::string& FntFontAtlasData::getName() const
     {
@@ -68,7 +73,14 @@ namespace mvcgame {
             return def;
         }
         return itr->second == "1";
-    }    
+    }
+
+#pragma mark - FntFontAtlasLoader
+
+    FntFontAtlasLoader::FntFontAtlasLoader() :
+    _textureManager(nullptr)
+    {
+    }
 
     bool FntFontAtlasLoader::validate(std::istream& in) const
     {
@@ -124,8 +136,9 @@ namespace mvcgame {
 
     std::unique_ptr<FontAtlas> FntFontAtlasLoader::load(std::istream& in) const
     {
-        std::unique_ptr<FontAtlas> atlas(new FontAtlas());
+        assert(_textureManager);
 
+        std::unique_ptr<FontAtlas> atlas(new FontAtlas());
         std::string str;
 
         while(in)
@@ -153,7 +166,11 @@ namespace mvcgame {
                 if(i>=0)
                 {
                     FontAtlasPage& page = atlas->getPage(i);
-                    page.setTextureName(data.getValue<std::string>("file", page.getTextureName()));
+                    std::string textureName = data.getValue<std::string>("file", "");
+                    if(!textureName.empty() && _textureManager)
+                    {
+                        page.setTexture(_textureManager->load(textureName));
+                    }
                 }
             }
             else if(data.getName() == "char")
@@ -181,5 +198,10 @@ namespace mvcgame {
         
         return atlas;
     }
+
+    void FntFontAtlasLoader::setTextureManager(AssetManager<Texture>& mng)
+    {
+        _textureManager = &mng;
+    }    
 
 }

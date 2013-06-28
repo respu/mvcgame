@@ -16,16 +16,15 @@ namespace mvcgame {
     class FontLetter
     {
     private:
-        std::shared_ptr<Texture> _texture;
+        std::shared_ptr<const Texture> _texture;
         FontRegion _region;
 
     public:
         FontLetter();
-        FontLetter(std::shared_ptr<Texture> texture);
-        FontLetter(std::shared_ptr<Texture> texture, const FontRegion& region);
+        FontLetter(std::shared_ptr<const Texture> texture);
+        FontLetter(std::shared_ptr<const Texture> texture, const FontRegion& region);
 
         const Texture& getTexture() const;
-        Texture& getTexture();
 
         const FontRegion& getRegion() const;
         FontRegion& getRegion();

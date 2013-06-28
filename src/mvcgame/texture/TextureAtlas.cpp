@@ -7,14 +7,14 @@ namespace mvcgame {
     {
     }
 
-    const std::string& TextureAtlas::getTextureName() const
+    std::shared_ptr<const Texture> TextureAtlas::getTexture() const
     {
-        return _textureName;
-    }
+        return _texture;
+    }    
 
-    void TextureAtlas::setTextureName(const std::string& name)
+    void TextureAtlas::setTexture(std::shared_ptr<const Texture> texture)
     {
-        _textureName = name;
+        _texture = texture;
     }
 
     void TextureAtlas::addRegion(const Region& region)

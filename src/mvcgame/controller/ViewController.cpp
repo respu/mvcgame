@@ -94,16 +94,6 @@ namespace mvcgame {
         return getRoot().getApp();
     }
 
-    const AssetsManager& ViewController::getAssets() const
-    {
-        return getApp().getAssets();
-    }
-
-    AssetsManager& ViewController::getAssets()
-    {
-        return getApp().getAssets();
-    }
-
     void ViewController::setView(std::shared_ptr<View> view)
     {
         BaseView* parentView = nullptr;

@@ -13,13 +13,13 @@ namespace mvcgame {
     class SpriteFrame
     {
     private:
-        std::shared_ptr<Texture> _texture;
+        std::shared_ptr<const Texture> _texture;
         TextureRegion _region;
 
     public:
         SpriteFrame();
-        SpriteFrame(std::shared_ptr<Texture> texture);
-        SpriteFrame(std::shared_ptr<Texture> texture, const TextureRegion& region);
+        SpriteFrame(std::shared_ptr<const Texture> texture);
+        SpriteFrame(std::shared_ptr<const Texture> texture, const TextureRegion& region);
 
         const Texture& getTexture() const;
         Texture& getTexture();

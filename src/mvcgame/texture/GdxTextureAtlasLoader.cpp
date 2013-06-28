@@ -1,11 +1,19 @@
 
 #include <mvcgame/texture/GdxTextureAtlasLoader.hpp>
 #include <mvcgame/texture/TextureAtlas.hpp>
+#include <mvcgame/texture/Texture.hpp>
+#include <mvcgame/asset/AssetManager.hpp>
 #include <mvcgame/util/StringUtils.hpp>
 
+#include <cassert>
 #include <string>
 
 namespace mvcgame {
+
+    GdxTextureAtlasLoader::GdxTextureAtlasLoader() :
+    _textureManager(nullptr)
+    {
+    }
     
     bool GdxTextureAtlasLoader::validate(std::istream& input) const
     {
@@ -14,12 +22,17 @@ namespace mvcgame {
 
     std::unique_ptr<TextureAtlas> GdxTextureAtlasLoader::load(std::istream& in) const
     {
+        assert(_textureManager);
+
         std::unique_ptr<TextureAtlas> atlas(new TextureAtlas());
         std::string line;
 
         // texture name
         std::getline(in, line);
-        atlas->setTextureName(line);
+        if(_textureManager)
+        {
+            atlas->setTexture(_textureManager->load(line));
+        }
 
         bool inRegion = false;
         TextureRegion region;
@@ -94,6 +107,11 @@ namespace mvcgame {
         }
 
         return std::move(atlas);
+    }
+
+    void GdxTextureAtlasLoader::setTextureManager(AssetManager<Texture>& mng)
+    {
+        _textureManager = &mng;
     }
 
 }

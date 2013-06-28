@@ -1,11 +1,24 @@
 
 #include <mvcgame/font/FontSheet.hpp>
+#include <mvcgame/font/FontAtlas.hpp>
 #include <mvcgame/texture/SpriteFrame.hpp>
 
 namespace mvcgame {
 
     FontSheet::FontSheet()
     {
+    }
+
+    FontSheet::FontSheet(const FontAtlas& atlas)
+    {
+        setInfo(atlas.getInfo());
+        for(const FontAtlas::Page& page : atlas.getPages())
+        {
+            for(const FontAtlas::Page::Region& region : page.getRegions())
+            {
+                setLetter(region.name, FontLetter(page.getTexture(), region));
+            }
+        }
     }
 
     const FontSheet::Info& FontSheet::getInfo() const

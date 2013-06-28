@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 namespace mvcgame {
 
@@ -17,13 +18,13 @@ namespace mvcgame {
         typedef FontRegion Region;
         typedef std::vector<Region> RegionList;
     private:
-        std::string _textureName;
+        std::shared_ptr<const Texture> _texture;
         RegionList _regions;
     public:
         FontAtlasPage();
 
-        const std::string& getTextureName() const;
-        void setTextureName(const std::string& name);
+        std::shared_ptr<const Texture> getTexture() const;
+        void setTexture(std::shared_ptr<const Texture> texture);
         void addRegion(const Region& region);
         RegionList& getRegions();
         const RegionList& getRegions() const;

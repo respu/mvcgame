@@ -10,6 +10,8 @@
 
 namespace mvcgame {
 
+    class FontAtlas;
+
     class FontSheet
     {
     public:
@@ -21,6 +23,7 @@ namespace mvcgame {
         Letters _letters;
     public:
         FontSheet();
+        FontSheet(const FontAtlas& atlas);
 
         const Info& getInfo() const;
         Info& getInfo();

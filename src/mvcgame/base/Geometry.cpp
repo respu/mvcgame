@@ -435,6 +435,10 @@ namespace mvcgame {
     Rect::Rect(const Size& s) : size(s)
     {
     }
+
+    Rect::Rect(const Point& p, const Point& o) : origin(p), size(o-p)
+    {
+    }
     
     Rect::Rect(const Point& p, const Size& s) : origin(p), size(s)
     {
@@ -481,13 +485,66 @@ namespace mvcgame {
     Rect& Rect::operator*=(const Scale& s)
     {
         origin *= s;
-        origin *= s;
+        size *= s;
         return *this;
     }
 
     Rect Rect::operator*(const Scale& s) const
     {
         return Rect(origin*s, size*s);
+    }
+
+    Rect& Rect::operator+=(const Point& p)
+    {
+        Point p1a = origin;
+        Point p1b = getOuter();
+        origin.x = std::min(p1a.x, p.x);
+        origin.y = std::min(p1a.y, p.y);
+        size.width = std::max(p1b.x, p.x) - origin.x;
+        size.height = std::max(p1b.y, p.y) - origin.y;
+        return *this;
+    }
+
+    Rect Rect::operator+(const Point& p) const
+    {
+        Point p1a = origin;
+        Point p1b = getOuter();
+        p1a.x = std::min(p1a.x, p.x);
+        p1a.y = std::min(p1a.y, p.y);
+        p1b.x = std::max(p1b.x, p.x);
+        p1b.y = std::max(p1b.y, p.y);
+        return Rect(p1a, p1b);
+    }
+
+    Rect& Rect::operator+=(const Rect& r)
+    {
+        Point p1a = origin;
+        Point p1b = getOuter();
+        Point p2a = r.origin;
+        Point p2b = r.getOuter();
+        origin.x = std::min(p1a.x, p2a.x);
+        origin.y = std::min(p1a.y, p2a.y);
+        size.width = std::max(p1b.x, p2b.x) - origin.x;
+        size.height = std::max(p1b.y, p2b.y) - origin.y;
+        return *this;
+    }
+
+    Rect Rect::operator+(const Rect& r) const
+    {
+        Point p1a = origin;
+        Point p1b = getOuter();
+        Point p2a = r.origin;
+        Point p2b = r.getOuter();
+        p1a.x = std::min(p1a.x, p2a.x);
+        p1a.y = std::min(p1a.y, p2a.y);
+        p1b.x = std::max(p1b.x, p2b.x);
+        p1b.y = std::max(p1b.y, p2b.y);
+        return Rect(p1a, p1b);
+    }    
+
+    Point Rect::getOuter() const
+    {
+        return Point(origin.x + size.width, origin.y + size.height);
     }
 
     Points Rect::getVertices() const

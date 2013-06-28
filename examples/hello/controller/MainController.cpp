@@ -1,5 +1,6 @@
 
 #include "hello/controller/MainController.hpp"
+#include "hello/base/ServiceLocator.hpp"
 
 #include <mvcgame/controller/RootViewController.hpp>
 #include <mvcgame/view/View.hpp>
@@ -8,7 +9,6 @@
 #include <mvcgame/view/ColorView.hpp>
 #include <mvcgame/view/Sprite.hpp>
 #include <mvcgame/base/Color.hpp>
-#include <mvcgame/asset/AssetsManager.hpp>
 #include <mvcgame/texture/Texture.hpp>
 #include <mvcgame/texture/SpriteSheet.hpp>
 #include <mvcgame/font/FontAtlas.hpp>
@@ -28,12 +28,13 @@ void MainController::controllerAdded()
     bg->getFrame().size = getRoot().getView().getSize();
     bg->getFrame().origin = bg->getFrame().size/2;
 
-    auto guybrushAtlas = getAssets().load<TextureAtlas>("guybrush");
-    auto guybrushSheet = getAssets().loadSheet(*guybrushAtlas);
+    auto guybrushAtlas = ServiceLocator::get().getTextureAtlases().load("guybrush");
+    SpriteSheet guybrushSheet(*guybrushAtlas);
     _guybrush = std::make_shared<Sprite>();
     _guybrush->setSheet(guybrushSheet);
     _guybrush->getFrame().origin = bg->getFrame().size/2;
     _guybrush->getFrame().origin.x -= 150;
+    _guybrush->setScale(0.5);
     _guybrush->setSpriteFrameDuration(20);
 
     bg->addChild(_guybrush);
@@ -46,8 +47,8 @@ void MainController::controllerAdded()
 
     bg->addChild(guybrush2);
 
-    auto fontAtlas = getAssets().load<FontAtlas>("font");
-    auto fontSheet = getAssets().loadSheet(*fontAtlas);
+    auto fontAtlas = ServiceLocator::get().getFontAtlases().load("font");
+    FontSheet fontSheet(*fontAtlas);
     auto title = std::make_shared<TextView>();
     title->setSheet(fontSheet);
     title->getFrame().size = Size(50, 50);

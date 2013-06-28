@@ -1,22 +1,18 @@
 
-#include <mvcgame/asset/BaseAssetsManager.hpp>
+#include <mvcgame/asset/AssetStreamManager.hpp>
 
 namespace mvcgame {
 
-    BaseAssetsManager::BaseAssetsManager()
+    AssetStreamManager::AssetStreamManager()
     {
     }
 
-    BaseAssetsManager::~BaseAssetsManager()
-    {
-    }
-
-    void BaseAssetsManager::addStreamLoader(std::unique_ptr<Loader> loader)
+    void AssetStreamManager::addLoader(std::unique_ptr<Loader> loader)
     {      
         _loaders.push_back(std::move(loader));
     }
 
-    bool BaseAssetsManager::loadStream(const std::string& name, Callback callback)
+    bool AssetStreamManager::load(const std::string& name, Callback callback)
     {
         for(std::unique_ptr<Loader>& loader : _loaders)
         {

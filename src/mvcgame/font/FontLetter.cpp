@@ -10,22 +10,17 @@ namespace mvcgame {
     {
     }
 
-    FontLetter::FontLetter(std::shared_ptr<Texture> texture) :
+    FontLetter::FontLetter(std::shared_ptr<const Texture> texture) :
     _texture(texture), _region(*texture)
     {
     }    
 
-    FontLetter::FontLetter(std::shared_ptr<Texture> texture, const FontRegion& region) :
+    FontLetter::FontLetter(std::shared_ptr<const Texture> texture, const FontRegion& region) :
     _texture(texture), _region(region)
     {
     }
 
     const Texture& FontLetter::getTexture() const
-    {
-        return *_texture;
-    }
-
-    Texture& FontLetter::getTexture()
     {
         return *_texture;
     }
