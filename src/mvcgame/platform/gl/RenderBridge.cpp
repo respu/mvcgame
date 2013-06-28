@@ -10,21 +10,24 @@
 #include <GL/glx.h>
 #include <GL/glu.h>
 
-#include <map>
-
 #ifdef MVCGAME_DEBUG_DRAW
 #include <iostream>
 #endif
 
 namespace mvcgame {
 
-    void getGlTransform(const Transform& t, float* m)
+    RenderBridge::RenderBridge() :
+    _texture(0)
+    {
+    }
+
+    void RenderBridge::getGlTransform(const Transform& t, float* m)
     {
         m[2] = m[3] = m[6] = m[7] = m[8] = m[9] = m[11] = m[14] = 0.0f;
         m[10] = m[15] = 1.0f;
         m[0] = t.a; m[4] = t.c; m[12] = t.tx;
         m[1] = t.b; m[5] = t.d; m[13] = t.ty;
-    }
+    }    
 
     void RenderBridge::loadRootTransform(const Size& size)
     {
@@ -91,9 +94,6 @@ namespace mvcgame {
         glEnd();
     }
 
-    typedef std::map<const Texture*, GLuint> Textures;
-    static Textures _textures;
-
     void RenderBridge::loadTexture(const Texture& t)
     {
         Textures::const_iterator itr = _textures.find(&t);
@@ -147,46 +147,65 @@ namespace mvcgame {
         loadTexture(texture);
         GLuint id = _textures.at(&texture);
 
-        glEnable(GL_TEXTURE_2D);
-        if(texture.hasAlpha())
-        {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        }
-        glBindTexture(GL_TEXTURE_2D, id);
         Rect trect = region / texture;
         Rect rrect = region / rect;
+
+        GLfloat arrVertex[] =
+        {
+            rrect.origin.x, rrect.origin.y, 0,
+            rrect.origin.x+rrect.size.width, rrect.origin.y, 0,
+            rrect.origin.x+rrect.size.width, rrect.origin.y+rrect.size.height, 0,
+            rrect.origin.x, rrect.origin.y+rrect.size.height, 0,
+        };
+        GLfloat arrCoord[] =
+        {
+            trect.origin.x, trect.origin.y,
+            trect.origin.x+trect.size.width, trect.origin.y,        
+            trect.origin.x+trect.size.width, trect.origin.y+trect.size.height,
+            trect.origin.x, trect.origin.y+trect.size.height,            
+        };
 
         if(region.rotate)
         {
             glPushMatrix();
             glTranslatef(0, rect.size.height, 0);
             glRotatef(-90, 0, 0, 1);
+        }        
+
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
+        glEnableClientState ( GL_VERTEX_ARRAY );
+
+        if(texture.hasAlpha())
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }        
+
+        if(_texture != id)
+        {
+            glBindTexture(GL_TEXTURE_2D, id);
+            _texture = id;
+        }
+        glVertexPointer(3, GL_FLOAT, 0, arrVertex );
+        glTexCoordPointer(2, GL_FLOAT, 0, arrCoord );
+        glDrawArrays(GL_QUADS, 0, 4 );
+
+        glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
+        glDisableClientState ( GL_VERTEX_ARRAY );
+        glDisable(GL_TEXTURE_2D);
+        if(texture.hasAlpha())
+        {
+            glDisable(GL_BLEND);
         }
 
-        glBegin(GL_QUADS);
-
-        glTexCoord2f(trect.origin.x, trect.origin.y);
-        glVertex3f(rrect.origin.x, rrect.origin.y, 0);
-        glTexCoord2f(trect.origin.x, trect.origin.y+trect.size.height);
-        glVertex3f(rrect.origin.x, rrect.origin.y+rrect.size.height, 0);
-        glTexCoord2f(trect.origin.x+trect.size.width, trect.origin.y+trect.size.height);
-        glVertex3f(rrect.origin.x+rrect.size.width, rrect.origin.y+rrect.size.height, 0);
-        glTexCoord2f(trect.origin.x+trect.size.width, trect.origin.y);
-        glVertex3f(rrect.origin.x+rrect.size.width, rrect.origin.y, 0);
-        glEnd();
-        glFlush();
+        glFlush();            
 
         if(region.rotate)
         {
             glPopMatrix();
         }
 
-        glDisable(GL_TEXTURE_2D);
-        if(texture.hasAlpha())
-        {
-            glDisable(GL_BLEND);
-        }
 
 #ifdef MVCGAME_DEBUG_DRAW
         std::cout << ">>>>" << std::endl;
