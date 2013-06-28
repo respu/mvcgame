@@ -169,9 +169,17 @@ namespace mvcgame {
         Rect& operator*=(const Scale& s);
         Rect operator*(const Scale& s) const;
 
+        Rect& operator+=(const Point& p);
+        Rect operator+(const Point& p) const;
+
+        Rect& operator+=(const Rect& r);
+        Rect operator+(const Rect& r) const;
+
         Points getVertices() const;
 
         bool contains(const Point& p) const;
+
+        Point getOuter() const;
     };
 
     /**

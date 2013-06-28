@@ -41,19 +41,21 @@ namespace mvcgame {
         removeChildren();
         TileLayer& layer = _tileMap->getLayers()[_layer];
 
-        Point p(0, getFrame().size.height);
-
-        for(unsigned ty=0; ty<layer.getHeight(); ty++)
+        Point p(0, 0);
+        unsigned th = layer.getHeight();
+        unsigned tw = layer.getWidth();
+        std::vector<std::shared_ptr<Sprite>> tiles;
+        Rect tr;
+        for(unsigned ty=0; ty<th; ty++)
         {   
-            for(unsigned tx=0; tx<layer.getWidth(); tx++)
+            for(unsigned tx=0; tx<tw; tx++)
             {
                 auto& tile = layer.getTile(tx, ty);
                 auto sheet = _tileMap->getSheetForTypeId(tile.getTypeId());
                 auto sprite = std::make_shared<Sprite>(sheet);
+                tiles.push_back(sprite);
                 sprite->getFrame().origin = p;
-                addChild(sprite);
-                
-                if(tx < layer.getWidth()-1)
+                if(tx < tw-1)
                 {
                     p.x += sprite->getFrame().size.width;
                 }
@@ -62,7 +64,18 @@ namespace mvcgame {
                     p.x = 0;
                     p.y -= sprite->getFrame().size.height;
                 }
+                tr += sprite->getFrame();
             }
+        }
+        std::cout << tr << std::endl;
+        Scale sc = getFrame().size / tr.size;
+        for(std::shared_ptr<Sprite>& tile : tiles)
+        {
+            tile->setScale(sc);
+            tile->setAnchor(Anchor(0,1));            
+            tile->getFrame().origin *= sc;
+            tile->getFrame().origin.y += getFrame().size.height;
+            addChild(tile);
         }
         _changed = false;
     }

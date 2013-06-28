@@ -185,6 +185,22 @@ TEST(Geometry, rect) {
     ASSERT_TRUE(r2.contains(p));
 }
 
+TEST(Geometry, rectCombine) {
+
+    Rect r(Size(5,5));
+    Rect r2 = r + Point(3, 3);
+
+    ASSERT_EQ(r, r2);
+
+    r2 = r + Point(6,3);
+
+    ASSERT_EQ(Rect(Size(6,5)), r2);
+
+    r2 += Point(0, -2);
+
+    ASSERT_EQ(Rect(Point(0, -2), Size(6, 7)), r2);
+}
+
 TEST(Geometry, rectCopy) {
     Rect r(Size(100, 200));
 
