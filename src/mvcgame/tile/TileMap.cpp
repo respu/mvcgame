@@ -62,6 +62,30 @@ namespace mvcgame {
         return _layers;
     }
 
+    TileMap::Layer& TileMap::getLayer(const std::string& name)
+    {
+        for(Layer& layer : _layers)
+        {
+            if(layer.getName() == name)
+            {
+                return layer;
+            }
+        }
+        throw std::runtime_error("Could not find a matching layer.");
+    }
+
+    const TileMap::Layer& TileMap::getLayer(const std::string& name) const
+    {
+        for(const Layer& layer : _layers)
+        {
+            if(layer.getName() == name)
+            {
+                return layer;
+            }
+        }        
+        throw std::runtime_error("Could not find a matching layer.");
+    }
+
     SpriteSheet TileMap::getSheetForTypeId(unsigned typeId) const
     {
         for(const TileSet& set : _sets)

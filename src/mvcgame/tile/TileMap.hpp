@@ -85,6 +85,12 @@ namespace mvcgame {
         const Layers& getLayers() const;
 
         /**
+         * Returns a layer by the name
+         */
+        Layer& getLayer(const std::string& name);
+        const Layer& getLayer(const std::string& name) const;
+
+        /**
          * Returns a sprite sheet for a tile type
          */
         SpriteSheet getSheetForTypeId(unsigned typeId) const;

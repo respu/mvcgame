@@ -485,7 +485,7 @@ namespace mvcgame {
     Rect& Rect::operator*=(const Scale& s)
     {
         origin *= s;
-        origin *= s;
+        size *= s;
         return *this;
     }
 
