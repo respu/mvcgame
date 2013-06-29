@@ -8,6 +8,7 @@
 namespace mvcgame {
 
 	class BaseViewController;
+	class BaseView;	
 	class UpdateEvent;
 	class TouchEvent;
 	class UpdateTouchEvent;
@@ -23,15 +24,18 @@ namespace mvcgame {
 		typedef std::map<IResponder*, TouchEvent> TouchResponders;
 		typedef std::function<void(IResponder& resp, const TouchEvent& event)> TouchResponderCallback;
 		
-		BaseViewController& _root;
+		BaseViewController& _rootController;
+		BaseView& _rootView;
 
 		void emitUpdate(const UpdateEvent& event, BaseViewController& controller);
-		void emitTouch(const TouchEvent& event, BaseViewController& controller, TouchResponderCallback callback);
+		void emitTouch(const TouchEvent& event, TouchResponderCallback callback);
 
         void findTouchResponders(const Point& p, const TouchEvent& event, BaseViewController& controller, TouchResponders& responders);
-        TouchResponders findTouchResponders(const TouchEvent& event, BaseViewController& controller);
+        void findTouchResponders(const TouchEvent& event, BaseViewController& controller, TouchResponders& responders);
+		void findTouchResponders(const Point& p, const TouchEvent& event, BaseView& view, TouchResponders& responders);        
+		void findTouchResponders(const TouchEvent& event, BaseView& view, TouchResponders& responders);
 	public:
-		EventEmitter(BaseViewController& root);
+		EventEmitter(BaseViewController& root, BaseView& rootView);
 		~EventEmitter();
 
 		void emitUpdate(const UpdateEvent& event);

@@ -30,6 +30,8 @@ namespace mvcgame {
         void draw();
 
         IRenderBridge& getBridge();
+
+        bool respondToTouchPoint(const Point& p, const TouchEvent& event);
     };
 }
 

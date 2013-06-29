@@ -42,4 +42,8 @@ namespace mvcgame {
         return _bridge;
     }
 
+    bool RootView::respondToTouchPoint(const Point& p, const TouchEvent& event)
+    {
+        return true;
+    }
 }

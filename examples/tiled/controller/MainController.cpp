@@ -4,6 +4,7 @@
 
 #include <mvcgame/controller/RootViewController.hpp>
 #include <mvcgame/view/TileMapView.hpp>
+#include <mvcgame/view/PanZoomView.hpp>
 
 using namespace mvcgame;
 
@@ -20,5 +21,9 @@ void MainController::controllerAdded()
     tileMapView->getFrame().size = getRoot().getView().getSize();
     tileMapView->getFrame().origin = tileMapView->getFrame().size/2;
 
-    setView(tileMapView);
+    auto panZoom = std::make_shared<PanZoomView>();
+    panZoom->setFrame(tileMapView->getFrame());
+    panZoom->setContentView(tileMapView);
+
+    setView(panZoom);
 }
