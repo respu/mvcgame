@@ -150,27 +150,34 @@ namespace mvcgame {
         Rect trect = region / texture;
         Rect rrect = region / rect;
 
-        GLfloat arrVertex[] =
+        if(region.rotate)
+        {
+            _textureBuffer =
+            {
+                trect.origin.x+trect.size.width, trect.origin.y,        
+                trect.origin.x+trect.size.width, trect.origin.y+trect.size.height,
+                trect.origin.x, trect.origin.y+trect.size.height,            
+                trect.origin.x, trect.origin.y,                
+            };
+        }     
+        else
+        {
+            _textureBuffer =
+            {
+                trect.origin.x, trect.origin.y,
+                trect.origin.x+trect.size.width, trect.origin.y,        
+                trect.origin.x+trect.size.width, trect.origin.y+trect.size.height,
+                trect.origin.x, trect.origin.y+trect.size.height,            
+            };
+        }   
+
+        _vertexBuffer =
         {
             rrect.origin.x, rrect.origin.y, 0,
             rrect.origin.x+rrect.size.width, rrect.origin.y, 0,
             rrect.origin.x+rrect.size.width, rrect.origin.y+rrect.size.height, 0,
             rrect.origin.x, rrect.origin.y+rrect.size.height, 0,
         };
-        GLfloat arrCoord[] =
-        {
-            trect.origin.x, trect.origin.y,
-            trect.origin.x+trect.size.width, trect.origin.y,        
-            trect.origin.x+trect.size.width, trect.origin.y+trect.size.height,
-            trect.origin.x, trect.origin.y+trect.size.height,            
-        };
-
-        if(region.rotate)
-        {
-            glPushMatrix();
-            glTranslatef(0, rect.size.height, 0);
-            glRotatef(-90, 0, 0, 1);
-        }        
 
         glEnable(GL_TEXTURE_2D);
         glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
@@ -187,8 +194,8 @@ namespace mvcgame {
             glBindTexture(GL_TEXTURE_2D, id);
             _texture = id;
         }
-        glVertexPointer(3, GL_FLOAT, 0, arrVertex );
-        glTexCoordPointer(2, GL_FLOAT, 0, arrCoord );
+        glVertexPointer(3, GL_FLOAT, 0, &_vertexBuffer.front() );
+        glTexCoordPointer(2, GL_FLOAT, 0, &_textureBuffer.front() );
         glDrawArrays(GL_QUADS, 0, 4 );
 
         glDisableClientState ( GL_TEXTURE_COORD_ARRAY );

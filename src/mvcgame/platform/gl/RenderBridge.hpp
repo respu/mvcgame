@@ -13,6 +13,8 @@ namespace mvcgame {
     private:
         Textures _textures;
         unsigned int _texture;
+        std::vector<float> _vertexBuffer;
+        std::vector<float> _textureBuffer;
 
         static void getGlTransform(const Transform& t, float* m);
     public:

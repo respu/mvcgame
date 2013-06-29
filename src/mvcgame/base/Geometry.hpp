@@ -168,6 +168,8 @@ namespace mvcgame {
         Rect operator*(const gunit_t& s) const;
         Rect& operator*=(const Scale& s);
         Rect operator*(const Scale& s) const;
+        Rect& operator*=(const Rotation& r);
+        Rect operator*(const Rotation& r) const;        
 
         Rect& operator+=(const Point& p);
         Rect operator+(const Point& p) const;

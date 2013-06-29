@@ -494,6 +494,20 @@ namespace mvcgame {
         return Rect(origin*s, size*s);
     }
 
+    Rect& Rect::operator*=(const Rotation& r)
+    {
+        Point b = getOuter()*r;
+        origin *= r;
+        size.width = b.x - origin.x;
+        size.height = b.y - origin.y;
+        return *this;
+    }
+
+    Rect Rect::operator*(const Rotation& r) const
+    {
+        return Rect(origin*r, getOuter()*r);
+    }
+
     Rect& Rect::operator+=(const Point& p)
     {
         Point p1a = origin;

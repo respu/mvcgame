@@ -47,12 +47,6 @@ namespace mvcgame {
         Rect tr(r.origin.x+offsetX, r.origin.y+offsetY,
             r.size.width*width/originalWidth, r.size.height*height/originalHeight);
 
-        if(rotate)
-        {
-            std::swap(tr.origin.x, tr.origin.y);
-            std::swap(tr.size.width, tr.size.height);
-        }
-
         return tr;
     }
 
