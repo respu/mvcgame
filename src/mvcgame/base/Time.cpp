@@ -1,8 +1,9 @@
 
 #include <mvcgame/base/Time.hpp>
-#include <math.h>
+#include <cmath>
 #include <chrono>
-#include <stdio.h>
+#include <cstdio>
+#include <cassert>
 
 #define FLOATTIME_EQ_ULP 4
 #define FIXED_TIME_FACTOR (duration_t)1000000
@@ -36,7 +37,7 @@ namespace mvcgame {
         return Duration(FIXED_TIME_FACTOR*60*m);
     }
     
-    const Duration Duration::secs(duration_part_t s)
+    const Duration Duration::secs(float s)
     {
         return Duration(FIXED_TIME_FACTOR*s);
     }
@@ -361,16 +362,69 @@ namespace mvcgame {
         return *this;
     }
 
-    const Speed Speed::operator*(const Duration& dur)
+    Speed Speed::operator*(const Duration& dur) const
     {
         gunit_t dt = dur.fsecs();
         return Speed(x*dt, y*dt, d-1);
     }
 
-    const Speed Speed::operator/(const Duration& dur)
+    Speed Speed::operator/(const Duration& dur) const
     {
         gunit_t dt = dur.fsecs();
         return Speed(x/dt, y/dt, d+1);
+    }
+
+    Speed& Speed::operator*=(gunit_t v)
+    {
+        x *= v;
+        y *= v;
+        return *this;        
+    }
+
+    Speed& Speed::operator/=(gunit_t v)
+    {
+        x /= v;
+        y /= v;
+        return *this;
+    }
+
+    Speed Speed::operator*(gunit_t v) const
+    {
+        return Speed(x*v, y*v, d);
+    }
+
+    Speed Speed::operator/(gunit_t v)const
+    {
+        return Speed(x/v, y/v, d);
+    }
+
+
+    Speed& Speed::operator+=(const Speed& s)
+    {
+        assert(d == s.d);        
+        x += s.x;
+        y += s.y;
+        return *this;
+    }
+
+    Speed& Speed::operator-=(const Speed& s)
+    {
+        assert(d == s.d);
+        x -= s.x;
+        y -= s.y;
+        return *this;
+    }
+
+    Speed Speed::operator+(const Speed& s) const
+    {
+        assert(d == s.d);
+        return Speed(x+s.x, y+s.y, d);
+    }
+
+    Speed Speed::operator-(const Speed& s) const
+    {
+        assert(d == s.d);        
+        return Speed(x-s.x, y-s.y, d);
     }
 
 
@@ -418,7 +472,12 @@ namespace mvcgame {
         if(p)
         {
             os << " " << p << " secs";
-        }        
+        }
+        p = d.usecs();
+        if(p)
+        {
+            os << " " << p << " usecs";   
+        }
         os << ")";
         return os;
     }

@@ -27,6 +27,7 @@ namespace mvcgame {
 		BaseViewController& _rootController;
 		BaseView& _rootView;
 
+		void emitUpdate(const UpdateEvent& event, BaseView& view);
 		void emitUpdate(const UpdateEvent& event, BaseViewController& controller);
 		void emitTouch(const TouchEvent& event, TouchResponderCallback callback);
 

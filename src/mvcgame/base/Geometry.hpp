@@ -31,6 +31,7 @@ namespace mvcgame {
         Point();
         Point(gunit_t x, gunit_t y);
         Point(const Size& size);
+        Point(const Speed& speed);
 
         gunit_t distance() const;
 
@@ -67,6 +68,11 @@ namespace mvcgame {
         Anchor operator/(const Size& s) const;
         Size operator/(const Anchor& a) const;
         Speed operator/(const Duration& d) const;
+
+        /**
+         * linear interpolation
+         */
+        Point lerp(const Point& p, float f) const;
     };
 
     /**

@@ -28,9 +28,8 @@ namespace mvcgame {
         static const Duration days(duration_part_t d);
         static const Duration hours(duration_part_t h);
         static const Duration mins(duration_part_t m);
-        static const Duration secs(duration_part_t s);
+        static const Duration secs(float s);
         static const Duration usecs(duration_t u);
-        static const Duration fsecs(float s);
         
         Duration();
     	Duration(duration_t pt);
@@ -119,8 +118,18 @@ namespace mvcgame {
 
         Speed& operator*=(const Duration& d);
         Speed& operator/=(const Duration& d);
-        const Speed operator*(const Duration& d);
-        const Speed operator/(const Duration& d);
+        Speed operator*(const Duration& d) const;
+        Speed operator/(const Duration& d) const;
+
+        Speed& operator*=(gunit_t v);
+        Speed& operator/=(gunit_t v);
+        Speed operator*(gunit_t v) const;
+        Speed operator/(gunit_t v)const;
+
+        Speed& operator+=(const Speed& s);
+        Speed& operator-=(const Speed& s);
+        Speed operator+(const Speed& s) const;
+        Speed operator-(const Speed& s) const;        
     };
 
     /**

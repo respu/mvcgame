@@ -15,6 +15,29 @@ namespace mvcgame {
     {
     }
 
+    void EventEmitter::emitUpdate(const UpdateEvent& event, BaseView& view)
+    {
+        view.respondOnUpdate(event);
+        if(event.getStopPropagation())
+        {
+            return;
+        }
+        const BaseView::Children& children = view.getChildren();
+        BaseView::Children::const_iterator itr;
+        for(itr=children.begin(); itr!=children.end(); ++itr)
+        {
+            emitUpdate(event, *itr->first);
+            if(event.getStopPropagation())
+            {
+                return;
+            }
+        }
+        if(event.getStopPropagation())
+        {
+            return;
+        }
+    }
+
     void EventEmitter::emitUpdate(const UpdateEvent& event, BaseViewController& controller)
     {
         controller.respondOnUpdate(event);
@@ -141,6 +164,7 @@ namespace mvcgame {
     void EventEmitter::emitUpdate(const UpdateEvent& event)
     {
         emitUpdate(event, _rootController);
+        emitUpdate(event, _rootView);
     }
 
     void EventEmitter::emitTouchStart(const TouchEvent& event)

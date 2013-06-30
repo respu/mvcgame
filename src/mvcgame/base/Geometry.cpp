@@ -3,6 +3,7 @@
 #include <mvcgame/base/Time.hpp>
 
 #include <cmath>
+#include <cassert>
 #include <limits>
 #include <algorithm>
 #include <sstream>
@@ -34,6 +35,11 @@ namespace mvcgame {
     Point::Point(const Size& size) : x(size.width), y(size.height)
     {
     }
+
+    Point::Point(const Speed& speed) : x(speed.x), y(speed.y)
+    {
+        assert(speed.d == 0);
+    }   
 
     gunit_t Point::distance() const
     {
@@ -201,6 +207,11 @@ namespace mvcgame {
     {
         float dt = d.fsecs();
         return Speed(x/dt, y/dt);
+    }
+
+    Point Point::lerp(const Point& p, float f) const
+    {
+        return Point(x+(p.x-x)*f, y+(p.y-y)*f);
     }
 
 #pragma mark - Anchor

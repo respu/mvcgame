@@ -5,6 +5,7 @@
 #include <mvcgame/controller/RootViewController.hpp>
 #include <mvcgame/view/TileMapView.hpp>
 #include <mvcgame/view/PanZoomView.hpp>
+#include <mvcgame/view/ColorView.hpp>
 
 using namespace mvcgame;
 
@@ -14,6 +15,11 @@ MainController::MainController()
 
 void MainController::controllerAdded()
 {
+    auto bg = std::make_shared<ColorView>();
+    bg->setBackgroundColor(Color(100, 100, 100));
+    bg->getFrame().size = getRoot().getView().getSize();
+    bg->getFrame().origin = bg->getFrame().size/2;
+
     auto tileMap = ServiceLocator::get().getTileMaps().load("desert");
     std::cout << *tileMap << std::endl;
 
@@ -25,5 +31,6 @@ void MainController::controllerAdded()
     panZoom->setFrame(tileMapView->getFrame());
     panZoom->setContentView(tileMapView);
 
-    setView(panZoom);
+    bg->addChild(panZoom);
+    setView(bg);
 }
