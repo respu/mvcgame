@@ -2,6 +2,8 @@
 #include <mvcgame/view/TileMapView.hpp>
 #include <mvcgame/view/Sprite.hpp>
 
+#include <cassert>
+
 namespace mvcgame {
 
     TileMapView::TileMapView() :
@@ -24,27 +26,34 @@ namespace mvcgame {
 
     void TileMapView::setTileLayer(unsigned int num, bool changeSize)
     {
-        _tileLayer = &_tileMap->getLayers().at(num);
-        _changed = true;
+        setTileLayer(_tileMap->getLayers().at(num), changeSize);
     }
 
     void TileMapView::setTileLayer(const std::string& name, bool changeSize)
     {
-        _tileLayer = &_tileMap->getLayer(name);
-        _changed = true;        
+        setTileLayer(_tileMap->getLayer(name), changeSize);
+    }
+
+    void TileMapView::setTileLayer(const TileLayer& layer, bool changeSize)
+    {
+        _tileLayer = &layer;
+        if(changeSize)
+        {
+            assert(_tileMap);
+            getFrame().size.width = _tileMap->getTileWidth()*_tileLayer->getWidth();
+            getFrame().size.height = _tileMap->getTileHeight()*_tileLayer->getHeight();
+        }
+        _changed = true;  
     }
 
     void TileMapView::setTileMap(std::shared_ptr<TileMap> tileMap, bool changeSize)
     {
-        if(_tileMap != tileMap)
+        _tileMap = tileMap;
+        if(!_tileLayer)
         {
-            _tileMap = tileMap;
-            if(!_tileLayer)
-            {
-                setTileLayer(0, changeSize);
-            }
-            _changed = true;
+            setTileLayer(0, changeSize);
         }
+        _changed = true;
     }
 
     void TileMapView::update()
@@ -55,16 +64,17 @@ namespace mvcgame {
             return;
         }
         removeChildren();
-        if(!_tileLayer)
+        if(!_tileLayer || !_tileMap)
         {
             return;
         }
 
         unsigned th = _tileLayer->getHeight();
         unsigned tw = _tileLayer->getWidth();
-        Size mapSize = Size(_tileMap->getTileWidth()*tw, _tileMap->getTileHeight()*th);
-        Scale sc = getFrame().size / mapSize;
-        Point p(0, mapSize.height);
+        Size layerSize = Size(_tileMap->getTileWidth()*tw, _tileMap->getTileHeight()*th); 
+        Scale sc = getFrame().size / layerSize;
+        std::cout << sc << std::endl;
+        Point p(0, layerSize.height);
         for(unsigned ty=0; ty<th; ty++)
         {   
             for(unsigned tx=0; tx<tw; tx++)

@@ -24,7 +24,6 @@ void MainController::controllerAdded()
     std::cout << *tileMap << std::endl;
 
     auto tileMapView = std::make_shared<TileMapView>(tileMap);
-    tileMapView->getFrame().size = getRoot().getView().getSize();
     tileMapView->getFrame().origin = tileMapView->getFrame().size/2;
 
     auto panZoom = std::make_shared<PanZoomView>();

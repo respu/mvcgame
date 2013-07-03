@@ -9,8 +9,6 @@ Guidelines
 
 * no naked pointers (use std::unique_ptr and std::shared_ptr)
 * no polymorphism (use std::function and std::bind as a substitute for delegates)
-* try to have no dependencies
-* try not to crash when things go wrong
 * try not to do any casting
 
 Installation
