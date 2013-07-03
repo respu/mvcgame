@@ -20,6 +20,7 @@ namespace mvcgame {
         Duration _panInertiaTime;
         Duration _panInertiaDuration;
         Duration _panSpeedInterval;
+        float _outOfBoundsSpeedFactor;
 
         std::shared_ptr<View> _contentView;
 

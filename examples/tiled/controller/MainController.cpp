@@ -27,7 +27,7 @@ void MainController::controllerAdded()
     tileMapView->getFrame().origin = tileMapView->getFrame().size/2;
 
     auto panZoom = std::make_shared<PanZoomView>();
-    panZoom->setFrame(tileMapView->getFrame());
+    panZoom->setFrame(bg->getFrame());
     panZoom->setContentView(tileMapView);
 
     bg->addChild(panZoom);

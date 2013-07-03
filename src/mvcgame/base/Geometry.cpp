@@ -582,10 +582,23 @@ namespace mvcgame {
         return vertices;
     }
 
-    bool Rect::contains(const Point& p) const
+    bool Rect::contains(const Point& p, bool equal) const
     {
-        return origin.x <= p.x && origin.x+size.width >= p.x &&
-        origin.y <= p.y && origin.y+size.height >= p.y;
+        if(equal)
+        {
+            return origin.x <= p.x && origin.x+size.width >= p.x &&
+            origin.y <= p.y && origin.y+size.height >= p.y;
+        }
+        else
+        {
+            return origin.x < p.x && origin.x+size.width > p.x &&
+            origin.y < p.y && origin.y+size.height > p.y;
+        }
+    }
+
+    bool Rect::contains(const Rect& r, bool equal) const
+    {
+        return contains(r.origin, equal) && contains(r.getOuter(), equal);
     }
 
 #pragma mark - RectBorder

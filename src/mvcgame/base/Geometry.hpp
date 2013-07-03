@@ -185,7 +185,8 @@ namespace mvcgame {
 
         Points getVertices() const;
 
-        bool contains(const Point& p) const;
+        bool contains(const Point& p, bool equal=true) const;
+        bool contains(const Rect& r, bool equal=true) const;
 
         Point getOuter() const;
     };

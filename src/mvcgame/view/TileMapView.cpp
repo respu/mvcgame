@@ -73,7 +73,6 @@ namespace mvcgame {
         unsigned tw = _tileLayer->getWidth();
         Size layerSize = Size(_tileMap->getTileWidth()*tw, _tileMap->getTileHeight()*th); 
         Scale sc = getFrame().size / layerSize;
-        std::cout << sc << std::endl;
         Point p(0, layerSize.height);
         for(unsigned ty=0; ty<th; ty++)
         {   
