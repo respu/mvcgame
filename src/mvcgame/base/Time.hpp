@@ -48,9 +48,9 @@ namespace mvcgame {
         Duration& operator+=(const Duration& i);
         Duration& operator-=(const Duration& i);
         
-        const Duration operator+(const Duration& i) const;
-        const Duration operator-(const Duration& i) const;
-		const Time operator+(const Time& s) const;
+        Duration operator+(const Duration& i) const;
+        Duration operator-(const Duration& i) const;
+		Time operator+(const Time& s) const;
         
         float operator/(const Duration& d) const;
         
@@ -102,8 +102,9 @@ namespace mvcgame {
         Time& operator+=(const Duration& i);
         Time& operator-=(const Duration& i);
 
-        const Time operator+(const Duration& i) const;
-        const Duration operator-(const Time& s) const;
+        Time operator+(const Duration& i) const;
+        Time operator-(const Duration& i) const;
+        Duration operator-(const Time& s) const;
     };
 
     class Speed final {

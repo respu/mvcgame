@@ -19,8 +19,11 @@ namespace mvcgame {
         Speed _panInertiaSpeed;
         Duration _panInertiaTime;
         Duration _panInertiaDuration;
+        Duration _panSpeedInterval;
 
         std::shared_ptr<View> _contentView;
+
+        void removeOldTouchTimePoints();
     public:
         PanZoomView();
         PanZoomView(std::shared_ptr<View> contentView);
@@ -31,6 +34,12 @@ namespace mvcgame {
          * of the inertia
          */
         void setPanInertiaDuration(Duration d);
+
+        /**
+         * The interval of time taken into account to optain
+         * the pan speed when the touch ends
+         */
+        void setPanInertiaSpeedInterval(Duration d);
 
         void respondOnUpdate(const UpdateEvent& event);
         void respondOnTouchStart(const TouchEvent& event);

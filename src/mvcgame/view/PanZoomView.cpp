@@ -4,18 +4,19 @@
 #include <mvcgame/event/Events.hpp>
 
 #include <algorithm>
+#include <cassert>
 
 namespace mvcgame {
 
     PanZoomView::PanZoomView() :
     _touched(false),
-    _panInertiaDuration(Duration::secs(0.5))
+    _panInertiaDuration(Duration::secs(0.5)),
+    _panSpeedInterval(Duration::secs(0.05))
     {   
     }
 
     PanZoomView::PanZoomView(std::shared_ptr<View> contentView) :
-    _touched(false),
-    _panInertiaDuration(Duration::secs(0.5))  
+    PanZoomView()
     {
         setContentView(contentView);
     }
@@ -23,7 +24,12 @@ namespace mvcgame {
     void PanZoomView::setPanInertiaDuration(Duration d)
     {
         _panInertiaDuration = d;
-    }   
+    }
+
+    void PanZoomView::setPanInertiaSpeedInterval(Duration d)
+    {
+        _panSpeedInterval = d;
+    }
 
     void PanZoomView::setContentView(std::shared_ptr<View> contentView)
     {
@@ -60,6 +66,15 @@ namespace mvcgame {
         }
     }
 
+    void PanZoomView::removeOldTouchTimePoints()
+    {
+        Time threshold = Time::now() - _panSpeedInterval;
+        _touchTimePoints.erase(std::remove_if(_touchTimePoints.begin(), _touchTimePoints.end(),
+            [&threshold](const TimePoint& tp){
+                return tp.first < threshold;
+        }), _touchTimePoints.end());
+    }
+
     void PanZoomView::respondOnTouchUpdate(const TouchEvent& event)
     {
         if(!_contentView)
@@ -71,6 +86,7 @@ namespace mvcgame {
             auto point = event.getTouchPoint(*_contentView);
             _contentView->getFrame().origin = point - _touchPoint;
             _touchTimePoints.push_back(TimePoint(Time::now(), point));
+            removeOldTouchTimePoints();            
         }
     }
 
@@ -80,11 +96,14 @@ namespace mvcgame {
         {
             TimePoint& start = _touchTimePoints.front();
             TimePoint& end = _touchTimePoints.back();
-            _panInertiaSpeed = (end.second-start.second)/(end.first-start.first);
-            std::cout << _panInertiaSpeed << std::endl;
-            _panInertiaTime = _panInertiaDuration;
-            _touched = false;
-            _touchTimePoints.clear();
+            Duration duration = end.first-start.first;
+            if(duration > Duration())
+            {
+                _panInertiaSpeed = (end.second-start.second)/duration;
+                _panInertiaTime = _panInertiaDuration;
+                _touched = false;
+                _touchTimePoints.clear();
+            }
         }
     }
 }

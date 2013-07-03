@@ -107,10 +107,10 @@ namespace mvcgame {
         _textures.insert(itr, Textures::value_type(&t, id));
 
         glBindTexture(GL_TEXTURE_2D, id);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);        
 
@@ -180,8 +180,8 @@ namespace mvcgame {
         };
 
         glEnable(GL_TEXTURE_2D);
-        glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
-        glEnableClientState ( GL_VERTEX_ARRAY );
+        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+        glEnableClientState( GL_VERTEX_ARRAY );
 
         if(texture.hasAlpha())
         {
@@ -198,8 +198,8 @@ namespace mvcgame {
         glTexCoordPointer(2, GL_FLOAT, 0, &_textureBuffer.front() );
         glDrawArrays(GL_QUADS, 0, 4 );
 
-        glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-        glDisableClientState ( GL_VERTEX_ARRAY );
+        glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+        glDisableClientState( GL_VERTEX_ARRAY );
         glDisable(GL_TEXTURE_2D);
         if(texture.hasAlpha())
         {

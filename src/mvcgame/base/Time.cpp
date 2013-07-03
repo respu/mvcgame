@@ -100,7 +100,7 @@ namespace mvcgame {
         return _value <= i._value;
     }
 
-    const Duration Duration::operator+(const Duration& i) const
+    Duration Duration::operator+(const Duration& i) const
     {
         return Duration(_value+i._value);
     }
@@ -111,7 +111,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Duration Duration::operator-(const Duration& i) const
+    Duration Duration::operator-(const Duration& i) const
     {
         return Duration(_value+i._value);
     }
@@ -122,7 +122,7 @@ namespace mvcgame {
         return *this;
     }
 
-	const Time Duration::operator+(const Time& s) const
+	Time Duration::operator+(const Time& s) const
     {
         return Time(_value+(fixedtime_t)s);
     }
@@ -244,14 +244,19 @@ namespace mvcgame {
         return *this;
     }
 
-    const Duration Time::operator-(const Time& s) const
+    Duration Time::operator-(const Time& s) const
     {
         return Duration(_value-s._value);
     }
     
-    const Time Time::operator+(const Duration& i) const
+    Time Time::operator+(const Duration& i) const
     {
         return Time(_value+i.usecs());
+    }
+
+    Time Time::operator-(const Duration& i) const
+    {
+        return Time(_value-i.usecs());
     }
     
     fixedtime_t Time::year() const
