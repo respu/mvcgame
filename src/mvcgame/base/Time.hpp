@@ -117,6 +117,9 @@ namespace mvcgame {
         Speed(gunit_t px, gunit_t py);
         Speed(gunit_t px, gunit_t py, int pd);
 
+        bool operator==(const Speed& s) const;
+        bool operator!=(const Speed& s) const;        
+
         Speed& operator*=(const Duration& d);
         Speed& operator/=(const Duration& d);
         Speed operator*(const Duration& d) const;
@@ -130,7 +133,7 @@ namespace mvcgame {
         Speed& operator+=(const Speed& s);
         Speed& operator-=(const Speed& s);
         Speed operator+(const Speed& s) const;
-        Speed operator-(const Speed& s) const;        
+        Speed operator-(const Speed& s) const;     
     };
 
     /**

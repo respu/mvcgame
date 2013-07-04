@@ -46,6 +46,11 @@ namespace mvcgame {
         return sqrt(x*x+y*y);
     }
 
+    Point::operator bool() const
+    {
+        return !guniteq(x, 0) || !guniteq(y, 0);
+    }
+
     bool Point::operator==(const Point& p) const
     {
         return guniteq(x, p.x) && guniteq(y, p.y);

@@ -10,8 +10,11 @@ namespace mvcgame {
 
     PanZoomView::PanZoomView() :
     _touched(false),
+    _panInertiaPercent(0),    
     _panInertiaDuration(Duration::secs(0.5)),
-    _panSpeedInterval(Duration::secs(0.2))
+    _panSpeedInterval(Duration::secs(0.2)),
+    _panInertiaEasing(Easing::linear),
+    _outOfBoundsDuration(Duration::secs(0.1))
     {   
     }
 
@@ -42,55 +45,69 @@ namespace mvcgame {
         if(!_contentView)
         {
             return;
-        }       
-        if(_panInertiaTime > Duration())
-        { 
-            _panInertiaTime -= event.getInterval();
-            float f = _panInertiaTime / _panInertiaDuration;            
-            Point p = (_panInertiaSpeed*f)*event.getInterval();
-            _contentView->getFrame().origin += p;
         }
-        else
+        Speed speed;
+        Point outOfBounds = getOutOfBoundsDistance();
+        if(outOfBounds)
         {
-            _panInertiaSpeed = Speed(0, 0);
-            bool outOfBounds = false;
-            Rect contentBounds = _contentView->getBoundingBox();
-            Rect containerBounds = getBoundingBox();
-            Point contentOrigin = contentBounds.origin;
-            Point containerOrigin = containerBounds.origin;
-            Point contentOuter = contentBounds.getOuter();
-            Point containerOuter = containerBounds.getOuter();
-
-            if(contentOrigin.x < containerOrigin.x && contentOuter.x < containerOuter.x)
+            _panInertiaSpeed = Speed();
+            if(_outOfBoundsDuration)
             {
-                // to the left
-                _panInertiaSpeed.x = (containerOuter.x - contentOuter.x);
-                outOfBounds = true;
+                speed += outOfBounds/_outOfBoundsDuration;
             }
-            if(contentOrigin.x > containerOrigin.x && contentOuter.x > containerOuter.x)
+            else
             {
-                // to the right
-                _panInertiaSpeed.x = (containerOrigin.x - contentOrigin.x);
-                outOfBounds = true;
-            }
-            if(contentOrigin.y < containerOrigin.y && contentOuter.y < containerOuter.y)
-            {
-                // to the bottom
-                _panInertiaSpeed.y = (containerOuter.y - contentOuter.y);
-                outOfBounds = true;
-            }
-            if(contentOrigin.y > containerOrigin.y && contentOuter.y > containerOuter.y)
-            {
-                // to the top
-                _panInertiaSpeed.y = (containerOrigin.y - contentOrigin.y);
-                outOfBounds = true;
-            }
-            if(outOfBounds)
-            {
-                _panInertiaSpeed /= _panInertiaDuration.fsecs()*_panInertiaDuration.fsecs();
-                _panInertiaTime = _panInertiaDuration;
+                _contentView->getFrame().origin += outOfBounds;
             }
         }
+        if(_panInertiaSpeed != Speed())
+        { 
+            _panInertiaPercent += event.getInterval() / _panInertiaDuration;
+            speed += Easing::get(
+                _panInertiaPercent,
+                _panInertiaSpeed,
+                _panInertiaSpeed*-1,
+                _panInertiaEasing);
+            if(_panInertiaPercent>=1)
+            {
+                _panInertiaSpeed = Speed();
+            }
+        }
+
+        _contentView->getFrame().origin += speed*event.getInterval();
+    }
+
+    Point PanZoomView::getOutOfBoundsDistance()
+    {
+        Point outOfBounds;
+        Rect contentBounds = _contentView->getBoundingBox();
+        Rect containerBounds = getBoundingBox();
+        Point contentOrigin = contentBounds.origin;
+        Point containerOrigin = containerBounds.origin;
+        Point contentOuter = contentBounds.getOuter();
+        Point containerOuter = containerBounds.getOuter();
+
+        if(contentOrigin.x < containerOrigin.x && contentOuter.x < containerOuter.x)
+        {
+            // to the left
+            outOfBounds.x += (containerOuter.x - contentOuter.x);
+        }
+        if(contentOrigin.x > containerOrigin.x && contentOuter.x > containerOuter.x)
+        {
+            // to the right
+            outOfBounds.x += (containerOrigin.x - contentOrigin.x);
+        }
+        if(contentOrigin.y < containerOrigin.y && contentOuter.y < containerOuter.y)
+        {
+            // to the bottom
+            outOfBounds.y += (containerOuter.y - contentOuter.y);
+        }
+        if(contentOrigin.y > containerOrigin.y && contentOuter.y > containerOuter.y)
+        {
+            // to the top
+            outOfBounds.y += (containerOrigin.y - contentOrigin.y);
+        }
+        return outOfBounds;
     }
 
     void PanZoomView::removeOldTouchTimePoints()
@@ -104,23 +121,18 @@ namespace mvcgame {
 
     void PanZoomView::respondOnTouchStart(const TouchEvent& event)
     {
-        if(!_contentView)
-        {
-            return;
-        }
         assert(event.touched(*this));
         _touchPoint = event.getTouchPoint(*this);
     }
 
     void PanZoomView::respondOnTouchUpdate(const TouchEvent& event)
     {
-        if(!_contentView)
-        {
-            return;
-        }
         assert(event.touched(*this));
         auto point = event.getTouchPoint(*this);
-        _contentView->getFrame().origin += point - _touchPoint;
+        if(_contentView)
+        {
+            _contentView->getFrame().origin += point - _touchPoint;
+        }
         _touchPoint = point;
         _touchTimePoints.push_back(TimePoint(Time::now(), point));
         removeOldTouchTimePoints();
@@ -134,7 +146,7 @@ namespace mvcgame {
         Duration duration = end.first-start.first;
         assert(duration > Duration());
         _panInertiaSpeed = (end.second-start.second)/duration;
-        _panInertiaTime = _panInertiaDuration;
+        _panInertiaPercent = 0;
         _touched = false;
         _touchTimePoints.clear();
     }

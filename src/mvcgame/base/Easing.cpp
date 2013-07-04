@@ -1,6 +1,10 @@
 
 #include <mvcgame/base/Easing.hpp>
-#include <math.h>
+#include <mvcgame/base/Geometry.hpp>
+#include <mvcgame/base/Time.hpp>
+
+#include <cmath>
+#include <cassert>
 
 namespace mvcgame {
 
@@ -15,5 +19,29 @@ namespace mvcgame {
 	{
 		return Easing::linear(0.5 - cosf( p*Pi ) / 2, b, c);
 	}
+
+    easing_t Easing::expo(easing_t p, easing_t b, easing_t c)
+    {
+        return (p==0) ? b : c * pow(2, 10 * (p - 1)) + b;
+    }
  
+    template<>
+    Speed Easing::get(easing_t p, Speed start, Speed diff, Function f)
+    {
+        assert(start.d == diff.d);
+        return Speed(
+            f(p, start.x, diff.x),
+            f(p, start.y, diff.y),
+            start.d
+        );
+    }
+
+    template<>
+    Point Easing::get(easing_t p, Point start, Point diff, Function f)
+    {
+        return Speed(
+            f(p, start.x, diff.x),
+            f(p, start.y, diff.y)
+        );
+    }    
 }

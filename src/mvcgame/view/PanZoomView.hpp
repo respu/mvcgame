@@ -5,6 +5,8 @@
 
 #include <mvcgame/view/View.hpp>
 #include <mvcgame/base/Time.hpp>
+#include <mvcgame/base/Easing.hpp>
+
 namespace mvcgame {
 
     class PanZoomView : public View
@@ -16,15 +18,20 @@ namespace mvcgame {
         TimePoints _touchTimePoints;
         Point _touchPoint;
         bool _touched;
+
         Speed _panInertiaSpeed;
-        Duration _panInertiaTime;
+        float _panInertiaPercent;
         Duration _panInertiaDuration;
         Duration _panSpeedInterval;
-        float _outOfBoundsSpeedFactor;
+        Easing::Function _panInertiaEasing;
+
+        Duration _outOfBoundsDuration;
 
         std::shared_ptr<View> _contentView;
 
         void removeOldTouchTimePoints();
+
+        Point getOutOfBoundsDistance();
     public:
         PanZoomView();
         PanZoomView(std::shared_ptr<View> contentView);
@@ -41,6 +48,12 @@ namespace mvcgame {
          * the pan speed when the touch ends
          */
         void setPanInertiaSpeedInterval(Duration d);
+
+        /**
+         * The time it should take to go from an out of bounds
+         * position to the edge of the content view
+         */
+        void setOutOfBoundsDuration(Duration d);
 
         void respondOnUpdate(const UpdateEvent& event);
         void respondOnTouchStart(const TouchEvent& event);

@@ -34,6 +34,7 @@ namespace mvcgame {
         Point(const Speed& speed);
 
         gunit_t distance() const;
+        operator bool() const;
 
         bool operator==(const Point& p) const;
         bool operator!=(const Point& p) const;

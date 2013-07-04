@@ -36,6 +36,10 @@ namespace mvcgame {
 
 		static easing_t linear(easing_t p, easing_t b, easing_t c);
 		static easing_t swing(easing_t p, easing_t b, easing_t c);
+		static easing_t expo(easing_t p, easing_t b, easing_t c);
+
+		template<typename Class>
+		static Class get(easing_t p, Class start, Class diff, Function f);
 	};
 }
 

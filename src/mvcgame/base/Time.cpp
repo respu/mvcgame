@@ -348,6 +348,16 @@ namespace mvcgame {
     {
         
     }
+
+    bool Speed::operator==(const Speed& s) const
+    {
+        return x == s.x && y == s.y && d == s.d;
+    }
+
+    bool Speed::operator!=(const Speed& s) const
+    {
+        return !operator==(s);
+    }
     
     Speed& Speed::operator*=(const Duration& dur)
     {
