@@ -24,7 +24,7 @@ MainController::MainController()
 void MainController::controllerAdded()
 {
     auto bg = std::make_shared<ColorView>();
-    bg->setBackgroundColor(Color(0, 0, 0));
+    bg->setBackgroundColor(Color(100, 100, 100));
     bg->getFrame().size = getRoot().getView().getSize();
     bg->getFrame().origin = bg->getFrame().size/2;
 

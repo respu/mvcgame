@@ -1,8 +1,9 @@
 
 #include <mvcgame/base/Time.hpp>
-#include <math.h>
+#include <cmath>
 #include <chrono>
-#include <stdio.h>
+#include <cstdio>
+#include <cassert>
 
 #define FLOATTIME_EQ_ULP 4
 #define FIXED_TIME_FACTOR (duration_t)1000000
@@ -36,7 +37,7 @@ namespace mvcgame {
         return Duration(FIXED_TIME_FACTOR*60*m);
     }
     
-    const Duration Duration::secs(duration_part_t s)
+    const Duration Duration::secs(float s)
     {
         return Duration(FIXED_TIME_FACTOR*s);
     }
@@ -99,7 +100,7 @@ namespace mvcgame {
         return _value <= i._value;
     }
 
-    const Duration Duration::operator+(const Duration& i) const
+    Duration Duration::operator+(const Duration& i) const
     {
         return Duration(_value+i._value);
     }
@@ -110,7 +111,7 @@ namespace mvcgame {
         return *this;
     }
 
-    const Duration Duration::operator-(const Duration& i) const
+    Duration Duration::operator-(const Duration& i) const
     {
         return Duration(_value+i._value);
     }
@@ -121,7 +122,7 @@ namespace mvcgame {
         return *this;
     }
 
-	const Time Duration::operator+(const Time& s) const
+	Time Duration::operator+(const Time& s) const
     {
         return Time(_value+(fixedtime_t)s);
     }
@@ -243,14 +244,19 @@ namespace mvcgame {
         return *this;
     }
 
-    const Duration Time::operator-(const Time& s) const
+    Duration Time::operator-(const Time& s) const
     {
         return Duration(_value-s._value);
     }
     
-    const Time Time::operator+(const Duration& i) const
+    Time Time::operator+(const Duration& i) const
     {
         return Time(_value+i.usecs());
+    }
+
+    Time Time::operator-(const Duration& i) const
+    {
+        return Time(_value-i.usecs());
     }
     
     fixedtime_t Time::year() const
@@ -342,6 +348,16 @@ namespace mvcgame {
     {
         
     }
+
+    bool Speed::operator==(const Speed& s) const
+    {
+        return x == s.x && y == s.y && d == s.d;
+    }
+
+    bool Speed::operator!=(const Speed& s) const
+    {
+        return !operator==(s);
+    }
     
     Speed& Speed::operator*=(const Duration& dur)
     {
@@ -361,16 +377,69 @@ namespace mvcgame {
         return *this;
     }
 
-    const Speed Speed::operator*(const Duration& dur)
+    Speed Speed::operator*(const Duration& dur) const
     {
         gunit_t dt = dur.fsecs();
         return Speed(x*dt, y*dt, d-1);
     }
 
-    const Speed Speed::operator/(const Duration& dur)
+    Speed Speed::operator/(const Duration& dur) const
     {
         gunit_t dt = dur.fsecs();
         return Speed(x/dt, y/dt, d+1);
+    }
+
+    Speed& Speed::operator*=(gunit_t v)
+    {
+        x *= v;
+        y *= v;
+        return *this;        
+    }
+
+    Speed& Speed::operator/=(gunit_t v)
+    {
+        x /= v;
+        y /= v;
+        return *this;
+    }
+
+    Speed Speed::operator*(gunit_t v) const
+    {
+        return Speed(x*v, y*v, d);
+    }
+
+    Speed Speed::operator/(gunit_t v)const
+    {
+        return Speed(x/v, y/v, d);
+    }
+
+
+    Speed& Speed::operator+=(const Speed& s)
+    {
+        assert(d == s.d);        
+        x += s.x;
+        y += s.y;
+        return *this;
+    }
+
+    Speed& Speed::operator-=(const Speed& s)
+    {
+        assert(d == s.d);
+        x -= s.x;
+        y -= s.y;
+        return *this;
+    }
+
+    Speed Speed::operator+(const Speed& s) const
+    {
+        assert(d == s.d);
+        return Speed(x+s.x, y+s.y, d);
+    }
+
+    Speed Speed::operator-(const Speed& s) const
+    {
+        assert(d == s.d);        
+        return Speed(x-s.x, y-s.y, d);
     }
 
 
@@ -418,7 +487,12 @@ namespace mvcgame {
         if(p)
         {
             os << " " << p << " secs";
-        }        
+        }
+        p = d.usecs();
+        if(p)
+        {
+            os << " " << p << " usecs";   
+        }
         os << ")";
         return os;
     }

@@ -33,8 +33,10 @@ namespace mvcgame {
 
     void RootView::draw()
     {
+        getBridge().beforeDraw();
         getBridge().loadRootTransform(_size);
         BaseView::draw();
+        getBridge().afterDraw();
     }
 
     IRenderBridge& RootView::getBridge()
@@ -42,4 +44,8 @@ namespace mvcgame {
         return _bridge;
     }
 
+    bool RootView::respondToTouchPoint(const Point& p, const TouchEvent& event)
+    {
+        return true;
+    }
 }

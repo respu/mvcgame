@@ -14,7 +14,7 @@ namespace mvcgame {
     {
     private:
         bool _changed;
-        TileLayer* _tileLayer;
+        const TileLayer* _tileLayer;
         std::shared_ptr<TileMap> _tileMap;
 
     public:
@@ -26,6 +26,7 @@ namespace mvcgame {
 
         void setTileLayer(unsigned int num, bool changeSize=true);
         void setTileLayer(const std::string& name, bool changeSize=true);
+        void setTileLayer(const TileLayer& layer, bool changeSize=true);
 
         std::shared_ptr<TileMap> getTileMap();
         void setTileMap(std::shared_ptr<TileMap> tileMap, bool changeSize=true);

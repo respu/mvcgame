@@ -8,7 +8,7 @@
 namespace mvcgame {
 
 	RootViewController::RootViewController(Application& app) :
-    _app(app), _view(app.getBridge().getRender()), _eventEmitter(*this),
+    _app(app), _view(app.getBridge().getRender()), _eventEmitter(*this, _view),
     _lastUpdateEvent(nullptr), _lastTouchEvent(nullptr),
     _frameDelay(1.0f/60.0f), _framePassed(0.0f)
 	{

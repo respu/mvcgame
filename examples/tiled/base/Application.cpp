@@ -10,7 +10,7 @@ mvcgame::Application(std::move(bridge))
 
 void Application::run()
 {
-    getRoot().getView().setSize(mvcgame::Size(480, 320));
+    getRoot().getView().setSize(mvcgame::Size(480, 321));
     getRoot().addChild(std::unique_ptr<mvcgame::ViewController>(new MainController()));    
     mvcgame::Application::run();
 }

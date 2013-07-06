@@ -3,6 +3,7 @@
 #include <mvcgame/base/Time.hpp>
 
 #include <cmath>
+#include <cassert>
 #include <limits>
 #include <algorithm>
 #include <sstream>
@@ -35,9 +36,19 @@ namespace mvcgame {
     {
     }
 
+    Point::Point(const Speed& speed) : x(speed.x), y(speed.y)
+    {
+        assert(speed.d == 0);
+    }   
+
     gunit_t Point::distance() const
     {
         return sqrt(x*x+y*y);
+    }
+
+    Point::operator bool() const
+    {
+        return !guniteq(x, 0) || !guniteq(y, 0);
     }
 
     bool Point::operator==(const Point& p) const
@@ -201,6 +212,11 @@ namespace mvcgame {
     {
         float dt = d.fsecs();
         return Speed(x/dt, y/dt);
+    }
+
+    Point Point::lerp(const Point& p, float f) const
+    {
+        return Point(x+(p.x-x)*f, y+(p.y-y)*f);
     }
 
 #pragma mark - Anchor
@@ -494,6 +510,20 @@ namespace mvcgame {
         return Rect(origin*s, size*s);
     }
 
+    Rect& Rect::operator*=(const Rotation& r)
+    {
+        Point b = getOuter()*r;
+        origin *= r;
+        size.width = b.x - origin.x;
+        size.height = b.y - origin.y;
+        return *this;
+    }
+
+    Rect Rect::operator*(const Rotation& r) const
+    {
+        return Rect(origin*r, getOuter()*r);
+    }
+
     Rect& Rect::operator+=(const Point& p)
     {
         Point p1a = origin;
@@ -557,10 +587,23 @@ namespace mvcgame {
         return vertices;
     }
 
-    bool Rect::contains(const Point& p) const
+    bool Rect::contains(const Point& p, bool equal) const
     {
-        return origin.x <= p.x && origin.x+size.width >= p.x &&
-        origin.y <= p.y && origin.y+size.height >= p.y;
+        if(equal)
+        {
+            return origin.x <= p.x && origin.x+size.width >= p.x &&
+            origin.y <= p.y && origin.y+size.height >= p.y;
+        }
+        else
+        {
+            return origin.x < p.x && origin.x+size.width > p.x &&
+            origin.y < p.y && origin.y+size.height > p.y;
+        }
+    }
+
+    bool Rect::contains(const Rect& r, bool equal) const
+    {
+        return contains(r.origin, equal) && contains(r.getOuter(), equal);
     }
 
 #pragma mark - RectBorder

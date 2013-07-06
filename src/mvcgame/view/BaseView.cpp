@@ -45,6 +45,16 @@ namespace mvcgame {
         });
     }
 
+    BaseView::Children& BaseView::getChildren()
+    {
+        return _children;
+    }
+
+    const BaseView::Children& BaseView::getChildren() const
+    {
+        return _children;
+    }
+
     void BaseView::update()
     {
         for(Child& child : _children)

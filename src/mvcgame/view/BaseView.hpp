@@ -26,6 +26,8 @@ namespace mvcgame {
 
         virtual void addChild(std::shared_ptr<View> view, unsigned layer=0);
         std::shared_ptr<View> removeChild(const View& view);
+        Children& getChildren();
+        const Children& getChildren() const;
         void removeChildren();
 
         virtual void update();

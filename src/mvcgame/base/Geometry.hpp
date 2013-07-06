@@ -31,8 +31,10 @@ namespace mvcgame {
         Point();
         Point(gunit_t x, gunit_t y);
         Point(const Size& size);
+        Point(const Speed& speed);
 
         gunit_t distance() const;
+        operator bool() const;
 
         bool operator==(const Point& p) const;
         bool operator!=(const Point& p) const;
@@ -67,6 +69,11 @@ namespace mvcgame {
         Anchor operator/(const Size& s) const;
         Size operator/(const Anchor& a) const;
         Speed operator/(const Duration& d) const;
+
+        /**
+         * linear interpolation
+         */
+        Point lerp(const Point& p, float f) const;
     };
 
     /**
@@ -168,6 +175,8 @@ namespace mvcgame {
         Rect operator*(const gunit_t& s) const;
         Rect& operator*=(const Scale& s);
         Rect operator*(const Scale& s) const;
+        Rect& operator*=(const Rotation& r);
+        Rect operator*(const Rotation& r) const;        
 
         Rect& operator+=(const Point& p);
         Rect operator+(const Point& p) const;
@@ -177,7 +186,8 @@ namespace mvcgame {
 
         Points getVertices() const;
 
-        bool contains(const Point& p) const;
+        bool contains(const Point& p, bool equal=true) const;
+        bool contains(const Rect& r, bool equal=true) const;
 
         Point getOuter() const;
     };

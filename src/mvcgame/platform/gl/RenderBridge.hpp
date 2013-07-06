@@ -10,19 +10,20 @@ namespace mvcgame {
     {
     public:
         typedef std::map<const Texture*, unsigned int> Textures;
+        typedef std::vector<float> FloatList;
     private:
         Textures _textures;
-        unsigned int _texture;
 
         static void getGlTransform(const Transform& t, float* m);
+        void loadTexture(const Texture& texture);
     public:
         RenderBridge();
         void loadRootTransform(const Size& size);
         void pushTransform(const Transform& transform);
         void popTransform(const Transform& transform);        
         void drawPolygon(const Points& verts, const Color& color);
-        void loadTexture(const Texture& texture);
-        void drawTexture(const Rect& rect, const Texture& texture, const TextureRegion& region);
+        void drawTexture(std::shared_ptr<const Texture> texture, const TexturePoints& points);
+        void drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect, const TextureRegion& region);
     };
 
 }

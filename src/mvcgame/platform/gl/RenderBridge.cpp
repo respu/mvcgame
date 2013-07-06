@@ -16,8 +16,7 @@
 
 namespace mvcgame {
 
-    RenderBridge::RenderBridge() :
-    _texture(0)
+    RenderBridge::RenderBridge()
     {
     }
 
@@ -107,10 +106,10 @@ namespace mvcgame {
         _textures.insert(itr, Textures::value_type(&t, id));
 
         glBindTexture(GL_TEXTURE_2D, id);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
         glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);        
 
@@ -142,76 +141,49 @@ namespace mvcgame {
 #endif        
     }
 
-    void RenderBridge::drawTexture(const Rect& rect, const Texture& texture, const TextureRegion& region)
+    void RenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect, const TextureRegion& region)
     {
-        loadTexture(texture);
-        GLuint id = _textures.at(&texture);
+        IRenderBridge::drawTexture(texture, rect, region);
+    }
 
-        Rect trect = region / texture;
-        Rect rrect = region / rect;
+    void RenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const TexturePoints& points)
+    {
+        loadTexture(*texture);
+        GLuint textureId = _textures.at(texture.get());
 
-        GLfloat arrVertex[] =
+        FloatList texturesBuffer(2*points.size());
+        FloatList verticesBuffer(3*points.size());
+        for(const TexturePoint& point : points)
         {
-            rrect.origin.x, rrect.origin.y, 0,
-            rrect.origin.x+rrect.size.width, rrect.origin.y, 0,
-            rrect.origin.x+rrect.size.width, rrect.origin.y+rrect.size.height, 0,
-            rrect.origin.x, rrect.origin.y+rrect.size.height, 0,
-        };
-        GLfloat arrCoord[] =
-        {
-            trect.origin.x, trect.origin.y,
-            trect.origin.x+trect.size.width, trect.origin.y,        
-            trect.origin.x+trect.size.width, trect.origin.y+trect.size.height,
-            trect.origin.x, trect.origin.y+trect.size.height,            
-        };
-
-        if(region.rotate)
-        {
-            glPushMatrix();
-            glTranslatef(0, rect.size.height, 0);
-            glRotatef(-90, 0, 0, 1);
-        }        
+            texturesBuffer.push_back(point.texture.x);
+            texturesBuffer.push_back(point.texture.y);
+            verticesBuffer.push_back(point.vertex.x);
+            verticesBuffer.push_back(point.vertex.y);
+            verticesBuffer.push_back(0);
+        }
 
         glEnable(GL_TEXTURE_2D);
-        glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
-        glEnableClientState ( GL_VERTEX_ARRAY );
+        glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+        glEnableClientState( GL_VERTEX_ARRAY );
 
-        if(texture.hasAlpha())
-        {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        }        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);       
 
-        if(_texture != id)
-        {
-            glBindTexture(GL_TEXTURE_2D, id);
-            _texture = id;
-        }
-        glVertexPointer(3, GL_FLOAT, 0, arrVertex );
-        glTexCoordPointer(2, GL_FLOAT, 0, arrCoord );
-        glDrawArrays(GL_QUADS, 0, 4 );
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        glVertexPointer(3, GL_FLOAT, 0, &verticesBuffer.front() );
+        glTexCoordPointer(2, GL_FLOAT, 0, &texturesBuffer.front() );
+        glDrawArrays(GL_QUADS, 0, verticesBuffer.size()/3 );
 
-        glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-        glDisableClientState ( GL_VERTEX_ARRAY );
+        glDisableClientState( GL_TEXTURE_COORD_ARRAY );
+        glDisableClientState( GL_VERTEX_ARRAY );
         glDisable(GL_TEXTURE_2D);
-        if(texture.hasAlpha())
-        {
-            glDisable(GL_BLEND);
-        }
-
-        glFlush();            
-
-        if(region.rotate)
-        {
-            glPopMatrix();
-        }
-
+        glDisable(GL_BLEND);
+        glFlush();
 
 #ifdef MVCGAME_DEBUG_DRAW
         std::cout << ">>>>" << std::endl;
-        std::cout << "GlRenderBridge::drawTexture " << id << std::endl;
-        std::cout << "rect " << rect << std::endl;
-        std::cout << "region " << region << std::endl;
+        std::cout << "GlRenderBridge::drawTexture " << textureId << std::endl;
+        std::cout << "rects " << rects.size() << std::endl;
         GLenum err = glGetError();
         if(err != GL_NO_ERROR)
         {

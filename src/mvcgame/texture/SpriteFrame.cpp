@@ -17,9 +17,9 @@ namespace mvcgame {
     {
     }
 
-    const Texture& SpriteFrame::getTexture() const
+    std::shared_ptr<const Texture> SpriteFrame::getTexture() const
     {
-        return *_texture;
+        return _texture;
     }
 
     const TextureRegion& SpriteFrame::getRegion() const

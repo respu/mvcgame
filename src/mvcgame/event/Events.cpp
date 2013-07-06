@@ -102,10 +102,8 @@ namespace mvcgame {
 
     bool TouchEvent::touched(const Rect& frame) const
     {
-        std::cout << frame << std::endl;
         for(const Point& p : getPoints())
         {
-            std::cout << p << std::endl;
             if(frame.contains(p))
             {
                 return true;
