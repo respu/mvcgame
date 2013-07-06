@@ -75,8 +75,7 @@ namespace mvcgame {
     }
 
     void TextView::update()
-    {
-		View::update();    	
+    { 	
     	if(!_changed)
     	{
     		return;
@@ -104,6 +103,7 @@ namespace mvcgame {
 		}
 		getFrame().size.width = p.x;
 		getFrame().size.height = info.lineHeight;
+        View::update();
     }
 
 }
