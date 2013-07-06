@@ -2,6 +2,7 @@
 #define mvcgame_linux_ApplicationBridge_hpp
 
 #include <mvcgame/platform/IApplicationBridge.hpp>
+#include <mvcgame/platform/BufferedTextureRenderBridge.hpp>
 #include <mvcgame/platform/gl/RenderBridge.hpp>
 #include <mvcgame/platform/linux/FilesystemBridge.hpp>
 
@@ -15,6 +16,7 @@ namespace mvcgame {
         Application* _app;
         bool _finished;
         RenderBridge _renderBridge;
+        BufferedTextureRenderBridge _bufferedRenderBridge;
         FilesystemBridge _fsBridge;
 
         void processEvent(XEvent& xev);

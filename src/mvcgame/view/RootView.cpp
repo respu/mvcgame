@@ -33,8 +33,10 @@ namespace mvcgame {
 
     void RootView::draw()
     {
+        getBridge().beforeDraw();
         getBridge().loadRootTransform(_size);
         BaseView::draw();
+        getBridge().afterDraw();
     }
 
     IRenderBridge& RootView::getBridge()

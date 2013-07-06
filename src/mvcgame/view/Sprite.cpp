@@ -89,7 +89,7 @@ namespace mvcgame {
         if(_sheet.getLength()>_spriteFrame)
         {
             const SpriteFrame& frame = _sheet.getFrame(_spriteFrame);
-            getBridge().drawTexture(getFrame().size, frame.getTexture(), frame.getRegion());
+            getBridge().drawTexture(frame.getTexture(), getFrame().size, frame.getRegion());
         }
         View::draw();
     }

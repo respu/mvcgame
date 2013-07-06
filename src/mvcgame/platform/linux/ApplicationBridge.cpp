@@ -13,13 +13,13 @@
 namespace mvcgame {
 
     ApplicationBridge::ApplicationBridge() :
-    _app(nullptr), _finished(false)
+    _app(nullptr), _finished(false), _bufferedRenderBridge(_renderBridge)
     {
     }
 
     IRenderBridge& ApplicationBridge::getRender()
     {
-        return _renderBridge;
+        return _bufferedRenderBridge;
     }
 
     IFilesystemBridge& ApplicationBridge::getFilesystem()

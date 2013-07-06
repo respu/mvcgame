@@ -3,8 +3,11 @@
 #ifndef mvcgame_IRenderBridge_hpp
 #define mvcgame_IRenderBridge_hpp
 
-#include <string>
+#include <mvcgame/texture/TextureRegion.hpp>
+#include <mvcgame/base/Geometry.hpp>
+
 #include <vector>
+#include <memory>
 
 namespace mvcgame {
 
@@ -15,15 +18,38 @@ namespace mvcgame {
     class Texture;
     class Rect;
     class TextureRegion;
-    typedef std::vector<Point> Points;
 
     class IRenderBridge
     {
     public:
+        struct TexturePoint
+        {
+            Point vertex;
+            Point texture;
+        };
+
+        typedef std::vector<Point> Points;        
+        typedef std::vector<TexturePoint> TexturePoints;
+
+    protected:
+
+        TexturePoints getTextureRectPoints(const Texture& texture, const Rect& rect, const TextureRegion& region);
+
+    public:
         virtual ~IRenderBridge(){};
 
         /**
-         Is called at the beginning of the app to setup the size
+         Is called at the beginning of a draw
+         */
+        virtual void beforeDraw();
+
+        /**
+         Is called at the end of a draw
+         */
+        virtual void afterDraw();        
+
+        /**
+         Is called at the beginning of a draw to setup the size
          */
         virtual void loadRootTransform(const Size& size) = 0;
 
@@ -43,22 +69,24 @@ namespace mvcgame {
         virtual void drawPolygon(const Points& vertices, const Color& color) = 0;
 
         /**
-         Should load a texture
+         Should draw a texture
+         @param texture texture to draw         
+         @param points pairs of screen and texture points
          */
-        virtual void loadTexture(const Texture& texture) = 0;
+        virtual void drawTexture(std::shared_ptr<const Texture> texture, const TexturePoints& points) = 0;
 
         /**
-         Should draw a texture, the texture should be loaded if it isn't already
-         @param rectangle wit hthe position of the texture
-         @param texture to draw
-         @param region inside the texture
+         Should draw a texture
+         @param texture texture to draw         
+         @param rect rectangle with hthe position of the texture
+         @param region region inside the texture
          */
-        virtual void drawTexture(const Rect& rect, const Texture& texture, const TextureRegion& region) = 0;
+        virtual void drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect, const TextureRegion& region);
 
         /**
          Utility method that will st the texture region to the entire texture
          */
-        void drawTexture(const Rect& rect, const Texture& texture);
+        void drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect);
     };
 
 }
