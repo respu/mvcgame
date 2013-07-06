@@ -3,17 +3,22 @@
 
 #include <mvcgame/platform/IRenderBridge.hpp>
 
+#include <stack>
+
 namespace mvcgame {
 
     class BufferedTextureRenderBridge : public IRenderBridge
     {
     private:
+        typedef std::stack<Transform> TransformStack;
         IRenderBridge& _bridge;
         std::shared_ptr<const Texture> _bufferedTexture;
         TexturePoints _bufferedTexturePoints;
-        Transform _bufferedTextureTransform;
+        TransformStack _bufferedTextureTransforms;
 
+        void startBufferedTexture(std::shared_ptr<const Texture> texture);
         void drawBufferedTexture();
+        void clearBufferedTexture();
         void addBufferedTexturePoints(const TexturePoints& points);
     public:
         BufferedTextureRenderBridge(IRenderBridge& innerBridge);

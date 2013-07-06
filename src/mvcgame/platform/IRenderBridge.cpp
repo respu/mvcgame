@@ -18,29 +18,30 @@ namespace mvcgame {
     {
         Rect trect = region / texture;
         Rect rrect = region / rect;
-        TexturePoints points(4);
-
-        points.push_back(TexturePoint{
-            Point(rrect.origin.x, rrect.origin.y),
-            Point(trect.origin.x, trect.origin.y)
-        });
-        points.push_back(TexturePoint{
-            Point(rrect.origin.x+rrect.size.width, rrect.origin.y),
-            Point(trect.origin.x+trect.size.width, trect.origin.y)
-        });
-        points.push_back(TexturePoint{
-            Point(rrect.origin.x+rrect.size.width, rrect.origin.y+rrect.size.height),
-            Point(trect.origin.x+trect.size.width, trect.origin.y+trect.size.height)
-        });
-        points.push_back(TexturePoint{
-            Point(rrect.origin.x, rrect.origin.y+rrect.size.height),
-            Point(trect.origin.x, trect.origin.y+trect.size.height)
-        });
+        TexturePoints points = {
+            TexturePoint{
+                Point(rrect.origin.x, rrect.origin.y),
+                Point(trect.origin.x, trect.origin.y)
+            },
+            TexturePoint{
+                Point(rrect.origin.x+rrect.size.width, rrect.origin.y),
+                Point(trect.origin.x+trect.size.width, trect.origin.y)
+            },
+            TexturePoint{
+                Point(rrect.origin.x+rrect.size.width, rrect.origin.y+rrect.size.height),
+                Point(trect.origin.x+trect.size.width, trect.origin.y+trect.size.height)
+            },
+            TexturePoint{
+                Point(rrect.origin.x, rrect.origin.y+rrect.size.height),
+                Point(trect.origin.x, trect.origin.y+trect.size.height)
+            }
+        };
 
         if(region.rotate)
         {
             std::swap(points[0].texture, points[3].texture);
-            std::swap(points[1].texture, points[2].texture);
+            std::swap(points[0].texture, points[1].texture);         
+            std::swap(points[1].texture, points[2].texture);           
         }
         return points; 
     }
