@@ -3,6 +3,7 @@
 
 #include <mvcgame/texture/PngTextureLoader.hpp>
 #include <mvcgame/texture/GdxTextureAtlasLoader.hpp>
+#include <mvcgame/texture/CocosTextureAtlasLoader.hpp>
 #include <mvcgame/font/FntFontAtlasLoader.hpp>
 
 using namespace mvcgame;
@@ -24,6 +25,10 @@ ServiceLocator::ServiceLocator()
     std::unique_ptr<GdxTextureAtlasLoader> gdx(new GdxTextureAtlasLoader());
     gdx->setTextureManager(_textures);
     _textureAtlases.add(std::move(gdx), "gdx");
+
+    std::unique_ptr<CocosTextureAtlasLoader> cocos(new CocosTextureAtlasLoader());
+    cocos->setTextureManager(_textures);
+    _textureAtlases.add(std::move(cocos), "plist");    
 
     std::unique_ptr<FntFontAtlasLoader> fnt(new FntFontAtlasLoader());
     fnt->setTextureManager(_textures);

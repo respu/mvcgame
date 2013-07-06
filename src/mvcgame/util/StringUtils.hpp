@@ -3,6 +3,7 @@
 #define mvcgame_StringUtils_hpp
 
 #include <string>
+#include <vector>
 
 namespace mvcgame {
 
@@ -10,14 +11,16 @@ namespace mvcgame {
     {
     public:
 
+        static const std::string DefaultTrimValues;
+
         // trim from start
-        static void ltrim(std::string &s);
+        static void ltrim(std::string& str, const std::string& chr=DefaultTrimValues);
 
         // trim from end
-        static void rtrim(std::string &s);
+        static void rtrim(std::string& str, const std::string& chr=DefaultTrimValues); 
 
         // trim from both ends
-        static void trim(std::string &s);
+        static void trim(std::string& str, const std::string& chr=DefaultTrimValues);
 
         // encode base64
         static std::string base64Encode(const std::string& s);
@@ -31,6 +34,8 @@ namespace mvcgame {
         // decompress data
         static std::string decompress(const std::string& str);
 
+        // split a string
+        static std::vector<std::string> split(const std::string &str, const char sep, size_t max=std::string::npos);
     };
 }
 

@@ -14,20 +14,26 @@
 
 namespace mvcgame {
 
-    void StringUtils::ltrim(std::string &s)
-    {
-        s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
-    }
+    const std::string StringUtils::DefaultTrimValues = "\t\n\r ";
 
-    void StringUtils::rtrim(std::string &s)
+    void StringUtils::ltrim(std::string& str, const std::string& chrs)
     {
-        s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+        str.erase(str.begin(), std::find_if(str.begin(), str.end(), [&chrs](const char chr){
+            return chrs.find(chr) == std::string::npos;
+        }));
     }
-
-    void StringUtils::trim(std::string &s)
+    
+    void StringUtils::rtrim(std::string& str, const std::string& chrs)
     {
-        ltrim(s);
-        rtrim(s);
+        str.erase(std::find_if(str.rbegin(), str.rend(), [&chrs](const char chr){
+            return chrs.find(chr) == std::string::npos;
+        }).base(), str.end());
+    }
+    
+    void StringUtils::trim(std::string& str, const std::string& chrs)
+    {
+        ltrim(str, chrs);
+        rtrim(str, chrs);
     }
 
     /**
@@ -252,4 +258,27 @@ namespace mvcgame {
 
         return outstring;
     }
+
+    std::vector<std::string> StringUtils::split(const std::string &str, const char sep, size_t max)
+    {
+        std::vector<std::string> tokens;
+        std::string token;
+        for(char c : str)
+        {
+            if(c == sep && (max == std::string::npos || tokens.size()<max-1))
+            {
+                tokens.push_back(token);
+                token = "";
+            }
+            else
+            {
+                token += c;
+            }
+        }
+        if(!token.empty())
+        {
+            tokens.push_back(token);
+        }
+        return tokens;
+    }    
 }

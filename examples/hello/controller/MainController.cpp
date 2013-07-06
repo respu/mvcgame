@@ -29,9 +29,8 @@ void MainController::controllerAdded()
     bg->getFrame().origin = bg->getFrame().size/2;
 
     auto guybrushAtlas = ServiceLocator::get().getTextureAtlases().load("guybrush");
-    SpriteSheet guybrushSheet(*guybrushAtlas);
     _guybrush = std::make_shared<Sprite>();
-    _guybrush->setSheet(guybrushSheet);
+    _guybrush->setSheet(*guybrushAtlas);
     _guybrush->getFrame().origin = bg->getFrame().size/2;
     _guybrush->getFrame().origin.x -= 150;
     _guybrush->setScale(0.5);
@@ -39,13 +38,14 @@ void MainController::controllerAdded()
 
     bg->addChild(_guybrush);
 
-    auto guybrush2 = std::make_shared<Sprite>();
-    guybrush2->setSheet(guybrushSheet);
-    guybrush2->getFrame().origin = bg->getFrame().size/2;
-    guybrush2->getFrame().origin.x += 150;
-    guybrush2->setSpriteFrameDuration(20);
+    auto miguelAtlas = ServiceLocator::get().getTextureAtlases().load("miguel");
+    auto miguel = std::make_shared<Sprite>();
+    miguel->setSheet(*miguelAtlas);
+    miguel->getFrame().origin = bg->getFrame().size/2;
+    miguel->getFrame().origin.x += 150;
+    miguel->setSpriteFrameDuration(20);
 
-    bg->addChild(guybrush2);
+    bg->addChild(miguel);
 
     auto fontAtlas = ServiceLocator::get().getFontAtlases().load("font");
     FontSheet fontSheet(*fontAtlas);
@@ -58,7 +58,7 @@ void MainController::controllerAdded()
     title->setText("mvcgame says hello!");
 
     bg->addChild(title);
-    
+
     setView(bg);
 }
 

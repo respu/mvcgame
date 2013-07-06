@@ -1,5 +1,6 @@
 
 #include <mvcgame/texture/TextureAtlas.hpp>
+#include <mvcgame/texture/Texture.hpp>
 
 namespace mvcgame {
 
@@ -48,6 +49,10 @@ namespace mvcgame {
     std::ostream& operator<<(std::ostream& os, const TextureAtlas& t)
     {
         os << "TextureAtlas( " << std::endl;
+        if(t.getTexture())
+        {
+            os << *t.getTexture() << std::endl;
+        }
         for(const TextureRegion& region : t.getRegions())
         {
             os << region << std::endl;

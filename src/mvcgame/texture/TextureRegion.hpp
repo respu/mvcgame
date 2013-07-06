@@ -37,7 +37,7 @@ namespace mvcgame {
         Origin origin;
 
         TextureRegion();
-        TextureRegion(const Texture& texture);
+        explicit TextureRegion(const Texture& texture);
 
         /**
          * Returns a unitary rectangle (as if the texture was size 1x1)
