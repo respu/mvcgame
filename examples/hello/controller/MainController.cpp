@@ -59,6 +59,9 @@ void MainController::controllerAdded()
 
     bg->addChild(title);
 
+    auto spineboySkel = ServiceLocator::get().getSkeletons().load("spineboy");
+    std::cout << *spineboySkel << std::endl;
+
     setView(bg);
 }
 
