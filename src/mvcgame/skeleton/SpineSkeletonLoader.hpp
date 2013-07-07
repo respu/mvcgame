@@ -6,11 +6,11 @@
 namespace mvcgame {
 
     class TextureAtlas;
-    class Skeleton;
+    class SpineSkeleton;
     template<typename Asset>
     class AssetManager;
 
-    class SpineSkeletonLoader : public IAssetLoader<Skeleton>
+    class SpineSkeletonLoader : public IAssetLoader<SpineSkeleton>
     {
     private:
         AssetManager<TextureAtlas>* _textureAtlasManager;        
@@ -18,7 +18,7 @@ namespace mvcgame {
         SpineSkeletonLoader();
 
         bool validate(std::istream& input) const;
-        std::unique_ptr<Skeleton> load(std::istream& input) const;
+        std::unique_ptr<SpineSkeleton> load(std::istream& input) const;
 
         /**
          * Set the assets manager to load related textures

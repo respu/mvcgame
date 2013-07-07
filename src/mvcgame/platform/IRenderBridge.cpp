@@ -14,24 +14,24 @@ namespace mvcgame {
         
     }
 
-    IRenderBridge::TexturePoints IRenderBridge::getTextureRectPoints(const Texture& texture, const Rect& rect, const TextureRegion& region)
+    IRenderBridge::Vertices IRenderBridge::getTextureRectVertices(const Texture& texture, const Rect& rect, const TextureRegion& region)
     {
         Rect trect = region / texture;
         Rect rrect = region / rect;
-        TexturePoints points = {
-            TexturePoint{
+        Vertices vertices = {
+            Vertex{
                 Point(rrect.origin.x, rrect.origin.y),
                 Point(trect.origin.x, trect.origin.y)
             },
-            TexturePoint{
+            Vertex{
                 Point(rrect.origin.x+rrect.size.width, rrect.origin.y),
                 Point(trect.origin.x+trect.size.width, trect.origin.y)
             },
-            TexturePoint{
+            Vertex{
                 Point(rrect.origin.x+rrect.size.width, rrect.origin.y+rrect.size.height),
                 Point(trect.origin.x+trect.size.width, trect.origin.y+trect.size.height)
             },
-            TexturePoint{
+            Vertex{
                 Point(rrect.origin.x, rrect.origin.y+rrect.size.height),
                 Point(trect.origin.x, trect.origin.y+trect.size.height)
             }
@@ -39,16 +39,16 @@ namespace mvcgame {
 
         if(region.rotate)
         {
-            std::swap(points[0].texture, points[3].texture);
-            std::swap(points[0].texture, points[1].texture);         
-            std::swap(points[1].texture, points[2].texture);           
+            std::swap(vertices[0].texture, vertices[3].texture);
+            std::swap(vertices[0].texture, vertices[1].texture);         
+            std::swap(vertices[1].texture, vertices[2].texture);           
         }
-        return points; 
+        return vertices; 
     }
 
     void IRenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect, const TextureRegion& region)
     {
-        drawTexture(texture, getTextureRectPoints(*texture, rect, region));
+        drawTexture(texture, getTextureRectVertices(*texture, rect, region));
     }
 
     void IRenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect)

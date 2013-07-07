@@ -4,7 +4,7 @@
 #include <mvcgame/texture/Texture.hpp>
 #include <mvcgame/texture/TextureAtlas.hpp>
 #include <mvcgame/texture/TextureRegion.hpp>
-#include <mvcgame/skeleton/Skeleton.hpp>
+#include <mvcgame/skeleton/SpineSkeleton.hpp>
 
 #include <spine/spine.h>
 #include <spine/extension.h>
@@ -28,7 +28,6 @@ char* _Util_readFile (const char* path, int* length)
     assert(false);
     return _readFile(path, length);
 }
-
 
 namespace mvcgame {
 
@@ -112,20 +111,29 @@ namespace mvcgame {
         std::string str((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
         AtlasAttachmentLoader* loader = AtlasAttachmentLoader_create(nullptr);
         SkeletonJson* json = SkeletonJson_createWithLoader(SUPER(loader));
-        SkeletonData *skeletonData = SkeletonJson_readSkeletonData(json, str.c_str());    
-        if(skeletonData != nullptr)
+        SkeletonData *data = SkeletonJson_readSkeletonData(json, str.c_str());    
+        if(data != nullptr)
         {
-            SkeletonData_dispose(skeletonData);
+            SkeletonData_dispose(data);
             SkeletonJson_dispose(json);
             return true;
         }
         return false;
     }
 
-    std::unique_ptr<Skeleton> SpineSkeletonLoader::load(std::istream& input) const
+    std::unique_ptr<SpineSkeleton> SpineSkeletonLoader::load(std::istream& input) const
     {
-        std::unique_ptr<Skeleton> skel(new Skeleton());
-        return skel;
+        std::string str((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+        std::shared_ptr<TextureAtlas> atlas = _textureAtlasManager->load("spineboy");
+        AtlasAttachmentLoader* loader = AtlasAttachmentLoader_create(atlas.get());
+        SkeletonJson* json = SkeletonJson_createWithLoader(SUPER(loader));
+        SkeletonData* data = SkeletonJson_readSkeletonData(json, str.c_str());
+        SkeletonJson_dispose(json);        
+        if(data != nullptr)
+        {
+            return std::unique_ptr<SpineSkeleton>(new SpineSkeleton(data, atlas));
+        }        
+        return std::unique_ptr<SpineSkeleton>();
     }
       
     void SpineSkeletonLoader::setTextureAtlasManager(AssetManager<TextureAtlas>& mng)

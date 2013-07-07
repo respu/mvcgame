@@ -146,19 +146,19 @@ namespace mvcgame {
         IRenderBridge::drawTexture(texture, rect, region);
     }
 
-    void RenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const TexturePoints& points)
+    void RenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const Vertices& vertices)
     {
         loadTexture(*texture);
         GLuint textureId = _textures.at(texture.get());
 
-        FloatList texturesBuffer(2*points.size());
-        FloatList verticesBuffer(3*points.size());
-        for(const TexturePoint& point : points)
+        FloatList texturesBuffer(2*vertices.size());
+        FloatList verticesBuffer(3*vertices.size());
+        for(const Vertex& vertex : vertices)
         {
-            texturesBuffer.push_back(point.texture.x);
-            texturesBuffer.push_back(point.texture.y);
-            verticesBuffer.push_back(point.vertex.x);
-            verticesBuffer.push_back(point.vertex.y);
+            texturesBuffer.push_back(vertex.texture.x);
+            texturesBuffer.push_back(vertex.texture.y);
+            verticesBuffer.push_back(vertex.position.x);
+            verticesBuffer.push_back(vertex.position.y);
             verticesBuffer.push_back(0);
         }
 

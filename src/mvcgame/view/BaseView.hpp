@@ -30,6 +30,7 @@ namespace mvcgame {
         const Children& getChildren() const;
         void removeChildren();
 
+        virtual void respondOnUpdate(const UpdateEvent& event);
         virtual void update();
         virtual void draw();
     };

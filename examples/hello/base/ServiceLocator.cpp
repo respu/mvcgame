@@ -41,7 +41,7 @@ ServiceLocator::ServiceLocator()
     _skeletons.add(std::move(spine), "json");    
 }
 
-AssetManager<Skeleton>& ServiceLocator::getSkeletons()
+AssetManager<SpineSkeleton>& ServiceLocator::getSkeletons()
 {
     return _skeletons;
 }

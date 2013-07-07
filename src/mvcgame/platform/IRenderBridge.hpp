@@ -11,6 +11,12 @@
 
 namespace mvcgame {
 
+    struct Vertex
+    {
+        Point position;
+        Point texture;
+    };    
+
     class Size;
     class Point;
     class Color;
@@ -22,18 +28,13 @@ namespace mvcgame {
     class IRenderBridge
     {
     public:
-        struct TexturePoint
-        {
-            Point vertex;
-            Point texture;
-        };
 
         typedef std::vector<Point> Points;        
-        typedef std::vector<TexturePoint> TexturePoints;
+        typedef std::vector<Vertex> Vertices;
 
     protected:
 
-        TexturePoints getTextureRectPoints(const Texture& texture, const Rect& rect, const TextureRegion& region);
+        Vertices getTextureRectVertices(const Texture& texture, const Rect& rect, const TextureRegion& region);
 
     public:
         virtual ~IRenderBridge(){};
@@ -66,14 +67,14 @@ namespace mvcgame {
         /**
          Should draw a polygon of a given color
          */
-        virtual void drawPolygon(const Points& vertices, const Color& color) = 0;
+        virtual void drawPolygon(const Points& points, const Color& color) = 0;
 
         /**
          Should draw a texture
          @param texture texture to draw         
-         @param points pairs of screen and texture points
+         @param vertices pairs of texture and position points
          */
-        virtual void drawTexture(std::shared_ptr<const Texture> texture, const TexturePoints& points) = 0;
+        virtual void drawTexture(std::shared_ptr<const Texture> texture, const Vertices& vertices) = 0;
 
         /**
          Should draw a texture

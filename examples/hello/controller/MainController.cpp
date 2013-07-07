@@ -9,10 +9,9 @@
 #include <mvcgame/view/ColorView.hpp>
 #include <mvcgame/view/Sprite.hpp>
 #include <mvcgame/base/Color.hpp>
-#include <mvcgame/texture/Texture.hpp>
 #include <mvcgame/texture/SpriteSheet.hpp>
-#include <mvcgame/font/FontAtlas.hpp>
 #include <mvcgame/font/FontSheet.hpp>
+#include <mvcgame/view/SpineSkeletonView.hpp>
 #include <mvcgame/action/TweenAction.hpp>
 
 using namespace mvcgame;
@@ -29,22 +28,18 @@ void MainController::controllerAdded()
     bg->getFrame().origin = bg->getFrame().size/2;
 
     auto guybrushAtlas = ServiceLocator::get().getTextureAtlases().load("guybrush");
-    _guybrush = std::make_shared<Sprite>();
-    _guybrush->setSheet(*guybrushAtlas);
+    _guybrush = std::make_shared<Sprite>(*guybrushAtlas);
     _guybrush->getFrame().origin = bg->getFrame().size/2;
     _guybrush->getFrame().origin.x -= 150;
     _guybrush->setScale(0.5);
     _guybrush->setSpriteFrameDuration(20);
-
     bg->addChild(_guybrush);
 
     auto miguelAtlas = ServiceLocator::get().getTextureAtlases().load("miguel");
-    auto miguel = std::make_shared<Sprite>();
-    miguel->setSheet(*miguelAtlas);
+    auto miguel = std::make_shared<Sprite>(*miguelAtlas);
     miguel->getFrame().origin = bg->getFrame().size/2;
     miguel->getFrame().origin.x += 150;
     miguel->setSpriteFrameDuration(20);
-
     bg->addChild(miguel);
 
     auto fontAtlas = ServiceLocator::get().getFontAtlases().load("font");
@@ -56,11 +51,13 @@ void MainController::controllerAdded()
     title->getFrame().origin.x -= 50;
     title->getFrame().origin.y += 100;
     title->setText("mvcgame says hello!");
-
     bg->addChild(title);
 
     auto spineboySkel = ServiceLocator::get().getSkeletons().load("spineboy");
     std::cout << *spineboySkel << std::endl;
+    auto spineboy = std::make_shared<SpineSkeletonView>(spineboySkel);
+    spineboy->getFrame().origin = bg->getFrame().size/2;    
+    bg->addChild(spineboy);
 
     setView(bg);
 }

@@ -28,7 +28,11 @@ namespace mvcgame {
         std::string line;
 
         // texture name
-        std::getline(in, line);
+        while(line.empty())
+        {
+            std::getline(in, line);
+            StringUtils::trim(line);
+        }
         if(_textureManager)
         {
             atlas->setTexture(_textureManager->load(line));

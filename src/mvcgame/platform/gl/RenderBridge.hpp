@@ -22,7 +22,7 @@ namespace mvcgame {
         void pushTransform(const Transform& transform);
         void popTransform(const Transform& transform);        
         void drawPolygon(const Points& verts, const Color& color);
-        void drawTexture(std::shared_ptr<const Texture> texture, const TexturePoints& points);
+        void drawTexture(std::shared_ptr<const Texture> texture, const Vertices& vertices);
         void drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect, const TextureRegion& region);
     };
 
