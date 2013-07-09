@@ -70,6 +70,13 @@ void MainController::controllerAdded()
 
     bg->addChild(spineboy);
 
+    auto spineboyAtlas = spineboySkel->getTextureAtlas();
+    auto spineboyHead = spineboyAtlas->getRegion("head");
+    auto spineboyHeadSprite = std::make_shared<Sprite>();
+    spineboyHeadSprite->setSheet(SpriteSheet(spineboyAtlas->getTexture(), spineboyHead));
+    spineboyHeadSprite->getFrame().origin = bg->getFrame().size/2;
+    bg->addChild(spineboyHeadSprite);    
+
     setView(bg);
 }
 
