@@ -57,6 +57,17 @@ void MainController::controllerAdded()
     std::cout << *spineboySkel << std::endl;
     auto spineboy = std::make_shared<SpineSkeletonView>(spineboySkel);
     spineboy->getFrame().origin = bg->getFrame().size/2;    
+
+    spineboySkel->setMix("walk", "jump", 0.2f);
+    spineboySkel->setMix("jump", "walk", 0.4f);   
+    spineboy->setAnimation("walk", true);
+    spineboy->addAnimation("jump", false, 0);
+    spineboy->addAnimation("walk", true, 0);
+    spineboy->addAnimation("jump", false, 3);
+    spineboy->addAnimation("walk", true, 0);
+    spineboy->addAnimation(true, 0);
+    spineboy->addAnimation("walk", false, 1);  
+
     bg->addChild(spineboy);
 
     setView(bg);

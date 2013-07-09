@@ -26,6 +26,12 @@ namespace mvcgame {
 
         void respondOnUpdate(const UpdateEvent& event);
         void draw();
+
+        void addAnimation(bool loop, float delay=-1);
+        void addAnimation(const std::string& name, bool loop, float delay=-1);
+        void setAnimation(const std::string& name, bool loop);
+        void setAnimation(bool loop);
+        void clearAnimation();
     };
 }
 

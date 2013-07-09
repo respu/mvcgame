@@ -5,13 +5,14 @@
 namespace mvcgame {
 
     SpineSkeleton::SpineSkeleton() :
-    _skeletonData(nullptr)
+    _skeletonData(nullptr), _animationStateData(nullptr)
     {
     }
 
     SpineSkeleton::SpineSkeleton(SkeletonData* data, std::shared_ptr<const TextureAtlas> atlas) :
-    _skeletonData(data), _atlas(atlas)
+    _skeletonData(nullptr), _animationStateData(nullptr), _atlas(atlas)
     {
+        setSkeletonData(data);
     }
 
     SpineSkeleton::~SpineSkeleton()
@@ -36,11 +37,15 @@ namespace mvcgame {
         {
             AnimationStateData_dispose(_animationStateData);
         }
-        _skeletonData = data;        
-        _animationStateData = AnimationStateData_create(_skeletonData);
-        AnimationStateData_setMixByName(_animationStateData, "walk", "jump", 0.2f);
-        AnimationStateData_setMixByName(_animationStateData, "jump", "walk", 0.4f);        
+        _skeletonData = data;
+        _animationStateData = AnimationStateData_create(_skeletonData);     
     }
+
+    void SpineSkeleton::setMix(const std::string& from, const std::string& to, float duration)
+    {
+        AnimationStateData_setMixByName(_animationStateData, from.c_str(), to.c_str(), duration);
+    }
+
     const SkeletonData* SpineSkeleton::getSkeletonData() const
     {
         return _skeletonData;

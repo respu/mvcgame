@@ -31,6 +31,8 @@ namespace mvcgame {
 
         void setTextureAtlas(std::shared_ptr<const TextureAtlas> atlas);
         std::shared_ptr<const TextureAtlas> getTextureAtlas() const;
+
+        void setMix(const std::string& from, const std::string& to, float duration);
     };
 
     /**

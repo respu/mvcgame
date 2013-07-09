@@ -47,15 +47,32 @@ namespace mvcgame {
         }      
         _skeleton = skeleton;
         _spineSkeleton = Skeleton_create(const_cast<SkeletonData*>(_skeleton->getSkeletonData()));
-        _spineState = AnimationState_create(const_cast<AnimationStateData*>(_skeleton->getAnimationStateData()));
+        _spineState = AnimationState_create(const_cast<AnimationStateData*>(_skeleton->getAnimationStateData()));       
+    }
 
-        AnimationState_setAnimationByName(_spineState, "walk", true);
-        AnimationState_addAnimationByName(_spineState, "jump", false, 0);
-        AnimationState_addAnimationByName(_spineState, "walk", true, 0);
-        AnimationState_addAnimationByName(_spineState, "jump", false, 3);
-        AnimationState_addAnimationByName(_spineState, "walk", true, 0);
-        AnimationState_addAnimationByName(_spineState, 0, true, 0);
-        AnimationState_addAnimationByName(_spineState, "walk", false, 1);         
+    void SpineSkeletonView::addAnimation(const std::string& name, bool loop, float delay)
+    {
+        AnimationState_addAnimationByName(_spineState, name.c_str(), loop, delay);
+    }
+
+    void SpineSkeletonView::addAnimation(bool loop, float delay)
+    {
+        AnimationState_addAnimationByName(_spineState, 0, loop, delay);
+    }    
+
+    void SpineSkeletonView::setAnimation(const std::string& name, bool loop)
+    {
+        AnimationState_setAnimationByName(_spineState, name.c_str(), loop);
+    }
+
+    void SpineSkeletonView::setAnimation(bool loop)
+    {
+        AnimationState_setAnimationByName(_spineState, 0, loop);
+    }
+
+    void SpineSkeletonView::clearAnimation()
+    {
+        AnimationState_clearAnimation(_spineState);
     }
 
     void SpineSkeletonView::respondOnUpdate(const UpdateEvent& event)
