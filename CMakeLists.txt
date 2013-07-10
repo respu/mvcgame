@@ -12,6 +12,14 @@ project(mvcgame)
 # rapidxml
 include_directories(lib/rapidxml)
 
+# spine
+include_directories(lib/spine/include)
+set(SPINE_SOURCE_DIR "lib/spine/src/spine")
+file(GLOB SPINE_SOURCES
+	"${SPINE_SOURCE_DIR}/*.c"
+)
+add_library(spine ${SPINE_SOURCES})
+
 # library
 include_directories(src)
 include_directories(lib)
@@ -27,6 +35,7 @@ file(GLOB MVCGAME_SOURCES
 	"${MVCGAME_SOURCE_DIR}/font/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/tile/*.cpp"	
 	"${MVCGAME_SOURCE_DIR}/texture/*.cpp"
+	"${MVCGAME_SOURCE_DIR}/skeleton/*.cpp"	
 	"${MVCGAME_SOURCE_DIR}/asset/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/view/*.cpp"
 	"${MVCGAME_SOURCE_DIR}/platform/*.cpp"
@@ -79,6 +88,7 @@ add_library(mvcgame ${MVCGAME_SOURCES} ${MVCGAME_PLATFORM_SOURCES})
 
 add_executable(hello ${MVCGAME_EXAMPLE_HELLO_SOURCES} ${MVCGAME_EXAMPLE_HELLO_PLATFORM_SOURCES})
 target_link_libraries(hello mvcgame ${MVCGAME_EXAMPLE_COMPILE_FLAGS})
+target_link_libraries(hello spine)
 
 add_executable(tiled ${MVCGAME_EXAMPLE_TILED_SOURCES} ${MVCGAME_EXAMPLE_TILED_PLATFORM_SOURCES})
 target_link_libraries(tiled mvcgame ${MVCGAME_EXAMPLE_COMPILE_FLAGS})

@@ -55,12 +55,13 @@ namespace mvcgame {
         return _children;
     }
 
+    void BaseView::respondOnUpdate(const UpdateEvent& event)
+    {
+        update();
+    }    
+
     void BaseView::update()
     {
-        for(Child& child : _children)
-        {
-            child.first->update();
-        }
     }
 
     void BaseView::draw()

@@ -13,13 +13,13 @@ namespace mvcgame {
         typedef std::stack<Transform> TransformStack;
         IRenderBridge& _bridge;
         std::shared_ptr<const Texture> _bufferedTexture;
-        TexturePoints _bufferedTexturePoints;
+        Vertices _bufferedTextureVertices;
         TransformStack _bufferedTextureTransforms;
 
         void startBufferedTexture(std::shared_ptr<const Texture> texture);
         void drawBufferedTexture();
         void clearBufferedTexture();
-        void addBufferedTexturePoints(const TexturePoints& points);
+        void addBufferedTextureVertices(const Vertices& vertices);
     public:
         BufferedTextureRenderBridge(IRenderBridge& innerBridge);
         void beforeDraw();
@@ -29,7 +29,7 @@ namespace mvcgame {
         void popTransform(const Transform& transform);        
         void drawPolygon(const Points& verts, const Color& color);
         void drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect, const TextureRegion& region);
-        void drawTexture(std::shared_ptr<const Texture> texture, const TexturePoints& points);
+        void drawTexture(std::shared_ptr<const Texture> texture, const Vertices& vertices);
     };
 
 }

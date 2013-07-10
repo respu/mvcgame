@@ -55,14 +55,13 @@ namespace mvcgame {
     void BufferedTextureRenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect, const TextureRegion& region)
     {
         startBufferedTexture(texture);
-        addBufferedTexturePoints(getTextureRectPoints(*texture, rect, region));
+        addBufferedTextureVertices(getTextureRectVertices(*texture, rect, region));
     }
 
-    void BufferedTextureRenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const TexturePoints& points)
+    void BufferedTextureRenderBridge::drawTexture(std::shared_ptr<const Texture> texture, const Vertices& vertices)
     {
-
         startBufferedTexture(texture);
-        addBufferedTexturePoints(points);
+        addBufferedTextureVertices(vertices);
     }
 
     void BufferedTextureRenderBridge::startBufferedTexture(std::shared_ptr<const Texture> texture)
@@ -74,37 +73,37 @@ namespace mvcgame {
         }
     }
 
-    void BufferedTextureRenderBridge::addBufferedTexturePoints(const TexturePoints& points)
+    void BufferedTextureRenderBridge::addBufferedTextureVertices(const Vertices& vertices)
     {
         if(_bufferedTextureTransforms.empty())
         {
-            _bufferedTexturePoints.insert(_bufferedTexturePoints.end(), points.begin(), points.end());
+            _bufferedTextureVertices.insert(_bufferedTextureVertices.end(), vertices.begin(), vertices.end());
         }
         else
         {
-            for(const TexturePoint& point : points)
+            for(const Vertex& vertex : vertices)
             {
-                TexturePoint tpoint(point);
-                tpoint.vertex *= _bufferedTextureTransforms.top();
-                _bufferedTexturePoints.push_back(tpoint);
+                Vertex tvertex(vertex);
+                tvertex.position *= _bufferedTextureTransforms.top();
+                _bufferedTextureVertices.push_back(tvertex);
             }
         }
     }
 
     void BufferedTextureRenderBridge::drawBufferedTexture()
     {
-        if(_bufferedTexture && !_bufferedTexturePoints.empty())
+        if(_bufferedTexture && !_bufferedTextureVertices.empty())
         {
             if(!_bufferedTextureTransforms.empty())
             {
                 Transform inverse = _bufferedTextureTransforms.top().invert();
-                for(TexturePoint& point : _bufferedTexturePoints)
+                for(Vertex& vertex : _bufferedTextureVertices)
                 {
-                    point.vertex *= inverse;
+                    vertex.position *= inverse;
                 }
             }
-            _bridge.drawTexture(_bufferedTexture, _bufferedTexturePoints);
-            _bufferedTexturePoints.clear();
+            _bridge.drawTexture(_bufferedTexture, _bufferedTextureVertices);
+            _bufferedTextureVertices.clear();
         }
     }
 

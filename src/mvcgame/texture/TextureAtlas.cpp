@@ -2,6 +2,8 @@
 #include <mvcgame/texture/TextureAtlas.hpp>
 #include <mvcgame/texture/Texture.hpp>
 
+#include <stdexcept>
+
 namespace mvcgame {
 
     TextureAtlas::TextureAtlas()
@@ -44,6 +46,30 @@ namespace mvcgame {
             }
         }
         return regions;
+    }
+
+    const TextureAtlas::Region& TextureAtlas::getRegion(const std::string& name) const
+    {
+        for(const TextureRegion& region : getRegions())
+        {
+            if(region.name == name)
+            {
+                return region;
+            }
+        }
+        throw std::runtime_error("Could not find region.");
+    }
+
+    TextureAtlas::Region& TextureAtlas::getRegion(const std::string& name)
+    {
+        for(TextureRegion& region : getRegions())
+        {
+            if(region.name == name)
+            {
+                return region;
+            }
+        }        
+        throw std::runtime_error("Could not find region.");
     }
 
     std::ostream& operator<<(std::ostream& os, const TextureAtlas& t)

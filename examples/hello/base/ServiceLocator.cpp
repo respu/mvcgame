@@ -5,6 +5,7 @@
 #include <mvcgame/texture/GdxTextureAtlasLoader.hpp>
 #include <mvcgame/texture/CocosTextureAtlasLoader.hpp>
 #include <mvcgame/font/FntFontAtlasLoader.hpp>
+#include <mvcgame/skeleton/SpineSkeletonLoader.hpp>
 
 using namespace mvcgame;
 
@@ -19,12 +20,13 @@ ServiceLocator::ServiceLocator()
     _textures.setStreamManager(_assetStreams);
     _textureAtlases.setStreamManager(_assetStreams);
     _fontAtlases.setStreamManager(_assetStreams);
+    _skeletons.setStreamManager(_assetStreams);    
 
     _textures.add(std::unique_ptr<PngTextureLoader>(new PngTextureLoader()), "png");
 
     std::unique_ptr<GdxTextureAtlasLoader> gdx(new GdxTextureAtlasLoader());
     gdx->setTextureManager(_textures);
-    _textureAtlases.add(std::move(gdx), "gdx");
+    _textureAtlases.add(std::move(gdx), "atlas");
 
     std::unique_ptr<CocosTextureAtlasLoader> cocos(new CocosTextureAtlasLoader());
     cocos->setTextureManager(_textures);
@@ -33,6 +35,15 @@ ServiceLocator::ServiceLocator()
     std::unique_ptr<FntFontAtlasLoader> fnt(new FntFontAtlasLoader());
     fnt->setTextureManager(_textures);
     _fontAtlases.add(std::move(fnt), "fnt");
+
+    std::unique_ptr<SpineSkeletonLoader> spine(new SpineSkeletonLoader());
+    spine->setTextureAtlasManager(_textureAtlases);
+    _skeletons.add(std::move(spine), "json");    
+}
+
+AssetManager<SpineSkeleton>& ServiceLocator::getSkeletons()
+{
+    return _skeletons;
 }
 
 AssetStreamManager& ServiceLocator::getAssetStreams()

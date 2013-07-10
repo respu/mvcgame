@@ -24,7 +24,7 @@ namespace mvcgame {
         /**
          * Set the assets manager to load related textures
          */        
-        void setTextureManager(AssetManager<Texture>& mng);         
+        void setTextureManager(AssetManager<Texture>& mng);
     };
 }
 

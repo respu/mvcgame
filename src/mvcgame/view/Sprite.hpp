@@ -24,7 +24,7 @@ namespace mvcgame {
 
         const Sheet& getSheet() const;
         void setSheet(const Sheet& sheet, bool changeSize=true);
-        void setSheet(std::shared_ptr<Texture> texture, bool changeSize=true);
+        void setSheet(std::shared_ptr<const Texture> texture, bool changeSize=true);
 
         unsigned setSpriteFrame() const;
         void setSpriteFrame(unsigned frame);

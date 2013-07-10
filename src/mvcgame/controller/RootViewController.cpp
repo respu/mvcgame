@@ -60,9 +60,8 @@ namespace mvcgame {
         _framePassed += _lastUpdateEvent->getInterval().fsecs();
         if(_framePassed > _frameDelay)
         {
-            _view.update();
             _framePassed = 0.0f;
-            _view.draw();            
+            _view.draw();
         }
     }
 

@@ -141,12 +141,15 @@ namespace mvcgame {
     void PanZoomView::respondOnTouchEnd(const TouchEvent& event)
     {       
         assert(event.touched(*this));
-        TimePoint& start = _touchTimePoints.front();
-        TimePoint& end = _touchTimePoints.back();
-        Duration duration = end.first-start.first;
-        assert(duration > Duration());
-        _panInertiaSpeed = (end.second-start.second)/duration;
-        _panInertiaPercent = 0;
+        if(_touchTimePoints.size()>1)
+        {
+            TimePoint& start = _touchTimePoints.front();
+            TimePoint& end = _touchTimePoints.back();
+            Duration duration = end.first-start.first;
+            assert(duration > Duration());
+            _panInertiaSpeed = (end.second-start.second)/duration;
+            _panInertiaPercent = 0;
+        }
         _touched = false;
         _touchTimePoints.clear();
     }

@@ -29,6 +29,8 @@ namespace mvcgame {
         RegionList& getRegions();
         const RegionList& getRegions() const;
         RegionList getRegions(const std::string& name) const;
+        const Region& getRegion(const std::string& name) const;
+        Region& getRegion(const std::string& name);
     };
 
     /**
