@@ -20,6 +20,17 @@ file(GLOB SPINE_SOURCES
 )
 add_library(spine ${SPINE_SOURCES})
 
+
+# box2d
+include_directories(lib/box2d)
+set(BOX2D_SOURCE_DIR "lib/box2d/Box2D")
+file(GLOB BOX2D_SOURCES
+	"${BOX2D_SOURCE_DIR}/Common/*.cpp"
+	"${BOX2D_SOURCE_DIR}/Collision/*.cpp"
+	"${BOX2D_SOURCE_DIR}/Dynamic/*.cpp"
+)
+add_library(box2d ${BOX2D_SOURCES})
+
 # library
 include_directories(src)
 include_directories(lib)
