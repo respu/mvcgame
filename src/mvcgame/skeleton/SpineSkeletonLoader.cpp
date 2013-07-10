@@ -75,6 +75,10 @@ namespace mvcgame {
                     v2 = (reg->y + reg->height) / h;
                 }
 
+                // invert y axis in texture
+                v = 1 - v;
+                v2 = 1 - v2;
+
                 RegionAttachment_setUVs(attachment, u, v, u2, v2, reg->rotate);
                 attachment->regionOffsetX = reg->offsetX;
                 attachment->regionOffsetY = reg->offsetY;

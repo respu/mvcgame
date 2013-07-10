@@ -49,14 +49,16 @@ void MainController::controllerAdded()
     title->getFrame().size = Size(50, 50);
     title->getFrame().origin = bg->getFrame().size/2;
     title->getFrame().origin.x -= 50;
-    title->getFrame().origin.y += 100;
+    title->getFrame().origin.y += 150;
     title->setText("mvcgame says hello!");
     bg->addChild(title);
 
     auto spineboySkel = ServiceLocator::get().getSkeletons().load("spineboy");
     std::cout << *spineboySkel << std::endl;
     auto spineboy = std::make_shared<SpineSkeletonView>(spineboySkel);
-    spineboy->getFrame().origin = bg->getFrame().size/2;    
+    spineboy->getFrame().origin = bg->getFrame().size/2;
+    spineboy->getFrame().origin.y /= 2;
+    spineboy->setScale(0.5);
 
     spineboySkel->setMix("walk", "jump", 0.2f);
     spineboySkel->setMix("jump", "walk", 0.4f);   
@@ -66,16 +68,9 @@ void MainController::controllerAdded()
     spineboy->addAnimation("jump", false, 3);
     spineboy->addAnimation("walk", true, 0);
     spineboy->addAnimation(true, 0);
-    spineboy->addAnimation("walk", false, 1);  
+    spineboy->addAnimation("walk", true, 1);  
 
-    bg->addChild(spineboy);
-
-    auto spineboyAtlas = spineboySkel->getTextureAtlas();
-    auto spineboyHead = spineboyAtlas->getRegion("head");
-    auto spineboyHeadSprite = std::make_shared<Sprite>();
-    spineboyHeadSprite->setSheet(SpriteSheet(spineboyAtlas->getTexture(), spineboyHead));
-    spineboyHeadSprite->getFrame().origin = bg->getFrame().size/2;
-    bg->addChild(spineboyHeadSprite);    
+    bg->addChild(spineboy);    
 
     setView(bg);
 }

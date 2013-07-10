@@ -81,7 +81,8 @@ namespace mvcgame {
         Skeleton_update(_spineSkeleton, deltaTime);
         AnimationState_update(_spineState, deltaTime * _timeScale);
         AnimationState_apply(_spineState, _spineSkeleton);
-        Skeleton_updateWorldTransform(_spineSkeleton);        
+        Skeleton_updateWorldTransform(_spineSkeleton);
+        View::respondOnUpdate(event);
     }
 
     void SpineSkeletonView::draw()
