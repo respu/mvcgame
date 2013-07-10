@@ -20,11 +20,11 @@ namespace mvcgame {
         return true;
     }
 
-    std::unique_ptr<TextureAtlas> GdxTextureAtlasLoader::load(std::istream& in) const
+    std::shared_ptr<TextureAtlas> GdxTextureAtlasLoader::load(std::istream& in) const
     {
         assert(_textureManager);
 
-        std::unique_ptr<TextureAtlas> atlas(new TextureAtlas());
+        auto atlas = std::make_shared<TextureAtlas>();
         std::string line;
 
         // texture name

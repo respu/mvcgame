@@ -9,7 +9,7 @@
 
 namespace mvcgame {
 
-    class Texture
+    class Texture : public std::enable_shared_from_this<Texture>
     {
     private:
         std::unique_ptr<uint8_t> _data;

@@ -26,7 +26,7 @@
         TmxTileMapLoader();
 
         bool validate(std::istream& input) const;
-        std::unique_ptr<TileMap> load(std::istream& input) const;
+        std::shared_ptr<TileMap> load(std::istream& input) const;
 
 
         /**

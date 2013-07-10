@@ -37,7 +37,7 @@ namespace mvcgame {
     public:
         FntFontAtlasLoader();
         bool validate(std::istream& input) const;
-        std::unique_ptr<FontAtlas> load(std::istream& input) const;
+        std::shared_ptr<FontAtlas> load(std::istream& input) const;
 
         /**
          * Set the assets manager to load related textures

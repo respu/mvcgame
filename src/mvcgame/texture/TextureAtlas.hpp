@@ -12,7 +12,7 @@
 
 namespace mvcgame {
 
-    class TextureAtlas
+    class TextureAtlas : public std::enable_shared_from_this<TextureAtlas>
     {
     public:
         typedef TextureRegion Region;

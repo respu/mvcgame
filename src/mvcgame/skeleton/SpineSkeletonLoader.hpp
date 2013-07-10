@@ -18,7 +18,7 @@ namespace mvcgame {
         SpineSkeletonLoader();
 
         bool validate(std::istream& input) const;
-        std::unique_ptr<SpineSkeleton> load(std::istream& input) const;
+        std::shared_ptr<SpineSkeleton> load(std::istream& input) const;
 
         /**
          * Set the assets manager to load related textures

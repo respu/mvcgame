@@ -10,7 +10,7 @@ namespace mvcgame {
 
     class TextureAtlas;
 
-    class SpineSkeleton
+    class SpineSkeleton : public std::enable_shared_from_this<SpineSkeleton>
     {
     private:
         SkeletonData* _skeletonData;

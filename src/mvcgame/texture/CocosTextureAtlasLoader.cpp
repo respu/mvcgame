@@ -133,13 +133,13 @@ namespace mvcgame {
             }
         }
 
-        std::unique_ptr<TextureAtlas> load(std::istream& input)
+        std::shared_ptr<TextureAtlas> load(std::istream& input)
         {
             xml_document<> doc;
             XmlBuffer buffer;
             loadXmlDocument(doc, input, buffer);
             
-            std::unique_ptr<TextureAtlas> atlas(new TextureAtlas());
+            auto atlas = std::make_shared<TextureAtlas>();
             auto root = doc.first_node("plist");
             auto dict = root->first_node("dict");
             while (dict != nullptr)
@@ -175,7 +175,7 @@ namespace mvcgame {
         return bridge.validate(input);
     }
 
-    std::unique_ptr<TextureAtlas> CocosTextureAtlasLoader::load(std::istream& input) const
+    std::shared_ptr<TextureAtlas> CocosTextureAtlasLoader::load(std::istream& input) const
     {
         CocosTextureAtlasLoaderBridge bridge(_textureManager);
         return bridge.load(input);
