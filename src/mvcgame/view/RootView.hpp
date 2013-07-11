@@ -18,6 +18,7 @@ namespace mvcgame {
     private:
         Size _size;
         IRenderBridge& _bridge;
+        Transform _transform;
     public:
         RootView(IRenderBridge& bridge);
 
@@ -25,8 +26,10 @@ namespace mvcgame {
         const Size& getSize() const;
         void setSize(const Size& size);
 
-        void addChild(std::shared_ptr<View> view, unsigned layer=0);
+        const Transform& getTransform() const;
 
+        void addChild(std::shared_ptr<View> view, unsigned layer=0);
+        
         void draw();
 
         IRenderBridge& getBridge();

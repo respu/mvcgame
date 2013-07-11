@@ -104,6 +104,7 @@ namespace mvcgame {
 		getFrame().size.width = p.x;
 		getFrame().size.height = info.lineHeight;
         View::update();
+        _changed = false;
     }
 
 }

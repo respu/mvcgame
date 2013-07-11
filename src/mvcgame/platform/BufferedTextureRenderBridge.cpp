@@ -11,7 +11,6 @@ namespace mvcgame {
     void BufferedTextureRenderBridge::beforeDraw()
     {
         IRenderBridge::beforeDraw();
-        _bufferedTextureTransforms = TransformStack();
         _bridge.beforeDraw();
     }
 
@@ -22,28 +21,10 @@ namespace mvcgame {
         _bridge.afterDraw();
     }
 
-    void BufferedTextureRenderBridge::loadRootTransform(const Size& size)
+    void BufferedTextureRenderBridge::setTransform(const Transform& transform)
     {
-        _bridge.loadRootTransform(size);
-    }
-
-    void BufferedTextureRenderBridge::pushTransform(const Transform& transform)
-    {
-        _bridge.pushTransform(transform);
-        if(_bufferedTextureTransforms.empty())
-        {
-            _bufferedTextureTransforms.push(transform);
-        }
-        else
-        {
-            _bufferedTextureTransforms.push(_bufferedTextureTransforms.top()*transform);
-        }
-    }
-
-    void BufferedTextureRenderBridge::popTransform(const Transform& transform)
-    {
-        _bridge.popTransform(transform);
-        _bufferedTextureTransforms.pop();
+        _bridge.setTransform(transform);
+        _transform = transform;
     }
 
     void BufferedTextureRenderBridge::drawPolygon(const Points& verts, const Color& color)
@@ -75,18 +56,11 @@ namespace mvcgame {
 
     void BufferedTextureRenderBridge::addBufferedTextureVertices(const Vertices& vertices)
     {
-        if(_bufferedTextureTransforms.empty())
+        for(const Vertex& vertex : vertices)
         {
-            _bufferedTextureVertices.insert(_bufferedTextureVertices.end(), vertices.begin(), vertices.end());
-        }
-        else
-        {
-            for(const Vertex& vertex : vertices)
-            {
-                Vertex tvertex(vertex);
-                tvertex.position *= _bufferedTextureTransforms.top();
-                _bufferedTextureVertices.push_back(tvertex);
-            }
+            Vertex tvertex(vertex);
+            tvertex.position *= _transform;
+            _bufferedTextureVertices.push_back(tvertex);
         }
     }
 
@@ -94,13 +68,10 @@ namespace mvcgame {
     {
         if(_bufferedTexture && !_bufferedTextureVertices.empty())
         {
-            if(!_bufferedTextureTransforms.empty())
+            Transform inverse = _transform.invert();
+            for(Vertex& vertex : _bufferedTextureVertices)
             {
-                Transform inverse = _bufferedTextureTransforms.top().invert();
-                for(Vertex& vertex : _bufferedTextureVertices)
-                {
-                    vertex.position *= inverse;
-                }
+                vertex.position *= inverse;
             }
             _bridge.drawTexture(_bufferedTexture, _bufferedTextureVertices);
             _bufferedTextureVertices.clear();

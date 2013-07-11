@@ -28,47 +28,15 @@ namespace mvcgame {
         m[1] = t.b; m[5] = t.d; m[13] = t.ty;
     }    
 
-    void RenderBridge::loadRootTransform(const Size& size)
-    {
-        Point norm(1, 1);
-        Transform transform = norm/Point(size/2);
-        transform -= norm;
-
-#ifdef MVCGAME_DEBUG_DRAW
-        std::cout << ">>>>" << std::endl;        
-        std::cout << "GlRenderBridge::loadRootTransform " << std::endl;
-        std::cout << size << std::endl;
-        std::cout << transform << std::endl;
-        std::cout << "<<<<" << std::endl;
-#endif
-        float glt[16];
-        getGlTransform(transform, glt);
-        glLoadMatrixf(glt);
-    }
-
-    void RenderBridge::pushTransform(const Transform& transform)
-    {
-#ifdef MVCGAME_DEBUG_DRAW
-        std::cout << ">>>>" << std::endl;        
-        std::cout << "GlRenderBridge::pushTransform " << std::endl;
-        std::cout << transform << std::endl;
-        std::cout << "<<<<" << std::endl;
-#endif
-        float glt[16];
-        getGlTransform(transform, glt);
-        glPushMatrix();
-        glMultMatrixf(glt);
-    }
-
-    void RenderBridge::popTransform(const Transform& transform)
+    void RenderBridge::setTransform(const Transform& transform)
     {
 #ifdef MVCGAME_DEBUG_DRAW
         std::cout << ">>>>" << std::endl;
-        std::cout << "GlRenderBridge::popTransform " << std::endl;
+        std::cout << "GlRenderBridge::setTransform " << std::endl;
         std::cout << transform << std::endl;
         std::cout << "<<<<" << std::endl;
 #endif
-        glPopMatrix();
+        _transform = transform;
     }
 
     void RenderBridge::drawPolygon(const Points& verts, const Color& color)
@@ -85,10 +53,11 @@ namespace mvcgame {
 
         glBegin(GL_QUADS);
         glColor4f(color.r/255.0f, color.g/255.0f, color.b/255.0f, color.a/255.0f); 
-        for(const Point& p : verts)
+        for(const Point& point : verts)
         {
-            glVertex3f(p.x, p.y, 0.);
-        }
+            Point p = point*_transform;
+            glVertex3f(p.x, p.y, 0.0f);
+        }     
         glColor4f(1.0f, 1.0f, 1.0f, 1.0f); 
         glEnd();
     }
@@ -155,10 +124,11 @@ namespace mvcgame {
         FloatList verticesBuffer(3*vertices.size());
         for(const Vertex& vertex : vertices)
         {
+            Point p = vertex.position*_transform;
             texturesBuffer.push_back(vertex.texture.x);
             texturesBuffer.push_back(vertex.texture.y);
-            verticesBuffer.push_back(vertex.position.x);
-            verticesBuffer.push_back(vertex.position.y);
+            verticesBuffer.push_back(p.x);
+            verticesBuffer.push_back(p.y);
             verticesBuffer.push_back(0);
         }
 
@@ -183,7 +153,7 @@ namespace mvcgame {
 #ifdef MVCGAME_DEBUG_DRAW
         std::cout << ">>>>" << std::endl;
         std::cout << "GlRenderBridge::drawTexture " << textureId << std::endl;
-        std::cout << "rects " << rects.size() << std::endl;
+        std::cout << "vertices " << vertices.size() << std::endl;
         GLenum err = glGetError();
         if(err != GL_NO_ERROR)
         {

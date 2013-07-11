@@ -13,14 +13,12 @@ namespace mvcgame {
         typedef std::vector<float> FloatList;
     private:
         Textures _textures;
-
+        Transform _transform;
         static void getGlTransform(const Transform& t, float* m);
         void loadTexture(const Texture& texture);
     public:
         RenderBridge();
-        void loadRootTransform(const Size& size);
-        void pushTransform(const Transform& transform);
-        void popTransform(const Transform& transform);        
+        void setTransform(const Transform& transform);        
         void drawPolygon(const Points& verts, const Color& color);
         void drawTexture(std::shared_ptr<const Texture> texture, const Vertices& vertices);
         void drawTexture(std::shared_ptr<const Texture> texture, const Rect& rect, const TextureRegion& region);

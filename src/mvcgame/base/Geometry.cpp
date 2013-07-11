@@ -993,6 +993,7 @@ namespace mvcgame {
             tx * t.a + ty * t.b + t.tx,
             tx * t.c + ty * t.d + t.ty
         );
+
     }
 
     Transform& Transform::operator*=(const Transform& t)

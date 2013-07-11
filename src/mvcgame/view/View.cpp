@@ -8,26 +8,32 @@
 namespace mvcgame {
 
     View::View() : _parent(nullptr), _root(nullptr),
-    _inverseDirty(false), _rootTransformDirty(false), _rootInverseDirty(false)
+    _inverseDirty(true), _rootTransformDirty(true), _rootInverseDirty(true)
     {
     }
 
     View::View(const View& v) :
     _parent(v._parent), _root(v._root), _frame(v._frame), _scale(v._scale),
     _anchor(v._anchor), _rotation(v._rotation),
-    _inverseDirty(false), _rootTransformDirty(false), _rootInverseDirty(false)
+    _inverseDirty(true), _rootTransformDirty(true), _rootInverseDirty(true)
     {
 
     }
 
     View::View(const Rect& f, const Scale& s, const Anchor& a, const Rotation& r) :
     _parent(nullptr), _root(nullptr), _frame(f), _scale(s), _anchor(a), _rotation(r),
-    _inverseDirty(false), _rootTransformDirty(false), _rootInverseDirty(false)    
+    _inverseDirty(true), _rootTransformDirty(true), _rootInverseDirty(true)    
     {
     }
 
     View::~View()
     {
+    }
+
+    void View::parentTransformChanged()
+    {
+        _rootTransformDirty = true;
+        _rootTransformDirty = true;
     }
 
     void View::update()
@@ -37,15 +43,19 @@ namespace mvcgame {
             _inverseDirty = true;
             _rootTransformDirty = true;
             _rootInverseDirty = true;
+            getRootTransform();
+            for(Child& child : getChildren())
+            {
+                child.first->parentTransformChanged();
+            }
         }
         BaseView::update();
     }
 
     void View::drawAsChild()
     {
-        getBridge().pushTransform(_transform);
+        getBridge().setTransform(getRootTransform());
         draw();
-        getBridge().popTransform(_transform);
     }
 
     Rect& View::getFrame()
@@ -124,7 +134,15 @@ namespace mvcgame {
     {
         if(_rootTransformDirty)
         {
-            _rootTransform = getParent().getTransform()*_transform;        
+            _rootTransform = _transform;
+            if(_parent)
+            {
+                _rootTransform *= _parent->getRootTransform();
+            }
+            else if(_root)
+            {
+                _rootTransform *= _root->getTransform();
+            }
             _rootTransformDirty = false;
         }
         return _rootTransform;        

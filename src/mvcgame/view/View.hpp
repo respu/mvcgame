@@ -35,6 +35,7 @@ namespace mvcgame {
     protected:
         void setParent(View& parent);
         IRenderBridge& getBridge();
+        void parentTransformChanged();
     public:
         View();
         View(const View& other);

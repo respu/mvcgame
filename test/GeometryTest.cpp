@@ -275,3 +275,12 @@ TEST(Geometry, transform) {
 
     ASSERT_EQ(t/t, Transform::Identity);
 }
+
+TEST(Geometry, matrixProduct) {
+
+    Transform a(0.004167, 0, 0, 0.00625, -1, -1);
+    Transform b(1, 0, 0, 1, 120, 80);
+    Transform c(0.004167, 0, 0, 0.00625, -0.49996, -0.5);
+
+    ASSERT_EQ(b*a, c);
+}
