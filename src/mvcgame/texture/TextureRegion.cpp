@@ -45,7 +45,7 @@ namespace mvcgame {
     Rect TextureRegion::operator/(const Rect& r) const
     {
         Rect tr(r.origin.x+offsetX, r.origin.y+offsetY,
-            (r.size.width*width)/originalWidth, (r.size.height*height)/originalHeight);
+            r.size.width*width/originalWidth, r.size.height*height/originalHeight);
 
         return tr;
     }

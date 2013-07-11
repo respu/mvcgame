@@ -84,8 +84,8 @@ namespace mvcgame {
         Size size;
         for(const Frame& frame : _frames)
         {
-            float w = frame.getRegion().originalWidth;
-            float h = frame.getRegion().originalHeight;
+            gunit_t w = frame.getRegion().originalWidth;
+            gunit_t h = frame.getRegion().originalHeight;
             size.width = std::max(w, size.width);
             size.height = std::max(h, size.height);
         }

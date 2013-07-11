@@ -125,19 +125,19 @@ namespace mvcgame {
         return false;
     }
 
-    std::unique_ptr<SpineSkeleton> SpineSkeletonLoader::load(std::istream& input) const
+    std::shared_ptr<SpineSkeleton> SpineSkeletonLoader::load(std::istream& input) const
     {
         std::string str((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
-        std::shared_ptr<TextureAtlas> atlas = _textureAtlasManager->load("spineboy");
+        auto atlas = _textureAtlasManager->load("spineboy");
         AtlasAttachmentLoader* loader = AtlasAttachmentLoader_create(atlas.get());
         SkeletonJson* json = SkeletonJson_createWithLoader(SUPER(loader));
         SkeletonData* data = SkeletonJson_readSkeletonData(json, str.c_str());
         SkeletonJson_dispose(json);        
         if(data != nullptr)
         {
-            return std::unique_ptr<SpineSkeleton>(new SpineSkeleton(data, atlas));
+            return std::make_shared<SpineSkeleton>(data, atlas);
         }        
-        return std::unique_ptr<SpineSkeleton>();
+        return std::make_shared<SpineSkeleton>();
     }
       
     void SpineSkeletonLoader::setTextureAtlasManager(AssetManager<TextureAtlas>& mng)

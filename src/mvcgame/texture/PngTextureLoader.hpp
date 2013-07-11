@@ -12,7 +12,7 @@ namespace mvcgame {
     {
     public:
         bool validate(std::istream& input) const;
-        std::unique_ptr<Texture> load(std::istream& input) const;
+        std::shared_ptr<Texture> load(std::istream& input) const;
     };
 }
 

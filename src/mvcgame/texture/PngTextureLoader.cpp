@@ -44,7 +44,7 @@ namespace mvcgame {
             ->read(reinterpret_cast<std::istream::char_type*>(data), length);
     }
 
-    std::unique_ptr<Texture> PngTextureLoader::load(std::istream& input) const
+    std::shared_ptr<Texture> PngTextureLoader::load(std::istream& input) const
     {
         png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
         if (!pngPtr)
@@ -152,7 +152,7 @@ namespace mvcgame {
 #endif
         delete[] rowPtrs;
         png_destroy_read_struct(&pngPtr, &infoPtr, nullptr);        
-        return std::unique_ptr<Texture>(new Texture(std::unique_ptr<uint8_t>(data), len, imgWidth, imgHeight, hasAlpha));
+        return std::make_shared<Texture>(std::unique_ptr<uint8_t>(data), len, imgWidth, imgHeight, hasAlpha);
     }
 
 }

@@ -270,7 +270,7 @@ namespace mvcgame {
             return std::string(doc.first_node()->name()) == "map";
         }
 
-        std::unique_ptr<TileMap> load(std::istream& input)
+        std::shared_ptr<TileMap> load(std::istream& input)
         {
             xml_document<> doc;
             XmlBuffer buffer;
@@ -278,12 +278,12 @@ namespace mvcgame {
 
             auto mapNode = doc.first_node("map");
             
-            std::unique_ptr<TileMap> map(new TileMap(
+            auto map = std::make_shared<TileMap>(
                 std::stoi(mapNode->first_attribute("width")->value()),
                 std::stoi(mapNode->first_attribute("height")->value()),
                 std::stoi(mapNode->first_attribute("tilewidth")->value()),
                 std::stoi(mapNode->first_attribute("tileheight")->value())
-            ));
+            );
 
             loadTileSets(mapNode, map->getSets());
             loadTileLayers(mapNode, map->getLayers());
@@ -313,7 +313,7 @@ namespace mvcgame {
         return bridge.validate(input);
     }
     
-    std::unique_ptr<TileMap> TmxTileMapLoader::load(std::istream& input) const
+    std::shared_ptr<TileMap> TmxTileMapLoader::load(std::istream& input) const
     {
         TmxTileMapLoaderBridge bridge(_streamManager, _textureManager);
         return bridge.load(input);

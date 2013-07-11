@@ -8,12 +8,13 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 
 namespace mvcgame {
 
     class SpriteSheet;
 
-    class TileMap
+    class TileMap : public std::enable_shared_from_this<TileMap>
     {
     public:
         typedef TileSet Set;

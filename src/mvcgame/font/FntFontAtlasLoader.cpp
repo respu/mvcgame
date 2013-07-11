@@ -134,11 +134,11 @@ namespace mvcgame {
         return data;
     }
 
-    std::unique_ptr<FontAtlas> FntFontAtlasLoader::load(std::istream& in) const
+    std::shared_ptr<FontAtlas> FntFontAtlasLoader::load(std::istream& in) const
     {
         assert(_textureManager);
 
-        std::unique_ptr<FontAtlas> atlas(new FontAtlas());
+        auto atlas = std::make_shared<FontAtlas>();
         std::string str;
 
         while(in)

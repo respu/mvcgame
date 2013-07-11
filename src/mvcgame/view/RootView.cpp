@@ -23,6 +23,14 @@ namespace mvcgame {
     void RootView::setSize(const Size& size)
     {
         _size = size;
+
+        Point norm(1, 1);
+        _transform = Transform(norm/Point(_size/2)) - norm;
+    }
+
+    const Transform& RootView::getTransform() const
+    {
+        return _transform;
     }
 
     void RootView::addChild(std::shared_ptr<View> view, unsigned layer)
@@ -34,7 +42,6 @@ namespace mvcgame {
     void RootView::draw()
     {
         getBridge().beforeDraw();
-        getBridge().loadRootTransform(_size);
         BaseView::draw();
         getBridge().afterDraw();
     }

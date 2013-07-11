@@ -5,10 +5,11 @@
 #include <mvcgame/font/FontInfo.hpp>
 #include <mvcgame/font/FontAtlasPage.hpp>
 #include <vector>
+#include <memory>
 
 namespace mvcgame {
 
-    class FontAtlas
+    class FontAtlas : public std::enable_shared_from_this<FontAtlas>
     {
     public:
         typedef FontInfo Info;

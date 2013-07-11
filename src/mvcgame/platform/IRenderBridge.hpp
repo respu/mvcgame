@@ -47,22 +47,12 @@ namespace mvcgame {
         /**
          Is called at the end of a draw
          */
-        virtual void afterDraw();        
+        virtual void afterDraw();
 
         /**
-         Is called at the beginning of a draw to setup the size
+         Set a base transform
          */
-        virtual void loadRootTransform(const Size& size) = 0;
-
-        /**
-         Is called before every view draw to change the transform
-         */
-        virtual void pushTransform(const Transform& transform) = 0;
-
-        /**
-         Is called after every view draw to revert the transform
-         */
-        virtual void popTransform(const Transform& transform) = 0;        
+        virtual void setTransform(const Transform& transform) = 0;        
 
         /**
          Should draw a polygon of a given color
