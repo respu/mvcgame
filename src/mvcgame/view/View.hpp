@@ -15,7 +15,7 @@ namespace mvcgame {
     class RootView;
     class IRenderBridge;
 
-    class View : public BaseView
+    class View : public BaseView, public std::enable_shared_from_this<View>
     {
     private:
         View* _parent;

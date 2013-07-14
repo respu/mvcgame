@@ -1,6 +1,6 @@
 
 #include <mvcgame/physics/PhysicsAtlas.hpp>
-
+#include <mvcgame/physics/PhysicsShape.hpp>
 
 namespace mvcgame {
 
@@ -37,6 +37,11 @@ namespace mvcgame {
 	std::ostream& operator<<(std::ostream& os, const PhysicsAtlas& a)
 	{
 		os << "PhysicsAtlas(";
+		PhysicsAtlas::Shapes::const_iterator itr;
+		for(itr = a.getShapes().begin(); itr!=a.getShapes().end(); ++itr)
+		{
+			os << itr->first << ": " << *(itr->second) << std::endl;
+		}
         os << ")";
         return os;
 	}

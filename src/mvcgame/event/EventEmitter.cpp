@@ -74,7 +74,7 @@ namespace mvcgame {
         responders[&controller] = event;
         for(const std::unique_ptr<ViewController>& child : controller.getChildren())
         {
-            const Transform& t = child->getView().getTransform();
+            const Transform& t = child->getView()->getTransform();
             Point cp = p*t;
             TouchEvent cev = event*t;
             findTouchResponders(cp, cev, *child, responders);

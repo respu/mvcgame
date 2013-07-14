@@ -3,6 +3,7 @@
 #define mvcgame_PhysicsShape_hpp
 
 #include <memory>
+#include <iostream>
 
 namespace mvcgame {
 
@@ -12,6 +13,7 @@ namespace mvcgame {
 		PhysicsShape();
 	};
 
+    std::ostream& operator<<(std::ostream& os, const PhysicsShape& s);
 }
 
 #endif

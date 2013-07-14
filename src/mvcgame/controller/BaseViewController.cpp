@@ -16,7 +16,7 @@ namespace mvcgame {
     {
         for(std::unique_ptr<ViewController>& child : _children)
         {
-            child->getView().removeFromParent();
+            child->getView()->removeFromParent();
         }
         _children.clear();
     }

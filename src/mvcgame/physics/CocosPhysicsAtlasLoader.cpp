@@ -32,6 +32,9 @@ namespace mvcgame {
 
         std::shared_ptr<PhysicsAtlas> load(std::istream& input)
         {
+            xml_document<> doc;
+            XmlBuffer buffer;
+            loadXmlDocument(doc, input, buffer);            
             return std::make_shared<PhysicsAtlas>();
         }
     };

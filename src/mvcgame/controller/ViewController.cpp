@@ -31,19 +31,26 @@ namespace mvcgame {
 
     void ViewController::setParent(ViewController& parent)
     {
-        if(_view != nullptr)
+        bool first = !_parent;
+        auto parentView = getParentView();
+        if(parentView && _view)
         {
-            if(_parent != nullptr && _parent->_view)
-            {
-                // remove view from old parent
-                _parent->getView().removeChild(*_view);
-            }
-            if(parent._view)
-            {
-                parent.getView().addChild(_view);
-            }
+            // remove view from old parent
+            parentView->removeChild(*_view);
         }
         _parent = &parent;
+        parentView = getParentView();
+        if(parentView && _view)
+        {
+            parentView->addChild(_view);
+        }
+        if(first)
+        {
+            for(auto& child : getChildren())
+            {
+                child->setParent(*this);
+            }
+        }
     }
 
     ViewController& ViewController::getParent()
@@ -58,9 +65,30 @@ namespace mvcgame {
         return *_parent;
     }
 
+    bool ViewController::hasParent() const
+    {
+        return _parent != nullptr;
+    }
+
     void ViewController::setRoot(RootViewController& root)
     {
         _root = &root;
+    }
+
+    bool ViewController::hasRoot() const
+    {
+        if(_root)
+        {
+            return true;
+        }
+        else if(_parent)
+        {
+            return _parent->hasRoot();
+        }
+        else
+        {
+            return false;
+        }
     }
 
     RootViewController& ViewController::getRoot()
@@ -97,47 +125,50 @@ namespace mvcgame {
         return getRoot().getApp();
     }
 
+    BaseView* ViewController::getParentView()
+    {
+        BaseView* view = nullptr;
+        if(!view && hasParent())
+        {
+            view = getParent().getView().get();
+        }
+        if(!view && hasRoot())
+        {
+            view = &getRoot().getView();
+        }
+        return view;
+    }
+
     void ViewController::setView(std::shared_ptr<View> view)
     {
-        BaseView* parentView = nullptr;
-        if(_parent)
-        {
-            parentView = &_parent->getView();
-        }
-        else if(_root)
-        {
-            parentView = &_root->getView();
-        }
-
         // set new view pointer
-        std::shared_ptr<View> oldView = _view;
+        auto oldView = _view;
         _view = view;
 
+        // move all the child controller views to the new view
+        moveChildren(oldView.get());        
+
+        auto parentView = getParentView();
         if(parentView)
         {
             if(oldView)
             {
-                // move all the child controller views to the new view
-                moveChildren(*oldView);
                 // remove the old view from the parent controller view
                 parentView->removeChild(*oldView);
             }
-
             // add the new view
             parentView->addChild(view);
         }
     }
         
-    const View& ViewController::getView() const
+    std::shared_ptr<const View> ViewController::getView() const
     {
-        assert(_view);
-        return *_view;
+        return _view;
     }
     
-    View& ViewController::getView()
+    std::shared_ptr<View> ViewController::getView()
     {
-        assert(_view);
-        return *_view;
+        return _view;
     }
 
     void ViewController::controllerAdded()
@@ -151,7 +182,7 @@ namespace mvcgame {
  
     void ViewController::addChild(std::unique_ptr<ViewController> child)
     {   
-        child->setParent(*this);        
+        child->setParent(*this);      
         BaseViewController::addChild(std::move(child));
     }
 
@@ -170,15 +201,22 @@ namespace mvcgame {
         _actions.update(event);
     }
 
-    void ViewController::moveChildren(View& oldView)
+    void ViewController::moveChildren(View* oldView)
     {
-        View& view = getView();
-		for(std::unique_ptr<ViewController>& child : _children)
+        if(!_view)
         {
-            std::shared_ptr<View> childView = oldView.removeChild(child->getView());
+            return;
+        }
+    	for(auto& child : getChildren())
+        {
+            if(oldView)
+            {
+                oldView->removeChild(*child->getView());
+            }
+            auto childView = child->getView();
             if(childView)
             {
-                view.addChild(childView);
+                _view->addChild(childView);
             }
         }
     }
@@ -190,7 +228,11 @@ namespace mvcgame {
 
     bool ViewController::respondToTouchPoint(const Point& p, const TouchEvent& event)
     {
-        return getView().respondToTouchPoint(p, event);
+        if(!_view)
+        {
+            return false;
+        }
+        return _view->respondToTouchPoint(p, event);
     }
 
 }

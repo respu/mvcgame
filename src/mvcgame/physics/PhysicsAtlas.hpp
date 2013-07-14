@@ -12,9 +12,10 @@ namespace mvcgame {
 
 	class PhysicsAtlas : public std::enable_shared_from_this<PhysicsAtlas>
 	{
-	private:
+	public:
 		typedef PhysicsShape Shape;
 		typedef std::map<std::string, std::shared_ptr<Shape>> Shapes;
+	private:		
 		Shapes _shapes;
 	public:
 		PhysicsAtlas();

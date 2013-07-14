@@ -6,6 +6,7 @@
 
 namespace mvcgame {
 
+    class BaseView;
     class Application;
     class RootViewController;
 
@@ -14,22 +15,23 @@ namespace mvcgame {
 	public:
 		typedef std::vector<std::unique_ptr<ViewController>> Children;
    	private:
-        Children _children;
         ActionRunner _actions;        
    		ViewController* _parent;
         RootViewController* _root;
    		std::shared_ptr<View> _view;
     protected:
 
-        void moveChildren(View& view);
+        void moveChildren(View* view);
+        BaseView* getParentView();
     public:
     	ViewController();
     	virtual ~ViewController();
 
-        const View& getView() const;
-        View& getView();
+        std::shared_ptr<const View> getView() const;
+        std::shared_ptr<View> getView();
 		virtual void setView(std::shared_ptr<View> view);
 
+        bool hasRoot() const;
         void setRoot(RootViewController& root);
         const RootViewController& getRoot() const;
         RootViewController& getRoot();
@@ -37,6 +39,7 @@ namespace mvcgame {
         const Application& getApp() const;
         Application& getApp();
 
+        bool hasParent() const;
         const ViewController& getParent() const;
         ViewController& getParent();
         virtual void setParent(ViewController& parent);
