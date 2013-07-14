@@ -4,7 +4,9 @@
 
 #include <mvcgame/controller/RootViewController.hpp>
 #include <mvcgame/view/ColorView.hpp>
+#include <mvcgame/view/Sprite.hpp>
 #include <mvcgame/physics/PhysicsWorldController.hpp>
+#include <mvcgame/physics/PhysicsBodyController.hpp>
 
 using namespace mvcgame;
 
@@ -19,13 +21,19 @@ void MainController::controllerAdded()
     bg->setBackgroundColor(Color(100, 100, 100));
     bg->getFrame().size = getRoot().getView().getSize();
     bg->getFrame().origin = bg->getFrame().size/2;
+    setView(bg);
 
     auto world = std::unique_ptr<PhysicsWorldController>(new PhysicsWorldController(32));
-    addChild(std::move(world));
 
     auto shapes = ServiceLocator::get().getPhysicsAtlases().load("shapes");
+    std::cout << *shapes << std::endl;    
 
-    std::cout << *shapes << std::endl;
+    auto hamburgerTexture = ServiceLocator::get().getTextures().load("hamburger");
+    auto hamburgerCtrl = std::unique_ptr<PhysicsBodyController>(new PhysicsBodyController());
 
-    setView(bg);
+    hamburgerCtrl->setView(std::make_shared<Sprite>(hamburgerTexture));
+    hamburgerCtrl->setShape(shapes->getShape("hamburger"));
+    world->addBody(std::move(hamburgerCtrl));
+
+    addChild(std::move(world));
 }

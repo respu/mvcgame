@@ -17,6 +17,21 @@ namespace mvcgame {
         setSheet(sheet);
     }
 
+    Sprite::Sprite(std::shared_ptr<const TextureAtlas> atlas) :
+    Sprite(Sheet(atlas))
+    {
+    }
+
+    Sprite::Sprite(const TextureAtlas& atlas) :
+    Sprite(Sheet(atlas))
+    {
+    }    
+
+    Sprite::Sprite(std::shared_ptr<const Texture> texture) :
+    Sprite(Sheet(texture))
+    {
+    }
+
     const Sprite::Sheet& Sprite::getSheet() const
     {
         return _sheet;

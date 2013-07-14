@@ -3,7 +3,7 @@
 #define mvcgame_PhysicsWorldController_hpp
 
 #include <mvcgame/controller/ViewController.hpp>
-#include <map>
+#include <mvcgame/physics/PhysicsBodyController.hpp>
 
 class b2World;
 class b2Vec2;
@@ -14,6 +14,8 @@ namespace mvcgame {
 
     class PhysicsWorldController : public ViewController
     {
+    public:
+        typedef PhysicsBodyController Body;
     private:
         unsigned _scale;        
         b2World* _world;
@@ -27,6 +29,7 @@ namespace mvcgame {
 
         void controllerAdded();
         void respondOnUpdate(const UpdateEvent& event);
+        void addBody(std::unique_ptr<Body> body);
     };
 }
 

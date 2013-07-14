@@ -23,11 +23,12 @@ namespace mvcgame {
         Frames _frames;
     public:
         SpriteSheet();
-        SpriteSheet(std::shared_ptr<const Texture> texture);
-        SpriteSheet(const Frame& frame);
+        explicit SpriteSheet(std::shared_ptr<const Texture> texture);
+        explicit SpriteSheet(const Frame& frame);
+        explicit SpriteSheet(const TextureAtlas& altas);  
+        explicit SpriteSheet(std::shared_ptr<const TextureAtlas> atlas);
         SpriteSheet(std::shared_ptr<const Texture> texture, const TextureRegion& region);
         SpriteSheet(std::shared_ptr<const Texture> texture, const TextureRegions& regions);
-        SpriteSheet(const TextureAtlas& altas);
         SpriteSheet(const TextureAtlas& altas, const std::string& name);
 
         void setRegions(std::shared_ptr<const Texture> texture, const TextureRegions& regions);

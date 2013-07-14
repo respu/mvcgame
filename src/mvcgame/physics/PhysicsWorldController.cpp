@@ -23,7 +23,6 @@ namespace mvcgame {
 
 	void PhysicsWorldController::controllerAdded()
 	{
-
 	}
 
 	b2Vec2 PhysicsWorldController::convertPoint(const Point& p)
@@ -36,4 +35,8 @@ namespace mvcgame {
 		_world->Step(event.getInterval().fsecs(), _velocityIterations, _positionIterations);
 	}
 
+	void PhysicsWorldController::addBody(std::unique_ptr<Body> body)
+	{
+		addChild(std::move(body));
+	}
 }

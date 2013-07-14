@@ -21,6 +21,9 @@ namespace mvcgame {
     public:
         Sprite();
         Sprite(const Sheet& sheet);
+        Sprite(std::shared_ptr<const TextureAtlas> atlas);
+        Sprite(const TextureAtlas& atlas);
+        Sprite(std::shared_ptr<const Texture> texture);
 
         const Sheet& getSheet() const;
         void setSheet(const Sheet& sheet, bool changeSize=true);

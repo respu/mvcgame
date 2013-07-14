@@ -39,6 +39,11 @@ namespace mvcgame {
         setRegions(atlas.getTexture(), regions);
     }
 
+    SpriteSheet::SpriteSheet(std::shared_ptr<const TextureAtlas> atlas) :
+    SpriteSheet(*atlas)
+    {
+    }
+
     SpriteSheet::SpriteSheet(const TextureAtlas& atlas, const std::string& name)
     {
         TextureRegions regions(atlas.getRegions(name));

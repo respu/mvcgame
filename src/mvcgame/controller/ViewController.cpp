@@ -33,12 +33,15 @@ namespace mvcgame {
     {
         if(_view != nullptr)
         {
-            if(_parent != nullptr)
+            if(_parent != nullptr && _parent->_view)
             {
                 // remove view from old parent
                 _parent->getView().removeChild(*_view);
             }
-            parent.getView().addChild(_view);
+            if(parent._view)
+            {
+                parent.getView().addChild(_view);
+            }
         }
         _parent = &parent;
     }
@@ -101,26 +104,28 @@ namespace mvcgame {
         {
             parentView = &_parent->getView();
         }
-        else
+        else if(_root)
         {
             parentView = &_root->getView();
         }
-        assert(parentView);
 
         // set new view pointer
         std::shared_ptr<View> oldView = _view;
         _view = view;
 
-        if(oldView)
+        if(parentView)
         {
-            // move all the child controller views to the new view
-            moveChildren(*oldView);
-            // remove the old view from the parent controller view
-            parentView->removeChild(*oldView);
-        }
+            if(oldView)
+            {
+                // move all the child controller views to the new view
+                moveChildren(*oldView);
+                // remove the old view from the parent controller view
+                parentView->removeChild(*oldView);
+            }
 
-        // add the new view
-        parentView->addChild(view);
+            // add the new view
+            parentView->addChild(view);
+        }
     }
         
     const View& ViewController::getView() const
