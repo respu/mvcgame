@@ -25,9 +25,19 @@ namespace mvcgame {
 	{
 	}
 
-	b2Vec2 PhysicsWorldController::convertPoint(const Point& p)
+	b2Vec2 PhysicsWorldController::convertToWorld(const Point& p)
 	{
 		return b2Vec2(p.x/_scale, p.y/_scale);
+	}
+
+	b2Vec2 PhysicsWorldController::convertToWorld(const Size& s)
+	{
+		return b2Vec2(s.width/_scale, s.height/_scale);
+	}
+
+	Point PhysicsWorldController::convertFromWorld(const b2Vec2& v)
+	{
+		return Point(v.x*_scale, v.y*_scale);
 	}
 
 	void PhysicsWorldController::respondOnUpdate(const UpdateEvent& event)
@@ -35,8 +45,21 @@ namespace mvcgame {
 		_world->Step(event.getInterval().fsecs(), _velocityIterations, _positionIterations);
 	}
 
-	void PhysicsWorldController::addBody(std::unique_ptr<Body> body)
+	b2World& PhysicsWorldController::getWorld()
 	{
-		addChild(std::move(body));
+		return *_world;
 	}
+
+    const b2World& PhysicsWorldController::getWorld() const
+    {
+		return *_world;
+    }
+
+    PhysicsWorldController::Body& PhysicsWorldController::createBody(b2BodyDef* def)
+    {
+    	auto bodyPtr = std::unique_ptr<Body>(new Body(*this, def));
+    	auto& body = *bodyPtr;
+    	addChild(std::move(bodyPtr));
+    	return body;
+    }
 }

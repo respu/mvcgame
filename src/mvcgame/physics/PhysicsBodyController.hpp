@@ -5,26 +5,36 @@
 #include <mvcgame/controller/ViewController.hpp>
 
 class b2Body;
+class b2Vec2;
+class b2BodyDef;
+class b2FixtureDef;
+class b2Fixture;
 
 namespace mvcgame {
 
-    class Point;
-    class PhysicsShape;
+    class PhysicsWorldController;
 
     class PhysicsBodyController : public ViewController
     {
     private:    
         b2Body* _body;
-        std::shared_ptr<PhysicsShape> _shape;
+        PhysicsWorldController& _world;
     public:
-        PhysicsBodyController();
-        PhysicsBodyController(std::shared_ptr<View> view);
+        PhysicsBodyController(PhysicsWorldController& world, b2BodyDef* def=nullptr);
         ~PhysicsBodyController();
 
-        void controllerAdded();
+        b2Body& getBody();
+        const b2Body& getBody() const;
 
-        void setShape(std::shared_ptr<PhysicsShape> shape);
+        void setView(std::shared_ptr<View> view);
+        void updateBody();
+        void respondOnUpdate(const UpdateEvent& event);
 
+        b2Vec2 convertToWorld(const Point& p);
+        b2Vec2 convertToWorld(const Size& s);
+        Point convertFromWorld(const b2Vec2& v);
+
+        b2Fixture* addFixture(b2FixtureDef* def);
     };
 }
 

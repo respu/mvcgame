@@ -7,6 +7,7 @@
 
 class b2World;
 class b2Vec2;
+class b2BodyDef;
 
 namespace mvcgame {
 
@@ -22,14 +23,20 @@ namespace mvcgame {
         unsigned _velocityIterations;
         unsigned _positionIterations;
 
-        b2Vec2 convertPoint(const Point& p);
     public:
-        PhysicsWorldController(unsigned scale, const Accel& gravity=Accel(0.f, 9.8f));
+        PhysicsWorldController(unsigned scale, const Accel& gravity=Accel(0.f, -9.8f));
         ~PhysicsWorldController();
 
         void controllerAdded();
         void respondOnUpdate(const UpdateEvent& event);
-        void addBody(std::unique_ptr<Body> body);
+        Body& createBody(b2BodyDef* def=nullptr);
+
+        b2Vec2 convertToWorld(const Point& p);
+        b2Vec2 convertToWorld(const Size& s);
+        Point convertFromWorld(const b2Vec2& v);        
+
+        b2World& getWorld();
+        const b2World& getWorld() const;
     };
 }
 

@@ -59,6 +59,7 @@ namespace mvcgame {
         void setScale(const Scale& s);
 
         Anchor& getAnchor();
+        Point getAnchorPoint() const;
         const Anchor& getAnchor() const;
         void setAnchor(const Anchor& a);
 

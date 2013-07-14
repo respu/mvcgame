@@ -120,6 +120,11 @@ namespace mvcgame {
         return _anchor;
     }
 
+    Point View::getAnchorPoint() const
+    {
+        return _anchor*_frame.size;
+    }
+
     void View::setAnchor(const Anchor& a)
     {
         _anchor = a;
