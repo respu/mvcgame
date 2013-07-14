@@ -443,6 +443,14 @@ namespace mvcgame {
     }
 
 
+    Accel::Accel() : Speed(0, 0, 2)
+    {
+    }
+
+    Accel::Accel(gunit_t px, gunit_t py) : Speed(px, py, 2)
+    {
+    }
+
 #pragma mark - stream functions
 
     std::ostream& operator<<(std::ostream& os, const Time& t)
@@ -499,8 +507,14 @@ namespace mvcgame {
 
     std::ostream& operator<<(std::ostream& os, const Speed& s)
     {
-        os << "Speed(" << s.x << ", " << s.y << ", " << s.d <<")";
+        os << "Speed(" << s.x << ", " << s.y << ", " << s.d << ")";
         return os;
     }
+
+    std::ostream& operator<<(std::ostream& os, const Accel& a)
+    {
+        os << "Accel(" << a.x << ", " << a.y << ")";
+        return os;
+    }    
 
 }

@@ -107,7 +107,7 @@ namespace mvcgame {
         Duration operator-(const Time& s) const;
     };
 
-    class Speed final {
+    class Speed {
     public:
         gunit_t x;
         gunit_t y;
@@ -136,13 +136,19 @@ namespace mvcgame {
         Speed operator-(const Speed& s) const;     
     };
 
+    class Accel final : public Speed {
+    public:
+        Accel();
+        Accel(gunit_t px, gunit_t py);
+    };
+
     /**
      Stream functions
      */
     std::ostream& operator<<(std::ostream& os, const Time& t);
     std::ostream& operator<<(std::ostream& os, const Duration& d);
     std::ostream& operator<<(std::ostream& os, const Speed& s);
-
+    std::ostream& operator<<(std::ostream& os, const Accel& a);
 
 }
 

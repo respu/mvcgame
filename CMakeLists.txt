@@ -15,7 +15,7 @@ include_directories(lib/rapidxml)
 # spine
 include_directories(lib/spine/include)
 set(SPINE_SOURCE_DIR "lib/spine/src/spine")
-file(GLOB SPINE_SOURCES
+file(GLOB_RECURSE SPINE_SOURCES
 	"${SPINE_SOURCE_DIR}/*.c"
 )
 add_library(spine ${SPINE_SOURCES})
@@ -24,10 +24,8 @@ add_library(spine ${SPINE_SOURCES})
 # box2d
 include_directories(lib/box2d)
 set(BOX2D_SOURCE_DIR "lib/box2d/Box2D")
-file(GLOB BOX2D_SOURCES
-	"${BOX2D_SOURCE_DIR}/Common/*.cpp"
-	"${BOX2D_SOURCE_DIR}/Collision/*.cpp"
-	"${BOX2D_SOURCE_DIR}/Dynamic/*.cpp"
+file(GLOB_RECURSE BOX2D_SOURCES
+	"${BOX2D_SOURCE_DIR}/*.cpp"
 )
 add_library(box2d ${BOX2D_SOURCES})
 
