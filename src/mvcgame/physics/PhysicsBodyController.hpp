@@ -18,9 +18,11 @@ namespace mvcgame {
     {
     private:    
         b2Body* _body;
+        b2BodyDef* _def;
         PhysicsWorldController& _world;
     public:
-        PhysicsBodyController(PhysicsWorldController& world, b2BodyDef* def=nullptr);
+        PhysicsBodyController(PhysicsWorldController& world, b2BodyDef& def);
+        PhysicsBodyController(PhysicsWorldController& world);
         ~PhysicsBodyController();
 
         b2Body& getBody();
@@ -34,7 +36,7 @@ namespace mvcgame {
         b2Vec2 convertToWorld(const Size& s);
         Point convertFromWorld(const b2Vec2& v);
 
-        b2Fixture* addFixture(b2FixtureDef* def);
+        b2Fixture& addFixture(b2FixtureDef& def);
     };
 }
 

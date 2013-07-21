@@ -55,11 +55,19 @@ namespace mvcgame {
 		return *_world;
     }
 
-    PhysicsWorldController::Body& PhysicsWorldController::createBody(b2BodyDef* def)
+    PhysicsWorldController::Body& PhysicsWorldController::createBody(b2BodyDef& def)
     {
     	auto bodyPtr = std::unique_ptr<Body>(new Body(*this, def));
     	auto& body = *bodyPtr;
     	addChild(std::move(bodyPtr));
     	return body;
     }
+
+    PhysicsWorldController::Body& PhysicsWorldController::createBody()
+    {
+    	auto bodyPtr = std::unique_ptr<Body>(new Body(*this));
+    	auto& body = *bodyPtr;
+    	addChild(std::move(bodyPtr));
+    	return body;
+    }    
 }

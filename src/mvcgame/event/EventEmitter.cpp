@@ -74,10 +74,18 @@ namespace mvcgame {
         responders[&controller] = event;
         for(const std::unique_ptr<ViewController>& child : controller.getChildren())
         {
-            const Transform& t = child->getView()->getTransform();
-            Point cp = p*t;
-            TouchEvent cev = event*t;
-            findTouchResponders(cp, cev, *child, responders);
+            auto view = child->getView();
+            if(view)
+            {
+                const Transform& t = view->getTransform();
+                Point cp = p*t;
+                TouchEvent cev = event*t;
+                findTouchResponders(cp, cev, *child, responders);
+            }
+            else
+            {
+                findTouchResponders(p, event, *child, responders);   
+            }
             if(event.getStopPropagation())
             {
                 return;
@@ -140,16 +148,16 @@ namespace mvcgame {
     void EventEmitter::emitTouch(const TouchEvent &event, TouchResponderCallback callback)
     {
         TouchResponders list;
-        findTouchResponders(event, _rootController, list);
-        if(event.getStopPropagation())
-        {
-            return;
-        } 
         findTouchResponders(event, _rootView, list);
         if(event.getStopPropagation())
         {
             return;
-        }               
+        }
+        findTouchResponders(event, _rootController, list);
+        if(event.getStopPropagation())
+        {
+            return;
+        }
         TouchResponders::iterator itr;
         for(itr=list.begin(); itr!=list.end(); ++itr)
         {
@@ -163,8 +171,8 @@ namespace mvcgame {
 
     void EventEmitter::emitUpdate(const UpdateEvent& event)
     {
-        emitUpdate(event, _rootController);
         emitUpdate(event, _rootView);
+        emitUpdate(event, _rootController);        
     }
 
     void EventEmitter::emitTouchStart(const TouchEvent& event)

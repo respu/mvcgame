@@ -24,20 +24,22 @@ void MainController::controllerAdded()
     bg->getFrame().origin = bg->getFrame().size/2;
     setView(bg);
 
-    auto world = std::unique_ptr<PhysicsWorldController>(new PhysicsWorldController(64));
+    auto world = std::unique_ptr<PhysicsWorldController>(new PhysicsWorldController(32));
 
     auto groundView = std::make_shared<ColorView>();
     groundView->setBackgroundColor(Color(0, 0, 0));
-    groundView->getFrame().size.width= 250;
+    groundView->getFrame().size.width = 300;
     groundView->getFrame().size.height = 50;
+    groundView->getFrame().origin.y = bg->getFrame().origin.y/2;
     groundView->getFrame().origin.x = bg->getFrame().origin.x;
     groundView->setAnchor(Anchor(0.5, 0));
-    b2BodyDef* groundDef = new b2BodyDef();
+    b2BodyDef groundDef;
     auto& groundCtrl = world->createBody(groundDef);
     groundCtrl.setView(groundView);
-    b2FixtureDef* groundFixDef = new b2FixtureDef();
-    groundFixDef->density = 0.1f;
-    groundFixDef->friction = 1.0f;
+    b2FixtureDef groundFixDef;
+    groundFixDef.density = 0.1f;
+    groundFixDef.friction = 0.5f;
+    groundFixDef.restitution = 0.0f;
     groundCtrl.addFixture(groundFixDef);
 
     auto hamburgerTexture = ServiceLocator::get().getTextures().load("hamburger"); 
@@ -52,9 +54,10 @@ void MainController::controllerAdded()
         hamburgerView->getFrame().origin.x += hamburgerView->getFrame().size.width/2;
         std::cout << hamburgerView->getFrame() << std::endl;
         hamburgerCtrl->setView(hamburgerView);
-        b2FixtureDef* hamburgerFixDef = new b2FixtureDef();
-        hamburgerFixDef->density = 0.1f;
-        hamburgerFixDef->friction = 0.3f;
+        b2FixtureDef hamburgerFixDef;
+        hamburgerFixDef.density = 0.1f;
+        hamburgerFixDef.friction = 0.5f;
+        hamburgerFixDef.restitution = 0.0f;        
         hamburgerCtrl->addFixture(hamburgerFixDef);
     }
 

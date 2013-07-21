@@ -577,14 +577,26 @@ namespace mvcgame {
         return Point(origin.x + size.width, origin.y + size.height);
     }
 
-    Points Rect::getVertices() const
+    Points Rect::getVertices(bool withOrigin) const
     {
-        Points vertices;
-        vertices.push_back(Point(origin.x, origin.y));
-        vertices.push_back(Point(origin.x+size.width, origin.y));
-        vertices.push_back(Point(origin.x+size.width, origin.y+size.height));
-        vertices.push_back(Point(origin.x, origin.y+size.height));        
-        return vertices;
+        if(withOrigin)
+        {
+            return {
+                Point(origin.x, origin.y),
+                Point(origin.x+size.width, origin.y),
+                Point(origin.x+size.width, origin.y+size.height),
+                Point(origin.x, origin.y+size.height)
+            };
+        }
+        else
+        {
+            return {
+                Point(0.0f, 0.0f),
+                Point(size.width, 0.0f),
+                Point(size.width, size.height),
+                Point(0.0f, size.height)
+            };
+        }
     }
 
     bool Rect::contains(const Point& p, bool equal) const

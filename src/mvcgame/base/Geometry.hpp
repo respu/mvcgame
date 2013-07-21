@@ -184,7 +184,7 @@ namespace mvcgame {
         Rect& operator+=(const Rect& r);
         Rect operator+(const Rect& r) const;
 
-        Points getVertices() const;
+        Points getVertices(bool withOrigin=true) const;
 
         bool contains(const Point& p, bool equal=true) const;
         bool contains(const Rect& r, bool equal=true) const;

@@ -29,7 +29,8 @@ namespace mvcgame {
 
         void controllerAdded();
         void respondOnUpdate(const UpdateEvent& event);
-        Body& createBody(b2BodyDef* def=nullptr);
+        Body& createBody(b2BodyDef& def);
+        Body& createBody();
 
         b2Vec2 convertToWorld(const Point& p);
         b2Vec2 convertToWorld(const Size& s);
