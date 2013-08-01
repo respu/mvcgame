@@ -11,7 +11,8 @@ namespace mvcgame {
 
 	PhysicsWorldController::PhysicsWorldController(unsigned scale, const Accel& gravity) :
 	_scale(scale), _world(new b2World(b2Vec2(gravity.x, gravity.y))),
-	_velocityIterations(6), _positionIterations(2)
+	_velocityIterations(10), _positionIterations(8),
+	_offset(new b2Vec2(0, 10))
 	{
 
 	}
@@ -19,6 +20,7 @@ namespace mvcgame {
 	PhysicsWorldController::~PhysicsWorldController()
 	{
 		delete _world;
+		delete _offset;
 	}
 
 	void PhysicsWorldController::controllerAdded()
@@ -27,17 +29,12 @@ namespace mvcgame {
 
 	b2Vec2 PhysicsWorldController::convertToWorld(const Point& p)
 	{
-		return b2Vec2(p.x/_scale, p.y/_scale);
-	}
-
-	b2Vec2 PhysicsWorldController::convertToWorld(const Size& s)
-	{
-		return b2Vec2(s.width/_scale, s.height/_scale);
+		return b2Vec2(p.x/_scale+_offset->x, p.y/_scale+_offset->y);
 	}
 
 	Point PhysicsWorldController::convertFromWorld(const b2Vec2& v)
 	{
-		return Point(v.x*_scale, v.y*_scale);
+		return Point((v.x-_offset->x)*_scale, (v.y-_offset->y)*_scale);
 	}
 
 	void PhysicsWorldController::respondOnUpdate(const UpdateEvent& event)

@@ -22,7 +22,7 @@ namespace mvcgame {
         b2World* _world;
         unsigned _velocityIterations;
         unsigned _positionIterations;
-
+        b2Vec2* _offset;
     public:
         PhysicsWorldController(unsigned scale, const Accel& gravity=Accel(0.f, -9.8f));
         ~PhysicsWorldController();
@@ -33,7 +33,6 @@ namespace mvcgame {
         Body& createBody();
 
         b2Vec2 convertToWorld(const Point& p);
-        b2Vec2 convertToWorld(const Size& s);
         Point convertFromWorld(const b2Vec2& v);        
 
         b2World& getWorld();

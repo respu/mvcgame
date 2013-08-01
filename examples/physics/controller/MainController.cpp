@@ -25,6 +25,12 @@ void MainController::controllerAdded()
     setView(bg);
 
     auto world = std::unique_ptr<PhysicsWorldController>(new PhysicsWorldController(32));
+    bg = std::make_shared<ColorView>();
+    bg->setBackgroundColor(Color(100, 100, 100));    
+    bg->getFrame().size = getRoot().getView().getSize();
+    bg->getFrame().origin = bg->getFrame().size/2;
+    bg->setScale(0.25);
+    world->setView(bg);
 
     auto groundView = std::make_shared<ColorView>();
     groundView->setBackgroundColor(Color(0, 0, 0));
@@ -44,7 +50,7 @@ void MainController::controllerAdded()
 
     auto hamburgerTexture = ServiceLocator::get().getTextures().load("hamburger"); 
     PhysicsBodyController* hamburgerCtrl = nullptr;
-    unsigned hamburgerNum = 4;
+    unsigned hamburgerNum = 1;
     for(unsigned i=0; i<hamburgerNum; i++)
     {
         auto hamburgerView = std::make_shared<Sprite>(hamburgerTexture);        
@@ -60,8 +66,6 @@ void MainController::controllerAdded()
         hamburgerFixDef.restitution = 0.0f;        
         hamburgerCtrl->addFixture(hamburgerFixDef);
     }
-
-    setView(bg);
 
     addChild(std::move(world));
 }

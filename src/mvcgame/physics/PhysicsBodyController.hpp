@@ -33,7 +33,6 @@ namespace mvcgame {
         void respondOnUpdate(const UpdateEvent& event);
 
         b2Vec2 convertToWorld(const Point& p);
-        b2Vec2 convertToWorld(const Size& s);
         Point convertFromWorld(const b2Vec2& v);
 
         b2Fixture& addFixture(b2FixtureDef& def);

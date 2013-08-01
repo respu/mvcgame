@@ -33,7 +33,7 @@ namespace mvcgame {
     void View::parentTransformChanged()
     {
         _rootTransformDirty = true;
-        _rootTransformDirty = true;
+        _rootInverseDirty = true;
     }
 
     void View::update()
@@ -43,7 +43,6 @@ namespace mvcgame {
             _inverseDirty = true;
             _rootTransformDirty = true;
             _rootInverseDirty = true;
-            getRootTransform();
             for(Child& child : getChildren())
             {
                 child.first->parentTransformChanged();
@@ -181,8 +180,8 @@ namespace mvcgame {
 
     void View::setParent(View& parent)
     {
-        assert(!_parent);
         _parent = &parent;
+        parentTransformChanged();
     }
     
     View& View::getParent()

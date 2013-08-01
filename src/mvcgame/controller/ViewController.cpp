@@ -31,7 +31,6 @@ namespace mvcgame {
 
     void ViewController::setParent(ViewController& parent)
     {
-        bool first = !_parent;
         auto parentView = getParentView();
         if(parentView && _view)
         {
@@ -44,12 +43,9 @@ namespace mvcgame {
         {
             parentView->addChild(_view);
         }
-        if(first)
+        for(auto& child : getChildren())
         {
-            for(auto& child : getChildren())
-            {
-                child->setParent(*this);
-            }
+            child->setParent(*this);
         }
     }
 
@@ -132,6 +128,10 @@ namespace mvcgame {
         {
             view = getParent().getView().get();
         }
+        if(!view && hasParent())
+        {
+            view = getParent().getParentView();
+        }        
         if(!view && hasRoot())
         {
             view = &getRoot().getView();

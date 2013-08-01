@@ -39,6 +39,7 @@ namespace mvcgame {
 		static const Color Green;
 		static const Color Blue;
 		static const Color Yellow;
+		static const Color Transparent;
 	};
 }
 

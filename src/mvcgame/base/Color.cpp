@@ -33,5 +33,6 @@ namespace mvcgame {
 	const Color Colors::Green = Color(0, 255, 0);
 	const Color Colors::Blue = Color(0, 0, 255);
 	const Color Colors::Yellow = Color(255, 255, 0);
+	const Color Colors::Transparent = Color(0, 0, 0, 0);
 
 };

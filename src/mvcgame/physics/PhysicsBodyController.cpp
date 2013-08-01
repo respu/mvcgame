@@ -19,7 +19,10 @@ namespace mvcgame {
 
 	PhysicsBodyController::~PhysicsBodyController()
 	{
-        delete _def;
+        if(_def)
+        {
+            delete _def;
+        }
 	}
 
     b2Body& PhysicsBodyController::getBody()
@@ -35,10 +38,15 @@ namespace mvcgame {
     void PhysicsBodyController::setView(std::shared_ptr<View> view)
     {
         ViewController::setView(view);
-        b2BodyDef def;
-        def.type = b2_dynamicBody;
-        _body = _world.getWorld().CreateBody(&def);        
-        updateBody();
+        b2BodyDef* def = _def;
+        if(!def)
+        {
+            b2BodyDef ldef;
+            ldef.type = b2_dynamicBody;
+            def = &ldef;
+        }
+        def->position = convertToWorld(view->getFrame().origin);
+        _body = _world.getWorld().CreateBody(def);
     }
 
     b2Fixture& PhysicsBodyController::addFixture(b2FixtureDef& def)
@@ -54,7 +62,6 @@ namespace mvcgame {
             std::vector<b2Vec2> rootVerts;
             for(const Point& p : verts)
             {
-                std::cout << p-anchor << std::endl;
                 rootVerts.push_back(convertToWorld(p-anchor));
             }
 
@@ -66,12 +73,7 @@ namespace mvcgame {
 
     void PhysicsBodyController::updateBody()
     {
-        auto view = getView();
-        if(view)
-        {
-            b2Vec2 p = convertToWorld(view->getFrame().origin);
-            _body->SetTransform(p, -1*view->getRotation().x);
-        }
+
     }
 
     void PhysicsBodyController::respondOnUpdate(const UpdateEvent& event)
@@ -79,8 +81,8 @@ namespace mvcgame {
         auto view = getView();
     	if(view)
     	{
-    		view->getFrame().origin = convertFromWorld(_body->GetPosition());
-    		view->setRotation(-1*_body->GetAngle());
+    	   view->getFrame().origin = convertFromWorld(_body->GetWorldCenter());
+           // view->setRotation(_body->GetAngle());
     	}
         ViewController::respondOnUpdate(event);        
     }
@@ -88,11 +90,6 @@ namespace mvcgame {
     b2Vec2 PhysicsBodyController::convertToWorld(const Point& p)
     {
         return _world.convertToWorld(p);
-    }
-
-    b2Vec2 PhysicsBodyController::convertToWorld(const Size& s)
-    {
-        return _world.convertToWorld(s);
     }
 
     Point PhysicsBodyController::convertFromWorld(const b2Vec2& v)
