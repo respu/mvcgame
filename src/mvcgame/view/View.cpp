@@ -38,8 +38,10 @@ namespace mvcgame {
 
     void View::update()
     {
-        if(_transform.update(_frame, _anchor, _rotation, _scale))
+        Transform t = _transform.update(_frame, _anchor, _rotation, _scale);
+        if(t != _transform)
         {
+            _transform = t;
             _inverseDirty = true;
             _rootTransformDirty = true;
             _rootInverseDirty = true;
@@ -70,13 +72,6 @@ namespace mvcgame {
     void View::setFrame(const Rect& rect)
     {
         _frame = rect;
-    }
-
-    Rect View::getBoundingBox() const
-    {
-        Rect box = _frame;
-        box.origin -= _anchor*box.size;
-        return box;
     }
     
     Rotation& View::getRotation()
@@ -141,7 +136,8 @@ namespace mvcgame {
             _rootTransform = _transform;
             if(_parent)
             {
-                _rootTransform *= _parent->getRootTransform();
+                _rootTransform += _parent->getAnchorPoint();
+                _rootTransform *= _parent->getRootTransform();                
             }
             else if(_root)
             {

@@ -50,11 +50,6 @@ namespace mvcgame {
 		const Points& getPoints() const;
         Points& getPoints();
 
-        bool touched(const Rect& frame) const;
-        bool touched(const View& view) const;
-        Point getTouchPoint(const Rect& frame) const;
-        Point getTouchPoint(const View& view) const;
-
         TouchEvent operator*(const Transform& t) const;
         TouchEvent& operator*=(const Transform& t);
 	};

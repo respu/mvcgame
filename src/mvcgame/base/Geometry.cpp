@@ -24,6 +24,9 @@ namespace mvcgame {
 
 #pragma mark - Point
 
+    const Point Point::Origin = Point(0.0f, 0.0f);
+    const Point Point::Normal = Point(1.0f, 1.0f);
+
     Point::Point() : x(0), y(0)
     {
     }
@@ -44,11 +47,6 @@ namespace mvcgame {
     gunit_t Point::distance() const
     {
         return sqrt(x*x+y*y);
-    }
-
-    Point::operator bool() const
-    {
-        return !guniteq(x, 0) || !guniteq(y, 0);
     }
 
     bool Point::operator==(const Point& p) const
@@ -911,30 +909,10 @@ namespace mvcgame {
         *this = ScaleTransform(r);
     }
 
-    bool Transform::update(const Rect& frame, const Anchor& anchor, const Rotation& rot, const Scale& scale)
+    Transform Transform::update(const Rect& frame, const Anchor& a, const Rotation& rot, const Scale& scale) const
     {
-        return update(frame.origin, anchor*frame.size, rot, scale);
-    }
-
-    bool Transform::update(const Point& point, const Anchor& anchor, const Size& size, const Rotation& rot, const Scale& scale)
-    {
-        return update(point, anchor*size, rot, scale);
-    }
-
-    bool Transform::update(const Point& point, const Point& anchor, const Rotation& rot, const Scale& scale)
-    {
-        ScaleTransform st = scale*rot;
-        Point tp = point-(anchor*st);
-        bool same = guniteq(a, st.a) && guniteq(b, st.b) &&
-        guniteq(c, st.c) && guniteq(d, st.d) &&
-        guniteq(tx, tp.x) && guniteq(ty, tp.y);
-        a = st.a;
-        b = st.b;
-        c = st.c;
-        d = st.d;
-        tx = tp.x;
-        ty = tp.y;
-        return !same;
+        Point ap = a*frame.size;
+        return Transform(ap*-1)*ScaleTransform(scale, rot)*Transform(ap+frame.origin);
     }
 
     bool Transform::operator==(const Transform& t) const
@@ -943,6 +921,11 @@ namespace mvcgame {
         guniteq(c, t.c) && guniteq(d, t.d) &&
         guniteq(tx, t.tx) && guniteq(ty, t.ty);
     }
+
+    bool Transform::operator!=(const Transform& t) const
+    {
+        return !(*this == t);
+    }    
 
     Transform& Transform::operator=(const ScaleTransform& st)
     {

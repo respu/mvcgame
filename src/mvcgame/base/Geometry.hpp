@@ -25,6 +25,9 @@ namespace mvcgame {
     class Point final
     {
     public:
+        static const Point Origin;
+        static const Point Normal;
+
         gunit_t x;
         gunit_t y;
 
@@ -34,7 +37,6 @@ namespace mvcgame {
         Point(const Speed& speed);
 
         gunit_t distance() const;
-        operator bool() const;
 
         bool operator==(const Point& p) const;
         bool operator!=(const Point& p) const;
@@ -317,16 +319,10 @@ namespace mvcgame {
         Transform(const Rotation& r);
         Transform(const Point& p);
 
-        bool update(const Rect& f, const Anchor& a,
-            const Rotation& r, const Scale& c);        
-
-        bool update(const Point& p, const Anchor& a,
-            const Size& s, const Rotation& r, const Scale& c);
-
-        bool update(const Point& p, const Point& a,
-            const Rotation& r, const Scale& c);
+        Transform update(const Rect& f, const Anchor& a, const Rotation& r, const Scale& c) const;
 
         bool operator==(const Transform& t) const;
+        bool operator!=(const Transform& t) const;
 
         Transform& operator=(const ScaleTransform& st);
         Transform& operator=(const Point& p);

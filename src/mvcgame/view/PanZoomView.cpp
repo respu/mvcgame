@@ -48,7 +48,7 @@ namespace mvcgame {
         }
         Speed speed;
         Point outOfBounds = getOutOfBoundsDistance();
-        if(outOfBounds)
+        if(outOfBounds == Point::Origin)
         {
             _panInertiaSpeed = Speed();
             if(_outOfBoundsDuration)
@@ -80,8 +80,8 @@ namespace mvcgame {
     Point PanZoomView::getOutOfBoundsDistance()
     {
         Point outOfBounds;
-        Rect contentBounds = _contentView->getBoundingBox();
-        Rect containerBounds = getBoundingBox();
+        Rect contentBounds = _contentView->getFrame();
+        Rect containerBounds = getFrame();
         Point contentOrigin = contentBounds.origin;
         Point containerOrigin = containerBounds.origin;
         Point contentOuter = contentBounds.getOuter();
@@ -121,26 +121,29 @@ namespace mvcgame {
 
     void PanZoomView::respondOnTouchStart(const TouchEvent& event)
     {
-        assert(event.touched(*this));
-        _touchPoint = event.getTouchPoint(*this);
+        if(event.getPoints().size() == 1)
+        {
+            _touchPoint = event.getPoints().front();
+        }
     }
 
     void PanZoomView::respondOnTouchUpdate(const TouchEvent& event)
     {
-        assert(event.touched(*this));
-        auto point = event.getTouchPoint(*this);
-        if(_contentView)
+        if(event.getPoints().size() == 1)
         {
-            _contentView->getFrame().origin += point - _touchPoint;
+            auto point = event.getPoints().front();
+            if(_contentView)
+            {
+                _contentView->getFrame().origin += point - _touchPoint;
+            }
+            _touchPoint = point;
+            _touchTimePoints.push_back(TimePoint(Time::now(), point));
+            removeOldTouchTimePoints();
         }
-        _touchPoint = point;
-        _touchTimePoints.push_back(TimePoint(Time::now(), point));
-        removeOldTouchTimePoints();
     }
 
     void PanZoomView::respondOnTouchEnd(const TouchEvent& event)
-    {       
-        assert(event.touched(*this));
+    {
         if(_touchTimePoints.size()>1)
         {
             TimePoint& start = _touchTimePoints.front();

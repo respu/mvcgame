@@ -95,40 +95,6 @@ namespace mvcgame {
         return *this;
     }
 
-    bool TouchEvent::touched(const View& view) const
-    {
-        return touched(view.getBoundingBox());
-    }
-
-    bool TouchEvent::touched(const Rect& frame) const
-    {
-        for(const Point& p : getPoints())
-        {
-            if(frame.contains(p))
-            {
-                return true;
-            }
-        } 
-        return false;
-    }    
-
-    Point TouchEvent::getTouchPoint(const View& view) const
-    {
-        return getTouchPoint(view.getBoundingBox());
-    }    
-
-    Point TouchEvent::getTouchPoint(const Rect& frame) const
-    {
-        for(const Point& p : getPoints())
-        {
-            if(frame.contains(p))
-            {
-                return p;
-            }
-        } 
-        throw new std::runtime_error("Frame was not touched");
-    }
-
 #pragma mark - stream functions
 
     std::ostream& operator<<(std::ostream& os, const UpdateEvent& e)

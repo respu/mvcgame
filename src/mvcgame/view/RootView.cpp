@@ -23,9 +23,7 @@ namespace mvcgame {
     void RootView::setSize(const Size& size)
     {
         _size = size;
-
-        Point norm(1, 1);
-        _transform = Transform(norm/Point(_size/2)) - norm;
+        _transform = Transform(Point::Normal/Point(_size/2));
     }
 
     const Transform& RootView::getTransform() const

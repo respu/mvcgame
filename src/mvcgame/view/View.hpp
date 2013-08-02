@@ -24,13 +24,14 @@ namespace mvcgame {
         Scale _scale;
         Anchor _anchor;
         Rotation _rotation;
-        Transform _transform;
 
         mutable bool _inverseDirty;
-        mutable Transform _inverse;
         mutable bool _rootTransformDirty;
-        mutable Transform _rootTransform;
         mutable bool _rootInverseDirty;        
+
+        Transform _transform;
+        mutable Transform _inverse;        
+        mutable Transform _rootTransform;
         mutable Transform _rootInverse;
     protected:
         void setParent(View& parent);
@@ -48,7 +49,6 @@ namespace mvcgame {
         Rect& getFrame();
         const Rect& getFrame() const;
         void setFrame(const Rect& rect);
-        Rect getBoundingBox() const;
 
         Rotation& getRotation();
         const Rotation& getRotation() const;
